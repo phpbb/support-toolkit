@@ -90,7 +90,7 @@ class stk
 		}
 		else
 		{
-			define ('STK_STANDALONE', true);
+			define ('STK_STANDALONE', false);
 			
 			// Load the phpBB configuration values
 			global $dbms, $dbhost, $dbport, $dbname, $dbuser, $dbpasswd, $table_prefix, $acm_type, $load_extensions;
@@ -150,6 +150,9 @@ class stk
 		
 		$user->set_custom_lang_path(STK_ROOT_PATH . 'language/');
 		$template->set_custom_template(STK_ROOT_PATH . 'style', 'stk_templates');
+		
+		// Load the common language file
+		$user->add_lang('stk_common');
 	}
 	
 	/**
@@ -216,9 +219,44 @@ class stk
 			'S_CAT'			=> true,
 		));
 		
+		// Create the tool list
+		$this->create_tool_list($this->_page['cat']);
+		
 		// Output
 		$this->page_header(utf8_strtoupper($this->_page['cat']) . '_TITLE');
 		$this->page_footer('index_body');
+	}
+	
+	/**
+	 * Create a list with the tools inside this category
+	 *
+	 * @param String $cat
+	 */
+	function create_tool_list($cat = '')
+	{
+		global $cache, $template;
+		
+		if ($cat == '')
+		{
+			return;
+		}
+		
+		$tools = $cache->obtain_stk_tools($cat);
+		
+		// Go through the tools
+		foreach ($tools as $tool)
+		{
+			$this->load_tool($cat, $tool, false);
+			
+			$selected = ($cat == $this->_page['cat'] && $tool == $this->_page['req_tool']) ? true : false;
+
+			// Assign to the template
+			$template->assign_block_vars('l_block2', array(
+				'L_TITLE'		=> get_lang_entry('TOOL_' . $tool . '_TITLE'),
+				'S_SELECTED'	=> $selected,
+				'U_TITLE'		=> append_sid(STK_ROOT_PATH, array('c' => $cat, 't' => $tool)),
+			));
+		}
 	}
 	
 	/**
@@ -227,7 +265,11 @@ class stk
 	 */
 	function _tool_overview()
 	{
+		// Load the tool
+		$tool = $this->load_tool($this->_page['cat'], $this->_page['req_tool']);
+		$options = $tool->tool_options();
 		
+
 	}
 	
 	/**
@@ -236,7 +278,56 @@ class stk
 	 */
 	function _run_tool()
 	{
+		// Load the tool
+		$tool = $this->load_tool($this->_page['cat'], $this->_page['req_tool']);
 		
+		// Run the tool and fetch the errors
+		$this->_error = $tool->run_tool();
+		
+		// Errors?
+		if (sizeof($this->_error))
+		{
+			// Back to the overview
+			$this->_tool_overview();
+		}
+	}
+	
+	/**
+	 * Load the requested tool
+	 *
+	 * @param String $tool_cat
+	 * @param String $tool_name
+	 * @param Boolean $init Define whether the class has to be constructed
+	 * @return Object instance of the required tool
+	 */
+	function load_tool($tool_cat, $tool_name)
+	{
+		global $user;
+		
+		// Does the file exits?
+		if ((@include STK_TOOL_BOX . $tool_cat . '/' . $tool_name . '.' . PHP_EXT) === false)
+		{
+			trigger_error('TOOL_NOT_EXITS');
+		}
+		
+		// Check the class
+		if (!class_exists('stk_' . $tool_name))
+		{
+			$msg_text = get_lang_entry('TOOL_INVALID_CLASS', E_USER_ERROR);
+			trigger_error(sprintf($msg_text, STK_TOOL_BOX . $tool_cat . '/' . $tool_name . '.' . PHP_EXT, 'stk_' . $tool_name));
+		}
+		
+		// Add the default language file
+		$user->add_lang('tools/' . $tool_cat . '/' . $tool_name);
+		
+		$obj = null;
+		
+		if ($init)
+		{
+			$obj = new stk_ . $tool_name();
+		}
+		
+		return $obj;
 	}
 	
 	/**

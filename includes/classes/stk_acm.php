@@ -20,6 +20,10 @@ $acm_type = $stk->get_config('stk_acm');
 include PHPBB_ROOT_PATH . "includes/acm/acm_{$acm_type}." . PHP_EXT;
 include PHPBB_ROOT_PATH . 'includes/cache.' . PHP_EXT;
 
+/**
+ * @todo enable caching in these methods if required.
+ *
+ */
 class stk_acm extends cache
 {
 	/**
@@ -45,8 +49,8 @@ class stk_acm extends cache
 			return $cats;
 		}
 		
-		if (($cats = $this->get('_stk_cats')) === false)
-		{
+		//if (($cats = $this->get('_stk_cats')) === false)
+		//{
 			$cats = array();
 			
 			if (false !== ($handle = opendir(STK_TOOL_BOX)))
@@ -62,15 +66,38 @@ class stk_acm extends cache
 					$cats[] = $dir;
 				}
 				
-				$this->put('_stk_cats', $cats);
+		//		$this->put('_stk_cats', $cats);
 			}
 			
 			sort($cats);
-		}
+		//}
 		
 		return $cats;
 	}
 
+	function obtain_stk_tools($cat = '')
+	{
+		$tools = array();
+		
+		if (false !== ($handle = opendir(STK_TOOL_BOX . $cat)))
+		{
+			while (false !== ($file = readdir($handle)))
+			{
+				// Skip *nix hidden, files and links
+				if ($file[0] == '.' || is_file($file) || is_link($file))
+				{
+					continue;
+				}
+					
+				// strip the extensions
+				$tools[] = substr($file, 0, strpos($file, '.'));
+			}
+			
+			sort($tools);
+		}
+		
+		return $tools;
+	}
 
 
 	/**

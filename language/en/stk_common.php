@@ -40,7 +40,16 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CAT_INVALID'	=> 'The requested category doesn\'t exists!'
-	
+	'TOOL_INVALID_CLASS'	=> 'The tool file %1$s does not contain the correct class [%2$s]',
+	'TOOL_NOT_EXITS'		=> 'The requested tool doesn\'t exist!',
+));
+
+/**
+ * Category related language strings
+ */
+$lang = array_merge($lang, array(
+	'CAT_ADMIN'		=> 'Admin tools',
+	'CAT_INVALID'	=> 'The requested category doesn\'t exists!',
+	'CAT_SUPPORT'	=> 'Support tools',
 ));
 ?>

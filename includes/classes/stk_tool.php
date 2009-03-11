@@ -21,7 +21,12 @@ if (!defined('IN_STK'))
  */
 class stk_tool
 {
-
+	var $options = '';
+	
+	function tool_options()
+	{
+		return $this->options;
+	}
 }
 
 ?>
