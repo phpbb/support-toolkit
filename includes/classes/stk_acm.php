@@ -25,7 +25,10 @@ class stk_acm extends cache
 	/**
 	* Construct, set the internal cache path
 	*/
-	function __construct() {}
+	function __construct()
+	{
+		$this->cache_dir = PHPBB_ROOT_PATH . 'cache/';
+	}
 
 	/**
 	 * Get all the tool categories
