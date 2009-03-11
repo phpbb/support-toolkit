@@ -15,7 +15,7 @@ define('IN_STK', true);
 define('ADMIN_START', true);
 define('NEED_SID', true);
 
-if (!defined('PHPBB_ROOT_PATH')) define('PHPBB_ROOT_PATH', './../quickinstall/boards/ATK/');
+if (!defined('PHPBB_ROOT_PATH')) define('PHPBB_ROOT_PATH', './../');
 if (!defined('PHP_EXT')) define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1));
 if (!defined('STK_ROOT_PATH')) define('STK_ROOT_PATH', './');
 include STK_ROOT_PATH . 'stk_common.' . PHP_EXT;
