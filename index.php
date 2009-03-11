@@ -22,7 +22,7 @@ include STK_ROOT_PATH . 'stk_common.' . PHP_EXT;
 
 // Start session management
 $user->stk_session_begin(false);
-$user->stk_setup();
+$user->stk_setup('acp/common');
 
 // Switch environment
 $stk->switch_env();
