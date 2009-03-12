@@ -160,10 +160,10 @@ class stk
 	 */
 	function build_page()
 	{
-		global $cache;
+		global $plugin;
 		
 		// Get all the categories
-		$cats = $cache->obtain_stk_categories();
+		$cats = $plugin->get_categories();
 
 		// Invalid cats means invalid request. Thus reset it
 		if (!in_array($this->_page['cat'], $cats))
@@ -211,7 +211,7 @@ class stk
 	{
 		global $template;
 		
-		$pag_content = get_lang_entry(utf8_strtoupper($this->_page['cat']) . '_EXPLAIN');
+		$pag_content = get_lang_entry(utf8_strtoupper('CAT_' . $this->_page['cat']) . '_EXPLAIN');
 		
 		// Assign vars
 		$template->assign_vars(array(
@@ -219,44 +219,9 @@ class stk
 			'S_CAT'			=> true,
 		));
 		
-		// Create the tool list
-		$this->create_tool_list($this->_page['cat']);
-		
 		// Output
-		$this->page_header(utf8_strtoupper($this->_page['cat']) . '_TITLE');
+		$this->page_header(utf8_strtoupper('CAT_' . $this->_page['cat']));
 		$this->page_footer('index_body');
-	}
-	
-	/**
-	 * Create a list with the tools inside this category
-	 *
-	 * @param String $cat
-	 */
-	function create_tool_list($cat = '')
-	{
-		global $cache, $template;
-		
-		if ($cat == '')
-		{
-			return;
-		}
-		
-		$tools = $cache->obtain_stk_tools($cat);
-		
-		// Go through the tools
-		foreach ($tools as $tool)
-		{
-			$this->load_tool($cat, $tool, false);
-			
-			$selected = ($cat == $this->_page['cat'] && $tool == $this->_page['req_tool']) ? true : false;
-
-			// Assign to the template
-			$template->assign_block_vars('l_block2', array(
-				'L_TITLE'		=> get_lang_entry('TOOL_' . $tool . '_TITLE'),
-				'S_SELECTED'	=> $selected,
-				'U_TITLE'		=> append_sid(STK_ROOT_PATH, array('c' => $cat, 't' => $tool)),
-			));
-		}
 	}
 	
 	/**
@@ -265,8 +230,10 @@ class stk
 	 */
 	function _tool_overview()
 	{
+		global $plugin;
+		
 		// Load the tool
-		$tool = $this->load_tool($this->_page['cat'], $this->_page['req_tool']);
+		$tool = $plugin->activate_tool($this->_page['cat'], $this->_page['req_tool']);
 		$options = $tool->tool_options();
 		
 
@@ -293,58 +260,21 @@ class stk
 	}
 	
 	/**
-	 * Load the requested tool
-	 *
-	 * @param String $tool_cat
-	 * @param String $tool_name
-	 * @param Boolean $init Define whether the class has to be constructed
-	 * @return Object instance of the required tool
-	 */
-	function load_tool($tool_cat, $tool_name)
-	{
-		global $user;
-		
-		// Does the file exits?
-		if ((@include STK_TOOL_BOX . $tool_cat . '/' . $tool_name . '.' . PHP_EXT) === false)
-		{
-			trigger_error('TOOL_NOT_EXITS');
-		}
-		
-		// Check the class
-		if (!class_exists('stk_' . $tool_name))
-		{
-			$msg_text = get_lang_entry('TOOL_INVALID_CLASS', E_USER_ERROR);
-			trigger_error(sprintf($msg_text, STK_TOOL_BOX . $tool_cat . '/' . $tool_name . '.' . PHP_EXT, 'stk_' . $tool_name));
-		}
-		
-		// Add the default language file
-		$user->add_lang('tools/' . $tool_cat . '/' . $tool_name);
-		
-		$obj = null;
-		
-		if ($init)
-		{
-			$obj = new stk_ . $tool_name();
-		}
-		
-		return $obj;
-	}
-	
-	/**
 	 * Get a configuration value
 	 *
 	 * @param String $key The key of the config value
-	 * @return Returns the value of the given config entry, or null if there isn't a matching key
+	 * @param mixed $default The value that is returned when the config entry doesn't exist.
+	 * @return Returns the value of the given config entry, or $default if there isn't a matching key
 	 * @access public
 	 */
-	function get_config($key)
+	function get_config($key, $default = null)
 	{
 		if (isset($this->_config[$key]))
 		{
 			return $this->_config[$key];
 		}
 		
-		return null;
+		return $default;
 	}
 	
 	/**
@@ -390,7 +320,7 @@ class stk
 	 */
 	function page_header($page_title = '')
 	{
-		global $cache, $template, $user;
+		global $cache, $plugin, $template, $user;
 		
 		if (defined('HEADER_INC'))
 		{
@@ -400,25 +330,14 @@ class stk
 		define('HEADER_INC', true);
 
 		// Create the tabbed menu
-		$tabs = $cache->obtain_stk_categories();
-		foreach ($tabs as $tab)
-		{
-			$active = false;
-			if ($tab == $this->_page['cat'])
-			{
-				$active = true;
-			}
-
-			$template->assign_block_vars('t_block1', array(
-				'L_TITLE'		=> get_lang_entry('CAT_' . utf8_strtoupper($tab)),
-				'U_TITLE'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $tab)),
-				'S_SELECTED'	=> $active,
-			));
-		}
+		$plugin->create_tab_menu($this->_page['cat']);
+		
+		// Create the menu
+		$plugin->create_left_menu($this->_page['cat'], $this->_page['req_tool']);
 		
 		// Template vars required on every page
 		$template->assign_vars(array(
-			'L_PAGE_TITLE'	=> $page_title,
+			'L_PAGE_TITLE'	=> get_lang_entry($page_title),
 		
 			'S_CONTENT_DIRECTION'	=> $user->lang['DIRECTION'],
 			'S_STYLE_PATH_FILE'		=> PHPBB_ROOT_PATH . 'adm/style/admin.css',

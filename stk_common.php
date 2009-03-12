@@ -140,6 +140,7 @@ include STK_ROOT_PATH . 'includes/constants.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_acm.' . PHP_EXT;
 //include STK_ROOT_PATH . 'includes/classes/stk_auth.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_db.' . PHP_EXT;
+include STK_ROOT_PATH . 'includes/classes/stk_plugin.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_session.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_template.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_tool.' . PHP_EXT;
@@ -155,11 +156,12 @@ set_error_handler(defined('PHPBB_MSG_HANDLER') ? PHPBB_MSG_HANDLER : 'msg_handle
  * Once in the STK users have full rights
 $auth = new stk_auth();
  */
-$cache = new stk_acm();
-$db = new stk_db();
-$template = new stk_template();
+$cache		= new stk_acm();
+$db			= new stk_db();
+$plugin		= new stk_plugin();
+$template	= new stk_template();
 //$uri = new stk_uri();
-$user = new stk_user();
+$user		= new stk_user();
 
 // Grab global variables, re-cache if necessary
 $config = $cache->obtain_config();

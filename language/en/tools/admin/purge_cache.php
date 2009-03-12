@@ -40,6 +40,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'TOOL_PURGE_CACHE_TITLE'	=> 'Purge cache',
+	'TOOL_PURGE_CACHE'	=> 'Purge cache',
 ));
 ?>

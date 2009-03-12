@@ -159,4 +159,43 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 
 	return $tpl;
 }
+
+/**
+ * Function used to generate a list with tools.
+ *
+ * @param String $dir The path to the directory
+ * @return An array holding the complete structure of the tools
+ */
+function get_tools($dir)
+{
+	// A limited form of caching
+	$dir_list = array();
+
+	if (false !== ($handle = opendir($dir)))
+	{
+		while (false !== ($file = readdir($handle)))
+		{
+			$file = utf8_strtolower($file);
+			
+			// Skip hidden files
+			if ($file[0] == '.')
+			{
+				continue;
+			}
+
+			if (is_dir($dir . $file))
+			{
+				$dir_list[$file] = get_tools($dir . $file . '/');
+			}
+			else
+			{
+				// Strip the extiontion
+				$file = substr($file, 0, strpos($file, '.'));
+				$dir_list[] = $file;
+			}
+		}
+	}
+	
+	return $dir_list;
+}
 ?>

@@ -2,7 +2,7 @@
 /**
  *
  * @package Support Tool Kit
- * @version $Id: constants.php 2 2009-03-07 15:48:30Z erikfrerejean $
+ * @version $Id$
  * @copyright (c) 2009 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *

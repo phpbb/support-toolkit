@@ -23,6 +23,8 @@ class stk_tool
 {
 	var $options = '';
 	
+	function __construct() {}
+	
 	function tool_options()
 	{
 		return $this->options;

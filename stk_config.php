@@ -21,4 +21,12 @@ if (!isset($stk_config) || !is_array($stk_config))
 	$stk_config = array();
 }
 
+/**
+ * This configuration variable controls whether the tool list should be cached
+ * by the system.
+ * 
+ * @todo Decide whether we want to have the ability to cache the tools, or just load
+ *       fetch the list everytime we load a page!
+ */
+$stk_config['cache_tools'] = false;
 ?>
