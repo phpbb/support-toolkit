@@ -36,10 +36,23 @@ class stk_acm extends cache
 		$this->cache_dir = PHPBB_ROOT_PATH . 'cache/';
 	}
 
+	/**
+	 * Create an array containing all available tools.
+	 *
+	 * @param String $dir Path to the "tools" directory
+	 * @param Boolean $cache_list Defines whether the list will be cached
+	 * @return The list holding all categories and tools
+	 */
 	function obtain_tool_list($dir, $cache_list = true)
 	{
-		if (!$cache_list || (false === ($dir_list = $this->get($this->_tool_list_name))))
+		// When not caching clear the file
+		if (!$cache_list)
 		{
+			$this->clear_tool_list();
+		}
+		
+		if (false === ($dir_list = $this->get($this->_tool_list_name)))
+		{	
 			if (false !== ($handle = opendir($dir)))
 			{
 				while (false !== ($file = readdir($handle)))
@@ -54,7 +67,7 @@ class stk_acm extends cache
 		
 					if (is_dir($dir . $file))
 					{
-						$dir_list[$file] = get_tools($dir . $file . '/');
+						$dir_list[$file] = $this->obtain_tool_list($dir . $file . '/');
 					}
 					else
 					{
@@ -64,16 +77,18 @@ class stk_acm extends cache
 					}
 				}
 			}
-			
-			if ($cache_list)
-			{
-				$this->put($this->_tool_list_name, $dir_list);
-			}
+
+			$this->put($this->_tool_list_name, $dir_list);
 		}
 		
 		return $dir_list;
 	}
 
+	function clear_tool_list()
+	{
+		$this->destroy($this->_tool_list_name);
+	}
+	
 	/**
 	* Gracefully fall back for php4
 	*/

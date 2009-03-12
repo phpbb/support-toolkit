@@ -33,6 +33,9 @@ $stk->get_page_data();
 // Check the form token
 $stk->check_form_token();
 
+// Run some default tasks
+$stk->default_tasks();
+
 // Build the correct page
 $stk->build_page();
 ?>

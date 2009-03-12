@@ -56,14 +56,15 @@ class stk_plugin
 	 */
 	function activate_tool($cat, $tool)
 	{
-		global $user;
-		
 		// Only do this once per tool
 		static $tools_init = array();
+
 		if (isset($tools_init[$tool]))
 		{
 			return $tools_init[$tool];
 		}
+
+		global $user;
 		
 		// Check the request
 		if (!isset($this->tool_list[$cat]))
@@ -126,10 +127,14 @@ class stk_plugin
 		{
 			return array();
 		}
-		
 		return $this->tool_list[$cat];
 	}
 	
+	/**
+	 * Generate the tabbed top menu.
+	 *
+	 * @param String $active_cat the category we're in at the momen
+	 */
 	function create_tab_menu($active_cat)
 	{
 		global $template;
@@ -158,7 +163,7 @@ class stk_plugin
 		
 		$tools = $this->get_tools($active_cat);
 		
-		foreach ($tools as $tool)
+		foreach ($tools as $key => $tool)
 		{
 			$active = false;
 			if ($tool == $active_tool)

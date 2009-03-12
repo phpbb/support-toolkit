@@ -185,7 +185,10 @@ function switch_menu()
 						<a id="toggle-handle" accesskey="m" title="{L_MENU_TOGGLE}" onclick="switch_menu(); return false;" href="#"></a></div>
 					<!-- ENDIF -->
 					<div id="menu">
-						<p>{L_LOGGED_IN_AS}<br /><strong>{USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOGOUT}</a>&nbsp;][&nbsp;<a href="{U_ADM_LOGOUT}">{L_ADM_LOGOUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+						<p>
+							{L_LOGGED_IN_AS}<br /><strong>{USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOGOUT}</a>&nbsp;][&nbsp;<a href="{U_ADM_LOGOUT}">{L_ADM_LOGOUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<!-- IF S_CACHE_TOOL_LIST --><br />[<a href="{U_REFRESH_TOOLS}" title="{L_REFRESH_TOOLS}">{L_REFRESH_TOOLS}</a>]<!-- ENDIF -->
+						</p>
 						<ul>
 						<!-- BEGIN l_block2 -->
 								<li<!-- IF l_block2.S_SELECTED --> id="activemenu"<!-- ENDIF -->><a href="{l_block2.U_TITLE}"><span>{l_block2.L_TITLE}</span></a></li>

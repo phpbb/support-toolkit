@@ -109,6 +109,30 @@ class stk
 	}
 	
 	/**
+	 * Handle actions that DON'T need authentication
+	 */
+	function default_tasks()
+	{
+		// Fetch all the info we'll use here
+		$action = request_var('dt', '');
+		
+		switch ($action)
+		{
+			// Refresh the tool list
+			case 'refresh_tools' :
+				global $cache;
+				$cache->clear_tool_list();
+			break;
+		}
+		
+		// Return when done
+		if (!empty($action))
+		{
+			redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c', $this->_page['cat'], 't', $this->_page['tool'])));
+		}
+	}
+	
+	/**
 	 * Get all page specific data
 	 *
 	 * @access public
@@ -320,7 +344,7 @@ class stk
 	 */
 	function page_header($page_title = '')
 	{
-		global $cache, $plugin, $template, $user;
+		global $plugin, $stk, $template, $user;
 		
 		if (defined('HEADER_INC'))
 		{
@@ -339,8 +363,11 @@ class stk
 		$template->assign_vars(array(
 			'L_PAGE_TITLE'	=> get_lang_entry($page_title),
 		
+			'S_CACHE_TOOL_LIST'		=> $stk->get_config('cache_tools', false),
 			'S_CONTENT_DIRECTION'	=> $user->lang['DIRECTION'],
 			'S_STYLE_PATH_FILE'		=> PHPBB_ROOT_PATH . 'adm/style/admin.css',
+		
+			'U_REFRESH_TOOLS'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $this->_page['cat'], 't' => $this->_page['tool'], 'dt' => 'refresh_tools')),
 		));
 	}
 	
