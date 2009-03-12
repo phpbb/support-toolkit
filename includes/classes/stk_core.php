@@ -118,7 +118,7 @@ class stk
 		$this->_page['action'] = request_var('action', '');
 		$this->_page['cat'] = request_var('c', 'main');
 		$this->_page['confirm'] = (isset($_GET['confirm_key'])) ? true : false;
-		$this->_page['req_tool'] = request_var('t', '');
+		$this->_page['tool'] = request_var('t', '');
 		$this->_page['submit'] = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
 	}
 	
@@ -171,7 +171,7 @@ class stk
 			$this->_page['action'] = '';
 			$this->_page['cat'] = 'main';
 			$this->_page['confirm'] = false;
-			$this->_page['req_tool'] = '';
+			$this->_page['tool'] = '';
 			$this->_page['submit'] = false;
 
 			$this->_error[] = 'CAT_INVALID';
@@ -181,17 +181,17 @@ class stk
 		switch (true)
 		{
 			// Category overview page
-			case $this->_page['cat'] != 'main' && empty($this->_page['req_tool']) :
+			case $this->_page['cat'] != 'main' && empty($this->_page['tool']) :
 				$this->_cat_overview();
 			break;
 			
 			// Tool page
-			case $this->_page['cat'] != 'main' && !empty($this->_page['req_tool']) && !$this->_page['submit'] :
+			case $this->_page['cat'] != 'main' && !empty($this->_page['tool']) && !$this->_page['submit'] :
 				$this->_tool_overview();
 			break;
 			
 			// Run the tool
-			case $this->_page['cat'] != 'main' && !empty($this->_page['req_tool']) && $this->_page['submit'] :
+			case $this->_page['cat'] != 'main' && !empty($this->_page['tool']) && $this->_page['submit'] :
 				$this->_run_tool();
 			break;
 			
@@ -233,7 +233,7 @@ class stk
 		global $plugin;
 		
 		// Load the tool
-		$tool = $plugin->activate_tool($this->_page['cat'], $this->_page['req_tool']);
+		$tool = $plugin->activate_tool($this->_page['cat'], $this->_page['tool']);
 		$options = $tool->tool_options();
 		
 
@@ -246,7 +246,7 @@ class stk
 	function _run_tool()
 	{
 		// Load the tool
-		$tool = $this->load_tool($this->_page['cat'], $this->_page['req_tool']);
+		$tool = $this->load_tool($this->_page['cat'], $this->_page['tool']);
 		
 		// Run the tool and fetch the errors
 		$this->_error = $tool->run_tool();
@@ -333,7 +333,7 @@ class stk
 		$plugin->create_tab_menu($this->_page['cat']);
 		
 		// Create the menu
-		$plugin->create_left_menu($this->_page['cat'], $this->_page['req_tool']);
+		$plugin->create_left_menu($this->_page['cat'], $this->_page['tool']);
 		
 		// Template vars required on every page
 		$template->assign_vars(array(
