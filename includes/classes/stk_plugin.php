@@ -136,6 +136,12 @@ class stk_plugin
 	
 	function get_tools($cat)
 	{
+		// Main doesn't contain any tools
+		if ($cat == 'main')
+		{
+			return array();
+		}
+		
 		return $this->tool_list[$cat];
 	}
 	
