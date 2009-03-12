@@ -136,7 +136,7 @@ include PHPBB_ROOT_PATH . 'includes/functions.' . PHP_EXT;
 include PHPBB_ROOT_PATH . 'includes/functions_content.' . PHP_EXT;
 include PHPBB_ROOT_PATH . 'includes/utf/utf_tools.' . PHP_EXT;
 
-include STK_ROOT_PATH . 'constants.' . PHP_EXT;
+include STK_ROOT_PATH . 'includes/constants.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_acm.' . PHP_EXT;
 //include STK_ROOT_PATH . 'includes/classes/stk_auth.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_db.' . PHP_EXT;
