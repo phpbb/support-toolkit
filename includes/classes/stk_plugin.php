@@ -38,37 +38,22 @@ class stk_plugin
 	 */
 	function __construct()
 	{
-		global $stk;
+		global $cache, $stk;
 		
 		// Set the tool dir
 		$this->tool_dir = STK_TOOL_BOX;
 		
 		// Build the tool list
-		$this->_load_tool_list($stk->get_config('cache_tools', false));
-	}
-	
-	/**
-	 * Read the tool directory and fetch all the tools and categories from
-	 * this directory.
-	 *
-	 * @param Boolean $cache_list If set to true the result will be cached using the phpBB cache
-	 * @access private
-	 */
-	function _load_tool_list($cache_list = true)
-	{
-		global $cache;
-		
-		if (!$cache_list || (false === ($this->tool_list = $cache->get('_stk_tool_list'))))
-		{
-			$this->tool_list = get_tools($this->tool_dir, true);
-			
-			if ($cache_list)
-			{
-				$cache->put('_stk_tool_list', $this->tool_list);
-			}
-		}
+		$this->tool_list = $cache->obtain_tool_list($this->tool_dir, $stk->get_config('cache_tools', false));
 	}
 
+	/**
+	 * Activate the requested tool. Before doing so check whether to requested tool is valid
+	 *
+	 * @param String $cat The category this tool should be in
+	 * @param unknown_type $tool
+	 * @return unknown
+	 */
 	function activate_tool($cat, $tool)
 	{
 		global $user;

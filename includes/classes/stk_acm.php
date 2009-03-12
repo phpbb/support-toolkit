@@ -26,6 +26,8 @@ include PHPBB_ROOT_PATH . 'includes/cache.' . PHP_EXT;
  */
 class stk_acm extends cache
 {
+	var $_tool_list_name = '_stk_tool_list';
+	
 	/**
 	* Construct, set the internal cache path
 	*/
@@ -34,71 +36,43 @@ class stk_acm extends cache
 		$this->cache_dir = PHPBB_ROOT_PATH . 'cache/';
 	}
 
-	/**
-	 * Get all the tool categories
-	 *
-	 * @return array Array containing all the categories
-	 * @access public
-	 */
-	function obtain_stk_categories()
+	function obtain_tool_list($dir, $cache_list = true)
 	{
-		// Cache internally as this method can be called multiple times.
-		static $cats = null;
-		if ($cats !== null)
+		if (!$cache_list || (false === ($dir_list = $this->get($this->_tool_list_name))))
 		{
-			return $cats;
-		}
-		
-		//if (($cats = $this->get('_stk_cats')) === false)
-		//{
-			$cats = array();
-			
-			if (false !== ($handle = opendir(STK_TOOL_BOX)))
+			if (false !== ($handle = opendir($dir)))
 			{
-				while (false !== ($dir = readdir($handle)))
+				while (false !== ($file = readdir($handle)))
 				{
-					// Skip *nix hidden, files and links
-					if ($dir[0] == '.' || is_file($dir) || is_link($dir))
+					$file = utf8_strtolower($file);
+					
+					// Skip hidden files
+					if ($file[0] == '.')
 					{
 						continue;
 					}
-					
-					$cats[] = $dir;
+		
+					if (is_dir($dir . $file))
+					{
+						$dir_list[$file] = get_tools($dir . $file . '/');
+					}
+					else
+					{
+						// Strip the extiontion
+						$file = substr($file, 0, strpos($file, '.'));
+						$dir_list[] = $file;
+					}
 				}
-				
-		//		$this->put('_stk_cats', $cats);
 			}
 			
-			sort($cats);
-		//}
-		
-		return $cats;
-	}
-
-	function obtain_stk_tools($cat = '')
-	{
-		$tools = array();
-		
-		if (false !== ($handle = opendir(STK_TOOL_BOX . $cat)))
-		{
-			while (false !== ($file = readdir($handle)))
+			if ($cache_list)
 			{
-				// Skip *nix hidden, files and links
-				if ($file[0] == '.' || is_file($file) || is_link($file))
-				{
-					continue;
-				}
-					
-				// strip the extensions
-				$tools[] = substr($file, 0, strpos($file, '.'));
+				$this->put($this->_tool_list_name, $dir_list);
 			}
-			
-			sort($tools);
 		}
 		
-		return $tools;
+		return $dir_list;
 	}
-
 
 	/**
 	* Gracefully fall back for php4
