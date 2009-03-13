@@ -84,6 +84,9 @@ class stk_acm extends cache
 		return $dir_list;
 	}
 
+	/**
+	 * Method to remove the tool list from the cache.
+	 */
 	function clear_tool_list()
 	{
 		$this->destroy($this->_tool_list_name);

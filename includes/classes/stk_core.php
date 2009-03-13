@@ -155,7 +155,7 @@ class stk
 		// If there isn't a submit, or the page comes from the confirmation page don't check
 		if ($this->_page['submit'] && !$this->_page['confirm'])
 		{
-			if (!check_form_key('stk_form_key_' . $this->page['req_tool']))
+			if (!check_form_key('stk_form_key_' . $this->_page['tool']))
 			{
 				$this->error[] = 'FROM_INVALID';
 				return false;
@@ -211,12 +211,12 @@ class stk
 			
 			// Tool page
 			case $this->_page['cat'] != 'main' && !empty($this->_page['tool']) && !$this->_page['submit'] :
-				$this->_tool_overview();
+				$plugin->tool_overview();
 			break;
 			
 			// Run the tool
 			case $this->_page['cat'] != 'main' && !empty($this->_page['tool']) && $this->_page['submit'] :
-				$this->_run_tool();
+				$plugin->run_tool();
 			break;
 			
 			// Default main page
@@ -249,41 +249,6 @@ class stk
 	}
 	
 	/**
-	 * Create the tool overview page
-	 *
-	 */
-	function _tool_overview()
-	{
-		global $plugin;
-		
-		// Load the tool
-		$tool = $plugin->activate_tool($this->_page['cat'], $this->_page['tool']);
-		$options = $tool->tool_options();
-		
-
-	}
-	
-	/**
-	 * Run the requested tool
-	 *
-	 */
-	function _run_tool()
-	{
-		// Load the tool
-		$tool = $this->load_tool($this->_page['cat'], $this->_page['tool']);
-		
-		// Run the tool and fetch the errors
-		$this->_error = $tool->run_tool();
-		
-		// Errors?
-		if (sizeof($this->_error))
-		{
-			// Back to the overview
-			$this->_tool_overview();
-		}
-	}
-	
-	/**
 	 * Get a configuration value
 	 *
 	 * @param String $key The key of the config value
@@ -300,16 +265,6 @@ class stk
 		
 		return $default;
 	}
-	
-	/**
-	 * Get the requested tool object
-	 *
-	 */
-	function get_tool()
-	{
-		
-	}
-	
 	
 	/**
 	 * Output the page

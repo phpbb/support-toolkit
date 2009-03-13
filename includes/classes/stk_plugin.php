@@ -22,6 +22,11 @@ if (!defined('IN_STK'))
  */
 class stk_plugin
 {
+	/**
+	 * Path to the "tools" directory
+	 *
+	 * @var String
+	 */
 	var $tool_dir = '';
 	
 	/**
@@ -120,6 +125,12 @@ class stk_plugin
 		return $cat_list;
 	}
 	
+	/**
+	 * Get all the tools that are inside a given category
+	 *
+	 * @param String $cat The category
+	 * @return An array containing all the tools
+	 */
 	function get_tools($cat)
 	{
 		// Main doesn't contain any tools
@@ -128,6 +139,107 @@ class stk_plugin
 			return array();
 		}
 		return $this->tool_list[$cat];
+	}
+	
+	function run_tool()
+	{
+		global $stk;
+		
+		// Load the tool
+		$tool = $this->activate_tool($stk->_page['cat'], $stk->_page['tool']);
+		
+		$stk->_error = $tool->run_tool();
+		
+		// If we encounter an error. Display the overview page
+		if (sizeof($stk->_error))
+		{
+			$this->tool_overview();
+		}
+	}
+	
+	function tool_overview()
+	{
+		global $stk;
+		
+		// Load the tool
+		$tool = $this->activate_tool($stk->_page['cat'], $stk->_page['tool']);
+		
+		// Get the options
+		$display_vars = $tool->tool_options();
+		
+		// Generate relevant page
+		if (is_array($display_vars) && isset($display_vars['vars']))
+		{
+			foreach ($display_vars['vars'] as $key => $vars)
+			{
+				if (!is_array($vars) && strpos($key, 'legend') === false)
+				{
+					continue;
+				}
+	
+				if (strpos($key, 'legend') !== false)
+				{
+					$template->assign_block_vars('options', array(
+						'S_LEGEND'		=> true,
+						'LEGEND'		=> get_lang_entry($vars),
+					));
+	
+					continue;
+				}
+	
+				$type = explode(':', $vars['type']);
+	
+				$l_explain = '';
+				if ($vars['explain'] && isset($vars['lang_explain']))
+				{
+					$l_explain = get_lang_entry($vars['lang_explain']);
+				}
+				else if ($vars['explain'])
+				{
+					$l_explain = get_lang_entry($vars['lang'] . '_EXPLAIN');
+				}
+	
+				$content = build_cfg_template($type, $key, $this->new_config, $key, $vars);
+	
+				if (empty($content))
+				{
+					continue;
+				}
+	
+				$template->assign_block_vars('options', array(
+					'KEY'			=> $key,
+					'TITLE'			=> get_lang_entry($vars['lang']),
+					'S_EXPLAIN'		=> $vars['explain'],
+					'TITLE_EXPLAIN'	=> $l_explain,
+					'CONTENT'		=> $content,
+				
+					'S_FIND_USER'   => (isset($content['find_user'])) ? true : false,
+					'U_FIND_USER'   => (isset($content['find_user'])) ? append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'admin_tool_kit', 'field' => $content['find_user_field'])) : ''
+				));
+	
+				unset($display_vars['vars'][$key]);
+			}
+			
+			// Output the page
+			$stk->page_header();
+			$stk->page_footer('tool_options');
+		}
+		else if (is_string($display_vars))
+		{
+			if (confirm_box(true))
+			{
+				$this->run_tool();
+			}
+			else
+			{
+				stk_confirm_box(false, $display_vars);
+			}
+		}
+		else
+		{
+			// Shouldn't happen
+			exit;
+		}
 	}
 	
 	/**
@@ -157,6 +269,13 @@ class stk_plugin
 		}
 	}
 	
+	/**
+	 * Create the lefthand menu this.
+	 * This menu contains al the available tools in the active category
+	 *
+	 * @param String $active_cat The category the user is in
+	 * @param String $active_tool The tool that is requested
+	 */
 	function create_left_menu($active_cat, $active_tool)
 	{
 		global $template;
