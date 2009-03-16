@@ -179,5 +179,24 @@ class stk_user extends user
 			unset($lang_set);
 		}
 	}
+
+	//-- Some methods to support outdated versions of phpBB3
+	/**
+	* Function to set custom language path (able to use directory outside of phpBB)
+	*
+	* @param string $lang_path New language path used.
+	* @access public
+	*/
+	function set_custom_lang_path($lang_path)
+	{
+		$this->lang_path = $lang_path;
+
+		if (substr($this->lang_path, -1) != '/')
+		{
+			$this->lang_path .= '/';
+		}
+		
+		$this->lang_path .= $this->lang_name . '/';
+	}
 }
 ?>
