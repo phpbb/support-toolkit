@@ -181,6 +181,8 @@ class stk_user extends user
 	}
 
 	//-- Some methods to support outdated versions of phpBB3
+	//-- And existing method slightly modified to work with the STK (including some additional logic)
+	
 	/**
 	* Function to set custom language path (able to use directory outside of phpBB)
 	*
@@ -195,8 +197,104 @@ class stk_user extends user
 		{
 			$this->lang_path .= '/';
 		}
+	}
+	
+	/**
+	* Add Language Items - use_db and use_help are assigned where needed (only use them to force inclusion)
+	*
+	* @param mixed $lang_set specifies the language entries to include
+	* @param bool $use_db internal variable for recursion, do not use
+	* @param bool $use_help internal variable for recursion, do not use
+	*
+	* Examples:
+	* <code>
+	* $lang_set = array('posting', 'help' => 'faq');
+	* $lang_set = array('posting', 'viewtopic', 'help' => array('bbcode', 'faq'))
+	* $lang_set = array(array('posting', 'viewtopic'), 'help' => array('bbcode', 'faq'))
+	* $lang_set = 'posting'
+	* $lang_set = array('help' => 'faq', 'db' => array('help:faq', 'posting'))
+	* </code>
+	*/
+	function add_lang($lang_set, $use_db = false, $use_help = false)
+	{
+		// Pre phpBB 3.0.2 installations have the lang name in their lang_path. Remove this the first time this method is called
+		if (stripos($this->lang_path, '/' . $this->lang_name . '/') !== false)
+		{
+			$this->lang_path = substr($this->lang_path, 0, -(strlen('/' . $this->lang_name . '/') - 1));
+		}
 		
-		$this->lang_path .= $this->lang_name . '/';
+		if (is_array($lang_set))
+		{
+			foreach ($lang_set as $key => $lang_file)
+			{
+				// Please do not delete this line.
+				// We have to force the type here, else [array] language inclusion will not work
+				$key = (string) $key;
+
+				if ($key == 'db')
+				{
+					$this->add_lang($lang_file, true, $use_help);
+				}
+				else if ($key == 'help')
+				{
+					$this->add_lang($lang_file, $use_db, true);
+				}
+				else if (!is_array($lang_file))
+				{
+					$this->set_lang($this->lang, $this->help, $lang_file, $use_db, $use_help);
+				}
+				else
+				{
+					$this->add_lang($lang_file, $use_db, $use_help);
+				}
+			}
+			unset($lang_set);
+		}
+		else if ($lang_set)
+		{
+			$this->set_lang($this->lang, $this->help, $lang_set, $use_db, $use_help);
+		}
+	}
+
+	/**
+	* Set language entry (called by add_lang)
+	* @access private
+	*/
+	function set_lang(&$lang, &$help, $lang_file, $use_db = false, $use_help = false)
+	{
+		global $config; 
+
+		// Make sure the language name is set (if the user setup did not happen it is not set)
+		if (!$this->lang_name)
+		{
+			global $config;
+			$this->lang_name = basename($config['default_lang']);
+		}
+
+		// A list with languages that are supported. (ordered in the way they'll be used)
+		$langs = array(
+			$this->lang_name,
+			$config['default_lang'],
+			'en', // Always use "en" as last resort as this language pack should always be included
+		);
+		
+		$language_filename = '';
+
+		// Loop through the list and try to find the file
+		foreach ($langs as $language)
+		{
+			if (file_exists($this->lang_path . $language . '/' . $lang_file . '.' . PHP_EXT))
+			{
+				$language_filename = $this->lang_path . $language . '/' . $lang_file . '.' . PHP_EXT;
+				break;
+			}
+		}
+
+		// Include the file
+		if (false === (@include $language_filename))
+		{
+			trigger_error('Language file ' . $language_filename . 'couldn\'t be opened.', E_USER_ERROR);
+		}
 	}
 }
 ?>
