@@ -1,0 +1,25 @@
+<!-- INCLUDE overall_header.html -->
+
+<form action="{S_LOGIN_ACTION}" method="post" id="login">
+<fieldset>
+	<h1><!-- IF LOGIN_EXPLAIN -->{LOGIN_EXPLAIN}<!-- ELSE -->{L_LOGIN}<!-- ENDIF --></h1>
+		
+	<!-- IF LOGIN_ERROR --><div class="errorbox">{LOGIN_ERROR}</div><!-- ENDIF -->
+	<dl>
+		<dt><label for="{USERNAME_CREDENTIAL}">{L_USERNAME}:</label></dt>
+		<dd><input type="text" tabindex="1" name="{USERNAME_CREDENTIAL}" id="{USERNAME_CREDENTIAL}" size="25" value="{USERNAME}" class="inputbox autowidth" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="{PASSWORD_CREDENTIAL}">{L_PASSWORD}:</label></dt>
+		<dd><input type="password" tabindex="2" id="{PASSWORD_CREDENTIAL}" name="{PASSWORD_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>
+	</dl>
+
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd>{S_HIDDEN_FIELDS}<input type="submit" name="login" tabindex="6" value="{L_LOGIN}" class="button1" /></dd>
+	</dl>
+	
+</fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

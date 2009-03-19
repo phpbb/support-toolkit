@@ -98,10 +98,10 @@ class stk_user extends user
 		if (isset($_GET['sid']) && $this->session_id === $_GET['sid'])
 		{
 			// Fetch the stored key
-			$stk_key = request_var($stk->_config['stk_cookie_name'] . '_key', '', true, true);
+			$stk_key = request_var($stk->get_config('stk_cookie_name') . '_key', '', true, true);
 			
 			// Check
-			if (phpbb_check_hash($this->get_config('atk_password'), $stk_key))
+			if (phpbb_check_hash($stk->get_config('atk_password'), $stk_key))
 			{
 				// We fill the data array, with the required information
 				$this->data = array(

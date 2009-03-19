@@ -109,6 +109,34 @@ class stk
 	}
 	
 	/**
+	 * Enter description here...
+	 *
+	 */
+	function check_stk_login()
+	{
+		global $user;
+		
+		// Force the user to be login
+		if (!$user->data['is_registered'])
+		{
+			stk_login_box(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT));
+			//stk_login_box();
+		}
+		
+		// Create admin session
+		if (!isset($user->data['session_admin']) || !$user->data['session_admin'])
+		{
+			stk_login_box(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT), $user->lang['LOGIN_ADMIN_CONFIRM'], $user->lang['LOGIN_ADMIN_SUCCESS'], true);
+		}
+		
+		// Only founders may pass this point
+		if ($user->data['user_type'] != USER_FOUNDER)
+		{
+			trigger_error('FOUNDER_ONLY', E_USER_ERROR);
+		}
+	}
+	
+	/**
 	 * Handle actions that DON'T need authentication
 	 */
 	function default_tasks()
@@ -273,19 +301,26 @@ class stk
 	{
 		global $template;
 		
-		// Make sure there is an extension
-		if (substr(strrchr($template_file, '.'), 0) != '.html')
+		if (!empty($template_file))
 		{
-			$template_file .= '.html';
+			// Make sure there is an extension
+			if (substr(strrchr($template_file, '.'), 0) != '.html')
+			{
+				$template_file .= '.html';
+			}
+			
+			// Set the template file
+			$template->set_filenames(array(
+				'stk_body' => $template_file,
+			));
+			
+			// Output
+			$template->display('stk_body');
 		}
-		
-		// Set the template file
-		$template->set_filenames(array(
-			'stk_body' => $template_file,
-		));
-		
-		// Output
-		$template->display('stk_body');
+		else 
+		{
+			$template->display('body');
+		}
 
 		// GC and exit
 		garbage_collection();
@@ -320,9 +355,11 @@ class stk
 		
 			'S_CACHE_TOOL_LIST'		=> $stk->get_config('cache_tools', false),
 			'S_CONTENT_DIRECTION'	=> $user->lang['DIRECTION'],
+			'S_CONTENT_ENCODING'	=> 'utf-8',
 			'S_STYLE_PATH_FILE'		=> PHPBB_ROOT_PATH . 'adm/style/admin.css',
 		
 			'U_REFRESH_TOOLS'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $this->_page['cat'], 't' => $this->_page['tool'], 'dt' => 'refresh_tools')),
+			'USERNAME'			=> $user->data['username'],
 		));
 	}
 	

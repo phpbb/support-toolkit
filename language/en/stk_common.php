@@ -50,6 +50,7 @@ $lang = array_merge($lang, array(
 	'CAT_NOT_EXISTS'		=> 'The requested category doesn\'t exists!',
 	'TOOL_INVALID_CLASS'	=> 'The tool file %1$s does not contain the correct class [%2$s]',
 	'TOOL_NOT_EXISTS'		=> 'The requested tool doesn\'t exist!',
+	'FOUNDER_ONLY'			=> 'You must be a board founder to use this tool kit',
 ));
 
 /**

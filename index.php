@@ -11,6 +11,7 @@
 /**
 * @ignore
 */
+define('IN_ADMIN', true);
 define('IN_STK', true);
 define('ADMIN_START', true);
 define('NEED_SID', true);
@@ -22,10 +23,14 @@ include STK_ROOT_PATH . 'stk_common.' . PHP_EXT;
 
 // Start session management
 $user->stk_session_begin(false);
+$auth->acl($user->data);
 $user->stk_setup('acp/common');
 
 // Switch environment
 $stk->switch_env();
+
+// Check login
+$stk->check_stk_login();
 
 // Get all the page data
 $stk->get_page_data();

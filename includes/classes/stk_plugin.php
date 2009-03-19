@@ -131,10 +131,10 @@ class stk_plugin
 	 * @param String $cat The category
 	 * @return An array containing all the tools
 	 */
-	function get_tools($cat)
+	function get_tools($cat = '')
 	{
 		// Main doesn't contain any tools
-		if ($cat == 'main')
+		if ($cat == 'main' || empty($cat))
 		{
 			return array();
 		}

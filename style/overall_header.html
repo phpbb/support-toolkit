@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
 <head>
 
+<meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="Content-Language" content="{S_USER_LANG}" />
 <meta http-equiv="imagetoolbar" content="no" />
@@ -186,7 +187,7 @@ function switch_menu()
 					<!-- ENDIF -->
 					<div id="menu">
 						<p>
-							{L_LOGGED_IN_AS}<br /><strong>{USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOGOUT}</a>&nbsp;][&nbsp;<a href="{U_ADM_LOGOUT}">{L_ADM_LOGOUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							{L_LOGGED_IN_AS} <strong>{USERNAME}</strong><br/>[&nbsp;<a href="{U_LOGOUT}">{L_LOGOUT}</a>&nbsp;][&nbsp;<a href="{U_ADM_LOGOUT}">{L_ADM_LOGOUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<!-- IF S_CACHE_TOOL_LIST --><br />[<a href="{U_REFRESH_TOOLS}" title="{L_REFRESH_TOOLS}">{L_REFRESH_TOOLS}</a>]<!-- ENDIF -->
 						</p>
 						<ul>

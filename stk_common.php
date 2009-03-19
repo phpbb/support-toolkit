@@ -138,7 +138,7 @@ include PHPBB_ROOT_PATH . 'includes/utf/utf_tools.' . PHP_EXT;
 
 include STK_ROOT_PATH . 'includes/constants.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_acm.' . PHP_EXT;
-//include STK_ROOT_PATH . 'includes/classes/stk_auth.' . PHP_EXT;
+include STK_ROOT_PATH . 'includes/classes/stk_auth.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_db.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_plugin.' . PHP_EXT;
 include STK_ROOT_PATH . 'includes/classes/stk_session.' . PHP_EXT;
@@ -151,11 +151,7 @@ include STK_ROOT_PATH . 'includes/functions.' . PHP_EXT;
 set_error_handler(defined('PHPBB_MSG_HANDLER') ? PHPBB_MSG_HANDLER : 'msg_handler');
 
 // Construct all the other classes
-/**
- * No ACL required
- * Once in the STK users have full rights
-$auth = new stk_auth();
- */
+$auth 		= new stk_auth();
 $cache		= new stk_acm();
 $db			= new stk_db();
 $plugin		= new stk_plugin();
