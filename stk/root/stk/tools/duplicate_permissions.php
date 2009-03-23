@@ -33,9 +33,9 @@ class duplicate_permissions
 		return 'DUPLICATE_PERMISSIONS_REMOVER';
 	}
 
-	function run_tool(&$error)
+	function run_tool()
 	{
-		global $db, $user;
+		global $db;
 
 		$acl_options = $acl_duplicates = array();
 
@@ -63,7 +63,7 @@ class duplicate_permissions
 		{
 			$tables = array(
 				ACL_GROUPS_TABLE		=> 'group_id',
-				ACL_ROLES_DATE_TABLE	=> 'role_id',
+				ACL_ROLES_DATA_TABLE	=> 'role_id',
 				ACL_USERS_TABLE			=> 'user_id',
 			);
 
@@ -73,9 +73,9 @@ class duplicate_permissions
 				$result = $db->sql_query($sql);
 				while ($row = $db->sql_fetchrow($result))
 				{
-					$sql = 'SELECT auth_setting FROM ' . $table . "
+					$sql = 'SELECT auth_option_id, auth_setting FROM ' . $table . "
 						WHERE $column = '{$row[$column]}'
-						AND auth_option_id = '{$row['auth_option_id']}'" .
+						AND auth_option_id = '{$orig_id}'" .
 						((isset($row['forum_id'])) ? " AND forum_id = '{$row['forum_id']}'" : '');
 					$result1 = $db->sql_query($sql);
 					$row1 = $db->sql_fetchrow($result1);
@@ -83,18 +83,15 @@ class duplicate_permissions
 
 					if ($row1)
 					{
-						if ($row['auth_setting'] != $row1['auth_setting'])
+						if (!$row['auth_setting'] && $row1['auth_setting'])
 						{
-							if (!$row['auth_setting'] && $row1['auth_setting'])
-							{
-								// If one was set to never we'll assume it should be never.
-								$sql = 'UPDATE ' . $table . "
-									SET auth_setting = 0
-									WHERE $column = '{$row[$column]}'
-									AND auth_option_id = '{$row['auth_option_id']}'" .
-									((isset($row['forum_id'])) ? " AND forum_id = '{$row['forum_id']}'" : '');
-								$db->sql_query($sql);
-							}
+							// If one was set to never we'll assume it should be never.
+							$sql = 'UPDATE ' . $table . "
+								SET auth_setting = 0
+								WHERE $column = '{$row[$column]}'
+								AND auth_option_id = '{$orig_id}'" .
+								((isset($row['forum_id'])) ? " AND forum_id = '{$row['forum_id']}'" : '');
+							$db->sql_query($sql);
 						}
 					}
 					else
@@ -124,7 +121,7 @@ class duplicate_permissions
 			$db->sql_query('DELETE FROM ' . $table . ' WHERE ' . $db->sql_in_set('auth_option_id', 	array_keys($acl_duplicates)));
 		}
 
-		trigger_error(sprintf($user->lang['DUPLICATES_FOUND'], implode(', ', $acl_duplicates)));
+		trigger_error('DUPLICATES_FOUND');
 	}
 }
 ?>
