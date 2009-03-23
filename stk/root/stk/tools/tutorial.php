@@ -31,21 +31,6 @@ if (!defined('IN_PHPBB'))
 class tutorial
 {
 	/*
-	* Auto Include
-	*
-	* This array holds all files that should be included when the class is loaded. (the system will asume that they are located
-	* within includes/[tool_name]). If the file is located in a sub directory, you should include that directory as well (see example)
-	* Only add the file extention if it is not a .php file
-	* The array should be formatted as followed: the key contains the file name and the array value is a boolean with which you can set
-	* whether the file should be included (true), or just checked whether it exists in the system (false, probably only used for non php
-	* files that are used to get data from, like .sql schemas)
-	*/
-	var $auto_include = array(
-		'tutorial_functions' => true,
-		'some_dir/some_file.sql' => false
-	);
-
-	/*
 	* Version specific tool
 	*
 	* In order to make a tool phpBB version specific (for example the clean database tool), set the following variable
