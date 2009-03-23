@@ -1,0 +1,33 @@
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+
+<h1>{L_TITLE}</h1>
+
+<!-- IF L_TITLE_EXPLAIN != '' --><p>{L_TITLE_EXPLAIN}</p><!-- ENDIF -->
+
+<!-- IF S_PM_DETAIL -->
+	<fieldset>
+		<legend>{L_PM_DETAILS}</legend>
+
+		<dl>
+			<dt>{MESSAGE}</dt>
+			<dd><strong>{L_SENT_AT}: </strong>{SENT_DATE} {L_MESSAGE_BY_AUTHOR} {AUTHOR_FULL}</dd>
+			<dd><strong>{L_MESSAGE_TITLE}: </strong>{PM_TITLE}</dd>
+		</dl>
+		
+		<div style="text-align: center;"><strong><em><a href="{U_DELETE}" title="{L_REMOVE_PM}">{L_REMOVE_PM}</a></em></strong></div>
+	</fieldset>
+<!-- ELSE -->
+	<ul class="topiclist cplist">
+		<!-- BEGIN pm_list -->
+		<li class="row">
+			<dl>
+				<dt><a href="{pm_list.U_PM}" title="{pm_list.L_PM}">{pm_list.L_PM}</a></dt>
+			</dl>
+		</li>
+		<!-- END pm_list -->
+	</ul>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

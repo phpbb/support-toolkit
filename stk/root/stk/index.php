@@ -1,0 +1,417 @@
+<?php
+/**
+*
+* @package Support Tool Kit
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+/**
+* TODO
+* UMIL?
+* select multiple
+* define PHPBB_ROOT_PATH, STK_ROOT_PATH, PHP_EXT
+*
+* check out the reparse_bbcode tool, many people have had issues with this script.
+* tool to check permissions for duplicates
+* change fix module left/right id's to fix all left/right id's in phpBB3 (would also be nice to know if anything was actually changed)
+*/
+
+define('IN_PHPBB', true);
+define('ADMIN_START', true);
+
+$phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : '../';
+$stk_root_path = $phpbb_root_path . 'stk/';
+$phpEx = substr(strrchr(__FILE__, '.'), 1);
+
+include($phpbb_root_path . 'common.' . $phpEx);
+include($stk_root_path . 'includes/functions.' . $phpEx);
+
+// Start session management
+$user->session_begin();
+$auth->acl($user->data);
+$user->setup('acp/common');
+
+// Language path.  We are using a custom language path to keep all the files within the stk/ folder.  First check if the $user->data['user_lang'] path exists, if not, check if the default lang path exists, and if still not use english.
+stk_add_lang('common');
+
+// Some extra stuff that can be done.  Don't add things here that require authentication.
+$action = request_var('action', '');
+switch ($action)
+{
+	// If the user wants to destroy their STK login cookie
+	case 'stklogout' :
+		setcookie('stk_key', '', (time() - 31536000));
+		trigger_error('STK_LOGOUT_SUCCESS');
+	break;
+}
+
+/*
+* Start Login
+*/
+// We need the Support Tool Kit password
+$stk_password = false;
+if (file_exists($stk_root_path . 'config.' . $phpEx))
+{
+	include($stk_root_path . 'config.' . $phpEx);
+}
+
+// If the STK password isn't blank and the user isn't registered we will use the STK login method
+if ($stk_password && !$user->data['is_registered'])
+{
+	/*
+	* Allow Alternate login method
+	*/
+	// The password will be held in a cookie to keep them logged in
+	$login_error = 'INCORRECT_PASSWORD';
+	if (isset($_COOKIE['stk_key']))
+	{
+		$stk_cookie = ((STRIP) ? stripslashes($_COOKIE['stk_key']) : $_COOKIE['stk_key']);
+		if (phpbb_check_hash($stk_password, $stk_cookie))
+		{
+			$login_error = false;
+			$template->assign_var('S_STK_LOGIN', true);
+		}
+	}
+
+	if ($login_error !== false)
+	{
+		if (isset($_POST['submit']))
+		{
+			$stk_key = request_var('stk_key', '');
+			if (check_form_key('stk_login') && phpbb_check_hash($stk_password, phpbb_hash($stk_key)))
+			{
+				$login_error = false;
+				$template->assign_var('S_STK_LOGIN', true);
+
+				// When storing the cookie, hash the password so that *IF* the cookie is stolen, nothing can be done with the password.
+				setcookie('stk_key', phpbb_hash($stk_key), time() + 31536000);
+			}
+			else if (!check_form_key('stk_login'))
+			{
+				$login_error = 'FORM_INVALID';
+			}
+		}
+
+		// Display the login page.
+		if (!isset($_POST['submit']) || $login_error !== false)
+		{
+			page_header($user->lang['LOGIN'], false);
+
+			$template->assign_vars(array(
+				'L_TITLE'				=> $user->lang['LOGIN'],
+				'L_TITLE_EXPLAIN'		=> '',
+
+				'S_ERROR'				=> (isset($_POST['submit'])) ? true : false,
+				'ERROR_MSG'				=> $user->lang[$login_error],
+
+				'U_ACTION'				=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
+				'U_ADM_INDEX'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx", false, true, $user->session_id),
+				'U_ADM_LOGOUT'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx", 'action=admlogout', true, $user->session_id),
+				'U_STK_INDEX'			=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
+				'U_STK_LOGOUT'			=> append_sid("{$stk_root_path}index.$phpEx", 'action=stklogout', true, $user->session_id),
+				'U_INDEX'				=> append_sid("{$phpbb_root_path}index.$phpEx"),
+				'U_LOGOUT'				=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout', true, $user->session_id),
+
+				'USERNAME'		=> $user->data['username'],
+			));
+			add_form_key('stk_login');
+
+			$template->assign_block_vars('options', array(
+				'S_LEGEND'		=> true,
+				'LEGEND'		=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
+			));
+
+			$content = build_cfg_template(array('password', '40', '255'), 'stk_key', array());
+			$template->assign_block_vars('options', array(
+				'KEY'			=> 'stk_key',
+				'TITLE'			=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
+				'S_EXPLAIN'		=> true,
+				'TITLE_EXPLAIN'	=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'],
+				'CONTENT'		=> $content['tpl'],
+			));
+
+            // Do not use the normal template path (to prevent issues with boards using alternate styles)
+			$template->set_custom_template($stk_root_path . 'style/');
+
+			$template->set_filenames(array(
+				'body' => 'tool_options.html',
+			));
+
+			page_footer();
+		}
+	}
+}
+else
+{
+	/*
+	* Use Normal login method (phpBB3)
+	*/
+	if (!$user->data['is_registered'])
+	{
+		// Could get here if no STK password is set.
+		login_box();
+	}
+
+	// This requires that the user is logged in as an administrator (like how the ACP requires two logins)
+	if (!isset($user->data['session_admin']) || !$user->data['session_admin'])
+	{
+		login_box('', $user->lang['LOGIN_ADMIN_CONFIRM'], $user->lang['LOGIN_ADMIN_SUCCESS'], true, false);
+	}
+
+	// Only Board Founders may use the STK
+	if ($user->data['user_type'] != USER_FOUNDER)
+	{
+		trigger_error('BOARD_FOUNDER_ONLY');
+	}
+}
+
+// Unset the password since we no longer need it
+unset($stk_password);
+/*
+* End Login
+*/
+
+// Do not use the normal template path (to prevent issues with boards using alternate styles)
+$template->set_custom_template($stk_root_path . 'style', 'stk');
+
+// Work around for a bug in phpBB3.
+$user->theme['template_storedb'] = false;
+
+// Setup some variables
+$tool_req = request_var('t', ''); // the tool the user wants to run
+$submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
+$available_tools = array();
+
+// If they canceled redirect them to the STK index.
+if (isset($_POST['cancel']))
+{
+	redirect(append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id));
+}
+
+// Get the available tools
+$dir = opendir($stk_root_path . 'tools');
+while($file = readdir($dir))
+{
+	if (substr($file, -(strlen($phpEx) + 1)) != '.' . $phpEx || $file == 'tutorial.' . $phpEx || $file == 'clean_database.' . $phpEx)
+	{
+		continue;
+	}
+
+	$file = substr($file, 0, -(strlen($phpEx) + 1));
+	$available_tools[] = $file;
+
+	// Include the language file (if possible)
+	stk_add_lang("tools/$file");
+}
+closedir($dir);
+
+// Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
+if (!$tool_req || preg_match('#([^a-zA-Z0-9_])#', $tool_req) || !file_exists($stk_root_path . 'tools/' . $tool_req . '.' . $phpEx))
+{
+	$tool_req = '';
+}
+
+// Output common stuff
+$template->assign_vars(array(
+	'U_ACTION'		=> append_sid("{$stk_root_path}index.$phpEx", (($tool_req) ? "t=$tool_req" : ''), true, $user->session_id),
+	'U_ADM_INDEX'	=> append_sid("{$phpbb_root_path}adm/index.$phpEx", false, true, $user->session_id),
+	'U_ADM_LOGOUT'	=> append_sid("{$phpbb_root_path}adm/index.$phpEx", 'action=admlogout', true, $user->session_id),
+	'U_STK_INDEX'	=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
+	'U_STK_LOGOUT'	=> append_sid("{$stk_root_path}index.$phpEx", 'action=stklogout', true, $user->session_id),
+	'U_BACK_TOOL'	=> ($tool_req) ? append_sid("{$stk_root_path}index.$phpEx", "t=$tool_req", true, $user->session_id) : false,
+	'U_INDEX'		=> append_sid("{$phpbb_root_path}index.$phpEx"),
+	'U_LOGOUT'		=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout', true, $user->session_id),
+
+	'USERNAME'		=> $user->data['username'],
+));
+
+// Does the user want to run a tool?
+if ($tool_req)
+{
+	add_form_key($tool_req);
+	include ($stk_root_path . 'tools/' . $tool_req . '.' . $phpEx);
+	$tool = new $tool_req;
+
+	$error = array();
+	if ($submit)
+	{
+		// First include all necessary includes
+		if (isset($tool->auto_include))
+		{
+			load_tool_includes($tool->auto_include, $tool_req, false);
+		}
+
+		// In run_tool do whatever is required.  If there is an error, put it into the array and the display options will be ran again
+		$tool->run_tool($error);
+	}
+
+	if (!$submit || sizeof($error))
+	{
+		/*
+		* Before we do anything, check whether all the files this tool will include exist in the system
+		*/
+		if (isset($tool->auto_include))
+		{
+			load_tool_includes($tool->auto_include, $tool_req, true);
+		}
+
+        /*
+        * Instead of building a page yourself you may return an array with the options you want to show.  This is outputted similar to how the acp_board is.
+        * You may also send back a string if you just want a confirm box shown with that string used for the title
+        */
+		$options = $tool->display_options();
+
+		if (is_array($options) && isset($options['vars']))
+		{
+			page_header($user->lang[$options['title']]);
+
+			// Go through each error and see if the key exists in the $user->lang.  If it does, use that.
+			if (sizeof($error))
+			{
+				array_walk($error, 'use_lang');
+			}
+
+			$template->assign_vars(array(
+				'L_TITLE'			=> $user->lang[$options['title']],
+				'L_TITLE_EXPLAIN'	=> (isset($user->lang[$options['title'] . '_EXPLAIN'])) ? $user->lang[$options['title'] . '_EXPLAIN'] : '',
+
+				'S_ERROR'			=> (sizeof($error)) ? true : false,
+				'ERROR_MSG'			=> (sizeof($error)) ? implode('<br />', $error) : '',
+			));
+
+			foreach ($options['vars'] as $name => $vars)
+			{
+				if (!is_array($vars) && strpos($name, 'legend') === false)
+				{
+					continue;
+				}
+
+				if (strpos($name, 'legend') !== false)
+				{
+					$template->assign_block_vars('options', array(
+						'S_LEGEND'		=> true,
+						'LEGEND'		=> (isset($user->lang[$vars])) ? $user->lang[$vars] : $vars)
+					);
+
+					continue;
+				}
+
+				$type = explode(':', $vars['type']);
+
+				$l_explain = '';
+				if ($vars['explain'] && isset($vars['lang_explain']))
+				{
+					$l_explain = (isset($user->lang[$vars['lang_explain']])) ? $user->lang[$vars['lang_explain']] : $vars['lang_explain'];
+				}
+				else if ($vars['explain'])
+				{
+					$l_explain = (isset($user->lang[$vars['lang'] . '_EXPLAIN'])) ? $user->lang[$vars['lang'] . '_EXPLAIN'] : '';
+				}
+
+				$content = build_cfg_template($type, $name, $vars);
+
+				if (!sizeof($content))
+				{
+					continue;
+				}
+
+				$template->assign_block_vars('options', array(
+					'KEY'			=> $name,
+					'TITLE'			=> (isset($user->lang[$vars['lang']])) ? $user->lang[$vars['lang']] : $vars['lang'],
+					'S_EXPLAIN'		=> $vars['explain'],
+					'TITLE_EXPLAIN'	=> $l_explain,
+					'CONTENT'		=> $content['tpl'],
+
+					// Find user link
+					'S_FIND_USER'	=> (isset($content['find_user'])) ? true : false,
+					'U_FIND_USER'	=> (isset($content['find_user'])) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'admin_tool_kit', 'field' => $content['find_user_field'])) : '',
+				));
+			}
+
+			$template->set_filenames(array(
+				'body' => 'tool_options.html',
+			));
+
+			page_footer();
+		}
+		else if (is_string($options))
+		{
+			if (confirm_box(true))
+			{
+				$tool->run_tool();
+			}
+			else
+			{
+				confirm_box(false, $options);
+			}
+		}
+		else
+		{
+			// The page should have been setup by the tool.  We will exit to prevent the redirect from below.
+			exit;
+		}
+	}
+
+	// Should never get here...
+	redirect(append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id));
+}
+else
+{
+	// Output the main page
+	page_header($user->lang['SUPPORT_TOOL_KIT']);
+
+	// Organize the available tools into categories
+	foreach ($available_tools as $tool)
+	{
+		include ($stk_root_path . 'tools/' . $tool . '.' . $phpEx);
+		if (!class_exists($tool))
+		{
+			trigger_error(sprintf($user->lang['INCORRECT_CLASS'], $tool, $phpEx), E_USER_ERROR);
+		}
+
+		$class = new $tool;
+
+		// A tool can be limited to a certein phpBB version
+		if (isset($class->phpbb_version) && version_compare($config['version'], $class->phpbb_version, "eq") != 1)
+		{
+			continue;
+		}
+
+		$tool_info = $class->info();
+
+		if (!isset($tools[$tool_info['CATEGORY']]))
+		{
+			$tools[$tool_info['CATEGORY']] = array();
+		}
+
+		$tools[$tool_info['CATEGORY']][] = array_merge($tool_info, array('name' => $tool));
+	}
+
+	// Sort by the category name
+	ksort($tools);
+
+	// Output the tools and categories
+	foreach ($tools as $category => $tool_ary)
+	{
+		$template->assign_block_vars('categories', array(
+			'NAME'		=> $category,
+		));
+
+		foreach ($tool_ary as $tool)
+		{
+			$template->assign_block_vars('categories.tools', array_merge($tool, array(
+				'U_TOOL'		=> append_sid("{$stk_root_path}index.$phpEx", 't=' . $tool['name'], true, $user->session_id),
+			)));
+		}
+	}
+
+	$template->set_filenames(array(
+		'body' => 'index_body.html',
+	));
+
+	page_footer();
+}
+?>

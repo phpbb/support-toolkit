@@ -1,0 +1,42 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_TITLE}</h1>
+
+<!-- IF L_TITLE_EXPLAIN != '' --><p>{L_TITLE_EXPLAIN}</p><!-- ENDIF -->
+
+<!-- IF S_PAGE == 'list_polls' -->
+	<ul class="topiclist cplist">
+		<!-- BEGIN polllist -->
+		<li class="row">
+			<dl>
+				<dt><a href="{polllist.U_POLL_LINK}" title="{polllist.L_POLL_LINK}">{polllist.L_POLL_LINK}</a></dt>
+			</dl>
+		</li>
+		<!-- END polllist -->
+	</ul>
+<!-- ELSEIF S_PAGE == 'reveal_poll' -->
+	<h2>{L_POLL_TITLE}</h2>
+	<!-- BEGIN vote_options -->
+	<table cellspacing="1">
+		<thead>
+		<col class="col1" /><col class="col2" /><col class="col1" /><col class="col2" />
+		<tr>
+			<th colspan="4">{L_POLL_OPTION}: {vote_options.OPTION_NAME}</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<!-- BEGIN voters -->
+					<!-- IF (voters.S_ROW_COUNT % 4 == 0 && voters.S_ROW_COUNT > 0) --></tr><tr><!-- ENDIF -->
+					<td>{voters.VOTER_FULL}</td>
+				<!-- BEGINELSE -->
+					<td>{L_NO_VOTERS}</td>
+				<!-- END voters -->
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<!-- END vote_options -->
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->
