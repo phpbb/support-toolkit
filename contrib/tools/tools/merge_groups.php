@@ -56,8 +56,7 @@ class merge_groups
 	*/
 	function run_tool(&$error)
 	{
-		global $stk_root_path, $db, $user;
-		global $phpbb_root_path, $phpEx;
+		global $db, $user;
 
         if (!check_form_key('merge_groups'))
 		{
@@ -88,7 +87,7 @@ class merge_groups
 		// Include nececeiry files
 		if (!function_exists('group_user_add'))
 		{
-			include($phpbb_root_path . 'includes/functions_user.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 		}
 
 		// First select all the users in these groups

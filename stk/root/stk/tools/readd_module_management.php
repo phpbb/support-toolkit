@@ -49,14 +49,8 @@ class readd_module_management
 	*/
 	function run_tool()
 	{
-		global $phpbb_root_path, $phpEx;
-
-		if (!file_exists($phpbb_root_path . 'umil/umil.' . $phpEx))
-		{
-			trigger_error('Please download the latest UMIL (Unified MOD Install Library) from: <a href="http://www.phpbb.com/mods/umil/">phpBB.com/mods/umil</a>', E_USER_ERROR);
-		}
-		include($phpbb_root_path . 'umil/umil.' . $phpEx);
-		$umil = new umil(true);
+		require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
+		$umil = new umil();
 
 		if (!$umil->module_exists('acp', 0, 'ACP_CAT_SYSTEM'))
 		{

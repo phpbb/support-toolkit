@@ -56,7 +56,7 @@ class sql_query
 	*/
 	function run_tool(&$error)
 	{
-		global $cache, $db, $dbms, $phpbb_root_path, $phpEx, $table_prefix, $user;
+		global $cache, $db, $dbms, $table_prefix, $user;
 
         if (!check_form_key('sql_query'))
 		{
@@ -77,11 +77,11 @@ class sql_query
 
 		if (!function_exists('remove_comments'))
 		{
-			include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
 		}
 		if (!function_exists('split_sql_file'))
 		{
-			include($phpbb_root_path . 'includes/functions_install.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
 		}
 
 		$dbmd = get_available_dbms($dbms);

@@ -39,12 +39,10 @@ class vote_revealer
 	*/
 	function display_options()
 	{
-		global $phpbb_root_path, $phpEx;
-
 		// Only include if needed
 		if (!function_exists('make_forum_select'))
 		{
-			include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
 		}
 
 		return array(
@@ -98,7 +96,6 @@ class vote_revealer
 	function search_polls($forum_id = 0, &$error)
 	{
 		global $db, $template, $user;
-		global $stk_root_path, $phpEx;
 
 		// Select all the polls
 		$sql = 'SELECT t.topic_id, t.poll_title, f.forum_name
@@ -122,7 +119,7 @@ class vote_revealer
 			{
 				$template->assign_block_vars('polllist', array(
 					'L_POLL_LINK'	=> censor_text($row['poll_title']),
-					'U_POLL_LINK'	=> append_sid("{$stk_root_path}index.$phpEx", array('t' => 'vote_revealer', 'submit' => true, 'mode' => 'reveal', 'forum_id' => $forum_id, 'topic_id' => $row['topic_id'])),
+					'U_POLL_LINK'	=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'vote_revealer', 'submit' => true, 'mode' => 'reveal', 'forum_id' => $forum_id, 'topic_id' => $row['topic_id'])),
 				));
 			}
 			while ($row = $db->sql_fetchrow($result));

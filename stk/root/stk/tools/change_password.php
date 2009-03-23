@@ -57,7 +57,7 @@ class change_password
 	*/
 	function run_tool(&$error)
 	{
-		global $config, $db, $user, $phpbb_root_path, $phpEx;
+		global $config, $db, $user;
 
         if (!check_form_key('change_password'))
 		{
@@ -88,7 +88,7 @@ class change_password
 		}
 
 		$user->add_lang('ucp');
-		include_once($phpbb_root_path . 'includes/functions_user.' . $phpEx);
+		include_once(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 
 		$data = array(
 			'new_password'		=> request_var('new_password', '', true),
@@ -112,7 +112,7 @@ class change_password
 
 		$db->sql_query('UPDATE ' . USERS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', array('user_password' => phpbb_hash($data['new_password']),)) . ' WHERE user_id = ' . $user_id);
 
-		trigger_error(sprintf($user->lang['CHANGE_PASSWORD_SUCCESS'], append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $user_id), $username));
+		trigger_error(sprintf($user->lang['CHANGE_PASSWORD_SUCCESS'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username));
 	}
 }
 ?>

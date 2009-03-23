@@ -49,7 +49,7 @@ class fix_modules
 	*/
 	function run_tool()
 	{
-		global $cache, $db, $phpbb_root_path, $phpEx;
+		global $cache, $db;
 
 		// We need to do each module class separately, so we need to get a list of each class available.
 		$result = $db->sql_query('SELECT DISTINCT(module_class) FROM ' . MODULES_TABLE);

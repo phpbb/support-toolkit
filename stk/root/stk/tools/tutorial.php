@@ -26,7 +26,7 @@ if (!defined('IN_PHPBB'))
 }
 
 /*
-* The class name MUST be the same as the filename (minus .$phpEx)
+* The class name MUST be the same as the filename (minus .PHP_EXT)
 */
 class tutorial
 {

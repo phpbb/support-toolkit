@@ -55,7 +55,7 @@ class make_founder
 	*/
 	function run_tool(&$error)
 	{
-		global $db, $user, $phpbb_root_path, $phpEx;
+		global $db, $user;
 
         if (!confirm_box(true) && !check_form_key('make_founder'))
 		{
@@ -95,14 +95,14 @@ class make_founder
 		{
 			$db->sql_query('UPDATE ' . USERS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', array('user_type' => USER_FOUNDER)) . ' WHERE user_id = ' . $user_id);
 
-			trigger_error(sprintf($user->lang['MAKE_FOUNDER_SUCCESS'], append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $user_id), $username));
+			trigger_error(sprintf($user->lang['MAKE_FOUNDER_SUCCESS'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username));
 		}
 		else
 		{
 			$hidden_fields = build_hidden_fields(array('user_to_founder' => $user_req, 'submit' => true));
-			confirm_box(false, sprintf($user->lang['MAKE_FOUNDER_CONFIRM'], append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $user_id), $username), $hidden_fields);
+			confirm_box(false, sprintf($user->lang['MAKE_FOUNDER_CONFIRM'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username), $hidden_fields);
 		}
-		redirect(append_sid("{$stk_root_path}index.$phpEx", 't=make_founder', true, $user->session_id));
+		redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=make_founder', true, $user->session_id));
 	}
 }
 ?>

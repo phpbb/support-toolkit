@@ -38,7 +38,7 @@ class reparse_bbcode
 
 	function run_tool()
 	{
-		global $stk_root_path, $user, $db, $phpbb_root_path, $phpEx, $config;
+		global $user, $db, $config;
 
 		// Prevent some errors from missing language strings.
 		$user->add_lang('posting');
@@ -48,7 +48,7 @@ class reparse_bbcode
 
 		if (!class_exists('parse_message'))
 		{
-			include($phpbb_root_path . "includes/message_parser." . $phpEx);
+			include(PHPBB_ROOT_PATH . "includes/message_parser." . PHP_EXT);
 		}
 
 		$bbcode_status = ($config['allow_bbcode']) ? true : false;
@@ -143,7 +143,7 @@ class reparse_bbcode
 
 		if ($post_count > $next_step)
 		{
-			meta_refresh(1, append_sid("{$stk_root_path}index.$phpEx", "t=reparse_bbcode&amp;submit=1&amp;start={$next_step}&amp;step={$step}"));
+			meta_refresh(1, append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;start={$next_step}&amp;step={$step}"));
 			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
 		}
 		else

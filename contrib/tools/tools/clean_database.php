@@ -69,7 +69,6 @@ class clean_database
 	function run_tool(&$error)
 	{
 		global $cache, $config, $db, $user;
-		global $stk_root_path, $phpbb_root_path, $phpEx;
 
         if (!check_form_key('clean_database') && !confirm_box(true))
 		{
@@ -86,7 +85,7 @@ class clean_database
 		// Is this phpBB version supported?
 		if (version_compare($config['version'], $this->phpbb_version, "eq") != 1)
 		{
-			meta_refresh(5, append_sid($stk_root_path . 'index.' . $phpEx));
+			meta_refresh(5, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT));
 			trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $this->phpbb_version));
 		}
 
@@ -115,14 +114,14 @@ class clean_database
 		// Include db tools, and construct cause we're going to need it :)
 		if (!class_exists('phpbb_db_tools'))
 		{
-			include($phpbb_root_path . 'includes/db/db_tools.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
 		}
 		$this->db_tools = new phpbb_db_tools($db);
 
 		// Include the functions_install
 		if (!function_exists('get_tables'))
 		{
-			include($phpbb_root_path . 'includes/functions_install.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
 		}
 
 		// Load vars
@@ -441,8 +440,7 @@ class clean_database
 
 		if (!function_exists('user_add'))
 		{
-			global $phpbb_root_path, $phpEx;
-			include ($phpbb_root_path . 'includes/functions_user.' . $phpEx);
+			include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 		}
 
 		// Select needed bot group data
@@ -540,17 +538,16 @@ class clean_database
 	function prepare_schema($schema_file)
 	{
 		global $table_prefix;
-		global $stk_root_path, $phpEx;
 
 		// First read the schema into the system
-		if (!file_exists($stk_root_path . 'includes/clean_database/schemas/' . $schema_file . '_schema.sql'))
+		if (!file_exists(STK_ROOT_PATH . 'includes/clean_database/schemas/' . $schema_file . '_schema.sql'))
 		{
 			// Shouldn't happen
 			trigger_error (sprintf($user->lang['NON_EXISTING_SCHEMA'], $schema_file), E_USER_ERROR);
 		}
 		else
 		{
-			$schema = file_get_contents("{$stk_root_path}includes/clean_database/schemas/{$schema_file}_schema.sql");
+			$schema = file_get_contents(STK_ROOT_PATH . 'includes/clean_database/schemas/{$schema_file}_schema.sql");
 		}
 
 		// Correct the table prefix

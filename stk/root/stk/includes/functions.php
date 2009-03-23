@@ -156,28 +156,27 @@ function use_lang(&$lang_key)
 function stk_add_lang($lang_file = '')
 {
 	global $config, $user;
-	global $stk_root_path, $phpEx;
 
 	// Path from the default lang directory
 	$path = './../../stk/language/';
 
 	// Set the correct language path
-	if (file_exists("{$stk_root_path}language/{$user->data['user_lang']}/{$lang_file}.$phpEx"))
+	if (file_exists(STK_ROOT_PATH . 'language/{$user->data['user_lang']}/{$lang_file}." . PHP_EXT))
 	{
 		$path .= $user->data['user_lang'];
 	}
-	else if (file_exists("{$stk_root_path}language/" . basename($config['default_lang']) . "/{$lang_file}.$phpEx"))
+	else if (file_exists(STK_ROOT_PATH . 'language/" . basename($config['default_lang']) . "/{$lang_file}." . PHP_EXT))
 	{
 		$path .= basename($config['default_lang']);
 	}
-	else if (file_exists("{$stk_root_path}language/en/{$lang_file}.$phpEx"))
+	else if (file_exists(STK_ROOT_PATH . 'language/en/{$lang_file}." . PHP_EXT))
 	{
 		$path .= 'en';
 	}
 	else
 	{
 		// This should really never happen
-		trigger_error("Language file stk/language/{$user->data['user_lang']}/$lang_file.$phpEx missing!");
+		trigger_error("Language file stk/language/{$user->data['user_lang']}/$lang_file." . PHP_EXT . ' missing!');
 	}
 
 	// Include the file

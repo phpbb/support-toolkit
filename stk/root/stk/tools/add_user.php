@@ -71,7 +71,6 @@ class add_user
 	function run_tool(&$error)
 	{
 		global $config, $user;
-		global $phpbb_root_path, $phpEx;
 
 		if (!check_form_key('add_user'))
 		{
@@ -176,8 +175,7 @@ class add_user
 
 		if (!function_exists('validate_data'))
 		{
-			global $phpbb_root_path, $phpEx;
-			include($phpbb_root_path . 'includes/functions_user.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 		}
 
 		$error = validate_data($data, array(

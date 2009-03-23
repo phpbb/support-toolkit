@@ -10,7 +10,6 @@
 
 /**
 * TODO
-* UMIL?
 * select multiple
 * define PHPBB_ROOT_PATH, STK_ROOT_PATH, PHP_EXT
 *
@@ -22,12 +21,15 @@
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
-$phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : '../';
-$stk_root_path = $phpbb_root_path . 'stk/';
-$phpEx = substr(strrchr(__FILE__, '.'), 1);
+if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', '../'); }
+if (!defined('PHPBB_EXT')) { substr(strrchr(__FILE__, '.'), 1); }
+define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
 
-include($phpbb_root_path . 'common.' . $phpEx);
-include($stk_root_path . 'includes/functions.' . $phpEx);
+$phpbb_root_path = PHPBB_ROOT_PATH;
+$phpEx = PHP_EXT;
+
+require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
+require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 
 // Start session management
 $user->session_begin();
@@ -53,9 +55,9 @@ switch ($action)
 */
 // We need the Support Tool Kit password
 $stk_password = false;
-if (file_exists($stk_root_path . 'config.' . $phpEx))
+if (file_exists(STK_ROOT_PATH . 'config.' . PHP_EXT))
 {
-	include($stk_root_path . 'config.' . $phpEx);
+	include(STK_ROOT_PATH . 'config.' . PHP_EXT);
 }
 
 // If the STK password isn't blank and the user isn't registered we will use the STK login method
@@ -107,13 +109,13 @@ if ($stk_password && !$user->data['is_registered'])
 				'S_ERROR'				=> (isset($_POST['submit'])) ? true : false,
 				'ERROR_MSG'				=> $user->lang[$login_error],
 
-				'U_ACTION'				=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
-				'U_ADM_INDEX'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx", false, true, $user->session_id),
-				'U_ADM_LOGOUT'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx", 'action=admlogout', true, $user->session_id),
-				'U_STK_INDEX'			=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
-				'U_STK_LOGOUT'			=> append_sid("{$stk_root_path}index.$phpEx", 'action=stklogout', true, $user->session_id),
-				'U_INDEX'				=> append_sid("{$phpbb_root_path}index.$phpEx"),
-				'U_LOGOUT'				=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout', true, $user->session_id),
+				'U_ACTION'				=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
+				'U_ADM_INDEX'			=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
+				'U_ADM_LOGOUT'			=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
+				'U_STK_INDEX'			=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
+				'U_STK_LOGOUT'			=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'action=stklogout', true, $user->session_id),
+				'U_INDEX'				=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
+				'U_LOGOUT'				=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
 
 				'USERNAME'		=> $user->data['username'],
 			));
@@ -134,7 +136,7 @@ if ($stk_password && !$user->data['is_registered'])
 			));
 
             // Do not use the normal template path (to prevent issues with boards using alternate styles)
-			$template->set_custom_template($stk_root_path . 'style/');
+			$template->set_custom_template(STK_ROOT_PATH . 'style/');
 
 			$template->set_filenames(array(
 				'body' => 'tool_options.html',
@@ -175,7 +177,7 @@ unset($stk_password);
 */
 
 // Do not use the normal template path (to prevent issues with boards using alternate styles)
-$template->set_custom_template($stk_root_path . 'style', 'stk');
+$template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
 
 // Work around for a bug in phpBB3.
 $user->theme['template_storedb'] = false;
@@ -188,19 +190,19 @@ $available_tools = array();
 // If they canceled redirect them to the STK index.
 if (isset($_POST['cancel']))
 {
-	redirect(append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id));
+	redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id));
 }
 
 // Get the available tools
-$dir = opendir($stk_root_path . 'tools');
+$dir = opendir(STK_ROOT_PATH . 'tools');
 while($file = readdir($dir))
 {
-	if (substr($file, -(strlen($phpEx) + 1)) != '.' . $phpEx || $file == 'tutorial.' . $phpEx || $file == 'clean_database.' . $phpEx)
+	if (substr($file, -(strlen(PHP_EXT) + 1)) != '.' . PHP_EXT || $file == 'tutorial.' . PHP_EXT)
 	{
 		continue;
 	}
 
-	$file = substr($file, 0, -(strlen($phpEx) + 1));
+	$file = substr($file, 0, -(strlen(PHP_EXT) + 1));
 	$available_tools[] = $file;
 
 	// Include the language file (if possible)
@@ -209,21 +211,21 @@ while($file = readdir($dir))
 closedir($dir);
 
 // Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
-if (!$tool_req || preg_match('#([^a-zA-Z0-9_])#', $tool_req) || !file_exists($stk_root_path . 'tools/' . $tool_req . '.' . $phpEx))
+if (!$tool_req || preg_match('#([^a-zA-Z0-9_])#', $tool_req) || !file_exists(STK_ROOT_PATH . 'tools/' . $tool_req . '.' . PHP_EXT))
 {
 	$tool_req = '';
 }
 
 // Output common stuff
 $template->assign_vars(array(
-	'U_ACTION'		=> append_sid("{$stk_root_path}index.$phpEx", (($tool_req) ? "t=$tool_req" : ''), true, $user->session_id),
-	'U_ADM_INDEX'	=> append_sid("{$phpbb_root_path}adm/index.$phpEx", false, true, $user->session_id),
-	'U_ADM_LOGOUT'	=> append_sid("{$phpbb_root_path}adm/index.$phpEx", 'action=admlogout', true, $user->session_id),
-	'U_STK_INDEX'	=> append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id),
-	'U_STK_LOGOUT'	=> append_sid("{$stk_root_path}index.$phpEx", 'action=stklogout', true, $user->session_id),
-	'U_BACK_TOOL'	=> ($tool_req) ? append_sid("{$stk_root_path}index.$phpEx", "t=$tool_req", true, $user->session_id) : false,
-	'U_INDEX'		=> append_sid("{$phpbb_root_path}index.$phpEx"),
-	'U_LOGOUT'		=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout', true, $user->session_id),
+	'U_ACTION'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, (($tool_req) ? "t=$tool_req" : ''), true, $user->session_id),
+	'U_ADM_INDEX'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
+	'U_ADM_LOGOUT'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
+	'U_STK_INDEX'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
+	'U_STK_LOGOUT'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'action=stklogout', true, $user->session_id),
+	'U_BACK_TOOL'	=> ($tool_req) ? append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=$tool_req", true, $user->session_id) : false,
+	'U_INDEX'		=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
+	'U_LOGOUT'		=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
 
 	'USERNAME'		=> $user->data['username'],
 ));
@@ -232,7 +234,7 @@ $template->assign_vars(array(
 if ($tool_req)
 {
 	add_form_key($tool_req);
-	include ($stk_root_path . 'tools/' . $tool_req . '.' . $phpEx);
+	include (STK_ROOT_PATH . 'tools/' . $tool_req . '.' . PHP_EXT);
 	$tool = new $tool_req;
 
 	$error = array();
@@ -327,7 +329,7 @@ if ($tool_req)
 
 					// Find user link
 					'S_FIND_USER'	=> (isset($content['find_user'])) ? true : false,
-					'U_FIND_USER'	=> (isset($content['find_user'])) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'admin_tool_kit', 'field' => $content['find_user_field'])) : '',
+					'U_FIND_USER'	=> (isset($content['find_user'])) ? append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'admin_tool_kit', 'field' => $content['find_user_field'])) : '',
 				));
 			}
 
@@ -356,7 +358,7 @@ if ($tool_req)
 	}
 
 	// Should never get here...
-	redirect(append_sid("{$stk_root_path}index.$phpEx", false, true, $user->session_id));
+	redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id));
 }
 else
 {
@@ -366,10 +368,10 @@ else
 	// Organize the available tools into categories
 	foreach ($available_tools as $tool)
 	{
-		include ($stk_root_path . 'tools/' . $tool . '.' . $phpEx);
+		include (STK_ROOT_PATH . 'tools/' . $tool . '.' . PHP_EXT);
 		if (!class_exists($tool))
 		{
-			trigger_error(sprintf($user->lang['INCORRECT_CLASS'], $tool, $phpEx), E_USER_ERROR);
+			trigger_error(sprintf($user->lang['INCORRECT_CLASS'], $tool, PHP_EXT), E_USER_ERROR);
 		}
 
 		$class = new $tool;
@@ -403,7 +405,7 @@ else
 		foreach ($tool_ary as $tool)
 		{
 			$template->assign_block_vars('categories.tools', array_merge($tool, array(
-				'U_TOOL'		=> append_sid("{$stk_root_path}index.$phpEx", 't=' . $tool['name'], true, $user->session_id),
+				'U_TOOL'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=' . $tool['name'], true, $user->session_id),
 			)));
 		}
 	}

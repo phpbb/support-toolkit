@@ -96,7 +96,6 @@ class pm_viewer
 	function list_user(&$error)
 	{
 		global $db, $template, $user;
-		global $stk_root_path, $phpEx;
 
 		// Some vars
 		$req_user = utf8_normalize_nfc(request_var('view_pm_of', '', true));
@@ -129,7 +128,7 @@ class pm_viewer
 			{
 				$template->assign_block_vars('pm_list', array(
 					'L_PM'	=> censor_text($row['message_subject']),
-					'U_PM'	=> append_sid("{$stk_root_path}index.$phpEx", array('t' => 'pm_viewer', 'mode' => 'detail', 'submit' => true, 'owner' => $user_id, 'pm_id' => $row['msg_id'])),
+					'U_PM'	=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'detail', 'submit' => true, 'owner' => $user_id, 'pm_id' => $row['msg_id'])),
 				));
 			}
 			while($row = $db->sql_fetchrow($result));
@@ -156,7 +155,6 @@ class pm_viewer
 	function show_pm(&$error)
 	{
 		global $db, $template, $user;
-		global $stk_root_path, $phpbb_root_path, $phpEx;
 
 		// Some vars
 		$pm_id = request_var('pm_id', 0);
@@ -186,7 +184,7 @@ class pm_viewer
 			{
 				if (!class_exists('bbcode'))
 				{
-					include($phpbb_root_path . 'includes/bbcode.' . $phpEx);
+					include(PHPBB_ROOT_PATH . 'includes/bbcode.' . PHP_EXT);
 				}
 				$bbcode = new bbcode($pm_row['bbcode_bitfield']);
 			}
@@ -210,7 +208,7 @@ class pm_viewer
 				'MESSAGE'		=> censor_text($message),
 				'SENT_DATE'		=> date($user->data['user_dateformat'], $pm_row['message_time']),
 				'AUTHOR_FULL'	=> get_username_string('full', $pm_row['user_id'], $pm_row['username'], $pm_row['user_colour']),
-				'U_DELETE'		=> append_sid("{$stk_root_path}index.$phpEx", array('t' => 'pm_viewer', 'mode' => 'delete', 'owner' => $owner, 'pm_id' => $pm_row['msg_id'], 'submit' => true, 'user' => $pm_row['user_id'])),
+				'U_DELETE'		=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'delete', 'owner' => $owner, 'pm_id' => $pm_row['msg_id'], 'submit' => true, 'user' => $pm_row['user_id'])),
 			));
 		}
 
@@ -228,8 +226,7 @@ class pm_viewer
 		if (confirm_box(true))
 		{
 			// Include the pm function
-			global $stk_root_path, $phpbb_root_path, $phpEx;
-			include($phpbb_root_path . 'includes/functions_privmsgs.' . $phpEx);
+			include(PHPBB_ROOT_PATH . 'includes/functions_privmsgs.' . PHP_EXT);
 
 			// Remove the pm
 			if (!delete_pm($owner, $pm_id, PRIVMSGS_INBOX))
@@ -240,7 +237,7 @@ class pm_viewer
 			}
 
 			// Inform the user that it is done, and redirect back to this users pm overview
-			$redir = append_sid("{$stk_root_path}index.$phpEx", array('t' => 'pm_viewer', 'mode' => 'list', 'view_user' => $owner, 'submit' => true));
+			$redir = append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'list', 'view_user' => $owner, 'submit' => true));
 			meta_refresh(3, $redir);
 			trigger_error('PM_DELETED_REDIRECT');
 		}

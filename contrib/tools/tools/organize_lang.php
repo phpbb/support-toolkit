@@ -55,8 +55,6 @@ class organize_lang
 	*/
 	function run_tool(&$error)
 	{
-		global $phpbb_root_path, $phpEx;
-
         if (!check_form_key('organize_lang'))
 		{
 			$error[] = 'FORM_INVALID';
@@ -64,7 +62,7 @@ class organize_lang
 		}
 
 		$file = request_var('file', '');
-		if (!$file || (!file_exists($phpbb_root_path . 'language/' . $file) && !file_exists($phpbb_root_path . 'language/' . $file . '.' . $phpEx)))
+		if (!$file || (!file_exists(PHPBB_ROOT_PATH . 'language/' . $file) && !file_exists(PHPBB_ROOT_PATH . 'language/' . $file . '.' . PHP_EXT)))
 		{
 			$error[] = 'NO_FILE';
 			return;
@@ -170,17 +168,15 @@ function lang_lines($lang, $max_length, &$output, $start = 0)
 */
 function organize_lang($file, $skip_errors = false)
 {
-	global $phpbb_root_path, $phpEx;
-
 	if (substr($file, -1) == '/')
 	{
 		$file = substr($file, 0, -1);
 	}
 
 	// If the user submitted a directory, do every language file in that directory
-	if (is_dir($phpbb_root_path . 'language/' . $file))
+	if (is_dir(PHPBB_ROOT_PATH . 'language/' . $file))
 	{
-		if ($handle = opendir($phpbb_root_path . 'language/' . $file))
+		if ($handle = opendir(PHPBB_ROOT_PATH . 'language/' . $file))
 		{
 		    while (false !== ($file1 = readdir($handle)))
 			{
@@ -189,11 +185,11 @@ function organize_lang($file, $skip_errors = false)
 					continue;
 				}
 
-				if (strpos($file1, ".$phpEx"))
+				if (strpos($file1, '.' . PHP_EXT))
 				{
-					organize_lang($file . '/' . substr($file1, 0, strpos($file1, ".$phpEx")), true);
+					organize_lang($file . '/' . substr($file1, 0, strpos($file1, '.' . PHP_EXT)), true);
 				}
-				else if (is_dir($phpbb_root_path . 'language/' . $file . '/' . $file1))
+				else if (is_dir(PHPBB_ROOT_PATH . 'language/' . $file . '/' . $file1))
 				{
 					organize_lang($file . '/' . $file1);
 				}
@@ -212,7 +208,7 @@ function organize_lang($file, $skip_errors = false)
 	}
 
 	// include the file
-	@include($phpbb_root_path . 'language/' . $file . '.' . $phpEx);
+	@include(PHPBB_ROOT_PATH . 'language/' . $file . '.' . PHP_EXT);
 
 	// make sure it is a valid language file
 	if (!isset($lang) || !is_array($lang))
@@ -229,7 +225,7 @@ function organize_lang($file, $skip_errors = false)
 	$output = '';
 
 	// lets get the header of the file...
-	$handle = @fopen($phpbb_root_path . 'language/' . $file . '.' . $phpEx, "r");
+	$handle = @fopen(PHPBB_ROOT_PATH . 'language/' . $file . '.' . PHP_EXT, "r");
 	if ($handle)
 	{
 		$stopped = false;
@@ -253,7 +249,7 @@ function organize_lang($file, $skip_errors = false)
 		{
 			if ($skip_errors)
 			{
-				echo 'Bad line endings in ' . $phpbb_root_path . 'language/' . $file . '.' . $phpEx . '<br />';
+				echo 'Bad line endings in ' . PHPBB_ROOT_PATH . 'language/' . $file . '.' . PHP_EXT . '<br />';
 				return;
 			}
 
@@ -280,6 +276,6 @@ function organize_lang($file, $skip_errors = false)
 ?>';
 
 	// write the contents to the specified file
-	file_put_contents($phpbb_root_path . 'language/' . $file . '.' . $phpEx, $output);
+	file_put_contents(PHPBB_ROOT_PATH . 'language/' . $file . '.' . PHP_EXT, $output);
 }
 ?>
