@@ -9,7 +9,7 @@
 */
 
 /**
-* Database Cleaner Data file for phpBB 3.0.0
+* Database Cleaner Data file for phpBB 3.0.2
 */
 class database_cleaner
 {
@@ -241,7 +241,7 @@ class database_cleaner
 				'topic_id'			=> array('UINT', 0),
 				'forum_id'			=> array('UINT', 0),
 				'save_time'			=> array('TIMESTAMP', 0),
-				'draft_subject'		=> array('XSTEXT_UNI', ''),
+				'draft_subject'		=> array('STEXT_UNI', ''),
 				'draft_message'		=> array('MTEXT_UNI', ''),
 			),
 			'PRIMARY_KEY'	=> 'draft_id',
@@ -303,11 +303,12 @@ class database_cleaner
 				'forum_topics_real'		=> array('UINT', 0),
 				'forum_last_post_id'	=> array('UINT', 0),
 				'forum_last_poster_id'	=> array('UINT', 0),
-				'forum_last_post_subject' => array('XSTEXT_UNI', ''),
+				'forum_last_post_subject' => array('STEXT_UNI', ''),
 				'forum_last_post_time'	=> array('TIMESTAMP', 0),
 				'forum_last_poster_name'=> array('VCHAR_UNI', ''),
 				'forum_last_poster_colour'=> array('VCHAR:6', ''),
 				'forum_flags'			=> array('TINT:4', 32),
+				'display_subforum_list'	=> array('BOOL', 1),
 				'display_on_index'		=> array('BOOL', 1),
 				'enable_indexing'		=> array('BOOL', 1),
 				'enable_icons'			=> array('BOOL', 1),
@@ -379,7 +380,7 @@ class database_cleaner
 			),
 			'PRIMARY_KEY'	=> 'group_id',
 			'KEYS'			=> array(
-				'group_legend'			=> array('INDEX', 'group_legend'),
+				'group_legend_name'		=> array('INDEX', array('group_legend', 'group_name')),
 			),
 		);
 
@@ -516,7 +517,7 @@ class database_cleaner
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
 				'post_username'			=> array('VCHAR_UNI:255', ''),
-				'post_subject'			=> array('XSTEXT_UNI', '', 'true_sort'),
+				'post_subject'			=> array('STEXT_UNI', '', 'true_sort'),
 				'post_text'				=> array('MTEXT_UNI', ''),
 				'post_checksum'			=> array('VCHAR:32', ''),
 				'post_attachment'		=> array('BOOL', 0),
@@ -552,7 +553,7 @@ class database_cleaner
 				'enable_smilies'		=> array('BOOL', 1),
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
-				'message_subject'		=> array('XSTEXT_UNI', ''),
+				'message_subject'		=> array('STEXT_UNI', ''),
 				'message_text'			=> array('MTEXT_UNI', ''),
 				'message_edit_reason'	=> array('STEXT_UNI', ''),
 				'message_edit_user'		=> array('UINT', 0),
@@ -755,6 +756,7 @@ class database_cleaner
 			'COLUMNS'		=> array(
 				'session_id'			=> array('CHAR:32', ''),
 				'session_user_id'		=> array('UINT', 0),
+				'session_forum_id'		=> array('UINT', 0),
 				'session_last_visit'	=> array('TIMESTAMP', 0),
 				'session_start'			=> array('TIMESTAMP', 0),
 				'session_time'			=> array('TIMESTAMP', 0),
@@ -770,6 +772,7 @@ class database_cleaner
 			'KEYS'			=> array(
 				'session_time'		=> array('INDEX', 'session_time'),
 				'session_user_id'	=> array('INDEX', 'session_user_id'),
+				'session_fid'		=> array('INDEX', 'session_forum_id'),
 			),
 		);
 
@@ -915,7 +918,7 @@ class database_cleaner
 				'topic_attachment'			=> array('BOOL', 0),
 				'topic_approved'			=> array('BOOL', 1),
 				'topic_reported'			=> array('BOOL', 0),
-				'topic_title'				=> array('XSTEXT_UNI', '', 'true_sort'),
+				'topic_title'				=> array('STEXT_UNI', '', 'true_sort'),
 				'topic_poster'				=> array('UINT', 0),
 				'topic_time'				=> array('TIMESTAMP', 0),
 				'topic_time_limit'			=> array('TIMESTAMP', 0),
@@ -931,7 +934,7 @@ class database_cleaner
 				'topic_last_poster_id'		=> array('UINT', 0),
 				'topic_last_poster_name'	=> array('VCHAR_UNI', ''),
 				'topic_last_poster_colour'	=> array('VCHAR:6', ''),
-				'topic_last_post_subject'	=> array('XSTEXT_UNI', ''),
+				'topic_last_post_subject'	=> array('STEXT_UNI', ''),
 				'topic_last_post_time'		=> array('TIMESTAMP', 0),
 				'topic_last_view_time'		=> array('TIMESTAMP', 0),
 				'topic_moved_id'			=> array('UINT', 0),

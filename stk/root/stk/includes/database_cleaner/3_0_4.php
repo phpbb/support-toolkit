@@ -9,7 +9,7 @@
 */
 
 /**
-* Database Cleaner Data file for phpBB 3.0.0
+* Database Cleaner Data file for phpBB 3.0.4
 */
 class database_cleaner
 {
@@ -241,7 +241,7 @@ class database_cleaner
 				'topic_id'			=> array('UINT', 0),
 				'forum_id'			=> array('UINT', 0),
 				'save_time'			=> array('TIMESTAMP', 0),
-				'draft_subject'		=> array('XSTEXT_UNI', ''),
+				'draft_subject'		=> array('STEXT_UNI', ''),
 				'draft_message'		=> array('MTEXT_UNI', ''),
 			),
 			'PRIMARY_KEY'	=> 'draft_id',
@@ -288,7 +288,7 @@ class database_cleaner
 				'forum_desc_uid'		=> array('VCHAR:8', ''),
 				'forum_link'			=> array('VCHAR_UNI', ''),
 				'forum_password'		=> array('VCHAR_UNI:40', ''),
-				'forum_style'			=> array('USINT', 0),
+				'forum_style'			=> array('UINT', 0),
 				'forum_image'			=> array('VCHAR', ''),
 				'forum_rules'			=> array('TEXT_UNI', ''),
 				'forum_rules_link'		=> array('VCHAR_UNI', ''),
@@ -303,11 +303,12 @@ class database_cleaner
 				'forum_topics_real'		=> array('UINT', 0),
 				'forum_last_post_id'	=> array('UINT', 0),
 				'forum_last_poster_id'	=> array('UINT', 0),
-				'forum_last_post_subject' => array('XSTEXT_UNI', ''),
+				'forum_last_post_subject' => array('STEXT_UNI', ''),
 				'forum_last_post_time'	=> array('TIMESTAMP', 0),
 				'forum_last_poster_name'=> array('VCHAR_UNI', ''),
 				'forum_last_poster_colour'=> array('VCHAR:6', ''),
 				'forum_flags'			=> array('TINT:4', 32),
+				'display_subforum_list'	=> array('BOOL', 1),
 				'display_on_index'		=> array('BOOL', 1),
 				'enable_indexing'		=> array('BOOL', 1),
 				'enable_icons'			=> array('BOOL', 1),
@@ -375,11 +376,12 @@ class database_cleaner
 				'group_sig_chars'		=> array('UINT', 0),
 				'group_receive_pm'		=> array('BOOL', 0),
 				'group_message_limit'	=> array('UINT', 0),
+				'group_max_recipients'	=> array('UINT', 0),
 				'group_legend'			=> array('BOOL', 1),
 			),
 			'PRIMARY_KEY'	=> 'group_id',
 			'KEYS'			=> array(
-				'group_legend'			=> array('INDEX', 'group_legend'),
+				'group_legend_name'		=> array('INDEX', array('group_legend', 'group_name')),
 			),
 		);
 
@@ -516,7 +518,7 @@ class database_cleaner
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
 				'post_username'			=> array('VCHAR_UNI:255', ''),
-				'post_subject'			=> array('XSTEXT_UNI', '', 'true_sort'),
+				'post_subject'			=> array('STEXT_UNI', '', 'true_sort'),
 				'post_text'				=> array('MTEXT_UNI', ''),
 				'post_checksum'			=> array('VCHAR:32', ''),
 				'post_attachment'		=> array('BOOL', 0),
@@ -552,7 +554,7 @@ class database_cleaner
 				'enable_smilies'		=> array('BOOL', 1),
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
-				'message_subject'		=> array('XSTEXT_UNI', ''),
+				'message_subject'		=> array('STEXT_UNI', ''),
 				'message_text'			=> array('MTEXT_UNI', ''),
 				'message_edit_reason'	=> array('STEXT_UNI', ''),
 				'message_edit_user'		=> array('UINT', 0),
@@ -638,6 +640,7 @@ class database_cleaner
 				'field_validation'		=> array('VCHAR_UNI:20', ''),
 				'field_required'		=> array('BOOL', 0),
 				'field_show_on_reg'		=> array('BOOL', 0),
+				'field_show_profile'	=> array('BOOL', 0),
 				'field_hide'			=> array('BOOL', 0),
 				'field_no_view'			=> array('BOOL', 0),
 				'field_active'			=> array('BOOL', 0),
@@ -755,6 +758,7 @@ class database_cleaner
 			'COLUMNS'		=> array(
 				'session_id'			=> array('CHAR:32', ''),
 				'session_user_id'		=> array('UINT', 0),
+				'session_forum_id'		=> array('UINT', 0),
 				'session_last_visit'	=> array('TIMESTAMP', 0),
 				'session_start'			=> array('TIMESTAMP', 0),
 				'session_time'			=> array('TIMESTAMP', 0),
@@ -770,6 +774,7 @@ class database_cleaner
 			'KEYS'			=> array(
 				'session_time'		=> array('INDEX', 'session_time'),
 				'session_user_id'	=> array('INDEX', 'session_user_id'),
+				'session_fid'		=> array('INDEX', 'session_forum_id'),
 			),
 		);
 
@@ -816,13 +821,13 @@ class database_cleaner
 
 		$schema_data['phpbb_styles'] = array(
 			'COLUMNS'		=> array(
-				'style_id'				=> array('USINT', NULL, 'auto_increment'),
+				'style_id'				=> array('UINT', NULL, 'auto_increment'),
 				'style_name'			=> array('VCHAR_UNI:255', ''),
 				'style_copyright'		=> array('VCHAR_UNI', ''),
 				'style_active'			=> array('BOOL', 1),
-				'template_id'			=> array('USINT', 0),
-				'theme_id'				=> array('USINT', 0),
-				'imageset_id'			=> array('USINT', 0),
+				'template_id'			=> array('UINT', 0),
+				'theme_id'				=> array('UINT', 0),
+				'imageset_id'			=> array('UINT', 0),
 			),
 			'PRIMARY_KEY'	=> 'style_id',
 			'KEYS'			=> array(
@@ -835,12 +840,14 @@ class database_cleaner
 
 		$schema_data['phpbb_styles_template'] = array(
 			'COLUMNS'		=> array(
-				'template_id'			=> array('USINT', NULL, 'auto_increment'),
+				'template_id'			=> array('UINT', NULL, 'auto_increment'),
 				'template_name'			=> array('VCHAR_UNI:255', ''),
 				'template_copyright'	=> array('VCHAR_UNI', ''),
 				'template_path'			=> array('VCHAR:100', ''),
 				'bbcode_bitfield'		=> array('VCHAR:255', 'kNg='),
 				'template_storedb'		=> array('BOOL', 0),
+				'template_inherits_id'		=> array('UINT:4', 0),
+				'template_inherit_path'		=> array('VCHAR', ''),
 			),
 			'PRIMARY_KEY'	=> 'template_id',
 			'KEYS'			=> array(
@@ -850,7 +857,7 @@ class database_cleaner
 
 		$schema_data['phpbb_styles_template_data'] = array(
 			'COLUMNS'		=> array(
-				'template_id'			=> array('USINT', 0),
+				'template_id'			=> array('UINT', 0),
 				'template_filename'		=> array('VCHAR:100', ''),
 				'template_included'		=> array('TEXT', ''),
 				'template_mtime'		=> array('TIMESTAMP', 0),
@@ -864,7 +871,7 @@ class database_cleaner
 
 		$schema_data['phpbb_styles_theme'] = array(
 			'COLUMNS'		=> array(
-				'theme_id'				=> array('USINT', NULL, 'auto_increment'),
+				'theme_id'				=> array('UINT', NULL, 'auto_increment'),
 				'theme_name'			=> array('VCHAR_UNI:255', ''),
 				'theme_copyright'		=> array('VCHAR_UNI', ''),
 				'theme_path'			=> array('VCHAR:100', ''),
@@ -880,7 +887,7 @@ class database_cleaner
 
 		$schema_data['phpbb_styles_imageset'] = array(
 			'COLUMNS'		=> array(
-				'imageset_id'				=> array('USINT', NULL, 'auto_increment'),
+				'imageset_id'				=> array('UINT', NULL, 'auto_increment'),
 				'imageset_name'				=> array('VCHAR_UNI:255', ''),
 				'imageset_copyright'		=> array('VCHAR_UNI', ''),
 				'imageset_path'				=> array('VCHAR:100', ''),
@@ -893,13 +900,13 @@ class database_cleaner
 
 		$schema_data['phpbb_styles_imageset_data'] = array(
 			'COLUMNS'		=> array(
-				'image_id'				=> array('USINT', NULL, 'auto_increment'),
+				'image_id'				=> array('UINT', NULL, 'auto_increment'),
 				'image_name'			=> array('VCHAR:200', ''),
 				'image_filename'		=> array('VCHAR:200', ''),
 				'image_lang'			=> array('VCHAR:30', ''),
 				'image_height'			=> array('USINT', 0),
 				'image_width'			=> array('USINT', 0),
-				'imageset_id'			=> array('USINT', 0),
+				'imageset_id'			=> array('UINT', 0),
 			),
 			'PRIMARY_KEY'		=> 'image_id',
 			'KEYS'				=> array(
@@ -915,7 +922,7 @@ class database_cleaner
 				'topic_attachment'			=> array('BOOL', 0),
 				'topic_approved'			=> array('BOOL', 1),
 				'topic_reported'			=> array('BOOL', 0),
-				'topic_title'				=> array('XSTEXT_UNI', '', 'true_sort'),
+				'topic_title'				=> array('STEXT_UNI', '', 'true_sort'),
 				'topic_poster'				=> array('UINT', 0),
 				'topic_time'				=> array('TIMESTAMP', 0),
 				'topic_time_limit'			=> array('TIMESTAMP', 0),
@@ -931,7 +938,7 @@ class database_cleaner
 				'topic_last_poster_id'		=> array('UINT', 0),
 				'topic_last_poster_name'	=> array('VCHAR_UNI', ''),
 				'topic_last_poster_colour'	=> array('VCHAR:6', ''),
-				'topic_last_post_subject'	=> array('XSTEXT_UNI', ''),
+				'topic_last_post_subject'	=> array('STEXT_UNI', ''),
 				'topic_last_post_time'		=> array('TIMESTAMP', 0),
 				'topic_last_view_time'		=> array('TIMESTAMP', 0),
 				'topic_moved_id'			=> array('UINT', 0),
@@ -1037,7 +1044,7 @@ class database_cleaner
 				'user_timezone'				=> array('DECIMAL', 0),
 				'user_dst'					=> array('BOOL', 0),
 				'user_dateformat'			=> array('VCHAR_UNI:30', 'd M Y H:i'),
-				'user_style'				=> array('USINT', 0),
+				'user_style'				=> array('UINT', 0),
 				'user_rank'					=> array('UINT', 0),
 				'user_colour'				=> array('VCHAR:6', ''),
 				'user_new_privmsg'			=> array('INT:4', 0),

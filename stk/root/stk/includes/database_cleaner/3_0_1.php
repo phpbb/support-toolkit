@@ -9,7 +9,7 @@
 */
 
 /**
-* Database Cleaner Data file for phpBB 3.0.0
+* Database Cleaner Data file for phpBB 3.0.1
 */
 class database_cleaner
 {
@@ -308,6 +308,7 @@ class database_cleaner
 				'forum_last_poster_name'=> array('VCHAR_UNI', ''),
 				'forum_last_poster_colour'=> array('VCHAR:6', ''),
 				'forum_flags'			=> array('TINT:4', 32),
+				'display_subforum_list'	=> array('BOOL', 1),
 				'display_on_index'		=> array('BOOL', 1),
 				'enable_indexing'		=> array('BOOL', 1),
 				'enable_icons'			=> array('BOOL', 1),
@@ -379,7 +380,7 @@ class database_cleaner
 			),
 			'PRIMARY_KEY'	=> 'group_id',
 			'KEYS'			=> array(
-				'group_legend'			=> array('INDEX', 'group_legend'),
+				'group_legend_name'		=> array('INDEX', array('group_legend', 'group_name')),
 			),
 		);
 
@@ -755,6 +756,7 @@ class database_cleaner
 			'COLUMNS'		=> array(
 				'session_id'			=> array('CHAR:32', ''),
 				'session_user_id'		=> array('UINT', 0),
+				'session_forum_id'		=> array('UINT', 0),
 				'session_last_visit'	=> array('TIMESTAMP', 0),
 				'session_start'			=> array('TIMESTAMP', 0),
 				'session_time'			=> array('TIMESTAMP', 0),
@@ -770,6 +772,7 @@ class database_cleaner
 			'KEYS'			=> array(
 				'session_time'		=> array('INDEX', 'session_time'),
 				'session_user_id'	=> array('INDEX', 'session_user_id'),
+				'session_forum_id'	=> array('INDEX', 'session_forum_id'),
 			),
 		);
 
