@@ -161,15 +161,15 @@ function stk_add_lang($lang_file = '')
 	$path = './../../stk/language/';
 
 	// Set the correct language path
-	if (file_exists(STK_ROOT_PATH . 'language/{$user->data['user_lang']}/{$lang_file}." . PHP_EXT))
+	if (file_exists(STK_ROOT_PATH . "language/{$user->data['user_lang']}/{$lang_file}." . PHP_EXT))
 	{
 		$path .= $user->data['user_lang'];
 	}
-	else if (file_exists(STK_ROOT_PATH . 'language/" . basename($config['default_lang']) . "/{$lang_file}." . PHP_EXT))
+	else if (file_exists(STK_ROOT_PATH . 'language/' . basename($config['default_lang']) . "/{$lang_file}." . PHP_EXT))
 	{
 		$path .= basename($config['default_lang']);
 	}
-	else if (file_exists(STK_ROOT_PATH . 'language/en/{$lang_file}." . PHP_EXT))
+	else if (file_exists(STK_ROOT_PATH . "language/en/{$lang_file}." . PHP_EXT))
 	{
 		$path .= 'en';
 	}

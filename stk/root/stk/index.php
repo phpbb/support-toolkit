@@ -22,7 +22,7 @@ define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
 if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', '../'); }
-if (!defined('PHPBB_EXT')) { substr(strrchr(__FILE__, '.'), 1); }
+if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
 define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
 
 $phpbb_root_path = PHPBB_ROOT_PATH;
@@ -240,26 +240,12 @@ if ($tool_req)
 	$error = array();
 	if ($submit)
 	{
-		// First include all necessary includes
-		if (isset($tool->auto_include))
-		{
-			load_tool_includes($tool->auto_include, $tool_req, false);
-		}
-
 		// In run_tool do whatever is required.  If there is an error, put it into the array and the display options will be ran again
 		$tool->run_tool($error);
 	}
 
 	if (!$submit || sizeof($error))
 	{
-		/*
-		* Before we do anything, check whether all the files this tool will include exist in the system
-		*/
-		if (isset($tool->auto_include))
-		{
-			load_tool_includes($tool->auto_include, $tool_req, true);
-		}
-
         /*
         * Instead of building a page yourself you may return an array with the options you want to show.  This is outputted similar to how the acp_board is.
         * You may also send back a string if you just want a confirm box shown with that string used for the title
