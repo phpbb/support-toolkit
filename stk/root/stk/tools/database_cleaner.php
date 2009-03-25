@@ -52,6 +52,9 @@ class database_cleaner
 		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file);
 		$cleaner = new database_cleaner_data();
 
+		// We will need UMIL
+		$umil = new umil();
+
 		switch ($step)
 		{
 			case 0 :
@@ -73,7 +76,7 @@ class database_cleaner
 
 				// Look into any way we can backup the database easily here...
 
-				// Start off simple by displaying extra config variables and let them check/uncheck the ones they want to remove
+				// Start off simple by displaying extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
 					'NAME'		=> $user->lang['CONFIG_SETTINGS'],
 					'TITLE'		=> $user->lang['ROWS'],
@@ -108,11 +111,11 @@ class database_cleaner
 			break;
 
 			case 2 :
-				// Remove the extra config variables they selected.
+				// Add/remove the extra config variables they selected.
 				if ($apply_changes)
 				{
 					$existing_config = array();
-					$sql = 'SELECT * FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
+					$sql = 'SELECT * FROM ' . CONFIG_TABLE;
 					$result = $db->sql_query($sql);
 					while ($row = $db->sql_fetchrow($result))
 					{
@@ -145,14 +148,77 @@ class database_cleaner
 					}
 				}
 
-				// Display the extra permission fields and again let them select ones to remove
+				// Display the extra permission fields and again let them select ones to add/remove
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang['PERMISSION_SETTINGS'],
+					'TITLE'		=> $user->lang['ROWS'],
+				));
+
+				$existing_permissions = array();
+				$sql = 'SELECT * FROM ' . ACL_OPTIONS_TABLE;
+				$result = $db->sql_query($sql);
+				while ($row = $db->sql_fetchrow($result))
+				{
+					$existing_permissions[] = $row['auth_option'];
+				}
+				$db->sql_freeresult($result);
+
+				$permission_rows = array_unique(array_merge(array_keys($cleaner->permissions), $existing_permissions));
+
+				foreach ($permission_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($cleaner->permissions[$name]) && in_array($name, $existing_permissions))
+					{
+						continue;
+					}
+
+					$template->assign_block_vars('section.items', array(
+						'NAME'			=> $name,
+						'FIELD_NAME'	=> $name,
+						'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
+					));
+				}
 			break;
 
 			case 3 :
-				// Remove the permission fields they selected
+				// Add/remove the permission fields they selected
 				if ($apply_changes)
 				{
+					$existing_permissions = array();
+					$sql = 'SELECT * FROM ' . ACL_OPTIONS_TABLE;
+					$result = $db->sql_query($sql);
+					while ($row = $db->sql_fetchrow($result))
+					{
+						$existing_permissions[] = $row['auth_option'];
+					}
+					$db->sql_freeresult($result);
 
+					$permission_rows = array_unique(array_merge(array_keys($cleaner->permissions), $existing_permissions));
+
+					foreach ($permission_rows as $name)
+					{
+						// Skip ones that are in the default install and are in the existing permissions
+						if (isset($cleaner->permissions[$name]) && in_array($name, $existing_permissions))
+						{
+							continue;
+						}
+
+						if (isset($selected[$name]))
+						{
+							if (isset($cleaner->permissions[$name]) && !in_array($name, $existing_permissions))
+							{
+								// Add it with the default settings we've got...
+								$umil->permission_add($name, (($cleaner->permissions[$name]['is_global']) ? true : false));
+							}
+							else if (!isset($cleaner->permissions[$name]) && in_array($name, $existing_permissions))
+							{
+								// Remove it
+								$umil->permission_remove($name, true);
+								$umil->permission_remove($name, false);
+							}
+						}
+					}
 				}
 
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them

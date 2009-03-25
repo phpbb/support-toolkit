@@ -29,6 +29,18 @@ while ($row = $db->sql_fetchrow($result))
 output_list($configs, 'config_name');
 */
 
+/* Get auth settings
+$permissions = array();
+$result = $db->sql_query('SELECT * FROM ' . ACL_OPTIONS_TABLE);
+while ($row = $db->sql_fetchrow($result))
+{
+	unset($row['auth_option_id']);
+	$permissions[] = $row;
+}
+
+output_list($permissions, 'auth_option');
+*/
+
 die();
 
 function output_list($data, $key)
@@ -46,7 +58,7 @@ function output_list($data, $key)
 	$output = '';
 	foreach ($data as $row)
 	{
-		$output .= "\t'{$row[$key]}'";
+		$output .= "\t\t'{$row[$key]}'";
 
 		$tabs = ($total_tabs - ceil((utf8_strlen($row[$key]) + 3) / 4));
 		for($i = 0; $i <= $tabs; $i++)

@@ -50,6 +50,7 @@ $lang = array_merge($lang, array(
 'TYPE' => 'Type',
 'MISSING' => 'Missing',
 'EXTRA' => 'Extra',
+'PERMISSION_SETTINGS' => 'Permission Options',
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
 	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and readd missing items).',
 
