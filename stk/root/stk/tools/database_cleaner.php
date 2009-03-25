@@ -250,7 +250,7 @@ class database_cleaner
 
 			case 5 :
 				// Reset the bots if they wanted to
-				if (isset($_POST['yes']) && true)//$apply_changes)
+				if (isset($_POST['yes']) && $apply_changes)
 				{
 					$sql = 'SELECT group_id
 						FROM ' . GROUPS_TABLE . "
