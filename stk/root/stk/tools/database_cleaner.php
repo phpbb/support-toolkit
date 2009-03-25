@@ -59,6 +59,13 @@ class database_cleaner
 		{
 			case 0 :
 				// Display a quick intro here and make sure they know what they are doing...
+				$template->assign_vars(array(
+					'S_NO_INSTRUCTIONS'	=> true,
+					'SUCCESS_TITLE'		=> $user->lang['DATABASE_CLEANER'],
+					'SUCCESS_MESSAGE'	=> $user->lang['DATABASE_CLEANER_WELCOME'],
+					'ERROR_TITLE'		=> ' ',
+					'ERROR_MESSAGE'		=> $user->lang['DATABASE_CLEANER_WARNING'],
+				));
 			break;
 
 			case 1 :
@@ -73,7 +80,7 @@ class database_cleaner
 				{
 					set_config('board_disable', 1);
 				}
-				$template->assign_var('STEP_SUCCESS', $user->lang['BOARD_DISABLE_SUCCESS']);
+				$template->assign_var('SUCCESS_MESSAGE', $user->lang['BOARD_DISABLE_SUCCESS']);
 
 				// Look into any way we can backup the database easily here...
 
@@ -148,7 +155,7 @@ class database_cleaner
 						}
 					}
 				}
-				$template->assign_var('STEP_SUCCESS', $user->lang['CONFIG_UPDATE_SUCCESS']);
+				$template->assign_var('SUCCESS_MESSAGE', $user->lang['CONFIG_UPDATE_SUCCESS']);
 
 				// Display the extra permission fields and again let them select ones to add/remove
 				$template->assign_block_vars('section', array(
@@ -222,7 +229,7 @@ class database_cleaner
 						}
 					}
 				}
-				$template->assign_var('STEP_SUCCESS', $user->lang['PERMISSION_UPDATE_SUCCESS']);
+				$template->assign_var('SUCCESS_MESSAGE', $user->lang['PERMISSION_UPDATE_SUCCESS']);
 
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
 			break;
@@ -234,14 +241,87 @@ class database_cleaner
 
 				}
 
-				// Ask if they would like to reset the bots
+				// Ask if they would like to reset the bots (handled in the template)
+				$template->assign_vars(array(
+					'S_BOT_OPTIONS'		=> true,
+					'S_NO_INSTRUCTIONS'	=> true,
+				));
 			break;
 
 			case 5 :
 				// Reset the bots if they wanted to
-				if ($apply_changes)
+				if (isset($_POST['yes']) && true)//$apply_changes)
 				{
+					$sql = 'SELECT group_id
+						FROM ' . GROUPS_TABLE . "
+						WHERE group_name = 'BOTS'";
+					$result = $db->sql_query($sql);
+					$group_id = (int) $db->sql_fetchfield('group_id');
+					$db->sql_freeresult($result);
 
+					if (!$group_id)
+					{
+						// If we reach this point then something has gone very wrong
+						$template->assign_var('ERROR_MESSAGE', $user->lang['NO_BOT_GROUP']);
+					}
+					else
+					{
+						if (!function_exists('user_add'))
+						{
+							include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+						}
+
+						// Remove existing bots
+						$uids = array();
+						$sql = 'SELECT user_id FROM ' . BOTS_TABLE;
+						$result = $db->sql_query($sql);
+						while ($row = $db->sql_fetchrow($result))
+						{
+							$uids[] = $row['user_id'];
+						}
+						$db->sql_freeresult($result);
+						if (sizeof($uids))
+						{
+							$db->sql_query('DELETE FROM ' . USERS_TABLE . ' WHERE ' . $db->sql_in_set('user_id', $uids));
+							$db->sql_query('DELETE FROM ' . BOTS_TABLE);
+						}
+
+						// Add the bots
+						foreach ($this->bot_list as $bot_name => $bot_ary)
+						{
+							$user_row = array(
+								'user_type'				=> USER_IGNORE,
+								'group_id'				=> $group_id,
+								'username'				=> $bot_name,
+								'user_regdate'			=> time(),
+								'user_password'			=> '',
+								'user_colour'			=> '9E8DA7',
+								'user_email'			=> '',
+								'user_lang'				=> $config['default_lang'],
+								'user_style'			=> 1,
+								'user_timezone'			=> 0,
+								'user_dateformat'		=> $config['default_dateformat'],
+								'user_allow_massemail'	=> 0,
+							);
+
+							$user_id = user_add($user_row);
+
+							if ($user_id)
+							{
+								$sql = 'INSERT INTO ' . BOTS_TABLE . ' ' . $db->sql_build_array('INSERT', array(
+									'bot_active'	=> 1,
+									'bot_name'		=> (string) $bot_name,
+									'user_id'		=> (int) $user_id,
+									'bot_agent'		=> (string) $bot_ary[0],
+									'bot_ip'		=> (string) $bot_ary[1],
+								));
+
+								$result = $db->sql_query($sql);
+							}
+						}
+
+						$template->assign_var('SUCCESS_MESSAGE', $user->lang['RESET_BOT_SUCCESS']);
+					}
 				}
 
 				// Time to start going through the database and listing any extra/missing fields
@@ -302,5 +382,62 @@ class database_cleaner
 
 		page_footer();
 	}
+
+	/**
+	* Bot list from phpBB 3.0.4
+	*
+	*/
+	var $bot_list = array(
+		'AdsBot [Google]'			=> array('AdsBot-Google', ''),
+		'Alexa [Bot]'				=> array('ia_archiver', ''),
+		'Alta Vista [Bot]'			=> array('Scooter/', ''),
+		'Ask Jeeves [Bot]'			=> array('Ask Jeeves', ''),
+		'Baidu [Spider]'			=> array('Baiduspider+(', ''),
+		'Exabot [Bot]'				=> array('Exabot/', ''),
+		'FAST Enterprise [Crawler]'	=> array('FAST Enterprise Crawler', ''),
+		'FAST WebCrawler [Crawler]'	=> array('FAST-WebCrawler/', ''),
+		'Francis [Bot]'				=> array('http://www.neomo.de/', ''),
+		'Gigabot [Bot]'				=> array('Gigabot/', ''),
+		'Google Adsense [Bot]'		=> array('Mediapartners-Google', ''),
+		'Google Desktop'			=> array('Google Desktop', ''),
+		'Google Feedfetcher'		=> array('Feedfetcher-Google', ''),
+		'Google [Bot]'				=> array('Googlebot', ''),
+		'Heise IT-Markt [Crawler]'	=> array('heise-IT-Markt-Crawler', ''),
+		'Heritrix [Crawler]'		=> array('heritrix/1.', ''),
+		'IBM Research [Bot]'		=> array('ibm.com/cs/crawler', ''),
+		'ICCrawler - ICjobs'		=> array('ICCrawler - ICjobs', ''),
+		'ichiro [Crawler]'			=> array('ichiro/2', ''),
+		'Majestic-12 [Bot]'			=> array('MJ12bot/', ''),
+		'Metager [Bot]'				=> array('MetagerBot/', ''),
+		'MSN NewsBlogs'				=> array('msnbot-NewsBlogs/', ''),
+		'MSN [Bot]'					=> array('msnbot/', ''),
+		'MSNbot Media'				=> array('msnbot-media/', ''),
+		'NG-Search [Bot]'			=> array('NG-Search/', ''),
+		'Nutch [Bot]'				=> array('http://lucene.apache.org/nutch/', ''),
+		'Nutch/CVS [Bot]'			=> array('NutchCVS/', ''),
+		'OmniExplorer [Bot]'		=> array('OmniExplorer_Bot/', ''),
+		'Online link [Validator]'	=> array('online link validator', ''),
+		'psbot [Picsearch]'			=> array('psbot/0', ''),
+		'Seekport [Bot]'			=> array('Seekbot/', ''),
+		'Sensis [Crawler]'			=> array('Sensis Web Crawler', ''),
+		'SEO Crawler'				=> array('SEO search Crawler/', ''),
+		'Seoma [Crawler]'			=> array('Seoma [SEO Crawler]', ''),
+		'SEOSearch [Crawler]'		=> array('SEOsearch/', ''),
+		'Snappy [Bot]'				=> array('Snappy/1.1 ( http://www.urltrends.com/ )', ''),
+		'Steeler [Crawler]'			=> array('http://www.tkl.iis.u-tokyo.ac.jp/~crawler/', ''),
+		'Synoo [Bot]'				=> array('SynooBot/', ''),
+		'Telekom [Bot]'				=> array('crawleradmin.t-info@telekom.de', ''),
+		'TurnitinBot [Bot]'			=> array('TurnitinBot/', ''),
+		'Voyager [Bot]'				=> array('voyager/1.0', ''),
+		'W3 [Sitesearch]'			=> array('W3 SiteSearch Crawler', ''),
+		'W3C [Linkcheck]'			=> array('W3C-checklink/', ''),
+		'W3C [Validator]'			=> array('W3C_*Validator', ''),
+		'WiseNut [Bot]'				=> array('http://www.WISEnutbot.com', ''),
+		'YaCy [Bot]'				=> array('yacybot', ''),
+		'Yahoo MMCrawler [Bot]'		=> array('Yahoo-MMCrawler/', ''),
+		'Yahoo Slurp [Bot]'			=> array('Yahoo! DE Slurp', ''),
+		'Yahoo [Bot]'				=> array('Yahoo! Slurp', ''),
+		'YahooSeeker [Bot]'			=> array('YahooSeeker/', ''),
+	);
 }
 ?>

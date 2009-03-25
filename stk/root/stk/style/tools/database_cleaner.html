@@ -9,35 +9,23 @@
 
 <form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
 
-<!-- IF STEP_SUCCESS -->
+<!-- IF SUCCESS_MESSAGE -->
 	<div class="successbox">
-		<h3>{L_SUCCESS}</h3>
+		<h3><!-- IF SUCCESS_TITLE -->{SUCCESS_TITLE}<!-- ELSE -->{L_SUCCESS}<!-- ENDIF --></h3>
 		<p>
-			{STEP_SUCCESS}
+			{SUCCESS_MESSAGE}
 		</p>
 	</div>
-	<br />
 <!-- ENDIF -->
 
-<!-- IF STEP == 0 -->
-	<div class="successbox">
-		<h3>{L_DATABASE_CLEANER}</h3>
-		<p>
-			{L_DATABASE_CLEANER_WELCOME}
-		</p>
-	</div>
-
+<!-- IF ERROR_MESSAGE -->
 	<div class="errorbox">
-		<p><strong>{L_DATABASE_CLEANER_WARNING}</strong></p>
+		<h3><!-- IF ERROR_TITLE -->{ERROR_TITLE}<!-- ELSE -->{L_ERROR}<!-- ENDIF --></h3>
+		<p><strong>{ERROR_MESSAGE}</strong></p>
 	</div>
-<!-- ELSEIF SPECIAL_MESSAGE -->
-	<div class="successbox">
-		<h3>{L_DATABASE_CLEANER}</h3>
-		<p>
-			{SPECIAL_MESSAGE}
-		</p>
-	</div>
-<!-- ELSEIF not S_DISPLAY_INSTRUCTIONS -->
+<!-- ENDIF -->
+
+<!-- IF not S_NO_INSTRUCTIONS -->
 	<fieldset>
 		<legend>{L_INSTRUCTIONS}</legend>
 		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p><br />
@@ -74,10 +62,20 @@
 	{S_HIDDEN_FIELDS}
 	{S_FORM_TOKEN}
 
-	<div style="text-align: center;">
-		<input type="submit" name="continue" value="{L_CONTINUE}" class="button1" />
-		<!-- IF STEP == 0 -->&nbsp; <input type="submit" name="quit" value="{L_QUIT}" class="button2" /><!-- ENDIF -->
-	</div>
+	<!-- IF S_BOT_OPTIONS -->
+		<legend>{L_RESET_BOTS}</legend>
+		<p style="padding: 5px 10px;">{L_RESET_BOTS_EXPLAIN}</p>
+
+		<div style="text-align: center;">
+			<input type="submit" name="yes" value="{L_YES}" class="button1" />
+			&nbsp; <input type="submit" name="no" value="{L_NO}" class="button2" />
+		</div>
+	<!-- ELSE -->
+		<div style="text-align: center;">
+			<input type="submit" name="continue" value="{L_CONTINUE}" class="button1" />
+			<!-- IF STEP == 0 -->&nbsp; <input type="submit" name="quit" value="{L_QUIT}" class="button2" /><!-- ENDIF -->
+		</div>
+	<!-- ENDIF -->
 </fieldset>
 
 </form>

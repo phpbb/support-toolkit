@@ -22,9 +22,6 @@ class database_cleaner_data
 	// All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
 	var $modules = array();
 
-	// All default Bots
-	var $bots = array();
-
 	// All default tables (copy from create_schema_files for this version)
 	var $tables = array();
 
