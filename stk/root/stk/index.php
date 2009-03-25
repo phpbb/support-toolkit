@@ -30,6 +30,7 @@ $phpEx = PHP_EXT;
 
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
+require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
 // Start session management
 $user->session_begin();

@@ -49,7 +49,6 @@ class readd_module_management
 	*/
 	function run_tool()
 	{
-		require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 		$umil = new umil();
 
 		if (!$umil->module_exists('acp', 0, 'ACP_CAT_SYSTEM'))
