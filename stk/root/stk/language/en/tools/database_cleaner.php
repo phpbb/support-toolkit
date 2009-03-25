@@ -38,8 +38,20 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+'DATABASE_CLEANER_WELCOME' => 'Welcome to the Database Cleaner tool!<br /><br />This tool was designed to remove extra columns, rows, and tables from the database not present in the default installation of phpBB3.<br /><br />When you are ready to continue click the Continue button to start using the Database Cleaner tool (note that your board will be disabled until this is finished).',
+'DATABASE_CLEANER_WARNING' => 'This tool comes with NO WARRANTY and users of this tool should back up their entire database in case of a failure.<br /><br />Before continuing, make sure you have a database backup!',
+'CONTINUE'	=> 'Continue',
+'QUIT' => 'Quit',
+'CONFIG_SETTINGS' => 'Config Settings',
+'ROWS' => 'Rows',
+'DATABASE_CLEANER_EXTRA' => 'Any fields that look like this are extra items added by modifications (if the check box is selected it will be removed).',
+'DATABASE_CLEANER_MISSING' => 'Any fields that look like this are missing items that should be added (if the check box is selected it will be added).',
+'INSTRUCTIONS' => 'Instructions',
+'TYPE' => 'Type',
+'MISSING' => 'Missing',
+'EXTRA' => 'Extra',
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
-	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods).',
+	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and readd missing items).',
 
 	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Tool Kit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time between a new version of phpBB3 being released and this tool being updated to support the newest version.',
 ));

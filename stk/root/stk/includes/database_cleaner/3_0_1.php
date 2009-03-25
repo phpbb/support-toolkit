@@ -11,7 +11,7 @@
 /**
 * Database Cleaner Data file for phpBB 3.0.1
 */
-class database_cleaner
+class database_cleaner_data
 {
 	// All default config settings
 	var $config = array();

@@ -28,9 +28,14 @@ class database_cleaner
 
 	function display_options()
 	{
-		global $config;
+		global $config, $db, $template, $user;
 
+		$continue = (isset($_POST['continue'])) ? true : false;
 		$step = request_var('step', 0);
+		$selected = request_var('items', array('' => ''));
+
+		// Apply Changes to the DB?
+		$apply_changes = false;
 
 		if ($step > 0)
 		{
@@ -40,10 +45,12 @@ class database_cleaner
 
 		// include the required file for this version
 		$version_file = preg_replace('#([^0-9]+)#', '_', $config['version']) . '.' . PHP_EXT;
-		if (!file_exists(STK_ROOT_PATH . 'database_cleaner/' . $version_file))
+		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file))
 		{
 			trigger_error('PHPBB_VERSION_NOT_SUPPORTED');
 		}
+		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file);
+		$cleaner = new database_cleaner_data();
 
 		switch ($step)
 		{
@@ -52,31 +59,121 @@ class database_cleaner
 			break;
 
 			case 1 :
+				// Redirect if they selected quit
+				if (isset($_POST['quit']))
+				{
+					redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT));
+				}
+
+				// Start by disabling the board
+				if ($apply_changes)
+				{
+					set_config('board_disable', 1);
+				}
+
+				// Look into any way we can backup the database easily here...
+
 				// Start off simple by displaying extra config variables and let them check/uncheck the ones they want to remove
-				// Insert any missing config variables (hopefully there are none missing!)
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang['CONFIG_SETTINGS'],
+					'TITLE'		=> $user->lang['ROWS'],
+				));
+
+				$existing_config = array();
+				$sql = 'SELECT * FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
+				$result = $db->sql_query($sql);
+				while ($row = $db->sql_fetchrow($result))
+				{
+					$existing_config[] = $row['config_name'];
+				}
+				$db->sql_freeresult($result);
+
+				$config_rows = array_unique(array_merge(array_keys($cleaner->config), $existing_config));
+				sort($config_rows);
+
+				foreach ($config_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing config
+					if (isset($cleaner->config[$name]) && in_array($name, $existing_config))
+					{
+						continue;
+					}
+
+					$template->assign_block_vars('section.items', array(
+						'NAME'			=> $name,
+						'FIELD_NAME'	=> $name,
+						'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
+					));
+				}
 			break;
 
 			case 2 :
 				// Remove the extra config variables they selected.
+				if ($apply_changes)
+				{
+					$existing_config = array();
+					$sql = 'SELECT * FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
+					$result = $db->sql_query($sql);
+					while ($row = $db->sql_fetchrow($result))
+					{
+						$existing_config[] = $row['config_name'];
+					}
+					$db->sql_freeresult($result);
+
+					$config_rows = array_unique(array_merge(array_keys($cleaner->config), $existing_config));
+
+					foreach ($config_rows as $name)
+					{
+						if (isset($cleaner->config[$name]) && in_array($name, $existing_config))
+						{
+							continue;
+						}
+
+						if (isset($selected[$name]))
+						{
+							if (isset($cleaner->config[$name]) && !in_array($name, $existing_config))
+							{
+								// Add it with the default settings we've got...
+								set_config($name, $cleaner->config[$name]['config_value'], $cleaner->config[$name]['is_dynamic']);
+							}
+							else if (!isset($cleaner->config[$name]) && in_array($name, $existing_config))
+							{
+								// Remove it
+								$db->sql_query('DELETE FROM ' . CONFIG_TABLE . " WHERE config_name = '" . $db->sql_escape($name) . "'");
+							}
+						}
+					}
+				}
 
 				// Display the extra permission fields and again let them select ones to remove
-				// Insert any missing permission settings (hopefully there are none missing!)
 			break;
 
 			case 3 :
 				// Remove the permission fields they selected
+				if ($apply_changes)
+				{
+
+				}
 
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
 			break;
 
 			case 4 :
 				// Remove the extra modules they selected, add any they selected to be added
+				if ($apply_changes)
+				{
+
+				}
 
 				// Ask if they would like to reset the bots
 			break;
 
 			case 5 :
 				// Reset the bots if they wanted to
+				if ($apply_changes)
+				{
+
+				}
 
 				// Time to start going through the database and listing any extra/missing fields
 
@@ -91,16 +188,38 @@ class database_cleaner
 
 			case 6 :
 				// Update the tables according to what they selected last time
+				if ($apply_changes)
+				{
+
+				}
 
 				// Find any extra tables and list them as options to remove
 			break;
 
 			case 7 :
 				// Remove the extra selected tables
+				if ($apply_changes)
+				{
+
+				}
 
 				// Finished?
 			break;
 		}
+
+		page_header($user->lang['DATABASE_CLEANER'], false);
+
+		$template->assign_vars(array(
+			'STEP'			=> $step,
+
+			'U_NEXT_STEP'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=database_cleaner&amp;step=' . ($step + 1)),
+		));
+
+		$template->set_filenames(array(
+			'body' => 'tools/database_cleaner.html',
+		));
+
+		page_footer();
 	}
 }
 ?>

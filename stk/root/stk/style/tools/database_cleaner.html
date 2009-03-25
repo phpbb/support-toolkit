@@ -1,0 +1,68 @@
+<!-- INCLUDE overall_header.html -->
+
+<head>
+	<style type="text/css">
+		.missing { color: #FFFFFF; background-color: #BC2A4D; }
+		.extra { color: #FFFFFF; background-color: #228822; }
+	</style>
+</head>
+
+<form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
+
+<!-- IF STEP == 0 -->
+	<div class="successbox">
+		<h3>{L_DATABASE_CLEANER}</h3>
+		<p>
+			{L_DATABASE_CLEANER_WELCOME}
+		</p>
+	</div>
+
+	<div class="errorbox">
+		<p><strong>{L_DATABASE_CLEANER_WARNING}</strong></p>
+	</div>
+<!-- ELSEIF not S_DISPLAY_INSTRUCTIONS -->
+	<fieldset>
+		<legend>{L_INSTRUCTIONS}</legend>
+		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p><br />
+		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p>
+	</fieldset>
+<!-- ENDIF -->
+
+<!-- BEGIN section -->
+	<fieldset>
+		<legend>{section.NAME}</legend>
+
+		<table cellspacing="1">
+			<tr>
+				<th>{section.TITLE}</th>
+				<th width="150px" align="right">{L_TYPE}</th>
+				<th width="75px" align="right"></th>
+			</tr>
+			<!-- BEGIN items -->
+				<tr class="<!-- IF items.MISSING -->missing<!-- ELSE -->extra<!-- ENDIF -->">
+					<td style="font-weight: bold;">{items.NAME}</td>
+					<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
+					<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
+				</tr>
+			<!-- END items -->
+		</table>
+	</fieldset>
+<!-- END section -->
+
+<!-- IF .section -->
+	<div class="rightside pagination"><a href="#" onclick="marklist('database_cleaner', 'items', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('database_cleaner', 'items', false); return false;">{L_UNMARK_ALL}</a></div>
+<!-- ENDIF -->
+
+<fieldset>
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
+
+	<div style="text-align: center;">
+		<input type="submit" name="continue" value="{L_CONTINUE}" class="button1" />
+		<!-- IF STEP == 0 -->&nbsp; <input type="submit" name="quit" value="{L_QUIT}" class="button2" /><!-- ENDIF -->
+	</div>
+</fieldset>
+
+</form>
+
+<!-- INCLUDE overall_footer.html -->
