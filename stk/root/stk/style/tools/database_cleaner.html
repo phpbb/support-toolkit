@@ -9,6 +9,16 @@
 
 <form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
 
+<!-- IF STEP_SUCCESS -->
+	<div class="successbox">
+		<h3>{L_SUCCESS}</h3>
+		<p>
+			{STEP_SUCCESS}
+		</p>
+	</div>
+	<br />
+<!-- ENDIF -->
+
 <!-- IF STEP == 0 -->
 	<div class="successbox">
 		<h3>{L_DATABASE_CLEANER}</h3>
@@ -19,6 +29,13 @@
 
 	<div class="errorbox">
 		<p><strong>{L_DATABASE_CLEANER_WARNING}</strong></p>
+	</div>
+<!-- ELSEIF SPECIAL_MESSAGE -->
+	<div class="successbox">
+		<h3>{L_DATABASE_CLEANER}</h3>
+		<p>
+			{SPECIAL_MESSAGE}
+		</p>
 	</div>
 <!-- ELSEIF not S_DISPLAY_INSTRUCTIONS -->
 	<fieldset>

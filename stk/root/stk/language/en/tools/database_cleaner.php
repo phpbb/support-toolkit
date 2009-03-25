@@ -51,6 +51,12 @@ $lang = array_merge($lang, array(
 'MISSING' => 'Missing',
 'EXTRA' => 'Extra',
 'PERMISSION_SETTINGS' => 'Permission Options',
+'CONFIG_UPDATE_SUCCESS' => 'The configuration settings have been updated successfully!',
+'PERMISSION_UPDATE_SUCCESS' => 'The permission settings have been updated successfully!',
+'BOARD_DISABLE_SUCCESS' => 'The board has been disabled successfully!',
+'SUCCESS' => 'Success',
+'DATABASE_CLEANER_SUCCESS' => 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',
+'FINAL_STEP' => 'This is the final step.<br /><br />We will now re-enable your board and purge your forum\'s cache.',
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
 	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and readd missing items).',
 

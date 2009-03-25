@@ -73,6 +73,7 @@ class database_cleaner
 				{
 					set_config('board_disable', 1);
 				}
+				$template->assign_var('STEP_SUCCESS', $user->lang['BOARD_DISABLE_SUCCESS']);
 
 				// Look into any way we can backup the database easily here...
 
@@ -147,6 +148,7 @@ class database_cleaner
 						}
 					}
 				}
+				$template->assign_var('STEP_SUCCESS', $user->lang['CONFIG_UPDATE_SUCCESS']);
 
 				// Display the extra permission fields and again let them select ones to add/remove
 				$template->assign_block_vars('section', array(
@@ -220,6 +222,7 @@ class database_cleaner
 						}
 					}
 				}
+				$template->assign_var('STEP_SUCCESS', $user->lang['PERMISSION_UPDATE_SUCCESS']);
 
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
 			break;
@@ -269,7 +272,19 @@ class database_cleaner
 
 				}
 
+				// Misc things will be done next
+				$template->assign_var('SPECIAL_MESSAGE', $user->lang['FINAL_STEP']);
+			break;
+
+			case 8 :
+				if ($apply_changes)
+				{
+					set_config('board_disable', 0);
+					$umil->cache_purge();
+				}
+
 				// Finished?
+				trigger_error('DATABASE_CLEANER_SUCCESS');
 			break;
 		}
 
