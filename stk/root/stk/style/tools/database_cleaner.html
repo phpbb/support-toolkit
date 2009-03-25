@@ -3,7 +3,7 @@
 <head>
 	<style type="text/css">
 		.missing { color: #FFFFFF; background-color: #BC2A4D; }
-		.extra { color: #FFFFFF; background-color: #228822; }
+		.extra { color: #000000; background-color: #F0F0F0; }
 	</style>
 </head>
 
@@ -28,8 +28,8 @@
 <!-- IF not S_NO_INSTRUCTIONS -->
 	<fieldset>
 		<legend>{L_INSTRUCTIONS}</legend>
-		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p><br />
-		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p>
+		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
+		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
 	</fieldset>
 <!-- ENDIF -->
 
@@ -40,13 +40,15 @@
 		<table cellspacing="1">
 			<tr>
 				<th>{section.TITLE}</th>
-				<th width="150px" align="right">{L_TYPE}</th>
-				<th width="75px" align="right"></th>
+				<th width="150px">{L_TYPE}</th>
+				<th width="75px">{L_ACTION}</th>
+				<th width="75px"></th>
 			</tr>
 			<!-- BEGIN items -->
-				<tr class="<!-- IF items.MISSING -->missing<!-- ELSE -->extra<!-- ENDIF -->">
+				<tr class="<!-- IF items.MISSING -->missing<!-- ELSE --><!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF --><!-- ENDIF -->">
 					<td style="font-weight: bold;">{items.NAME}</td>
 					<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
+					<td><!-- IF items.MISSING -->{L_ADD}<!-- ELSE -->{L_REMOVE}<!-- ENDIF --></td>
 					<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
 				</tr>
 			<!-- END items -->
