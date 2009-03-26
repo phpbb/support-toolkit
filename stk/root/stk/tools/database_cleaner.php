@@ -472,7 +472,7 @@ class database_cleaner
 			case 7 :
 				// Remove the extra selected tables
 				$error = array();
-				if (true)//$apply_changes)
+				if ($apply_changes)
 				{
 					if (!function_exists('get_tables'))
 					{
