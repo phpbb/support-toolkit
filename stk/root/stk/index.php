@@ -11,10 +11,8 @@
 /**
 * TODO
 * select multiple
-* define PHPBB_ROOT_PATH, STK_ROOT_PATH, PHP_EXT
 *
 * check out the reparse_bbcode tool, many people have had issues with this script.
-* tool to check permissions for duplicates
 * change fix module left/right id's to fix all left/right id's in phpBB3 (would also be nice to know if anything was actually changed)
 */
 

@@ -333,27 +333,193 @@ class database_cleaner
 				// If there were no rows in the table, attempt to insert a row from the data on the table stored in the file for this version,
 					// catch any errors in case a column was added, and keep going until a row is added successfully.
 					// Once one was added successfully we can record the columns and then remove the row again
+
+				$last_output_table = '';
+				foreach ($cleaner->tables as $table_name => $data)
+				{
+					$existing_columns = $this->get_existing_columns($table_name, $data);
+
+					if ($existing_columns === false)
+					{
+						// Table doesn't exist, don't handle here.
+						continue;
+					}
+
+					$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+					sort($columns);
+
+					foreach ($columns as $column)
+					{
+						if ((!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns)) || (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns)))
+						{
+							// Output the table block if it's not been done yet
+							if ($last_output_table != $table_name)
+							{
+								$last_output_table = $table_name;
+
+								$template->assign_block_vars('section', array(
+									'NAME'		=> $table_name,
+									'TITLE'		=> $user->lang['ROWS'],
+								));
+							}
+
+							$template->assign_block_vars('section.items', array(
+								'NAME'			=> $column,
+								'FIELD_NAME'	=> $table_name . '_' . $column,
+								'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
+							));
+						}
+					}
+				}
 			break;
 
 			case 6 :
 				// Update the tables according to what they selected last time
+				$error = array();
 				if ($apply_changes)
 				{
+					foreach ($cleaner->tables as $table_name => $data)
+					{
+						$existing_columns = $this->get_existing_columns($table_name, $data);
 
+						if ($existing_columns === false)
+						{
+							// Table doesn't exist, don't handle here.
+							continue;
+						}
+
+						$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+
+						foreach ($columns as $column)
+						{
+							if (isset($selected[$table_name . '_' . $column]))
+							{
+								if (!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns))
+								{
+									$result = $umil->table_column_remove($table_name, $column);
+									if (stripos($result, 'SQL ERROR'))
+									{
+										$error[] = $result;
+									}
+								}
+								else if (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns))
+								{
+									// This can return an error under some circumstances, like when trying to add an auto-increment field (hope to hell nobody drops one of those)
+									$result = $umil->table_column_add($table_name, $column, $data['COLUMNS'][$column]);
+									if (stripos($result, 'SQL ERROR'))
+									{
+										$error[] = $result;
+									}
+
+									// We can re-add *some* keys
+									if (isset($data['KEYS']))
+									{
+										if (in_array($column, $data['KEYS']))
+										{
+											if ($data['KEYS'][$column][0] == 'INDEX' && $data['KEYS'][$column][1] == $column)
+											{
+												$result = $umil->table_index_add($table_name, $column, $column);
+												if (stripos($result, 'SQL ERROR'))
+												{
+													$error[] = $result;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (sizeof($error))
+				{
+					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
+				}
+				else
+				{
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_COLUMNS_SUCCESS']);
 				}
 
 				// Find any extra tables and list them as options to remove
+				if (!function_exists('get_tables'))
+				{
+					include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
+				}
+
+				$existing_tables = get_tables($db);
+				$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
+				sort($tables);
+
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang['DATABASE_TABLES'],
+					'TITLE'		=> $user->lang['DATABASE_TABLES'],
+				));
+
+				foreach ($tables as $table)
+				{
+					if ((isset($cleaner->tables[$table]) && !in_array($table, $existing_tables)) || (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables)))
+					{
+						$template->assign_block_vars('section.items', array(
+							'NAME'			=> $table,
+							'FIELD_NAME'	=> $table,
+							'MISSING'		=> (isset($cleaner->tables[$table])) ? true : false,
+						));
+					}
+				}
 			break;
 
 			case 7 :
 				// Remove the extra selected tables
-				if ($apply_changes)
+				$error = array();
+				if (true)//$apply_changes)
 				{
+					if (!function_exists('get_tables'))
+					{
+						include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
+					}
 
+					$existing_tables = get_tables($db);
+					$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
+
+					foreach ($tables as $table)
+					{
+						if (isset($selected[$table]))
+						{
+							if (isset($cleaner->tables[$table]) && !in_array($table, $existing_tables))
+							{
+								$result = $umil->table_add($table, $cleaner->tables[$table]);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+							}
+							else if (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables))
+							{
+								$result = $umil->table_remove($table);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+							}
+						}
+					}
+				}
+
+				if (sizeof($error))
+				{
+					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
+				}
+				else
+				{
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_TABLES_SUCCESS']);
 				}
 
 				// Misc things will be done next
-				$template->assign_var('SPECIAL_MESSAGE', $user->lang['FINAL_STEP']);
+				$template->assign_vars(array(
+					'SUCCESS_MESSAGE'	=> $user->lang['FINAL_STEP'],
+					'S_NO_INSTRUCTIONS'	=> true,
+				));
 			break;
 
 			case 8 :
@@ -439,5 +605,120 @@ class database_cleaner
 		'Yahoo [Bot]'				=> array('Yahoo! Slurp', ''),
 		'YahooSeeker [Bot]'			=> array('YahooSeeker/', ''),
 	);
+
+	function get_existing_columns($table_name, $data)
+	{
+		global $db;
+
+		$existing_columns = array();
+
+		$db->return_on_error = true;
+		$sql = 'SELECT * FROM ' . $table_name;
+		$result = $db->sql_query_limit($sql, 1);
+
+		if (!$result)
+		{
+			// Table does not exist?
+			return false;
+		}
+
+		$row = $db->sql_fetchrow($result);
+		$db->return_on_error = false;
+
+		if ($row)
+		{
+			foreach ($row as $name => $value)
+			{
+				$existing_columns[] = $name;
+			}
+		}
+		else
+		{
+			// No rows in the database...gotta do it the hard way.
+			$no_row = true;
+			$db->return_on_error = true; // Must catch errors
+			$sql_ary = array();
+
+			foreach ($data['COLUMNS'] as $name => $type)
+			{
+				if ($type[1] !== NULL) // Skip auto increment fields
+				{
+					$sql_ary[$name] = $type[1];
+				}
+			}
+
+			while ($no_row)
+			{
+				$sql = 'INSERT INTO ' . $table_name . ' ' . $db->sql_build_array('INSERT', $sql_ary);
+				$result = $db->sql_query($sql);
+
+				if (!$result)
+				{
+					$error = $db->sql_error_returned['message'];
+
+					$matches = array();
+					preg_match("#column '([a-zA-Z0-9_\-]+)'#", $error, $matches);
+
+					if (!isset($matches[1]))
+					{
+						trigger_error('Please record the following error and report it to the Support Team at phpbb.com<br /><br />' . $error);
+					}
+					$column = $matches[1];
+
+					if (isset($sql_ary[$column]))
+					{
+						if (stripos($error, 'unknown'))
+						{
+							unset($sql_ary[$column]);
+						}
+						else
+						{
+							// keep trying to guess what type it is...
+							if ($sql_ary[$column] === '')
+							{
+								$sql_ary[$column] = 0;
+							}
+							else
+							{
+								trigger_error('Please record the following error and report it to the Support Team at phpbb.com<br /><br />' . $error);
+							}
+						}
+					}
+					else
+					{
+						$sql_ary[$column] = '';
+					}
+				}
+				else
+				{
+					// Looks like an insertion worked.
+					$sql = 'SELECT * FROM ' . $table_name;
+					$result = $db->sql_query_limit($sql, 1);
+					$row = $db->sql_fetchrow($result);
+
+					if ($row)
+					{
+						foreach ($row as $name => $value)
+						{
+							$existing_columns[] = $name;
+						}
+
+						$no_row = false;
+					}
+					else
+					{
+						trigger_error('Unknown Error - Line 425.  Please contact the Support Team at phpbb.com.');
+					}
+				}
+			}
+
+			// Clean out the table again
+			$db->sql_query('DELETE FROM ' . $table_name);
+
+			$db->return_on_error = false;
+		}
+
+		return $existing_columns;
+	}
 }
 ?>

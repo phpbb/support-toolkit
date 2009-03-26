@@ -381,7 +381,7 @@ class database_cleaner_data
 	// All default tables (copy from create_schema_files for this version)
 	var $tables = array();
 
-	function database_cleaner()
+	function database_cleaner_data()
 	{
 		// This makes it easier, just copy & paste the get_schema_struct function from the develop/create_schema_files.php file
 		$this->tables = $this->get_schema_struct();
