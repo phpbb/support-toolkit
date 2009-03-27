@@ -39,7 +39,7 @@ require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
-/* For testing the style repair
+/* For testing the style repair (when testing comment out the header redirect line below or you'll have an infinate loop :P)
 set_config('default_style', 0);
 $db->sql_query('TRUNCATE TABLE ' . STYLES_TABLE);
 $db->sql_query('TRUNCATE TABLE ' . STYLES_TEMPLATE_TABLE);
