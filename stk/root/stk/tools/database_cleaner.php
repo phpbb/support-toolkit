@@ -325,19 +325,10 @@ class database_cleaner
 				}
 
 				// Time to start going through the database and listing any extra/missing fields
-
-				// Output a list of the name of the table followed by all of the fields in it.  Any extras give the option to remove and any missing give the option to add
-				//(grey background for ones that are there and should be, green for ones that are there and should not be, red for ones that are not there and should be)
-
-				// When checking for database columns, select a row from the table to find all the column names.
-				// If there were no rows in the table, attempt to insert a row from the data on the table stored in the file for this version,
-					// catch any errors in case a column was added, and keep going until a row is added successfully.
-					// Once one was added successfully we can record the columns and then remove the row again
-
 				$last_output_table = '';
 				foreach ($cleaner->tables as $table_name => $data)
 				{
-					$existing_columns = $this->get_existing_columns($table_name, $data);
+					$existing_columns = $this->get_columns($table_name);
 
 					if ($existing_columns === false)
 					{
@@ -380,7 +371,7 @@ class database_cleaner
 				{
 					foreach ($cleaner->tables as $table_name => $data)
 					{
-						$existing_columns = $this->get_existing_columns($table_name, $data);
+						$existing_columns = $this->get_columns($table_name);
 
 						if ($existing_columns === false)
 						{
@@ -606,119 +597,116 @@ class database_cleaner
 		'YahooSeeker [Bot]'			=> array('YahooSeeker/', ''),
 	);
 
-	function get_existing_columns($table_name, $data)
+	function get_columns($table)
 	{
 		global $db;
 
-		$existing_columns = array();
-
-		$db->return_on_error = true;
-		$sql = 'SELECT * FROM ' . $table_name;
-		$result = $db->sql_query_limit($sql, 1);
-
-		if (!$result)
+		if (!class_exists('phpbb_db_tools'))
 		{
-			// Table does not exist?
-			return false;
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
+		}
+		$db_tools = new phpbb_db_tools($db);
+
+		$sql = '';
+		$column_name = '';
+
+		// Set the query and column for each dbms
+		switch ($db_tools->sql_layer)
+		{
+			// MySQL
+			case 'mysql_40'	:
+			case 'mysql_41'	:
+				$sql = "SHOW COLUMNS FROM {$table}";
+				$column_name = 'Field';
+			break;
+
+			// PostgreSQL
+			case 'postgres'	:
+				$sql = "SELECT a.attname
+					FROM (pg_class c, pg_attribute a)
+					WHERE c.relname = '{$table}'
+						AND a.attnum > 0
+						AND a.attrelid = c.oid";
+				$column_name = 'attname';
+			break;
+
+			// MsSQL
+			case 'mssql'	:
+				$sql = "SELECT c.name
+					FROM syscolumns c
+					LEFT JOIN (sysobjects o)
+					ON (c.id = o.id)
+					WHERE o.name = '{$table}'";
+				$column_name = 'name';
+			break;
+
+			// Oracle
+			case 'oracle'	:
+				$sql = "SELECT column_name
+					FROM user_tab_columns
+					WHERE table_name = '{$table}'";
+				$column_name = 'column_name';
+			break;
+
+			// Firebird
+			case 'firebird'	:
+				$sql = "SELECT RDB\$FIELD_NAME as FNAME
+					FROM RDB\$RELATION_FIELDS
+					WHERE RDB\$RELATION_NAME = '{$table}'";
+				$column_name = 'fname';
+			break;
+
+			// SQLite
+			case 'sqlite'	:
+				$sql = "SELECT sql
+					FROM sqlite_master
+					WHERE type = 'table'
+						AND name = '{$table}'";
+				$column_name = 'sql';
+			break;
 		}
 
-		$row = $db->sql_fetchrow($result);
-		$db->return_on_error = false;
+		// Get the columns
+		$columns = array();
 
-		if ($row)
+		if ($db_tools->sql_layer != 'sqlite')
 		{
-			foreach ($row as $name => $value)
+			$result = $db->sql_query($sql);
+			while ($row = $db->sql_fetchrow($result))
 			{
-				$existing_columns[] = $name;
+				array_push($columns, $row[$column_name]);
 			}
+			$db->sql_freeresult($result);
 		}
 		else
 		{
-			// No rows in the database...gotta do it the hard way.
-			$no_row = true;
-			$db->return_on_error = true; // Must catch errors
-			$sql_ary = array();
+			// Unfortunately SQLite doen't play as nice as the others
+			$col_ary = $entities = $matches = array();
+			$cols = $declaration = '';
 
-			foreach ($data['COLUMNS'] as $name => $type)
+			$result = $db->sql_query($sql);
+			while ($row = $db->sql_fetchrow($result))
 			{
-				if ($type[1] !== NULL) // Skip auto increment fields
+				preg_match('#\((.*)\)#s', $row[$column_name], $matches);
+
+				$cols = trim($matches[1]);
+				$col_ary = preg_split('/,(?![\s\w]+\))/m', $cols);
+
+				foreach ($col_ary as $declaration)
 				{
-					$sql_ary[$name] = $type[1];
+					$entities = preg_split('#\s+#', trim($declaration));
+					if ($entities[0] == 'PRIMARY')
+					{
+						continue;
+					}
+
+					array_push($columns, $entities[0]);
 				}
 			}
-
-			while ($no_row)
-			{
-				$sql = 'INSERT INTO ' . $table_name . ' ' . $db->sql_build_array('INSERT', $sql_ary);
-				$result = $db->sql_query($sql);
-
-				if (!$result)
-				{
-					$error = $db->sql_error_returned['message'];
-
-					$matches = array();
-					preg_match("#column '([a-zA-Z0-9_\-]+)'#", $error, $matches);
-
-					if (!isset($matches[1]))
-					{
-						trigger_error('Please record the following error and report it to the Support Team at phpbb.com<br /><br />' . $error);
-					}
-					$column = $matches[1];
-
-					if (isset($sql_ary[$column]))
-					{
-						if (stripos($error, 'unknown'))
-						{
-							unset($sql_ary[$column]);
-						}
-						else
-						{
-							// keep trying to guess what type it is...
-							if ($sql_ary[$column] === '')
-							{
-								$sql_ary[$column] = 0;
-							}
-							else
-							{
-								trigger_error('Please record the following error and report it to the Support Team at phpbb.com<br /><br />' . $error);
-							}
-						}
-					}
-					else
-					{
-						$sql_ary[$column] = '';
-					}
-				}
-				else
-				{
-					// Looks like an insertion worked.
-					$sql = 'SELECT * FROM ' . $table_name;
-					$result = $db->sql_query_limit($sql, 1);
-					$row = $db->sql_fetchrow($result);
-
-					if ($row)
-					{
-						foreach ($row as $name => $value)
-						{
-							$existing_columns[] = $name;
-						}
-
-						$no_row = false;
-					}
-					else
-					{
-						trigger_error('Unknown Error - Line 425.  Please contact the Support Team at phpbb.com.');
-					}
-				}
-			}
-
-			// Clean out the table again
-			$db->sql_query('DELETE FROM ' . $table_name);
-
-			$db->return_on_error = false;
+			$db->sql_freeresult($result);
 		}
 
-		return $existing_columns;
+		return $columns;
 	}
 }
 ?>
