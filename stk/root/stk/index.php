@@ -26,14 +26,48 @@ define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
 $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
 
+// Check to make sure the config file exists.  If not we will attempt critical repair.
+if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
+{
+	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
+	critical_config_repair();
+	header('Location: ' . STK_ROOT_PATH . 'index.' . PHP_EXT);
+	exit;
+}
+
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
+/* For testing the style repair
+set_config('default_style', 0);
+$db->sql_query('TRUNCATE TABLE ' . STYLES_TABLE);
+$db->sql_query('TRUNCATE TABLE ' . STYLES_TEMPLATE_TABLE);
+$db->sql_query('TRUNCATE TABLE ' . STYLES_THEME_TABLE);
+$db->sql_query('TRUNCATE TABLE ' . STYLES_IMAGESET_TABLE);*/
+
+// A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
+$sql = 'SELECT s.style_id FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
+	WHERE s.style_id = {$config['default_style']}
+		AND t.template_id = s.template_id
+		AND c.theme_id = s.theme_id
+		AND i.imageset_id = s.imageset_id";
+$result = $db->sql_query($sql);
+if (!$db->sql_fetchrow($result))
+{
+	// Styles appear to be broken.  Attempt automatic repair
+	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
+	critical_style_repair();
+	header('Location: ' . STK_ROOT_PATH . 'index.' . PHP_EXT);
+	exit;
+}
+$db->sql_freeresult($result);
+
+
 // Start session management
 $user->session_begin();
 $auth->acl($user->data);
-$user->setup('acp/common');
+$user->setup('acp/common', $config['default_style']);
 
 // Language path.  We are using a custom language path to keep all the files within the stk/ folder.  First check if the $user->data['user_lang'] path exists, if not, check if the default lang path exists, and if still not use english.
 stk_add_lang('common');
