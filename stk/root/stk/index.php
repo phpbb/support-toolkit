@@ -19,7 +19,7 @@
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
-if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', '../'); }
+if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
 if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
 define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
 
@@ -37,6 +37,7 @@ if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
 
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
+require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
 /* For testing the style repair (when testing comment out the header redirect line below or you'll have an infinate loop :P)
@@ -216,9 +217,7 @@ $template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
 $user->theme['template_storedb'] = false;
 
 // Setup some variables
-$tool_req = request_var('t', ''); // the tool the user wants to run
 $submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
-$available_tools = array();
 
 // If they canceled redirect them to the STK index.
 if (isset($_POST['cancel']))
@@ -226,37 +225,17 @@ if (isset($_POST['cancel']))
 	redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id));
 }
 
-// Get the available tools
-$dir = opendir(STK_ROOT_PATH . 'tools');
-while($file = readdir($dir))
-{
-	if (substr($file, -(strlen(PHP_EXT) + 1)) != '.' . PHP_EXT || $file == 'tutorial.' . PHP_EXT)
-	{
-		continue;
-	}
-
-	$file = substr($file, 0, -(strlen(PHP_EXT) + 1));
-	$available_tools[] = $file;
-
-	// Include the language file (if possible)
-	stk_add_lang("tools/$file");
-}
-closedir($dir);
-
-// Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
-if (!$tool_req || preg_match('#([^a-zA-Z0-9_])#', $tool_req) || !file_exists(STK_ROOT_PATH . 'tools/' . $tool_req . '.' . PHP_EXT))
-{
-	$tool_req = '';
-}
+// Setup the plugin manager
+$plugin = new plugin();
 
 // Output common stuff
 $template->assign_vars(array(
-	'U_ACTION'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, (($tool_req) ? "t=$tool_req" : ''), true, $user->session_id),
+	'U_ACTION'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $plugin->url_arg(), true, $user->session_id),
 	'U_ADM_INDEX'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
 	'U_ADM_LOGOUT'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
 	'U_STK_INDEX'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
 	'U_STK_LOGOUT'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'action=stklogout', true, $user->session_id),
-	'U_BACK_TOOL'	=> ($tool_req) ? append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=$tool_req", true, $user->session_id) : false,
+	'U_BACK_TOOL'	=> ($plugin->req_tool) ? append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $plugin->url_arg(), true, $user->session_id) : false,
 	'U_INDEX'		=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
 	'U_LOGOUT'		=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
 
@@ -264,11 +243,10 @@ $template->assign_vars(array(
 ));
 
 // Does the user want to run a tool?
-if ($tool_req)
+if ($plugin->req_tool)
 {
-	add_form_key($tool_req);
-	include (STK_ROOT_PATH . 'tools/' . $tool_req . '.' . PHP_EXT);
-	$tool = new $tool_req;
+	// Load the tool
+	$tool = $plugin->load_tool($plugin->req_cat, $plugin->req_tool);
 
 	$error = array();
 	if ($submit)
@@ -384,51 +362,21 @@ else
 	// Output the main page
 	page_header($user->lang['SUPPORT_TOOL_KIT']);
 
-	// Organize the available tools into categories
-	foreach ($available_tools as $tool)
+	// Set what is being displayed
+	if (empty($plugin->req_cat) || $plugin->req_cat == 'main')
 	{
-		include (STK_ROOT_PATH . 'tools/' . $tool . '.' . PHP_EXT);
-		if (!class_exists($tool))
-		{
-			trigger_error(sprintf($user->lang['INCORRECT_CLASS'], $tool, PHP_EXT), E_USER_ERROR);
-		}
-
-		$class = new $tool;
-
-		// A tool can be limited to a certein phpBB version
-		if (isset($class->phpbb_version) && version_compare($config['version'], $class->phpbb_version, "eq") != 1)
-		{
-			continue;
-		}
-
-		$tool_info = $class->info();
-
-		if (!isset($tools[$tool_info['CATEGORY']]))
-		{
-			$tools[$tool_info['CATEGORY']] = array();
-		}
-
-		$tools[$tool_info['CATEGORY']][] = array_merge($tool_info, array('name' => $tool));
+		// Just the welcome page
+		$template->assign_var('S_WELCOME', true);
 	}
-
-	// Sort by the category name
-	ksort($tools);
-
-	// Output the tools and categories
-	foreach ($tools as $category => $tool_ary)
+	else
 	{
-		$template->assign_block_vars('categories', array(
-			'NAME'		=> $category,
+		// Category title and desc if available
+		$template->assign_vars(array(
+			'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->req_cat)],
+			'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN'] : '',
 		));
-
-		foreach ($tool_ary as $tool)
-		{
-			$template->assign_block_vars('categories.tools', array_merge($tool, array(
-				'U_TOOL'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=' . $tool['name'], true, $user->session_id),
-			)));
-		}
 	}
-
+	
 	$template->set_filenames(array(
 		'body' => 'index_body.html',
 	));

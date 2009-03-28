@@ -59,6 +59,17 @@ $lang = array_merge($lang, array(
 	'TOOL_NAME'							=> 'Tool Name',
 
 	'USER_GROUP_TOOLS'					=> 'User/Group Tools',
+
+	'WELCOME'							=> 'Support Tool Kit',
+	'WELCOME_EXPLAIN'					=> '................ I\'m no story writer so someone else can think up what comes here :P ................',
 ));
 
+// Categories
+$lang = array_merge($lang, array(
+	'CAT_ADMIN'			=> 'Admin Tools',
+	'CAT_DEV'			=> 'Developer Tools',
+	'CAT_MAIN'			=> 'main',
+	'CAT_SUPPORT'		=> 'Support Tools',
+	'CAT_USER_GROUP'	=> 'User/Group Tools',
+));
 ?>

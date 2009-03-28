@@ -167,6 +167,14 @@ function switch_menu()
 	</div>
 
 	<div id="page-body">
+		<div id="tabs">
+			<ul>
+			<!-- BEGIN top_nav -->
+				<li<!-- IF top_nav.S_SELECTED --> id="activetab"<!-- ENDIF -->><a href="{top_nav.U_TITLE}"><span>{top_nav.L_TITLE}</span></a></li>
+			<!-- END top_nav -->
+			</ul>
+		</div>
+		
 		<div id="acp">
 		<div class="panel">
 			<span class="corners-top"><span></span></span>
@@ -177,6 +185,12 @@ function switch_menu()
 					<div id="menu">
 						<p>{L_LOGGED_IN_AS}<br /><strong>{USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOGOUT}</a>&nbsp;][&nbsp;<a href="{U_ADM_LOGOUT}">{L_ADM_LOGOUT}</a>&nbsp;]</p>
 						<!-- IF S_STK_LOGIN --><p>[&nbsp;<a href="{U_STK_LOGOUT}">{L_STK_LOGOUT}</a>&nbsp;]</p><!-- ENDIF -->
+						
+						<ul>
+							<!-- BEGIN left_nav -->
+							<li<!-- IF left_nav.S_SELECTED --> id="activemenu"<!-- ENDIF -->><a href="{left_nav.U_TITLE}"><span>{left_nav.L_TITLE}</span></a></li>
+							<!-- END left_nav -->
+						</ul>
 					</div>
 
 					<div id="main">

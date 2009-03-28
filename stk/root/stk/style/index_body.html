@@ -1,21 +1,15 @@
 <!-- INCLUDE overall_header.html -->
 
-<!-- BEGIN categories -->
-	<fieldset>
-		<legend>{categories.NAME}</legend>
-
-		<table cellspacing="1">
-			<tr>
-				<th>{L_TOOL_NAME}</th>
-			</tr>
-			<!-- BEGIN tools -->
-				<tr class="<!-- IF tools.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
-					<td><a href="{tools.U_TOOL}">{tools.NAME}</a><!-- IF tools.NAME_EXPLAIN --><br /><span>{tools.NAME_EXPLAIN}</span><!-- ENDIF --></td>
-				</tr>
-			<!-- END tools -->
-		</table>
-
-	</fieldset>
-<!-- END categories -->
+<!-- IF S_WELCOME -->
+	<h1>{L_WELCOME}</h1>
+	<p>
+		{L_WELCOME_EXPLAIN}
+	</p>
+<!-- ELSE -->
+	<h1>{L_TITLE}</h1>
+	<p>
+		{L_TITLE_EXPLAIN}
+	</p>
+<!-- ENDIF -->
 
 <!-- INCLUDE overall_footer.html -->
