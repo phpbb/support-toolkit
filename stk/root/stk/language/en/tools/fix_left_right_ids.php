@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Fix Module Left/Right ID's
+* @package Support Tool Kit - Fix Left/Right ID's
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -38,11 +38,12 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'FIX_MODULES'			=> 'Fix Module Left/Right ID\'s',
-	'FIX_MODULES_CONFIRM'	=> 'Are you sure you want to fix the modules left and right ID\'s?<br /><br /><strong>Make sure you backup your modules table before running this just in case something goes wrong.</strong>',
-	'FIX_MODULES_EXPLAIN'	=> 'Repair the UCP/MCP/ACP module left and right ID\'s.  For more info <a href="http://www.lithiumstudios.org/forum/viewtopic.php?f=9&t=691">read this topic</a>.',
+	'FIX_LEFT_RIGHT_IDS'			=> 'Fix Left/Right ID\'s',
+	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Are you sure you want to fix the left and right ID\'s?<br /><br /><strong>Make sure you backup your database before running this just in case something goes wrong.</strong>',
+	'FIX_LEFT_RIGHT_IDS_EXPLAIN'	=> 'Repair the forum/module left and right ID\'s.  For more info <a href="http://www.lithiumstudios.org/forum/viewtopic.php?f=9&t=691">read this topic</a>.',
 
-	'MODULE_FIX_SUCCESS'	=> 'The modules left/right ID\'s have been successfully fixed.',
+	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'The left/right ID\'s have been successfully fixed.',
+	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'The tool has finished going through all of the left and right id\'s and all rows are already correct so no changes were made.',
 ));
 
 ?>

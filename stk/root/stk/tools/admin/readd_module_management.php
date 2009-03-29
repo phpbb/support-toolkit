@@ -27,8 +27,6 @@ class readd_module_management
 		return array(
 			'NAME'			=> $user->lang['READD_MODULE_MANATEMENT'],
 			'NAME_EXPLAIN'	=> $user->lang['READD_MODULE_MANATEMENT_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

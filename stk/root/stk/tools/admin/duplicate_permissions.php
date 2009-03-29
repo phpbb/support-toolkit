@@ -24,7 +24,6 @@ class duplicate_permissions
 		return array(
 			'NAME'			=> $user->lang['DUPLICATE_PERMISSIONS_REMOVER'],
 			'NAME_EXPLAIN'	=> $user->lang['DUPLICATE_PERMISSIONS_REMOVER_EXPLAIN'],
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

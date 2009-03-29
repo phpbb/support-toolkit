@@ -27,8 +27,6 @@ class auto_cookies
 		return array(
 			'NAME'			=> $user->lang['AUTO_COOKIES'],
 			'NAME_EXPLAIN'	=> $user->lang['AUTO_COOKIES_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

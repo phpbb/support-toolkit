@@ -13,7 +13,6 @@
 * select multiple
 *
 * check out the reparse_bbcode tool, many people have had issues with this script.
-* change fix module left/right id's to fix all left/right id's in phpBB3 (would also be nice to know if anything was actually changed)
 */
 
 define('IN_PHPBB', true);
@@ -376,7 +375,7 @@ else
 			'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN'] : '',
 		));
 	}
-	
+
 	$template->set_filenames(array(
 		'body' => 'index_body.html',
 	));

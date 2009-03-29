@@ -22,7 +22,6 @@ class database_cleaner
 		return array(
 			'NAME'			=> $user->lang['DATABASE_CLEANER'],
 			'NAME_EXPLAIN'	=> $user->lang['DATABASE_CLEANER_EXPLAIN'],
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

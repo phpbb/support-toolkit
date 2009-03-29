@@ -27,8 +27,6 @@ class purge_cache
 		return array(
 			'NAME'			=> $user->lang['PURGE_CACHE'],
 			'NAME_EXPLAIN'	=> $user->lang['PURGE_CACHE_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

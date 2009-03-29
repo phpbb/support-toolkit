@@ -27,8 +27,6 @@ class reset_styles
 		return array(
 			'NAME'			=> $user->lang['RESET_STYLES'],
 			'NAME_EXPLAIN'	=> $user->lang['RESET_STYLES_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 
