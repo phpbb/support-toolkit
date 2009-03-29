@@ -121,6 +121,9 @@ class duplicate_permissions
 			$db->sql_query('DELETE FROM ' . $table . ' WHERE ' . $db->sql_in_set('auth_option_id', 	array_keys($acl_duplicates)));
 		}
 
+		// Purge the auth cache in the users table
+		$db->sql_query('UPDATE ' . USERS_TABLE . ' SET user_permissions = \'\'');
+
 		trigger_error('DUPLICATES_FOUND');
 	}
 }

@@ -49,7 +49,10 @@ class purge_cache
 	*/
 	function run_tool(&$error)
 	{
-		global $cache;
+		global $cache, $db;
+
+		// Purge the auth cache in the users table
+		$db->sql_query('UPDATE ' . USERS_TABLE . ' SET user_permissions = \'\'');
 
 		$cache->purge();
 
