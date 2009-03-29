@@ -259,6 +259,9 @@ function critical_style_repair()
 			// That should be everything, only reset the board style and purge the cache yet
 			set_config('default_style', $style_id);
 			$cache->purge();
+
+			$umil = new umil();
+			$umil->cache_purge(array('template', 'theme', 'imageset'));
 		}
 		else
 		{
