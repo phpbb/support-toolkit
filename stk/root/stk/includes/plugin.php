@@ -71,6 +71,9 @@ class plugin
 		$this->req_cat	= request_var('c', 'main');
 		$this->req_tool	= request_var('t', '');
 		
+		// Make sure the form_key is set
+		add_form_key($this->req_tool);
+		
 		// Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
 		if (!$this->req_tool || preg_match('#([^a-zA-Z0-9_])#', $this->req_tool) || !file_exists(STK_ROOT_PATH . 'tools/' . $this->req_cat . '/' . $this->req_tool . '.' . PHP_EXT))
 		{
@@ -195,6 +198,11 @@ class plugin
 		}
 		
 		return $_args;
+	}
+	
+	function get_cat()
+	{
+		return $this->req_cat;
 	}
 	
 	/**
