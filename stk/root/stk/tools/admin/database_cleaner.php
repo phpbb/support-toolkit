@@ -27,7 +27,7 @@ class database_cleaner
 
 	function display_options()
 	{
-		global $config, $db, $template, $user;
+		global $config, $db, $plugin, $template, $user;
 
 		$continue = (isset($_POST['continue'])) ? true : false;
 		$step = request_var('step', 0);
@@ -39,7 +39,7 @@ class database_cleaner
 		if ($step > 0)
 		{
 			// Kick them if bad form key
-			check_form_key('database_cleaner', false, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=database_cleaner'), true);
+			check_form_key('database_cleaner', false, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'database_cleaner')), true);
 		}
 
 		// include the required file for this version
@@ -529,7 +529,7 @@ class database_cleaner
 		$template->assign_vars(array(
 			'STEP'			=> $step,
 
-			'U_NEXT_STEP'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=database_cleaner&amp;step=' . ($step + 1)),
+			'U_NEXT_STEP'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'database_cleaner&amp;step=' . ($step + 1))),
 		));
 
 		$template->set_filenames(array(
