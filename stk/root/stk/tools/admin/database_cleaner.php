@@ -251,11 +251,12 @@ class database_cleaner
 				// Reset the bots if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
-					$sql = 'SELECT group_id
+					$sql = 'SELECT group_id, group_colour
 						FROM ' . GROUPS_TABLE . "
 						WHERE group_name = 'BOTS'";
 					$result = $db->sql_query($sql);
-					$group_id = (int) $db->sql_fetchfield('group_id');
+					$group_id		= (int) $db->sql_fetchfield('group_id', false, $result);
+					$group_colour	= $db->sql_fetchfield('group_colour', 0, $result);
 					$db->sql_freeresult($result);
 
 					if (!$group_id)
@@ -294,7 +295,7 @@ class database_cleaner
 								'username'				=> $bot_name,
 								'user_regdate'			=> time(),
 								'user_password'			=> '',
-								'user_colour'			=> '9E8DA7',
+								'user_colour'			=> $group_colour,
 								'user_email'			=> '',
 								'user_lang'				=> $config['default_lang'],
 								'user_style'			=> 1,
