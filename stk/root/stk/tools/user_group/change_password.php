@@ -27,8 +27,6 @@ class change_password
 		return array(
 			'NAME'			=> $user->lang['CHANGE_PASSWORD'],
 			'NAME_EXPLAIN'	=> $user->lang['CHANGE_PASSWORD_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['USER_GROUP_TOOLS'],
 		);
 	}
 

@@ -27,8 +27,6 @@ class add_user
 		return array(
 			'NAME'			=> $user->lang['ADD_USER'],
 			'NAME_EXPLAIN'	=> $user->lang['ADD_USER_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['USER_GROUP_TOOLS'],
 		);
 	}
 

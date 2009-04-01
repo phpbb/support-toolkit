@@ -27,8 +27,6 @@ class make_founder
 		return array(
 			'NAME'			=> $user->lang['MAKE_FOUNDER'],
 			'NAME_EXPLAIN'	=> $user->lang['MAKE_FOUNDER_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['USER_GROUP_TOOLS'],
 		);
 	}
 
