@@ -38,9 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ADMIN_TOOLS'						=> 'Admin Tools',
 	'SUPPORT_TOOL_KIT'					=> 'Support Tool Kit',
-	'SUPPORT_TOOL_KIT_INDEX'				=> 'Support Tool Kit Index',
+	'SUPPORT_TOOL_KIT_INDEX'			=> 'Support Tool Kit Index',
 	'SUPPORT_TOOL_KIT_PASSWORD'			=> 'Password',
 	'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Since you are not logged in to phpBB3 you must verify that you are the board owner by entering the Support Tool Kit Password.<br /><br /><strong>Cookies MUST be allowed by your browser or you will not be able to stay logged in.</strong>',
 	'STK_LOGOUT'						=> 'STK Logout',
@@ -49,8 +48,6 @@ $lang = array_merge($lang, array(
 	'BACK_TOOL'							=> 'Back to last Tool',
 	'BOARD_FOUNDER_ONLY'				=> 'Only Board Founders may access the Support Tool Kit.',
 
-	'DEV_TOOLS'							=> 'Developer Tools',
-
 	'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
 	'INCORRECT_PASSWORD'				=> 'Password is incorrect',
 	'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn\'t compatible with this tool. Make sure that you are running phpBB version: %1$s, in order to run this tool',
@@ -58,10 +55,8 @@ $lang = array_merge($lang, array(
 	'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is trying to load a not existing file: %1$s',
 	'TOOL_NAME'							=> 'Tool Name',
 
-	'USER_GROUP_TOOLS'					=> 'User/Group Tools',
-
 	'WELCOME'							=> 'Support Tool Kit',
-	'WELCOME_EXPLAIN'					=> '................ I\'m no story writer so someone else can think up what comes here :P ................',
+	'WELCOME_EXPLAIN'					=> 'The Support Tool Kit, or STK, is a package that can be used to recover phpBB 3.0.x installations, or fix common issues within a working installation. The package is a second ACP that can be easily installed on any working phpBB 3 board, and has the look and feel of the phpBB 3 ACP, but gives the administrator access to a whole new set of tools that can be used in cases where phpBB might not function correctly anymore.',
 ));
 
 // Categories
