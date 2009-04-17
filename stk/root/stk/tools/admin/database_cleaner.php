@@ -29,12 +29,11 @@ class database_cleaner
 	{
 		global $config, $db, $plugin, $template, $user;
 
-		$continue = (isset($_POST['continue'])) ? true : false;
 		$step = request_var('step', 0);
 		$selected = request_var('items', array('' => ''));
 
 		// Apply Changes to the DB?
-		$apply_changes = false;
+		$apply_changes = (isset($_POST['continue'])) ? true : false;
 
 		if ($step > 0)
 		{
