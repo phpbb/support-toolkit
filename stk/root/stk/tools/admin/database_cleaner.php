@@ -37,6 +37,9 @@ class database_cleaner
 
 		if ($step > 0)
 		{
+			// Unlock the board
+			set_config('board_disable', 0);
+			
 			// Kick them if bad form key
 			check_form_key('database_cleaner', false, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'database_cleaner')), true);
 		}
