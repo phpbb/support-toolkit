@@ -40,7 +40,7 @@ class database_cleaner
 		{
 			// Unlock the board
 			set_config('board_disable', 0);
-			
+
 			// Kick them if bad form key
 			check_form_key('database_cleaner', false, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'database_cleaner')), true);
 		}
@@ -234,13 +234,171 @@ class database_cleaner
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang['PERMISSION_UPDATE_SUCCESS']);
 
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
+				$missing_modules = $cleaner->modules;
+				$extra_modules = array();
+				$sql = 'SELECT * FROM ' . MODULES_TABLE . '
+					ORDER BY left_id';
+				$result = $db->sql_query($sql);
+				while ($row = $db->sql_fetchrow($result))
+				{
+					if (!isset($cleaner->modules[$row['module_class']]))
+					{
+						if (!isset($extra_modules[$row['module_class']]))
+						{
+							$extra_modules[$row['module_class']] = array();
+						}
+
+						$extra_modules[$row['module_class']][] = $row;
+					}
+					else
+					{
+						$extra = true;
+						foreach ($cleaner->modules[$row['module_class']] as $module_id => $module)
+						{
+							if ($module['parent_id'] == $row['parent_id'] && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
+							{
+								$extra = false;
+								unset($missing_modules[$row['module_class']][$module_id]);
+							}
+						}
+
+						if ($extra == true)
+						{
+							if (!isset($extra_modules[$row['module_class']]))
+							{
+								$extra_modules[$row['module_class']] = array();
+							}
+
+							$extra_modules[$row['module_class']][] = $row;
+						}
+					}
+				}
+				$db->sql_freeresult($result);
+
+				$template->assign_block_vars('section', array(
+					'TITLE'		=> $user->lang['ACP_MODULE_MANAGEMENT'],
+				));
+
+				foreach ($missing_modules as $class => $rows)
+				{
+					foreach ($rows as $id => $row)
+					{
+						$template->assign_block_vars('section.items', array(
+							'FIELD_NAME'	=> 'missing-' . $id,
+							'NAME'			=> $class . ' - ' . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
+							'MISSING'		=> true,
+						));
+					}
+				}
+
+				foreach ($extra_modules as $class => $rows)
+				{
+					foreach ($rows as $row)
+					{
+						$template->assign_block_vars('section.items', array(
+							'FIELD_NAME'	=> 'extra-' . $row['module_id'],
+							'NAME'			=> $class . ' - ' . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
+						));
+					}
+				}
 			break;
 
 			case 4 :
 				// Remove the extra modules they selected, add any they selected to be added
 				if ($apply_changes)
 				{
+					$missing_modules = $cleaner->modules;
+					$extra_modules = $error = array();
+					$sql = 'SELECT * FROM ' . MODULES_TABLE . '
+						ORDER BY left_id';
+					$result = $db->sql_query($sql);
+					while ($row = $db->sql_fetchrow($result))
+					{
+						if (!isset($cleaner->modules[$row['module_class']]))
+						{
+							if (!isset($extra_modules[$row['module_class']]))
+							{
+								$extra_modules[$row['module_class']] = array();
+							}
 
+							$extra_modules[$row['module_class']][] = $row;
+						}
+						else
+						{
+							$extra = true;
+							foreach ($cleaner->modules[$row['module_class']] as $module_id => $module)
+							{
+								if ($module['parent_id'] == $row['parent_id'] && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
+								{
+									$extra = false;
+									unset($missing_modules[$row['module_class']][$module_id]);
+								}
+							}
+
+							if ($extra == true)
+							{
+								if (!isset($extra_modules[$row['module_class']]))
+								{
+									$extra_modules[$row['module_class']] = array();
+								}
+
+								$extra_modules[$row['module_class']][] = $row;
+							}
+						}
+					}
+					$db->sql_freeresult($result);
+
+					foreach ($missing_modules as $class => $rows)
+					{
+						foreach ($rows as $row)
+						{
+							if ($row['module_basename'])
+							{
+								//echo 'Add ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_basename'] . ' ' . $row['module_mode'];
+								$umil->module_add($class, $row['parent_id'], array(
+									'module_basename'	=> $row['module_basename'],
+									'modes'				=> array($row['module_mode']),
+								));
+								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+								{
+									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+								}
+							}
+							else
+							{
+								//echo 'Add ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_langname'];
+								$umil->module_add($class, $row['parent_id'], $row['module_langname']);
+								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+								{
+									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+								}
+							}
+						}
+					}
+
+					foreach ($extra_modules as $class => $rows)
+					{
+						foreach ($rows as $id => $row)
+						{
+							if (isset($selected['missing-' . $id]))
+							{
+								echo 'Remove ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_langname'];
+								/*$umil->module_remove($class, $row['parent_id'], $row['module_langname']);
+								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+								{
+									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+								}*/
+							}
+						}
+					}
+				}
+				if (sizeof($error))
+				{
+					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
+				}
+				else
+				{
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['MODULE_UPDATE_SUCCESS']);
 				}
 
 				// Ask if they would like to reset the bots (handled in the template)

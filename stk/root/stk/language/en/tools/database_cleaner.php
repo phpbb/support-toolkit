@@ -60,13 +60,14 @@ $lang = array_merge($lang, array(
 'PERMISSION_SETTINGS' => 'Permission Options',
 'CONFIG_UPDATE_SUCCESS' => 'The configuration settings have been updated successfully!',
 'PERMISSION_UPDATE_SUCCESS' => 'The permission settings have been updated successfully!',
+'MODULE_UPDATE_SUCCESS'	=> 'The modules have been updated successfully!',
 'BOARD_DISABLE_SUCCESS' => 'The board has been disabled successfully!',
 'SUCCESS' => 'Success',
 'DATABASE_CLEANER_SUCCESS' => 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',
 'FINAL_STEP' => 'This is the final step.<br /><br />We will now re-enable your board and purge your forum\'s cache.',
 'NO_BOT_GROUP' => 'Could not reset the bots, missing Bot group.',
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
-	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and readd missing items).',
+	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and re-add missing items).',
 
 	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Tool Kit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time between a new version of phpBB3 being released and this tool being updated to support the newest version.',
 ));

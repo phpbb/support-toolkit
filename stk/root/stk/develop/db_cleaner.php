@@ -41,6 +41,19 @@ while ($row = $db->sql_fetchrow($result))
 output_list($permissions, 'auth_option');
 */
 
+/*$class = 'ucp';
+$modules = array();
+$sql = 'SELECT module_id, module_basename, parent_id, module_langname, module_mode FROM ' . MODULES_TABLE . '
+	WHERE module_class = \'' . $class . '\'
+	ORDER BY module_id';
+$result = $db->sql_query($sql);
+while ($row = $db->sql_fetchrow($result))
+{
+	$modules[] = $row;
+}
+
+output_list($modules, 'module_id');*/
+
 die();
 
 function output_list($data, $key)
@@ -58,7 +71,7 @@ function output_list($data, $key)
 	$output = '';
 	foreach ($data as $row)
 	{
-		$output .= "\t\t'{$row[$key]}'";
+		$output .= "\t\t\t'{$row[$key]}'";
 
 		$tabs = ($total_tabs - ceil((utf8_strlen($row[$key]) + 3) / 4));
 		for($i = 0; $i <= $tabs; $i++)
