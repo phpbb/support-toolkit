@@ -15,6 +15,9 @@ if (!defined('IN_PHPBB'))
 
 class database_cleaner
 {
+	// Will hold existing modules when we get to the modules part
+	var $modules = array();
+
 	function info()
 	{
 		global $user;
@@ -56,6 +59,8 @@ class database_cleaner
 
 		// We will need UMIL
 		$umil = new umil();
+
+		$user->add_lang('acp/common');
 
 		switch ($step)
 		{
@@ -241,6 +246,8 @@ class database_cleaner
 				$result = $db->sql_query($sql);
 				while ($row = $db->sql_fetchrow($result))
 				{
+					$this->modules[$row['module_id']] = $row;
+
 					if (!isset($cleaner->modules[$row['module_class']]))
 					{
 						if (!isset($extra_modules[$row['module_class']]))
@@ -255,7 +262,9 @@ class database_cleaner
 						$extra = true;
 						foreach ($cleaner->modules[$row['module_class']] as $module_id => $module)
 						{
-							if ($module['parent_id'] == $row['parent_id'] && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
+							$parent = ($module['parent_id']) ? $cleaner->modules[$row['module_class']][$module['parent_id']]['module_langname'] : '';
+							$existing_parent = ($row['parent_id']) ? $this->modules[$row['parent_id']]['module_langname'] : '';
+							if ($parent == $existing_parent && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
 							{
 								$extra = false;
 								unset($missing_modules[$row['module_class']][$module_id]);
@@ -283,9 +292,10 @@ class database_cleaner
 				{
 					foreach ($rows as $id => $row)
 					{
+						$parent = ($row['parent_id']) ? $cleaner->modules[$class][$row['parent_id']]['module_langname'] : '';
 						$template->assign_block_vars('section.items', array(
 							'FIELD_NAME'	=> 'missing-' . $id,
-							'NAME'			=> $class . ' - ' . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
+							'NAME'			=> strtoupper($class) . ' -> ' . (($row['parent_id']) ? ((isset($user->lang[$parent])) ? $user->lang[$parent] : $parent) . ' -> ' : '') . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
 							'MISSING'		=> true,
 						));
 					}
@@ -297,7 +307,7 @@ class database_cleaner
 					{
 						$template->assign_block_vars('section.items', array(
 							'FIELD_NAME'	=> 'extra-' . $row['module_id'],
-							'NAME'			=> $class . ' - ' . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
+							'NAME'			=> strtoupper($class) . ' -> ' . (($row['parent_id']) ? ((isset($user->lang[$this->modules[$row['parent_id']]['module_langname']])) ? $user->lang[$this->modules[$row['parent_id']]['module_langname']] : $this->modules[$row['parent_id']]['module_langname']) . ' -> ' : '') . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
 						));
 					}
 				}
@@ -305,15 +315,18 @@ class database_cleaner
 
 			case 4 :
 				// Remove the extra modules they selected, add any they selected to be added
+				$error = array();
 				if ($apply_changes)
 				{
 					$missing_modules = $cleaner->modules;
-					$extra_modules = $error = array();
+					$extra_modules = array();
 					$sql = 'SELECT * FROM ' . MODULES_TABLE . '
 						ORDER BY left_id';
 					$result = $db->sql_query($sql);
 					while ($row = $db->sql_fetchrow($result))
 					{
+						$this->modules[$row['module_id']] = $row;
+
 						if (!isset($cleaner->modules[$row['module_class']]))
 						{
 							if (!isset($extra_modules[$row['module_class']]))
@@ -348,49 +361,33 @@ class database_cleaner
 					}
 					$db->sql_freeresult($result);
 
+					$to_add = $to_remove = array();
 					foreach ($missing_modules as $class => $rows)
 					{
-						foreach ($rows as $row)
+						foreach ($rows as $id => $row)
 						{
-							if ($row['module_basename'])
+							if (isset($selected['missing-' . $id]))
 							{
-								//echo 'Add ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_basename'] . ' ' . $row['module_mode'];
-								$umil->module_add($class, $row['parent_id'], array(
-									'module_basename'	=> $row['module_basename'],
-									'modes'				=> array($row['module_mode']),
-								));
-								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-								{
-									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-								}
-							}
-							else
-							{
-								//echo 'Add ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_langname'];
-								$umil->module_add($class, $row['parent_id'], $row['module_langname']);
-								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-								{
-									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-								}
+								$row['class'] = $class;
+								$to_add[$id] = $row;
 							}
 						}
 					}
 
 					foreach ($extra_modules as $class => $rows)
 					{
-						foreach ($rows as $id => $row)
+						foreach ($rows as $row)
 						{
-							if (isset($selected['missing-' . $id]))
+							if (isset($selected['extra-' . $row['module_id']]))
 							{
-								echo 'Remove ' . $class . ' ' . $row['parent_id'] . ' ' . $row['module_langname'];
-								/*$umil->module_remove($class, $row['parent_id'], $row['module_langname']);
-								if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-								{
-									$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-								}*/
+								$row['class'] = $class;
+								$to_remove[] = $row;
 							}
 						}
 					}
+
+					$error = array_merge($error, $this->add_modules($to_add, $umil, $cleaner));
+					$error = array_merge($error, $this->remove_modules($to_remove, $umil));
 				}
 				if (sizeof($error))
 				{
@@ -868,6 +865,84 @@ class database_cleaner
 		}
 
 		return $columns;
+	}
+
+	// Recursive in case we try to add children before parents or something like that...
+	function add_modules($to_add, &$umil, &$cleaner, $cnt = 0)
+	{
+		global $user;
+
+		$error = $try_again = array();
+
+		foreach ($to_add as $row)
+		{
+			$parent = ($row['parent_id']) ? $cleaner->modules[$row['class']][$row['parent_id']]['module_langname'] : 0;
+			if ($row['module_basename'])
+			{
+				$umil->module_add($row['class'], $parent, array(
+					'module_basename'	=> $row['module_basename'],
+					'modes'				=> array($row['module_mode']),
+				));
+				if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+				{
+					if ($umil->result == 'PARENT_NOT_EXIST' || (isset($user->lang['PARENT_NOT_EXIST']) && $umil->result == $user->lang['PARENT_NOT_EXIST']))
+					{
+						$try_again[] = $row;
+					}
+
+					$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+				}
+			}
+			else
+			{
+				$umil->module_add($row['class'], $parent, $row['module_langname']);
+				if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+				{
+					if ($umil->result == 'PARENT_NOT_EXIST' || (isset($user->lang['PARENT_NOT_EXIST']) && $umil->result == $user->lang['PARENT_NOT_EXIST']))
+					{
+						$try_again[] = $row;
+					}
+
+					$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+				}
+			}
+		}
+
+		if (sizeof($try_again) && $cnt < 5)
+		{
+			return $this->add_modules($try_again, $umil, $cleaner, ($cnt + 1));
+		}
+
+		return $error;
+	}
+
+	// Recursive in case we try to remove parents before children or something like that...
+	function remove_modules($to_remove, &$umil, $cnt = 0)
+	{
+		global $user;
+
+		$error = $try_again = array();
+
+		foreach ($to_remove as $row)
+		{
+			$umil->module_remove($row['class'], $row['parent_id'], $row['module_langname']);
+			if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
+			{
+				if ($umil->result == $user->lang['CANNOT_REMOVE_MODULE'])
+				{
+					$try_again[] = $row;
+				}
+
+				$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
+			}
+		}
+
+		if (sizeof($try_again) && $cnt < 5)
+		{
+			return $this->remove_modules($try_again, $umil, ($cnt + 1));
+		}
+
+		return $error;
 	}
 }
 ?>

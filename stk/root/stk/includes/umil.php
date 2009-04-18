@@ -1213,6 +1213,10 @@ class umil
 
 			$parent = $data['parent_id'] = $row['module_id'];
 		}
+		else if ($parent && !$this->module_exists($class, false, $parent))
+		{
+			return $this->umil_end('PARENT_NOT_EXIST');
+		}
 
 		if ($this->module_exists($class, $parent, $data['module_langname']))
 		{
