@@ -88,9 +88,9 @@ switch ($action)
 */
 // We need the Support Tool Kit password
 $stk_password = false;
-if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
+if (file_exists(STK_ROOT_PATH . 'config.' . PHP_EXT))
 {
-	include(STK_ROOT_PATH . 'passwd.' . PHP_EXT);
+	include(STK_ROOT_PATH . 'config.' . PHP_EXT);
 }
 
 // If the STK password isn't blank and the user isn't registered we will use the STK login method
