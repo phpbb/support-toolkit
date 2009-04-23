@@ -177,6 +177,9 @@ function critical_config_repair()
 					</div>
 				</div>
 			</div>
+			<div id="page-footer">
+				Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
+			</div>
 		</div>
 	</body>
 </html>
