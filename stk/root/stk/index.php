@@ -143,36 +143,23 @@ if ($stk_password && !$user->data['is_registered'])
 				'ERROR_MSG'				=> $user->lang[$login_error],
 
 				'U_ACTION'				=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
-				'U_ADM_INDEX'			=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
-				'U_ADM_LOGOUT'			=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
-				'U_STK_INDEX'			=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
-				'U_STK_LOGOUT'			=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'action=stklogout', true, $user->session_id),
 				'U_INDEX'				=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
-				'U_LOGOUT'				=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
-
-				'USERNAME'		=> $user->data['username'],
 			));
 			add_form_key('stk_login');
 
-			$template->assign_block_vars('options', array(
-				'S_LEGEND'		=> true,
-				'LEGEND'		=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
-			));
-
 			$content = build_cfg_template(array('password', '40', '255'), 'stk_key', array());
-			$template->assign_block_vars('options', array(
+			$template->assign_vars(array(
+				'FIELD'			=> $content['tpl'],
 				'KEY'			=> 'stk_key',
 				'TITLE'			=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
-				'S_EXPLAIN'		=> true,
 				'TITLE_EXPLAIN'	=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'],
-				'CONTENT'		=> $content['tpl'],
 			));
-
+			
             // Do not use the normal template path (to prevent issues with boards using alternate styles)
 			$template->set_custom_template(STK_ROOT_PATH . 'style/');
 
 			$template->set_filenames(array(
-				'body' => 'tool_options.html',
+				'body' => 'stk_login.html',
 			));
 
 			page_footer();

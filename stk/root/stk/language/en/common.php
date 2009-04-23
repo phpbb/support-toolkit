@@ -42,6 +42,7 @@ $lang = array_merge($lang, array(
 	'SUPPORT_TOOL_KIT_INDEX'			=> 'Support Tool Kit Index',
 	'SUPPORT_TOOL_KIT_PASSWORD'			=> 'Password',
 	'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Since you are not logged in to phpBB3 you must verify that you are the board owner by entering the Support Tool Kit Password.<br /><br /><strong>Cookies MUST be allowed by your browser or you will not be able to stay logged in.</strong>',
+	'STK_LOGIN'							=> 'Support Took Kit Login',
 	'STK_LOGOUT'						=> 'STK Logout',
 	'STK_LOGOUT_SUCCESS'				=> 'You have successfully logged out from the Support Tool Kit.',
 
