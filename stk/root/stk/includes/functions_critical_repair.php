@@ -102,58 +102,82 @@ function critical_config_repair()
 	else
 	{
 		?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta http-equiv="imagetoolbar" content="no" />
 		<title>Config Repair - Support Tool Kit</title>
-		<link media="screen" type="text/css" rel="stylesheet" href="<?php echo PHPBB_ROOT_PATH; ?>adm/style/admin.css">
+		<link href="<?php echo PHPBB_ROOT_PATH; ?>adm/style/admin.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
-	<body>
-		<form id="stk" method="post" action="<?php echo STK_ROOT_PATH . 'index.' . PHP_EXT; ?>" name="support_tool_kit">
-			<fieldset>
-				<?php if (sizeof($error)) { ?>
-					<div class="errorbox">
-						<h3>Error</h3>
-						<p><?php echo implode('<br />', $error); ?></p>
+	<body id="errorpage">
+		<div id="wrap">
+			<div id="page-header">
+
+			</div>
+			<div id="page-body">
+				<div id="acp">
+					<div class="panel">
+						<span class="corners-top"><span></span></span>
+							<div id="content">
+								<h1>Config Repair</h1>
+								<br />
+								<p>
+									Through this tool you can regenerate your configuration file.
+								</p>
+								<form id="stk" method="post" action="<?php echo STK_ROOT_PATH . 'index.' . PHP_EXT; ?>" name="support_tool_kit">
+									<fieldset>
+										<?php if (sizeof($error)) {?>
+											<div class="errorbox">
+												<h3>Error</h3>
+												<p><?php echo implode('<br />', $error); ?></p>
+											</div>
+										<?php } ?>
+										<dl>
+											<dt><label for="dbms">Database type:</label></dt>
+											<dd><select name="dbms">
+												<?php foreach (get_available_dbms() as $dbms => $dbms_data) { ?>
+													<option value="<?php echo $dbms; ?>" <?php if ($data['dbms'] == $dbms) { echo ' selected="selected"'; } ?>><?php echo $dbms_data['LABEL']; ?>
+												<?php } ?>
+											</select></dd>
+										</dl>
+										<dl>
+											<dt><label for="dbhost">Database server hostname or DSN:</label><br /><span class="explain">DSN stands for Data Source Name and is relevant only for ODBC installs.</span></dt>
+											<dd><input id="dbhost" type="text" value="<?php echo $data['dbhost']; ?>" name="dbhost" maxlength="100" size="25"/></dd>
+										</dl>
+										<dl>
+											<dt><label for="dbport">Database server port:</label><br /><span class="explain">Leave this blank unless you know the server operates on a non-standard port.</span></dt>
+											<dd><input id="dbport" type="text" value="<?php echo $data['dbport']; ?>" name="dbport" maxlength="100" size="25"/></dd>
+										</dl>
+										<dl>
+											<dt><label for="dbname">Database name:</label></dt>
+											<dd><input id="dbname" type="text" value="<?php echo $data['dbname']; ?>" name="dbname" maxlength="100" size="25"/></dd>
+										</dl>
+										<dl>
+											<dt><label for="dbuser">Database username:</label></dt>
+											<dd><input id="dbuser" type="text" value="<?php echo $data['dbuser']; ?>" name="dbuser" maxlength="100" size="25"/></dd>
+										</dl>
+										<dl>
+											<dt><label for="dbpasswd">Database password:</label></dt>
+											<dd><input id="dbpasswd" type="password" value="" name="dbpasswd" maxlength="100" size="25"/></dd>
+										</dl>
+										<dl>
+											<dt><label for="table_prefix">Prefix for tables in database:</label></dt>
+											<dd><input id="table_prefix" type="text" value="<?php echo $data['table_prefix']; ?>" name="table_prefix" maxlength="100" size="25"/></dd>
+										</dl>
+										<p class="submit-buttons">
+											<input class="button1" type="submit" id="submit" name="submit" value="Submit" />&nbsp;
+											<input class="button2" type="reset" id="reset" name="reset" value="Reset" />
+										</p>
+									</fieldset>
+								</form>
+							</div>
+						<span class="corners-bottom"><span></span></span>
 					</div>
-				<?php } ?>
-				<dl>
-					<dt><label for="dbms">Database type:</label></dt>
-					<dd><select name="dbms">
-						<?php foreach (get_available_dbms() as $dbms => $dbms_data) { ?>
-							<option value="<?php echo $dbms; ?>" <?php if ($data['dbms'] == $dbms) { echo ' selected="selected"'; } ?>><?php echo $dbms_data['LABEL']; ?>
-						<?php } ?>
-					</select></dd>
-				</dl>
-				<dl>
-					<dt><label for="dbhost">Database server hostname or DSN:</label><br /><span class="explain">DSN stands for Data Source Name and is relevant only for ODBC installs.</span></dt>
-					<dd><input id="dbhost" type="text" value="<?php echo $data['dbhost']; ?>" name="dbhost" maxlength="100" size="25"/></dd>
-				</dl>
-				<dl>
-					<dt><label for="dbport">Database server port:</label><br /><span class="explain">Leave this blank unless you know the server operates on a non-standard port.</span></dt>
-					<dd><input id="dbport" type="text" value="<?php echo $data['dbport']; ?>" name="dbport" maxlength="100" size="25"/></dd>
-				</dl>
-				<dl>
-					<dt><label for="dbname">Database name:</label></dt>
-					<dd><input id="dbname" type="text" value="<?php echo $data['dbname']; ?>" name="dbname" maxlength="100" size="25"/></dd>
-				</dl>
-				<dl>
-					<dt><label for="dbuser">Database username:</label></dt>
-					<dd><input id="dbuser" type="text" value="<?php echo $data['dbuser']; ?>" name="dbuser" maxlength="100" size="25"/></dd>
-				</dl>
-				<dl>
-					<dt><label for="dbpasswd">Database password:</label></dt>
-					<dd><input id="dbpasswd" type="password" value="" name="dbpasswd" maxlength="100" size="25"/></dd>
-				</dl>
-				<dl>
-					<dt><label for="table_prefix">Prefix for tables in database:</label></dt>
-					<dd><input id="table_prefix" type="text" value="<?php echo $data['table_prefix']; ?>" name="table_prefix" maxlength="100" size="25"/></dd>
-				</dl>
-				<p class="submit-buttons">
-					<input class="button1" type="submit" id="submit" name="submit" value="Submit" />&nbsp;
-					<input class="button2" type="reset" id="reset" name="reset" value="Reset" />
-				</p>
-			</fieldset>
-		</form>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 		<?php

@@ -26,7 +26,7 @@ $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
 
 // Check to make sure the config file exists.  If not we will attempt critical repair.
-if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
+if (!file_exists(PHPBB_ROOT_PATH . 'configd.' . PHP_EXT))
 {
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
 	critical_config_repair();
@@ -88,9 +88,9 @@ switch ($action)
 */
 // We need the Support Tool Kit password
 $stk_password = false;
-if (file_exists(STK_ROOT_PATH . 'config.' . PHP_EXT))
+if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
 {
-	include(STK_ROOT_PATH . 'config.' . PHP_EXT);
+	include(STK_ROOT_PATH . 'passwd.' . PHP_EXT);
 }
 
 // If the STK password isn't blank and the user isn't registered we will use the STK login method
