@@ -26,7 +26,7 @@ $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
 
 // Check to make sure the config file exists.  If not we will attempt critical repair.
-if (!file_exists(PHPBB_ROOT_PATH . 'configd.' . PHP_EXT))
+if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
 {
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
 	critical_config_repair();
