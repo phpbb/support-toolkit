@@ -176,7 +176,7 @@ function stk_add_lang($lang_file = '')
 	else
 	{
 		// This should really never happen
-		trigger_error("Language file stk/language/{$user->data['user_lang']}/$lang_file." . PHP_EXT . ' missing!');
+		trigger_error("Language file stk/language/{$user->data['user_lang']}/$lang_file." . PHP_EXT . ' missing!', E_USER_ERROR);
 	}
 
 	// Include the file

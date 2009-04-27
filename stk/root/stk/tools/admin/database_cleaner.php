@@ -238,10 +238,98 @@ class database_cleaner
 				}
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang['PERMISSION_UPDATE_SUCCESS']);
 
+				// Display the system groups that are missing or aren't from a vanilla installation
+				$missing_groups	= $cleaner->groups;
+				$added_groups	= array();
+				$this->get_system_group_data($missing_groups, $added_groups, false);
+				
+				$template->assign_block_vars('section', array(
+					'TITLE'		=> $user->lang['ACP_GROUPS_MANAGEMENT'],
+				));
+				
+				foreach ($missing_groups as $group_name)
+				{
+					$template->assign_block_vars('section.items', array(
+						'FIELD_NAME'	=> "add-{$group_name}",
+						'MISSING'		=> true,
+						'NAME'			=> isset($user->lang["G_{$group_name}"]) ? $user->lang["G_{$group_name}"] : $group_name,
+					));
+				}
+				
+				foreach ($added_groups as $group_name)
+				{
+					$template->assign_block_vars('section.items', array(
+						'FIELD_NAME'	=> "remove-{$group_name}",
+						'MISSING'		=> false,
+						'NAME'			=> isset($user->lang["G_{$group_name}"]) ? $user->lang["G_{$group_name}"] : $group_name,
+					));
+				}
+			break;
+			
+			case 4:
+				// Add/remove selected system groups
+				if ($apply_changes)
+				{
+					// Build an array with the actions
+					$actions = array(
+						'add'		=> array(),
+						'remove'	=> array(),
+					);
+					
+					foreach ($selected as $field => $value)
+					{
+						// split and add to the actions array
+						$type = explode('-', $field);
+						$actions[$type[0]][] = $type[1];
+					}
+					
+					// Get all the default groups
+					$default_groups = $cleaner->groups;
+					
+					// Inlcude required file
+					if (!function_exists('user_get_id_name'))
+					{
+						include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+					}
+					
+					// Get the IDs of the remove groups
+					if (sizeof($actions['remove']))
+					{
+						$remove_ids = array();
+						$sql = 'SELECT group_id, group_name
+							FROM ' . GROUPS_TABLE . '
+							WHERE ' . $db->sql_in_set('group_name', $actions['remove']);
+						$result = $db->sql_query($sql);
+						while ($group = $db->sql_fetchrow($result))
+						{
+							$remove_ids[$group['group_name']] = $group['group_id'];
+						}
+					}
+					
+					$group_id = 0;
+					
+					// Run through the actions and do them
+					foreach ($actions as $action => $groups)
+					{
+						foreach ($groups as $group)
+						{
+							if ($action == 'add')
+							{
+								group_create($group_id, $default_groups[$group]['group_type'], $group, $default_groups[$group]['group_desc'], array('group_colour' => $default_groups[$group]['group_colour'], 'group_legend' => $default_groups[$group]['group_legend'], 'group_avatar' => $default_groups[$group]['group_avatar'], 'group_max_recipients' => $default_groups[$group]['group_max_recipients']));
+							}
+							else 
+							{
+								group_delete($remove_ids[$group], $group);
+							}
+						}
+					}
+				}
+				
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
 				$missing_modules = $cleaner->modules;
 				$extra_modules = array();
-				$sql = 'SELECT * FROM ' . MODULES_TABLE . '
+				$sql = 'SELECT *
+					FROM ' . MODULES_TABLE . '
 					ORDER BY left_id';
 				$result = $db->sql_query($sql);
 				while ($row = $db->sql_fetchrow($result))
@@ -313,7 +401,7 @@ class database_cleaner
 				}
 			break;
 
-			case 4 :
+			case 5 :
 				// Remove the extra modules they selected, add any they selected to be added
 				$error = array();
 				if ($apply_changes)
@@ -405,7 +493,7 @@ class database_cleaner
 				));
 			break;
 
-			case 5 :
+			case 6 :
 				// Reset the bots if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -522,7 +610,7 @@ class database_cleaner
 				}
 			break;
 
-			case 6 :
+			case 7 :
 				// Update the tables according to what they selected last time
 				$error = array();
 				if ($apply_changes)
@@ -618,7 +706,7 @@ class database_cleaner
 				}
 			break;
 
-			case 7 :
+			case 8 :
 				// Remove the extra selected tables
 				$error = array();
 				if ($apply_changes)
@@ -671,7 +759,7 @@ class database_cleaner
 				));
 			break;
 
-			case 8 :
+			case 9 :
 				if ($apply_changes)
 				{
 					set_config('board_disable', 0);
@@ -943,6 +1031,40 @@ class database_cleaner
 		}
 
 		return $error;
+	}
+	
+	function get_system_group_data(&$missing_groups, &$added_groups, $data = true)
+	{
+		global $db;
+		
+		$select = ($data) ? '*' : 'group_name';
+		
+		$sql = "SELECT {$select}
+			FROM " . GROUPS_TABLE . '
+			WHERE group_type = 3';
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			// A default group
+			if (isset($missing_groups[$row['group_name']]))
+			{
+				unset($missing_groups[$row['group_name']]);
+			}
+			else
+			{
+				if (!isset($added_groups[$row['group_name']]))
+				{
+					$added_groups[$row['group_name']] = $row;
+				}
+			}
+		}
+		
+		// If required only pass the names
+		if (!$data)
+		{
+			$missing_groups = array_keys($missing_groups);
+			$added_groups	= array_keys($added_groups);
+		}
 	}
 }
 ?>

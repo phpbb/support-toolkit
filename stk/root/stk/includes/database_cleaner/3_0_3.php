@@ -260,6 +260,70 @@ class database_cleaner_data
 	// All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
 	var $modules = array();
 
+	// All default groups
+	var $groups = array(
+		'GUESTS'			=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '',
+			'group_legend'			=> 0,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 5,
+		),
+		'REGISTERED'		=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '',
+			'group_legend'			=> 0,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 5,
+		),
+		'REGISTERED_COPPA'	=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '',
+			'group_legend'			=> 0,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 5,
+		),
+		'GLOBAL_MODERATORS'	=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '00AA00',
+			'group_legend'			=> 1,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 0,
+		),
+		'ADMINISTRATORS'	=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 1,
+			'group_colour'			=> 'AA0000',
+			'group_legend'			=> 1,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 0,
+		),
+		'BOTS'				=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '9E8DA7',
+			'group_legend'			=> 0,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 5,
+		),
+	);
+	
 	// All default tables (copy from create_schema_files for this version)
 	var $tables = array();
 
