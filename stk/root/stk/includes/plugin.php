@@ -134,6 +134,7 @@ class plugin
 					$_plugin_list[] = $file;
 				}
 			}
+			closedir($handle);
 		}
 		
 		return $_plugin_list;
