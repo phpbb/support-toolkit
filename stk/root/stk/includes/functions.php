@@ -64,6 +64,7 @@ function build_cfg_template($tpl_type, $name, $vars)
 		break;
 
 		case 'select':
+		case 'select_multiple' :
 		case 'custom':
 
 			$return = '';
@@ -105,8 +106,11 @@ function build_cfg_template($tpl_type, $name, $vars)
 
 			if ($tpl_type[0] == 'select')
 			{
-				$multiple	= ((isset($vars['multiple']) && $vars['multiple']) ? ' multiple="multiple"' : '');
-				$tpl['tpl']		= '<select id="' . $name . '" name="' . $name . (!empty($multiple) ? '[]' : '') . '"' . $multiple . '>' . $return . '</select>';
+				$tpl['tpl'] = '<select id="' . $name . '" name="' . $name . '">' . $return . '</select>';
+			}
+			else if ($tpl_type[0] == 'select_multiple')
+			{
+				$tpl['tpl'] = '<select id="' . $name . '" name="' . $name . '[]" multiple="multiple">' . $return . '</select>';	
 			}
 			else
 			{

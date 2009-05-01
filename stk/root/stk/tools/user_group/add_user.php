@@ -54,9 +54,9 @@ class add_user
 				'ad_tz'					=> array('lang' => 'TIMEZONE', 'explain' => false, 'type' => 'select', 'function' => 'tz_select'),
 
 				'legend2'				=> 'ADD_USER_GROUP',
-				'ad_usergroups'			=> array('lang' => 'USER_GROUPS', 'explain' => true, 'type' => 'select', 'multiple' => true, 'function' => 'get_groups'),
+				'ad_usergroups'			=> array('lang' => 'USER_GROUPS', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
 				'ad_defaultgroup'		=> array('lang' => 'DEFAULT_GROUP', 'explain' => true, 'type' => 'select', 'function' => 'get_groups'),
-				'ad_groupleader'		=> array('lang' => 'GROUP_LEADER', 'explain' => true, 'type' => 'select', 'multiple' => true, 'function' => 'get_groups'),
+				'ad_groupleader'		=> array('lang' => 'GROUP_LEADER', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
 			)
 		);
 	}
