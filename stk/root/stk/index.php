@@ -10,7 +10,6 @@
 
 /**
 * TODO
-* select multiple
 *
 * check out the reparse_bbcode tool, many people have had issues with this script.
 */
