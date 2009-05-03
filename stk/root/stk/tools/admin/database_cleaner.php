@@ -37,7 +37,7 @@ class database_cleaner
 		$selected = request_var('items', array('' => ''));
 
 		// Apply Changes to the DB?
-		$apply_changes = false;
+		$apply_changes = true;
 
 		if ($step > 0)
 		{
