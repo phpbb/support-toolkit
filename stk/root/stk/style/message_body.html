@@ -1,4 +1,4 @@
-<!-- INCLUDE overall_header.html -->
+<!-- IF S_STK_FULL_BODY --><!-- INCLUDE overall_header.html --><!-- ELSE --><!-- INCLUDE simple_header.html --><!-- ENDIF -->
 
 <div <!-- IF S_USER_NOTICE -->class="successbox"<!-- ELSE -->class="errorbox"<!-- ENDIF -->>
 	<h3>{MESSAGE_TITLE}</h3>
@@ -11,4 +11,4 @@
 
 <!-- IF ADDITIONAL_MESSAGE --><div>{ADDITIONAL_MESSAGE}</div><!-- ENDIF -->
 
-<!-- INCLUDE overall_footer.html -->
+<!-- IF S_STK_FULL_BODY --><!-- INCLUDE overall_footer.html --><!-- ELSE --><!-- INCLUDE simple_footer.html --><!-- ENDIF -->
