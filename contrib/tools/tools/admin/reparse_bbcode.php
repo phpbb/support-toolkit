@@ -26,8 +26,6 @@ class reparse_bbcode
 		return array(
 			'NAME'			=> $user->lang['BBCODE_REPARSE_TITLE'],
 			'NAME_EXPLAIN'	=> $user->lang['BBCODE_REPARSE_TITLE_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

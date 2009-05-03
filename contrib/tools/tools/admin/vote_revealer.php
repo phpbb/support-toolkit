@@ -27,8 +27,6 @@ class vote_revealer
 		return array(
 			'NAME'			=> $user->lang['VOTE_REVEALER'],
 			'NAME_EXPLAIN'	=> $user->lang['VOTE_REVEALER_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

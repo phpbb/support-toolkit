@@ -37,8 +37,6 @@ class pm_viewer
 		return array(
 			'NAME'			=> $user->lang['PM_VIEWER'],
 			'NAME_EXPLAIN'	=> $user->lang['PM_VIEWER_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['USER_GROUP_TOOLS'],
 		);
 	}
 
@@ -128,7 +126,7 @@ class pm_viewer
 			{
 				$template->assign_block_vars('pm_list', array(
 					'L_PM'	=> censor_text($row['message_subject']),
-					'U_PM'	=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'detail', 'submit' => true, 'owner' => $user_id, 'pm_id' => $row['msg_id'])),
+					'U_PM'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'detail', 'submit' => true, 'owner' => $user_id, 'pm_id' => $row['msg_id'])),
 				));
 			}
 			while($row = $db->sql_fetchrow($result));
@@ -208,7 +206,7 @@ class pm_viewer
 				'MESSAGE'		=> censor_text($message),
 				'SENT_DATE'		=> date($user->data['user_dateformat'], $pm_row['message_time']),
 				'AUTHOR_FULL'	=> get_username_string('full', $pm_row['user_id'], $pm_row['username'], $pm_row['user_colour']),
-				'U_DELETE'		=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'delete', 'owner' => $owner, 'pm_id' => $pm_row['msg_id'], 'submit' => true, 'user' => $pm_row['user_id'])),
+				'U_DELETE'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'delete', 'owner' => $owner, 'pm_id' => $pm_row['msg_id'], 'submit' => true, 'user' => $pm_row['user_id'])),
 			));
 		}
 

@@ -27,8 +27,6 @@ class organize_lang
 		return array(
 			'NAME'			=> $user->lang['ORGANIZE_LANG'],
 			'NAME_EXPLAIN'	=> $user->lang['ORGANIZE_LANG_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['DEV_TOOLS'],
 		);
 	}
 

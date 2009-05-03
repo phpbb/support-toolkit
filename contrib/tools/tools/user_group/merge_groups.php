@@ -27,8 +27,6 @@ class merge_groups
 		return array(
 			'NAME'			=> $user->lang['MERGE_GROUPS'],	// The name of this tool that will be shown to the user
 			'NAME_EXPLAIN'	=> $user->lang['MERGE_GROUPS_EXPLAIN'],
-
-			'CATEGORY'		=> $user->lang['USER_GROUP_TOOLS'],	// The category this tool should be shown in
 		);
 	}
 
