@@ -11,7 +11,8 @@
 /**
 * TODO
 *
-* check out the reparse_bbcode tool, many people have had issues with this script.
+* - Remove the ignore variable for the internal authentication method before packing.
+* - check out the reparse_bbcode tool, many people have had issues with this script.
 */
 
 define('IN_PHPBB', true);
@@ -72,115 +73,144 @@ $user->setup('acp/common', $config['default_style']);
 // Language path.  We are using a custom language path to keep all the files within the stk/ folder.  First check if the $user->data['user_lang'] path exists, if not, check if the default lang path exists, and if still not use english.
 stk_add_lang('common');
 
+// Do not use the normal template path (to prevent issues with boards using alternate styles)
+$template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
+
+// Work around for a bug in phpBB3.
+$user->theme['template_storedb'] = false;
+
 // Some extra stuff that can be done.  Don't add things here that require authentication.
 $action = request_var('action', '');
-switch ($action)
-{
-	// If the user wants to destroy their STK login cookie
-	case 'stklogout' :
-		setcookie('stk_key', '', (time() - 31536000));
-		trigger_error('STK_LOGOUT_SUCCESS');
-	break;
-}
+perform_unauth_tasks($action);
+
+/**
+ * @debug
+ * A temp variable that allows us to bypass the internal authentication with the passwd file in place
+ */
+$_ignore_pass = false;
 
 /*
 * Start Login
 */
-// We need the Support Tool Kit password
-$stk_password = false;
-if (file_exists(STK_ROOT_PATH . 'config.' . PHP_EXT))
+// See whether we have an emergency login file
+if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && !$_ignore_pass)
 {
-	include(STK_ROOT_PATH . 'config.' . PHP_EXT);
+	// Include the file
+	include STK_ROOT_PATH . 'passwd.' . PHP_EXT;
+	
+	// Can we use trust this password
+	if (!isset($stk_passwd_expiration) || time() > $stk_passwd_expiration)
+	{
+		// No. Unset the password and try to remove the file
+		unset ($stk_passwd);
+		if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
+		{
+			// Shouldn't happen. Kill the script
+			trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
+		}
+	}
 }
 
-// If the STK password isn't blank and the user isn't registered we will use the STK login method
-if ($stk_password && !$user->data['is_registered'])
+// Do the actual login. If we have an emergency login we'll use that over the phpBB authentication method
+if (isset($stk_passwd))
 {
-	/*
-	* Allow Alternate login method
-	*/
-	// The password will be held in a cookie to keep them logged in
-	$login_error = 'INCORRECT_PASSWORD';
-	if (isset($_COOKIE['stk_key']))
+	// Set some vars
+	$cookie_token	= request_var('stk_token', '', true, true);
+	$err_msg		= '';
+	$login_token	= request_var('stk_pass', '', true);
+	$stk_session	= false;
+	
+	// One foot in the air for an active session
+	if (!empty($cookie_token))
 	{
-		$stk_cookie = ((STRIP) ? stripslashes($_COOKIE['stk_key']) : $_COOKIE['stk_key']);
-		if (phpbb_check_hash($stk_password, $stk_cookie))
+		if (phpbb_check_hash($stk_passwd, $cookie_token))
 		{
-			$login_error = false;
-			$template->assign_var('S_STK_LOGIN', true);
+			$stk_session = true;
+			unset($stk_passwd, $login_token);
 		}
 	}
 
-	if ($login_error !== false)
+	// No active session? 
+	if (!$stk_session)
 	{
-		if (isset($_POST['submit']))
+		// We're trying to login
+		if (isset($_POST['login']))
 		{
-			$stk_key = request_var('stk_key', '');
-			if (check_form_key('stk_login') && phpbb_check_hash($stk_password, phpbb_hash($stk_key)))
+			if (!check_form_key('stk_login_form'))
 			{
-				$login_error = false;
-				$template->assign_var('S_STK_LOGIN', true);
-
-				// When storing the cookie, hash the password so that *IF* the cookie is stolen, nothing can be done with the password.
-				setcookie('stk_key', phpbb_hash($stk_key), time() + 31536000);
+				$err_msg = 'FORM_INVALID';
 			}
-			else if (!check_form_key('stk_login'))
+			else 
 			{
-				$login_error = 'FORM_INVALID';
+				// Create a hash of the given token to compare the password
+				$login_token_hash = phpbb_hash($login_token);
+			
+				if (phpbb_check_hash($stk_passwd, $login_token_hash))
+				{
+					$stk_session = true;
+				
+					// Create a session cookie to keep the user logged in
+					setcookie('stk_token', $login_token_hash, 0);
+				}
+				else
+				{
+					$err_msg = 'INCORRECT_PASSWORD';
+				}
 			}
 		}
-
-		// Display the login page.
-		if (!isset($_POST['submit']) || $login_error !== false)
+		
+		// Past this point we don't want the passwords anymore
+		unset($stk_passwd, $login_token);
+		
+		// Still no session. Make the user happy and show him something to work with
+		if (!$stk_session)
 		{
-			page_header($user->lang['LOGIN'], false);
+			add_form_key('stk_login_form');
 
 			$template->assign_vars(array(
-				'L_TITLE'				=> $user->lang['LOGIN'],
-				'L_TITLE_EXPLAIN'		=> '',
-
-				'S_ERROR'				=> (isset($_POST['submit'])) ? true : false,
-				'ERROR_MSG'				=> $user->lang[$login_error],
+				// Password field related
+				'TITLE'			=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
+				'TITLE_EXPLAIN'	=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'],
+			
+				// Other page stuff
+				'LOGIN_ERROR'			=> (!empty($err_msg)) ? $user->lang[$err_msg] : false,
 
 				'U_ACTION'				=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
 				'U_INDEX'				=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
-			));
-			add_form_key('stk_login');
-
-			$content = build_cfg_template(array('password', '40', '255'), 'stk_key', array());
-			$template->assign_vars(array(
-				'FIELD'			=> $content['tpl'],
-				'KEY'			=> 'stk_key',
-				'TITLE'			=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
-				'TITLE_EXPLAIN'	=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'],
+			
+				// Identify this method in the template
+				'S_STK_LOGIN_METHOD'	=> true,
 			));
 			
-            // Do not use the normal template path (to prevent issues with boards using alternate styles)
-			$template->set_custom_template(STK_ROOT_PATH . 'style/');
-
+			page_header($user->lang['LOGIN'], false);
+			
 			$template->set_filenames(array(
-				'body' => 'stk_login.html',
+				'body' => 'login_body.html',
 			));
-
-			page_footer();
+			
+			page_footer(false);
 		}
 	}
+	
+	// Tell the template engine we're logged through this
+	$template->assign_var('S_STK_LOGIN', true);
 }
+// phpBB authentication. Only allow founders to pass!
 else
 {
-	/*
-	* Use Normal login method (phpBB3)
-	*/
 	if (!$user->data['is_registered'])
 	{
-		// Could get here if no STK password is set.
-		login_box();
+		// Assign a string only used here
+		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'genpassdfile'))));
+		
+		// A user can potentially access this file directly
+		login_box('', $user->lang['STK_NON_LOGIN'], '', false, false);
 	}
 
 	// This requires that the user is logged in as an administrator (like how the ACP requires two logins)
 	if (!isset($user->data['session_admin']) || !$user->data['session_admin'])
 	{
-		login_box('', $user->lang['LOGIN_ADMIN_CONFIRM'], $user->lang['LOGIN_ADMIN_SUCCESS'], true, false);
+		login_box('', $user->lang['STK_FOUNDER_ONLY'], $user->lang['LOGIN_STK_SUCCESS'], true, false);
 	}
 
 	// Only Board Founders may use the STK
@@ -189,18 +219,18 @@ else
 		trigger_error('BOARD_FOUNDER_ONLY');
 	}
 }
-
-// Unset the password since we no longer need it
-unset($stk_password);
 /*
 * End Login
 */
 
-// Do not use the normal template path (to prevent issues with boards using alternate styles)
-$template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
+// We need the STK config file
+if (false === (@include STK_ROOT_PATH . 'config.' . PHP_EXT))
+{
+	trigger_error($user->lang['CONFIG_NOT_FOUND'], E_USER_ERROR);
+}
 
-// Work around for a bug in phpBB3.
-$user->theme['template_storedb'] = false;
+// From this point we'll be able to use the full STK layout
+$template->assign_var('S_STK_FULL_BODY', true);
 
 // Setup some variables
 $submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;

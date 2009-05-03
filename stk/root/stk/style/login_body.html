@@ -1,0 +1,65 @@
+<!-- INCLUDE simple_header.html -->
+
+<!-- IF S_STK_LOGIN_METHOD -->
+	<h1>{L_STK_LOGIN}</h1>
+	<br />
+	<!-- IF LOGIN_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{LOGIN_ERROR}</p>
+	</div>
+	<!-- ENDIF -->
+	<form id="stk" method="post" action="{U_ACTION}" name="support_tool_kit">
+		<fieldset>
+			<legend>{L_LOGIN}</legend>
+			<dl>
+				<dt><label for="stk_pass">{TITLE}</label><br /><span class="explain">{TITLE_EXPLAIN}</span></dt>
+				<dd><input id="stk_pass" type="password" size="40" maxlength="255" name="stk_pass" value="" tabindex="1" /></dd>
+			</dl>
+			
+			<p class="submit-buttons">
+				<input class="button1" type="submit" id="login" name="login" value="{L_LOGIN}" tabindex="2" />&nbsp;
+				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" tabindex="3" />
+			</p>
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+		</fieldset>
+	</form>
+<!-- ELSE -->
+	<h1><!-- IF LOGIN_EXPLAIN -->{LOGIN_EXPLAIN}<!-- ELSE -->{L_LOGIN}<!-- ENDIF --></h1>
+	<!-- IF LOGIN_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{LOGIN_ERROR}</p>
+	</div>
+	<!-- ENDIF -->
+	<form action="{S_LOGIN_ACTION}" method="post" id="login">
+		<fieldset>
+			<legend>{L_LOGIN}</legend>
+			<dl>
+				<dt><label for="{USERNAME_CREDENTIAL}">{L_USERNAME}:</label></dt>
+				<dd><input type="text" tabindex="1" name="{USERNAME_CREDENTIAL}" id="{USERNAME_CREDENTIAL}" size="25" value="{USERNAME}" class="inputbox autowidth" /></dd>
+			</dl>
+			<dl>
+				<dt><label for="{PASSWORD_CREDENTIAL}">{L_PASSWORD}:</label></dt>
+				<dd><input type="password" tabindex="2" id="{PASSWORD_CREDENTIAL}" name="{PASSWORD_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>
+			</dl>
+			
+			<p class="submit-buttons">
+				<input type="submit" name="login" tabindex="3" value="{L_LOGIN}" class="button1" />
+			</p>
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+		</fieldset>
+		<!-- IF GEN_PASS_FILE_EXPLAIN -->
+		<fieldset>
+			<legend>{L_GEN_PASS_FILE}</legend>
+			<p>
+				{GEN_PASS_FILE_EXPLAIN}
+			</p>
+		</fieldset>
+		<!-- ENDIF -->
+	</form>
+<!-- ENDIF -->
+
+<!-- INCLUDE simple_footer.html -->

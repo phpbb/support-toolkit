@@ -41,19 +41,35 @@ $lang = array_merge($lang, array(
 	'BACK_TOOL'							=> 'Back to last Tool',
 	'BOARD_FOUNDER_ONLY'				=> 'Only Board Founders may access the Support Tool Kit.',
 
+	'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn\'t be loaded. Please check your installation',
+
+	'DOWNLOAD_PASS'						=> 'Download the password file.',
+
+	'FAIL_REMOVE_PASSWD'				=> 'Couldn\'t remove the expired password file. Please remove this file manually!',
+
+	'GEN_PASS_FILE'						=> 'Generate password file.',
+	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren\'t able to login to phpBB at all you can use the internal authentication method of the support tool kit. To use this method you must <a href="%s">generate</a> a new password file.',
+
 	'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
 	'INCORRECT_PASSWORD'				=> 'Password is incorrect',
 	'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn\'t compatible with this tool. Make sure that you are running phpBB version: %1$s, in order to run this tool',
 
+	'LOGIN_STK_SUCCESS'					=> 'You have successfully authenticated and will now be redirected to the Support Tool Kit.',
+
 	'NOTICE'							=> 'Notice',
+
+	'PASS_GENERATED'					=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you\'ve downloaded this file you must upload it to your server into the "stk" directory',
+	'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',
 
 	'SUPPORT_TOOL_KIT'					=> 'Support Tool Kit',
 	'SUPPORT_TOOL_KIT_INDEX'			=> 'Support Tool Kit Index',
 	'SUPPORT_TOOL_KIT_PASSWORD'			=> 'Password',
 	'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Since you are not logged in to phpBB3 you must verify that you are the board owner by entering the Support Tool Kit Password.<br /><br /><strong>Cookies MUST be allowed by your browser or you will not be able to stay logged in.</strong>',
+	'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Tool Kit!',
 	'STK_LOGIN'							=> 'Support Took Kit Login',
 	'STK_LOGOUT'						=> 'STK Logout',
 	'STK_LOGOUT_SUCCESS'				=> 'You have successfully logged out from the Support Tool Kit.',
+	'STK_NON_LOGIN'						=> 'Login to access the STK.',
 
 	'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is trying to load a not existing file: %1$s',
 	'TOOL_NAME'							=> 'Tool Name',

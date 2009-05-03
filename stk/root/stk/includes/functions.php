@@ -237,4 +237,74 @@ function parse_page($file, $title = '', $sprintf_title = array(), $sprintf_expla
 
 	page_footer();
 }
+
+/**
+ * Perform all quick tasks that has to be ran before we authenticate
+ *
+ * @param unknown_type $action
+ */
+function perform_unauth_tasks($action)
+{
+	global $template, $user;
+	
+	switch ($action)
+	{
+		// If the user wants to destroy their STK login cookie
+		case 'stklogout' :
+			setcookie('stk_token', '', (time() - 31536000));
+			meta_refresh(3, append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT));
+			trigger_error('STK_LOGOUT_SUCCESS');
+		break;
+		
+		// Generate the passwd file
+		case 'genpassdfile' :
+			// Create a 25 character password
+			$_pass_string = substr(phpbb_hash(gen_rand_string()), -25);
+			
+			// The password is usable for 6 hours from now
+			$_pass_exprire = time() + 21600;
+	
+			// Print a message and tell the user what to do and where to download this page
+			page_header($user->lang['GEN_PASS_FILE'], false);
+			
+			$template->assign_vars(array(
+				'PASS_GENERATED'			=> sprintf($user->lang['PASS_GENERATED'], $_pass_string, $user->format_date($_pass_exprire, false, true)),
+				'PASS_GENERATED_REDIRECT'	=> sprintf($user->lang['PASS_GENERATED_REDIRECT'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT)),
+				'S_HIDDEN_FIELDS'			=> build_hidden_fields(array('pass_string' => $_pass_string, 'pass_exp' => $_pass_exprire)),
+				'U_ACTION'					=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'downpassdfile')),
+			));
+			
+			$template->set_filenames(array(
+				'body'	=> 'gen_password.html',
+			));
+			page_footer(false);
+		break;
+		
+		// Download the passwd file
+		case 'downpassdfile' :
+			$_pass_string	= request_var('pass_string', '', true);
+			$_pass_exprire	= request_var('pass_exp', 0);
+			
+			// Something went wrong, stop execution
+			if (!isset($_POST['download_passwd']) || empty($_pass_string) || $_pass_exprire <= 0)
+			{
+				trigger_error('', E_USER_ERROR);
+			}
+			
+			// Create the file and let the user download it
+			header('Content-Type: text/x-delimtext; name="passwd.' . PHP_EXT . '"');
+			header('Content-disposition: attachment; filename=passwd.' . PHP_EXT);
+			
+			print ("<?php
+	/**
+	* Support Tool Kit emergency password. Generated on: " . $user->format_date(time(), false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
+	*/
+	
+	\$stk_passwd\t\t\t\t= '{$_pass_string}';
+	\$stk_passwd_expiration\t= {$_pass_exprire};
+	?>";
+			exit_handler();                        
+		break;
+	}
+}
 ?>
