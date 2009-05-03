@@ -19,7 +19,15 @@ function build_cfg_template($tpl_type, $name, $vars)
 
 	$tpl = array();
 
-	$default = (isset($vars['default'])) ? request_var($name, $vars['default']) : request_var($name, '');
+	// Give the option to not do a request_var here and never do it for password fields.
+	if ((!isset($vars['no_request_var']) || !$vars['no_request_var']) && $tpl_type[0] != 'password')
+	{
+		$default = (isset($vars['default'])) ? request_var($name, $vars['default']) : request_var($name, '');
+	}
+	else
+	{
+		$default = (isset($vars['default'])) ? $vars['default'] : '';
+	}
 
 	switch ($tpl_type[0])
 	{
@@ -110,7 +118,7 @@ function build_cfg_template($tpl_type, $name, $vars)
 			}
 			else if ($tpl_type[0] == 'select_multiple')
 			{
-				$tpl['tpl'] = '<select id="' . $name . '" name="' . $name . '[]" multiple="multiple">' . $return . '</select>';	
+				$tpl['tpl'] = '<select id="' . $name . '" name="' . $name . '[]" multiple="multiple">' . $return . '</select>';
 			}
 			else
 			{

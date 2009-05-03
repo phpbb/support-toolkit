@@ -54,7 +54,7 @@ class sql_query
 	*/
 	function run_tool(&$error)
 	{
-		global $cache, $db, $dbms, $table_prefix, $user;
+		global $cache, $db, $dbms, $table_prefix, $template, $user;
 
         if (!check_form_key('sql_query'))
 		{
@@ -64,8 +64,8 @@ class sql_query
 
 		$sql_query = utf8_normalize_nfc(request_var('sql_query', '', true));
 
-		// Replace phpbb_ with the correct table prefix.
-		$sql_query = preg_replace('#phpbb_#i', $table_prefix, $sql_query);
+		// Replace phpbb_ with the correct table prefix.  Do the double replace otherwise you can have issues with prefixes like phpbb_3
+		$sql_query = str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $sql_query));
 
 		if (!$sql_query)
 		{
@@ -131,7 +131,8 @@ class sql_query
 		// Purge the cache
 		$cache->purge();
 
-		trigger_error($display . $user->lang['SQL_QUERY_SUCCESS']);
+		$template->assign_var('ADDITIONAL_MESSAGE', $display);
+		trigger_error('SQL_QUERY_SUCCESS');
 	}
 }
 
