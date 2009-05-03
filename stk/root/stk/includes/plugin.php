@@ -22,7 +22,7 @@ class plugin
 	 * @access private
 	 */
 	var $ignore_tools = array('index.htm', 'tutorial.php');
-	
+
 	/**
 	 * List containing all available tools and in which category they belong.
 	 * On default it contains the "main" category
@@ -33,7 +33,7 @@ class plugin
 	var $plugin_list = array(
 		'main' => array()
 	);
-	
+
 	/**
 	 * Path to the tools directory
 	 *
@@ -41,7 +41,7 @@ class plugin
 	 * @access public
 	 */
 	var $tool_box = '';
-	
+
 	/**
 	 * The requested tool category
 	 *
@@ -49,7 +49,7 @@ class plugin
 	 * @access public
 	 */
 	var $req_cat = '';
-	
+
 	/**
 	 * The requested tool
 	 *
@@ -57,7 +57,7 @@ class plugin
 	 * @access public
 	 */
 	var $req_tool = '';
-	
+
 	/**
 	 * Constructor
 	 * Load the list with available plugins and assign them in the correct category
@@ -66,28 +66,43 @@ class plugin
 	{
 		// Set the path
 		$this->tool_box = STK_ROOT_PATH . 'tools/';
-		
+
+		// Create a list with tools
+		$this->plugin_list += $this->build_tool_list($this->tool_box);
+
 		// Get the requested cat and tool
 		$this->req_cat	= request_var('c', 'main');
 		$this->req_tool	= request_var('t', '');
-		
-		// Make sure the form_key is set
-		add_form_key($this->req_tool);
-		
+
+		// We shouldn't rely on the given category request, unless there really is a tool with that name in the given category
+		if ($this->req_tool && (!isset($this->plugin_list[$this->req_cat]) || !in_array($this->req_tool, $this->plugin_list[$this->req_cat])))
+		{
+			foreach ($this->plugin_list as $cat => $tools)
+			{
+				foreach ($tools as $tool)
+				{
+					if ($tool == $this->req_tool)
+					{
+						$this->req_cat = $cat;
+					}
+				}
+			}
+		}
+
 		// Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
 		if (!$this->req_tool || preg_match('#([^a-zA-Z0-9_])#', $this->req_tool) || !file_exists(STK_ROOT_PATH . 'tools/' . $this->req_cat . '/' . $this->req_tool . '.' . PHP_EXT))
 		{
 			$this->req_tool = '';
 		}
 
-		// Create a list with tools
-		$this->plugin_list += $this->build_tool_list($this->tool_box);
-		
+		// Make sure the form_key is set
+		add_form_key($this->req_tool);
+
 		// Assign the two menus to the template
 		$this->gen_top_nav();
 		$this->gen_left_nav();
 	}
-	
+
 	/**
 	 * Build the list with tools. This method will look recursifley in the given directory
 	 *
@@ -97,13 +112,13 @@ class plugin
 	{
 		// Tools in this directory
 		$_plugin_list = array();
-		
+
 		// Path
 		if (substr($dir, -1) != '/')
 		{
 			$dir .= '/';
 		}
-		
+
 		if (false !== ($handle = opendir($dir)))
 		{
 			while (false !== ($file = readdir($handle)))
@@ -122,7 +137,7 @@ class plugin
 				{
 					continue;
 				}
-				
+
 				if (is_dir($dir . $file))
 				{
 					$_plugin_list[$file] = $this->build_tool_list($dir . $file);
@@ -136,10 +151,10 @@ class plugin
 			}
 			closedir($handle);
 		}
-		
+
 		return $_plugin_list;
 	}
-	
+
 	/**
 	 * Load the requested tool
 	 *
@@ -151,31 +166,31 @@ class plugin
 	function load_tool($tool_cat, $tool_name, $return = true)
 	{
 		global $user;
-		
+
 		static $tools_loaded = array();
-		
+
 		if (isset($tools_loaded[$tool_name]))
 		{
 			return ($return) ? $tools_loaded[$tool_name] : true;
 		}
-		
+
 		$tool_path = $this->tool_box . $tool_cat . '/' . $tool_name . '.' . PHP_EXT;
 		if (false === (@include $tool_path))
 		{
 			trigger_error(sprintf($user->lang['TOOL_INCLUTION_NOT_FOUND'], $tool_path), E_USER_ERROR);
 		}
-		
+
 		if (!class_exists($tool_name))
 		{
 			trigger_error(sprintf($user->lang['INCORRECT_CLASS'], $tool_name, PHP_EXT), E_USER_ERROR);
 		}
-		
+
 		// Construct the class
 		$tools_loaded[$tool_name] = new $tool_name();
-		
+
 		// Add the language file
 		stk_add_lang('tools/' . $tool_name);
-		
+
 		// Return
 		return ($return) ? $tools_loaded[$tool_name] : true;
 	}
@@ -188,31 +203,31 @@ class plugin
 	function url_arg()
 	{
 		$_args = array();
-		
+
 		// The category
 		$_args += array('c' => $this->req_cat);
-		
+
 		// A tool?
 		if (!empty($this->req_tool))
 		{
 			$_args += array('t' => $this->req_tool);
 		}
-		
+
 		return $_args;
 	}
-	
+
 	function get_cat()
 	{
 		return $this->req_cat;
 	}
-	
+
 	/**
 	 * Build the top "category" navigation for every page
 	 */
 	function gen_top_nav()
 	{
 		global $template, $user;
-		
+
 		// Loop through the plugin list. The first keys are the categories
 		$cats = array_keys($this->plugin_list);
 		foreach ($cats as $cat)
@@ -222,7 +237,7 @@ class plugin
 			{
 				continue;
 			}
-			
+
 			// Active cat?
 			$_s_active = ($cat == $this->req_cat) ? true : false;
 
@@ -234,7 +249,7 @@ class plugin
 			));
 		}
 	}
-	
+
 	/**
 	 * Build the left "tool" navigation for every page
 	 * This is based upon the active tool
@@ -242,22 +257,22 @@ class plugin
 	function gen_left_nav()
 	{
 		global $template;
-		
+
 		// Grep the correct category
 		$tool_list = $this->plugin_list[$this->req_cat];
-		
+
 		// Loop through the tools and create the template
 		foreach ($tool_list as $tool)
 		{
 			// Active tool?
 			$_s_active = ($tool == $this->req_tool) ? true : false;
-			
+
 			// Make sure the tool is loaded
 			$class = $this->load_tool($this->req_cat, $tool);
-			
+
 			// Get the info
 			$info = $class->info();
-			
+
 			// Assign to the template
 			$template->assign_block_vars('left_nav', array(
 				'L_TITLE'		=> $info['NAME'],
