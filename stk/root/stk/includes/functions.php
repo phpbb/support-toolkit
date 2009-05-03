@@ -249,6 +249,16 @@ function perform_unauth_tasks($action)
 	
 	switch ($action)
 	{
+		// If the user wants to distroy the passwd file
+		case 'delpassdfile' :
+			if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
+			{
+				// Shouldn't happen. Kill the script
+				trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
+			}
+		
+		// No break, also logout
+		
 		// If the user wants to destroy their STK login cookie
 		case 'stklogout' :
 			setcookie('stk_token', '', (time() - 31536000));

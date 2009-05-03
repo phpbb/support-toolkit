@@ -193,7 +193,10 @@ if (isset($stk_passwd))
 	}
 	
 	// Tell the template engine we're logged through this
-	$template->assign_var('S_STK_LOGIN', true);
+	$template->assign_vars(array(
+		'S_STK_LOGIN'			=> true,
+		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpassdfile'))),
+	));
 }
 // phpBB authentication. Only allow founders to pass!
 else
