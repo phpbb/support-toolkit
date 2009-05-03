@@ -324,7 +324,12 @@ class database_cleaner
 						}
 					}
 				}
-/*
+/**
+* Modules Cleaner
+*
+* DO NOT USE THIS!
+* It is very buggy and just plain does not work correctly.  In the future we will take another look at this.
+*
 				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
 				$missing_modules = $cleaner->modules;
 				$extra_modules = array();
