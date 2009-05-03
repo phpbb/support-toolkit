@@ -16,16 +16,6 @@ if (!defined('IN_PHPBB'))
 class pm_viewer
 {
 	/**
-	* The template file this page needs
-	*/
-	var $template_file = '';
-
-	/**
-	* The title of this page
-	*/
-	var $page_title = '';
-
-	/**
 	* Tool Info
 	*
 	* @return Returns an array with the info about this tool.
@@ -235,7 +225,7 @@ class pm_viewer
 			}
 
 			// Inform the user that it is done, and redirect back to this users pm overview
-			$redir = append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'list', 'view_user' => $owner, 'submit' => true));
+			$redir = append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('t' => 'pm_viewer', 'mode' => 'list', 'view_user' => $owner, 'submit' => true));
 			meta_refresh(3, $redir);
 			trigger_error('PM_DELETED_REDIRECT');
 		}

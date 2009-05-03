@@ -141,7 +141,7 @@ class reparse_bbcode
 
 		if ($post_count > $next_step)
 		{
-			meta_refresh(1, append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;start={$next_step}&amp;step={$step}"));
+			meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;start={$next_step}&amp;step={$step}"));
 			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
 		}
 		else

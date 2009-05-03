@@ -117,7 +117,7 @@ class vote_revealer
 			{
 				$template->assign_block_vars('polllist', array(
 					'L_POLL_LINK'	=> censor_text($row['poll_title']),
-					'U_POLL_LINK'	=> append_sid(STK_ROOT_PATH . 'index." . PHP_EXT, array('t' => 'vote_revealer', 'submit' => true, 'mode' => 'reveal', 'forum_id' => $forum_id, 'topic_id' => $row['topic_id'])),
+					'U_POLL_LINK'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('t' => 'vote_revealer', 'submit' => true, 'mode' => 'reveal', 'forum_id' => $forum_id, 'topic_id' => $row['topic_id'])),
 				));
 			}
 			while ($row = $db->sql_fetchrow($result));
