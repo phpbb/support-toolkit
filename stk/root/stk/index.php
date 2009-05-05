@@ -197,6 +197,9 @@ if (isset($stk_passwd))
 		'S_STK_LOGIN'			=> true,
 		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpassdfile'))),
 	));
+	
+	// Don't use "Anonymous" as username
+	$user->data['username'] = $user->lang['EMERGENCY_LOGIN_NAME'];
 }
 // phpBB authentication. Only allow founders to pass!
 else

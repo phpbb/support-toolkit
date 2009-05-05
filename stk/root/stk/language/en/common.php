@@ -45,6 +45,8 @@ $lang = array_merge($lang, array(
 
 	'DOWNLOAD_PASS'						=> 'Download the password file.',
 
+	'EMERGENCY_LOGIN_NAME'				=> 'STK Emergency login',
+
 	'FAIL_REMOVE_PASSWD'				=> 'Couldn\'t remove the expired password file. Please remove this file manually!',
 
 	'GEN_PASS_FILE'						=> 'Generate password file.',
