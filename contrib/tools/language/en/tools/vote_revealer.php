@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'NO_POLLS'	=> 'The forum that you selected doesnt\'t have any polls',
-	'NO_VOTERS'	=> 'Nobody has voted for this option yet.',
+	'NO_POLLS'						=> 'The forum that you selected doesnt\'t have any polls',
+	'NO_VOTERS'						=> 'Nobody has voted for this option yet.',
 
 	'POLL_NO_VOTES'					=> 'Nobody has voted in this poll yet!',
 	'POLL_OPTION'					=> 'Vote option',
@@ -48,11 +48,11 @@ $lang = array_merge($lang, array(
 	'POLL_VOTERS'					=> 'Voters in this poll',
 	'POLL_VOTERS_EXPLAIN'			=> 'This page lists every user that voted in this poll, and shows on which option(s) he voted.',
 
-	'SELECT_FORUM'				=> 'Select forum',
-	'SELECT_FORUM_EXPLAIN'		=> 'Select the forum in which you want to search for polls.',
+	'SELECT_FORUM'					=> 'Select forum',
+	'SELECT_FORUM_EXPLAIN'			=> 'Select the forum in which you want to search for polls.',
 
-	'VOTE_REVEALER'				=> 'Vote revealer',
-	'VOTE_REVEALER_EXPLAIN'		=> 'Allows you to see which user voted what in any poll that is currently on the board.',
+	'VOTE_REVEALER'					=> 'Vote revealer',
+	'VOTE_REVEALER_EXPLAIN'			=> 'Allows you to see which user voted what in any poll that is currently on the board.',
 ));
 
 ?>
