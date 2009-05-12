@@ -243,22 +243,12 @@ function parse_page($file, $title = '', $sprintf_title = array(), $sprintf_expla
  *
  * @param unknown_type $action
  */
-function perform_unauth_tasks($action)
+function perform_unauthed_quick_tasks($action)
 {
 	global $template, $user;
 
 	switch ($action)
 	{
-		// If the user wants to distroy the passwd file
-		case 'delpassdfile' :
-			if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
-			{
-				// Shouldn't happen. Kill the script
-				trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
-			}
-
-		// No break, also logout
-
 		// If the user wants to destroy their STK login cookie
 		case 'stklogout' :
 			setcookie('stk_token', '', (time() - 31536000));
@@ -267,7 +257,7 @@ function perform_unauth_tasks($action)
 		break;
 
 		// Generate the passwd file
-		case 'genpassdfile' :
+		case 'genpasswdfile' :
 			// Create a 25 character password
 			$_pass_string = substr(phpbb_hash(gen_rand_string()), -25);
 
@@ -281,7 +271,7 @@ function perform_unauth_tasks($action)
 				'PASS_GENERATED'			=> sprintf($user->lang['PASS_GENERATED'], $_pass_string, $user->format_date($_pass_exprire, false, true)),
 				'PASS_GENERATED_REDIRECT'	=> sprintf($user->lang['PASS_GENERATED_REDIRECT'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT)),
 				'S_HIDDEN_FIELDS'			=> build_hidden_fields(array('pass_string' => $_pass_string, 'pass_exp' => $_pass_exprire)),
-				'U_ACTION'					=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'downpassdfile')),
+				'U_ACTION'					=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'downpasswdfile')),
 			));
 
 			$template->set_filenames(array(
@@ -291,7 +281,7 @@ function perform_unauth_tasks($action)
 		break;
 
 		// Download the passwd file
-		case 'downpassdfile' :
+		case 'downpasswdfile' :
 			$_pass_string	= request_var('pass_string', '', true);
 			$_pass_exprire	= request_var('pass_exp', 0);
 
@@ -314,6 +304,40 @@ function perform_unauth_tasks($action)
 \$stk_passwd_expiration\t= {$_pass_exprire};
 ?>";
 			exit_handler();
+		break;
+	}
+}
+
+/**
+ * Perform all quick tasks that require the user to be authenticated
+ *
+ * @param unknown_type $action
+ */
+function perform_authed_quick_tasks($action)
+{
+	global $user;
+	
+	switch ($action)
+	{
+		// User wants to logout and remove the password file
+		case 'delpasswdfilelogout' :
+			$logout = true;
+		
+			// No Break;
+		
+		// If the user wants to distroy the passwd file
+		case 'delpasswdfile' :
+			if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
+			{
+				// Shouldn't happen. Kill the script
+				trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
+			}
+			
+			// Log him out
+			if ($logout)
+			{
+				perform_unauthed_quick_tasks('stklogout');
+			}
 		break;
 	}
 }

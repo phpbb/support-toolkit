@@ -64,7 +64,6 @@ if (!$db->sql_fetchrow($result))
 }
 $db->sql_freeresult($result);
 
-
 // Start session management
 $user->session_begin();
 $auth->acl($user->data);
@@ -79,19 +78,23 @@ $template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
 // Work around for a bug in phpBB3.
 $user->theme['template_storedb'] = false;
 
-// Some extra stuff that can be done.  Don't add things here that require authentication.
+// Setup some variables
 $action = request_var('action', '');
-perform_unauth_tasks($action);
+$submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
+
+// Perform some quick tasks here that don't require any authentication!
+perform_unauthed_quick_tasks($action);
 
 /**
  * @debug
  * A temp variable that allows us to bypass the internal authentication with the passwd file in place
  */
-$_ignore_pass = false;
+$_ignore_pass = FALSE;
 
 /*
 * Start Login
 */
+$stk_passwd = $stk_passwd_expiration = FALSE;
 // See whether we have an emergency login file
 if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && !$_ignore_pass)
 {
@@ -99,20 +102,16 @@ if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && !$_ignore_pass)
 	include STK_ROOT_PATH . 'passwd.' . PHP_EXT;
 	
 	// Can we use trust this password
-	if (!isset($stk_passwd_expiration) || time() > $stk_passwd_expiration)
+	if ($stk_passwd_expiration === false || time() > $stk_passwd_expiration)
 	{
 		// No. Unset the password and try to remove the file
 		unset ($stk_passwd);
-		if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
-		{
-			// Shouldn't happen. Kill the script
-			trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
-		}
+		perform_authed_quick_tasks('delpasswdfile');
 	}
 }
 
 // Do the actual login. If we have an emergency login we'll use that over the phpBB authentication method
-if (isset($stk_passwd))
+if ($stk_passwd !== false)
 {
 	// Set some vars
 	$cookie_token	= request_var('stk_token', '', true, true);
@@ -195,7 +194,7 @@ if (isset($stk_passwd))
 	// Tell the template engine we're logged through this
 	$template->assign_vars(array(
 		'S_STK_LOGIN'			=> true,
-		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpassdfile'))),
+		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpasswdfile'))),
 	));
 	
 	// Don't use "Anonymous" as username
@@ -207,7 +206,7 @@ else
 	if (!$user->data['is_registered'])
 	{
 		// Assign a string only used here
-		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'genpassdfile'))));
+		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'genpasswdfile'))));
 		
 		// A user can potentially access this file directly
 		login_box('', $user->lang['STK_NON_LOGIN'], '', false, false);
@@ -238,8 +237,8 @@ if (false === (@include STK_ROOT_PATH . 'config.' . PHP_EXT))
 // From this point we'll be able to use the full STK layout
 $template->assign_var('S_STK_FULL_BODY', true);
 
-// Setup some variables
-$submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
+// Perform some quick tasks here that require the user to be authenticated
+perform_authed_quick_tasks($action);
 
 // If they canceled redirect them to the STK index.
 if (isset($_POST['cancel']))
