@@ -64,7 +64,15 @@
 	{S_HIDDEN_FIELDS}
 	{S_FORM_TOKEN}
 
-	<!-- IF S_BOT_OPTIONS -->
+	<!-- IF S_MODULE_OPTIONS -->
+		<legend>{L_RESET_MODULES}</legend>
+		<p style="padding: 5px 10px;">{L_RESET_MODULES_EXPLAIN}</p>
+
+		<div style="text-align: center;">
+			<input type="submit" name="yes" value="{L_YES}" class="button1" />
+			&nbsp; <input type="submit" name="no" value="{L_NO}" class="button2" />
+		</div>
+	<!-- ELSEIF S_BOT_OPTIONS -->
 		<legend>{L_RESET_BOTS}</legend>
 		<p style="padding: 5px 10px;">{L_RESET_BOTS_EXPLAIN}</p>
 

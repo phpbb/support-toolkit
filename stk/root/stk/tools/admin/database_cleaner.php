@@ -41,9 +41,6 @@ class database_cleaner
 
 		if ($step > 0)
 		{
-			// Unlock the board
-			set_config('board_disable', 0);
-
 			// Kick them if bad form key
 			check_form_key('database_cleaner', false, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'database_cleaner')), true);
 		}
@@ -54,6 +51,7 @@ class database_cleaner
 		{
 			trigger_error('PHPBB_VERSION_NOT_SUPPORTED');
 		}
+		include(STK_ROOT_PATH . 'includes/database_cleaner/functions.' . PHP_EXT);
 		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file);
 		$cleaner = new database_cleaner_data();
 
@@ -89,26 +87,14 @@ class database_cleaner
 				}
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang['BOARD_DISABLE_SUCCESS']);
 
-				// Look into any way we can backup the database easily here...
-
 				// Start off simple by displaying extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
 					'NAME'		=> $user->lang['CONFIG_SETTINGS'],
 					'TITLE'		=> $user->lang['ROWS'],
 				));
 
-				$existing_config = array();
-				$sql = 'SELECT * FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
-				$result = $db->sql_query($sql);
-				while ($row = $db->sql_fetchrow($result))
-				{
-					$existing_config[] = $row['config_name'];
-				}
-				$db->sql_freeresult($result);
-
-				$config_rows = array_unique(array_merge(array_keys($cleaner->config), $existing_config));
-				sort($config_rows);
-
+				$config_rows = $existing_config = array();
+				get_config_rows($cleaner, $config_rows, $existing_config);
 				foreach ($config_rows as $name)
 				{
 					// Skip ones that are in the default install and are in the existing config
@@ -129,17 +115,8 @@ class database_cleaner
 				// Add/remove the extra config variables they selected.
 				if ($apply_changes)
 				{
-					$existing_config = array();
-					$sql = 'SELECT * FROM ' . CONFIG_TABLE;
-					$result = $db->sql_query($sql);
-					while ($row = $db->sql_fetchrow($result))
-					{
-						$existing_config[] = $row['config_name'];
-					}
-					$db->sql_freeresult($result);
-
-					$config_rows = array_unique(array_merge(array_keys($cleaner->config), $existing_config));
-
+					$config_rows = $existing_config = array();
+					get_config_rows($cleaner, $config_rows, $existing_config);
 					foreach ($config_rows as $name)
 					{
 						if (isset($cleaner->config[$name]) && in_array($name, $existing_config))
@@ -170,17 +147,8 @@ class database_cleaner
 					'TITLE'		=> $user->lang['ROWS'],
 				));
 
-				$existing_permissions = array();
-				$sql = 'SELECT * FROM ' . ACL_OPTIONS_TABLE;
-				$result = $db->sql_query($sql);
-				while ($row = $db->sql_fetchrow($result))
-				{
-					$existing_permissions[] = $row['auth_option'];
-				}
-				$db->sql_freeresult($result);
-
-				$permission_rows = array_unique(array_merge(array_keys($cleaner->permissions), $existing_permissions));
-
+				$permission_rows = $existing_permissions = array();
+				get_permission_rows($cleaner, $permission_rows, $existing_permissions);
 				foreach ($permission_rows as $name)
 				{
 					// Skip ones that are in the default install and are in the existing permissions
@@ -201,17 +169,8 @@ class database_cleaner
 				// Add/remove the permission fields they selected
 				if ($apply_changes)
 				{
-					$existing_permissions = array();
-					$sql = 'SELECT * FROM ' . ACL_OPTIONS_TABLE;
-					$result = $db->sql_query($sql);
-					while ($row = $db->sql_fetchrow($result))
-					{
-						$existing_permissions[] = $row['auth_option'];
-					}
-					$db->sql_freeresult($result);
-
-					$permission_rows = array_unique(array_merge(array_keys($cleaner->permissions), $existing_permissions));
-
+					$permission_rows = $existing_permissions = array();
+					get_permission_rows($cleaner, $permission_rows, $existing_permissions);
 					foreach ($permission_rows as $name)
 					{
 						// Skip ones that are in the default install and are in the existing permissions
@@ -239,29 +198,25 @@ class database_cleaner
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang['PERMISSION_UPDATE_SUCCESS']);
 
 				// Display the system groups that are missing or aren't from a vanilla installation
-				$missing_groups	= $cleaner->groups;
-				$added_groups	= array();
-				$this->get_system_group_data($missing_groups, $added_groups, false);
-
 				$template->assign_block_vars('section', array(
-					'TITLE'		=> $user->lang['ACP_GROUPS_MANAGEMENT'],
+					'NAME'		=> $user->lang['ACP_GROUPS_MANAGEMENT'],
+					'TITLE'		=> $user->lang['ROWS'],
 				));
 
-				foreach ($missing_groups as $group_name)
+				$group_rows = $existing_groups = array();
+				get_group_rows($cleaner, $group_rows, $existing_groups);
+				foreach ($group_rows as $name)
 				{
-					$template->assign_block_vars('section.items', array(
-						'FIELD_NAME'	=> "add-{$group_name}",
-						'MISSING'		=> true,
-						'NAME'			=> isset($user->lang["G_{$group_name}"]) ? $user->lang["G_{$group_name}"] : $group_name,
-					));
-				}
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($cleaner->groups[$name]) && in_array($name, $existing_groups))
+					{
+						continue;
+					}
 
-				foreach ($added_groups as $group_name)
-				{
 					$template->assign_block_vars('section.items', array(
-						'FIELD_NAME'	=> "remove-{$group_name}",
-						'MISSING'		=> false,
-						'NAME'			=> isset($user->lang["G_{$group_name}"]) ? $user->lang["G_{$group_name}"] : $group_name,
+						'NAME'			=> $name,
+						'FIELD_NAME'	=> $name,
+						'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
 					));
 				}
 			break;
@@ -270,227 +225,55 @@ class database_cleaner
 				// Add/remove selected system groups
 				if ($apply_changes)
 				{
-					// Build an array with the actions
-					$actions = array(
-						'add'		=> array(),
-						'remove'	=> array(),
-					);
-
-					foreach ($selected as $field => $value)
+					$group_rows = $existing_groups = array();
+					get_group_rows($cleaner, $group_rows, $existing_groups);
+					foreach ($group_rows as $name)
 					{
-						// split and add to the actions array
-						$type = explode('-', $field);
-						$actions[$type[0]][] = $type[1];
-					}
-
-					// Get all the default groups
-					$default_groups = $cleaner->groups;
-
-					// Inlcude required file
-					if (!function_exists('user_get_id_name'))
-					{
-						include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
-					}
-
-					// Get the IDs of the remove groups
-					if (sizeof($actions['remove']))
-					{
-						$remove_ids = array();
-						$sql = 'SELECT group_id, group_name
-							FROM ' . GROUPS_TABLE . '
-							WHERE ' . $db->sql_in_set('group_name', $actions['remove']);
-						$result = $db->sql_query($sql);
-						while ($group = $db->sql_fetchrow($result))
+						// Skip ones that are in the default install and are in the existing permissions
+						if (isset($cleaner->groups[$name]) && in_array($name, $existing_groups))
 						{
-							$remove_ids[$group['group_name']] = $group['group_id'];
+							continue;
 						}
-					}
 
-					$group_id = 0;
-
-					// Run through the actions and do them
-					foreach ($actions as $action => $groups)
-					{
-						foreach ($groups as $group)
+						if (isset($selected[$name]))
 						{
-							if ($action == 'add')
+							if (isset($cleaner->groups[$name]) && !in_array($name, $existing_groups))
 							{
-								group_create($group_id, $default_groups[$group]['group_type'], $group, $default_groups[$group]['group_desc'], array('group_colour' => $default_groups[$group]['group_colour'], 'group_legend' => $default_groups[$group]['group_legend'], 'group_avatar' => $default_groups[$group]['group_avatar'], 'group_max_recipients' => $default_groups[$group]['group_max_recipients']));
+								// Add it with the default settings we've got...
+								$group_id = false;
+								group_create($group_id, $cleaner->groups[$name]['group_type'], $name, $cleaner->groups[$name]['group_desc'], array('group_colour' => $cleaner->groups[$name]['group_colour'], 'group_legend' => $cleaner->groups[$name]['group_legend'], 'group_avatar' => $cleaner->groups[$name]['group_avatar'], 'group_max_recipients' => $cleaner->groups[$name]['group_max_recipients']));
 							}
-							else
+							else if (!isset($cleaner->groups[$name]) && in_array($name, $existing_groups))
 							{
-								group_delete($remove_ids[$group], $group);
+								// Remove it
+								$db->sql_query('SELECT group_id FROM ' . GROUPS_TABLE . ' WHERE group_name = \'' . $name . '\'');
+								$group_id = $db->sql_fetchfield('group_id');
+								group_delete($group_id, $name);
 							}
 						}
 					}
 				}
-/**
-* Modules Cleaner
-*
-* DO NOT USE THIS!
-* It is very buggy and just plain does not work correctly.  In the future we will take another look at this.
-*
-				// Display the extra modules and let them select what to remove, also display a list of any missing and if they want to re-add them
-				$missing_modules = $cleaner->modules;
-				$extra_modules = array();
-				$sql = 'SELECT *
-					FROM ' . MODULES_TABLE . '
-					ORDER BY left_id';
-				$result = $db->sql_query($sql);
-				while ($row = $db->sql_fetchrow($result))
-				{
-					$this->modules[$row['module_id']] = $row;
 
-					if (!isset($cleaner->modules[$row['module_class']]))
-					{
-						if (!isset($extra_modules[$row['module_class']]))
-						{
-							$extra_modules[$row['module_class']] = array();
-						}
-
-						$extra_modules[$row['module_class']][] = $row;
-					}
-					else
-					{
-						$extra = true;
-						foreach ($cleaner->modules[$row['module_class']] as $module_id => $module)
-						{
-							$parent = ($module['parent_id']) ? $cleaner->modules[$row['module_class']][$module['parent_id']]['module_langname'] : '';
-							$existing_parent = ($row['parent_id']) ? $this->modules[$row['parent_id']]['module_langname'] : '';
-							if ($parent == $existing_parent && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
-							{
-								$extra = false;
-								unset($missing_modules[$row['module_class']][$module_id]);
-							}
-						}
-
-						if ($extra == true)
-						{
-							if (!isset($extra_modules[$row['module_class']]))
-							{
-								$extra_modules[$row['module_class']] = array();
-							}
-
-							$extra_modules[$row['module_class']][] = $row;
-						}
-					}
-				}
-				$db->sql_freeresult($result);
-
-				$template->assign_block_vars('section', array(
-					'TITLE'		=> $user->lang['ACP_MODULE_MANAGEMENT'],
+				// Ask if they would like to reset the modules (handled in the template)
+				$template->assign_vars(array(
+					'S_MODULE_OPTIONS'		=> true,
+					'S_NO_INSTRUCTIONS'		=> true,
 				));
-
-				foreach ($missing_modules as $class => $rows)
-				{
-					foreach ($rows as $id => $row)
-					{
-						$parent = ($row['parent_id']) ? $cleaner->modules[$class][$row['parent_id']]['module_langname'] : '';
-						$template->assign_block_vars('section.items', array(
-							'FIELD_NAME'	=> 'missing-' . $id,
-							'NAME'			=> strtoupper($class) . ' -> ' . (($row['parent_id']) ? ((isset($user->lang[$parent])) ? $user->lang[$parent] : $parent) . ' -> ' : '') . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
-							'MISSING'		=> true,
-						));
-					}
-				}
-
-				foreach ($extra_modules as $class => $rows)
-				{
-					foreach ($rows as $row)
-					{
-						$template->assign_block_vars('section.items', array(
-							'FIELD_NAME'	=> 'extra-' . $row['module_id'],
-							'NAME'			=> strtoupper($class) . ' -> ' . (($row['parent_id']) ? ((isset($user->lang[$this->modules[$row['parent_id']]['module_langname']])) ? $user->lang[$this->modules[$row['parent_id']]['module_langname']] : $this->modules[$row['parent_id']]['module_langname']) . ' -> ' : '') . ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']),
-						));
-					}
-				}
 			break;
 
 			case 5 :
-				// Remove the extra modules they selected, add any they selected to be added
-				$error = array();
-				if ($apply_changes)
+				// Reset the modules if they wanted to
+				if (isset($_POST['yes']) && $apply_changes)
 				{
-					$missing_modules = $cleaner->modules;
-					$extra_modules = array();
-					$sql = 'SELECT * FROM ' . MODULES_TABLE . '
-						ORDER BY left_id';
-					$result = $db->sql_query($sql);
-					while ($row = $db->sql_fetchrow($result))
-					{
-						$this->modules[$row['module_id']] = $row;
+					// Remove existing modules
+					$db->sql_query('DELETE FROM ' . MODULES_TABLE);
 
-						if (!isset($cleaner->modules[$row['module_class']]))
-						{
-							if (!isset($extra_modules[$row['module_class']]))
-							{
-								$extra_modules[$row['module_class']] = array();
-							}
+					// Add the modules
+					$db->sql_multi_insert(MODULES_TABLE, $cleaner->modules);
 
-							$extra_modules[$row['module_class']][] = $row;
-						}
-						else
-						{
-							$extra = true;
-							foreach ($cleaner->modules[$row['module_class']] as $module_id => $module)
-							{
-								if ($module['parent_id'] == $row['parent_id'] && $module['module_basename'] == $row['module_basename'] && $module['module_mode'] == $row['module_mode'] && $module['module_langname'] == $row['module_langname'])
-								{
-									$extra = false;
-									unset($missing_modules[$row['module_class']][$module_id]);
-								}
-							}
-
-							if ($extra == true)
-							{
-								if (!isset($extra_modules[$row['module_class']]))
-								{
-									$extra_modules[$row['module_class']] = array();
-								}
-
-								$extra_modules[$row['module_class']][] = $row;
-							}
-						}
-					}
-					$db->sql_freeresult($result);
-
-					$to_add = $to_remove = array();
-					foreach ($missing_modules as $class => $rows)
-					{
-						foreach ($rows as $id => $row)
-						{
-							if (isset($selected['missing-' . $id]))
-							{
-								$row['class'] = $class;
-								$to_add[$id] = $row;
-							}
-						}
-					}
-
-					foreach ($extra_modules as $class => $rows)
-					{
-						foreach ($rows as $row)
-						{
-							if (isset($selected['extra-' . $row['module_id']]))
-							{
-								$row['class'] = $class;
-								$to_remove[] = $row;
-							}
-						}
-					}
-
-					$error = array_merge($error, $this->add_modules($to_add, $umil, $cleaner));
-					$error = array_merge($error, $this->remove_modules($to_remove, $umil));
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['RESET_MODULE_SUCCESS']);
 				}
-				if (sizeof($error))
-				{
-					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
-				}
-				else
-				{
-					$template->assign_var('SUCCESS_MESSAGE', $user->lang['MODULE_UPDATE_SUCCESS']);
-				}
-*/
+
 				// Ask if they would like to reset the bots (handled in the template)
 				$template->assign_vars(array(
 					'S_BOT_OPTIONS'		=> true,
@@ -498,7 +281,7 @@ class database_cleaner
 				));
 			break;
 
-			case 5 :
+			case 6 :
 				// Reset the bots if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -615,7 +398,7 @@ class database_cleaner
 				}
 			break;
 
-			case 6 :
+			case 7 :
 				// Update the tables according to what they selected last time
 				$error = array();
 				if ($apply_changes)
@@ -711,7 +494,7 @@ class database_cleaner
 				}
 			break;
 
-			case 7 :
+			case 8 :
 				// Remove the extra selected tables
 				$error = array();
 				if ($apply_changes)
@@ -764,11 +547,13 @@ class database_cleaner
 				));
 			break;
 
-			case 8 :
+			case 9 :
 				if ($apply_changes)
 				{
 					set_config('board_disable', 0);
+
 					$umil->cache_purge();
+					$umil->cache_purge('auth');
 				}
 
 				// Finished?
@@ -958,118 +743,6 @@ class database_cleaner
 		}
 
 		return $columns;
-	}
-
-	// Recursive in case we try to add children before parents or something like that...
-	function add_modules($to_add, &$umil, &$cleaner, $cnt = 0)
-	{
-		global $user;
-
-		$error = $try_again = array();
-
-		foreach ($to_add as $row)
-		{
-			$parent = ($row['parent_id']) ? $cleaner->modules[$row['class']][$row['parent_id']]['module_langname'] : 0;
-			if ($row['module_basename'])
-			{
-				$umil->module_add($row['class'], $parent, array(
-					'module_basename'	=> $row['module_basename'],
-					'modes'				=> array($row['module_mode']),
-				));
-				if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-				{
-					if ($umil->result == 'PARENT_NOT_EXIST' || (isset($user->lang['PARENT_NOT_EXIST']) && $umil->result == $user->lang['PARENT_NOT_EXIST']))
-					{
-						$try_again[] = $row;
-					}
-
-					$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-				}
-			}
-			else
-			{
-				$umil->module_add($row['class'], $parent, $row['module_langname']);
-				if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-				{
-					if ($umil->result == 'PARENT_NOT_EXIST' || (isset($user->lang['PARENT_NOT_EXIST']) && $umil->result == $user->lang['PARENT_NOT_EXIST']))
-					{
-						$try_again[] = $row;
-					}
-
-					$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-				}
-			}
-		}
-
-		if (sizeof($try_again) && $cnt < 5)
-		{
-			return $this->add_modules($try_again, $umil, $cleaner, ($cnt + 1));
-		}
-
-		return $error;
-	}
-
-	// Recursive in case we try to remove parents before children or something like that...
-	function remove_modules($to_remove, &$umil, $cnt = 0)
-	{
-		global $user;
-
-		$error = $try_again = array();
-
-		foreach ($to_remove as $row)
-		{
-			$umil->module_remove($row['class'], $row['parent_id'], $row['module_langname']);
-			if ($umil->result != ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
-			{
-				if ($umil->result == $user->lang['CANNOT_REMOVE_MODULE'])
-				{
-					$try_again[] = $row;
-				}
-
-				$error[] = ((isset($user->lang[$row['module_langname']])) ? $user->lang[$row['module_langname']] : $row['module_langname']) . ' - ' . $umil->result;
-			}
-		}
-
-		if (sizeof($try_again) && $cnt < 5)
-		{
-			return $this->remove_modules($try_again, $umil, ($cnt + 1));
-		}
-
-		return $error;
-	}
-
-	function get_system_group_data(&$missing_groups, &$added_groups, $data = true)
-	{
-		global $db;
-
-		$select = ($data) ? '*' : 'group_name';
-
-		$sql = "SELECT {$select}
-			FROM " . GROUPS_TABLE . '
-			WHERE group_type = 3';
-		$result = $db->sql_query($sql);
-		while ($row = $db->sql_fetchrow($result))
-		{
-			// A default group
-			if (isset($missing_groups[$row['group_name']]))
-			{
-				unset($missing_groups[$row['group_name']]);
-			}
-			else
-			{
-				if (!isset($added_groups[$row['group_name']]))
-				{
-					$added_groups[$row['group_name']] = $row;
-				}
-			}
-		}
-
-		// If required only pass the names
-		if (!$data)
-		{
-			$missing_groups = array_keys($missing_groups);
-			$added_groups	= array_keys($added_groups);
-		}
 	}
 }
 ?>

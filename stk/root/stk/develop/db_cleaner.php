@@ -42,20 +42,19 @@ output_list($permissions, 'auth_option');
 */
 
 $modules = array();
-$sql = 'SELECT module_id, module_basename, parent_id, module_langname, module_mode FROM ' . MODULES_TABLE . '
-	WHERE module_class = \'mcp\'
-	ORDER BY left_id';
+$sql = 'SELECT * FROM ' . MODULES_TABLE . '
+	ORDER BY module_id ASC';
 $result = $db->sql_query($sql);
 while ($row = $db->sql_fetchrow($result))
 {
 	$modules[] = $row;
 }
 
-output_list($modules, 'module_id');
+output_list($modules, 'module_id', true);
 
 die();
 
-function output_list($data, $key)
+function output_list($data, $key, $list_key = false)
 {
 	$max_length = 0;
 	foreach ($data as $row)
@@ -70,17 +69,24 @@ function output_list($data, $key)
 	$output = '';
 	foreach ($data as $row)
 	{
-		$output .= "\t\t\t'{$row[$key]}'";
-
-		$tabs = ($total_tabs - ceil((utf8_strlen($row[$key]) + 3) / 4));
-		for($i = 0; $i <= $tabs; $i++)
+		if ($list_key == false)
 		{
-			$output .= "\t";
+			$output .= "\t\t\t'{$row[$key]}'";
+
+			$tabs = ($total_tabs - ceil((utf8_strlen($row[$key]) + 3) / 4));
+			for($i = 0; $i <= $tabs; $i++)
+			{
+				$output .= "\t";
+			}
+
+			$output .= '=> array(';
+
+			unset($row[$key]);
 		}
-
-		$output .= '=> array(';
-
-		unset($row[$key]);
+		else
+		{
+			$output .= "\t\tarray(";
+		}
 
 		foreach ($row as $column => $value)
 		{

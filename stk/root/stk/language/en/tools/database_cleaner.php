@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+'RESET_MODULES' => 'Reset Modules',
+'RESET_MODULES_EXPLAIN' => 'Would you like to reset the modules to the default phpBB3 modules?  All existing modules will be removed and be replaced with the default ones.',
+'RESET_MODULE_SUCCESS' => 'The modules have been reset successfully!',
 'DATABASE_CLEANER_WELCOME' => 'Welcome to the Database Cleaner tool!<br /><br />This tool was designed to remove extra columns, rows, and tables from the database not present in the default installation of phpBB3.<br /><br />When you are ready to continue click the Continue button to start using the Database Cleaner tool (note that your board will be disabled until this is finished).',
 'DATABASE_CLEANER_WARNING' => 'This tool comes with NO WARRANTY and users of this tool should back up their entire database in case of a failure.<br /><br />Before continuing, make sure you have a database backup!',
 'CONTINUE'	=> 'Continue',
