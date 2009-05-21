@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Tool Kit - Fix Left/Right ID's
-* @version $Id$
+* @version $Id: fix_left_right_ids.php 46 2009-03-29 21:30:21Z EXreaction $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
