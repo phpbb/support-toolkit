@@ -12,7 +12,6 @@
 * TODO
 *
 * - Remove the ignore variable for the internal authentication method before packing.
-* - check out the reparse_bbcode tool, many people have had issues with this script.
 */
 
 define('IN_PHPBB', true);
@@ -47,7 +46,7 @@ $db->sql_query('TRUNCATE TABLE ' . STYLES_THEME_TABLE);
 $db->sql_query('TRUNCATE TABLE ' . STYLES_IMAGESET_TABLE);*/
 
 // A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
-$sql = 'SELECT s.style_id 
+$sql = 'SELECT s.style_id
 	FROM (' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i)
 	WHERE s.style_id = {$config['default_style']}
 		AND t.template_id = s.template_id
@@ -100,7 +99,7 @@ if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && !$_ignore_pass)
 {
 	// Include the file
 	include STK_ROOT_PATH . 'passwd.' . PHP_EXT;
-	
+
 	// Can we use trust this password
 	if ($stk_passwd_expiration === false || time() > $stk_passwd_expiration)
 	{
@@ -118,7 +117,7 @@ if ($stk_passwd !== false)
 	$err_msg		= '';
 	$login_token	= request_var('stk_pass', '', true);
 	$stk_session	= false;
-	
+
 	// One foot in the air for an active session
 	if (!empty($cookie_token))
 	{
@@ -129,7 +128,7 @@ if ($stk_passwd !== false)
 		}
 	}
 
-	// No active session? 
+	// No active session?
 	if (!$stk_session)
 	{
 		// We're trying to login
@@ -139,15 +138,15 @@ if ($stk_passwd !== false)
 			{
 				$err_msg = 'FORM_INVALID';
 			}
-			else 
+			else
 			{
 				// Create a hash of the given token to compare the password
 				$login_token_hash = phpbb_hash($login_token);
-			
+
 				if (phpbb_check_hash($stk_passwd, $login_token_hash))
 				{
 					$stk_session = true;
-				
+
 					// Create a session cookie to keep the user logged in
 					setcookie('stk_token', $login_token_hash, 0);
 				}
@@ -157,10 +156,10 @@ if ($stk_passwd !== false)
 				}
 			}
 		}
-		
+
 		// Past this point we don't want the passwords anymore
 		unset($stk_passwd, $login_token);
-		
+
 		// Still no session. Make the user happy and show him something to work with
 		if (!$stk_session)
 		{
@@ -170,33 +169,33 @@ if ($stk_passwd !== false)
 				// Password field related
 				'TITLE'			=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD'],
 				'TITLE_EXPLAIN'	=> $user->lang['SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'],
-			
+
 				// Other page stuff
 				'LOGIN_ERROR'			=> (!empty($err_msg)) ? $user->lang[$err_msg] : false,
 
 				'U_ACTION'				=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
 				'U_INDEX'				=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
-			
+
 				// Identify this method in the template
 				'S_STK_LOGIN_METHOD'	=> true,
 			));
-			
+
 			page_header($user->lang['LOGIN'], false);
-			
+
 			$template->set_filenames(array(
 				'body' => 'login_body.html',
 			));
-			
+
 			page_footer(false);
 		}
 	}
-	
+
 	// Tell the template engine we're logged through this
 	$template->assign_vars(array(
 		'S_STK_LOGIN'			=> true,
 		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpasswdfile'))),
 	));
-	
+
 	// Don't use "Anonymous" as username
 	$user->data['username'] = $user->lang['EMERGENCY_LOGIN_NAME'];
 }
@@ -207,7 +206,7 @@ else
 	{
 		// Assign a string only used here
 		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'genpasswdfile'))));
-		
+
 		// A user can potentially access this file directly
 		login_box('', $user->lang['STK_NON_LOGIN'], '', false, false);
 	}
@@ -227,12 +226,6 @@ else
 /*
 * End Login
 */
-
-// We need the STK config file
-if (false === (@include STK_ROOT_PATH . 'config.' . PHP_EXT))
-{
-	trigger_error($user->lang['CONFIG_NOT_FOUND'], E_USER_ERROR);
-}
 
 // From this point we'll be able to use the full STK layout
 $template->assign_var('S_STK_FULL_BODY', true);

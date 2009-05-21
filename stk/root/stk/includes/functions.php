@@ -258,8 +258,8 @@ function perform_unauthed_quick_tasks($action)
 
 		// Generate the passwd file
 		case 'genpasswdfile' :
-			// Create a 25 character password
-			$_pass_string = substr(phpbb_hash(gen_rand_string()), -25);
+			// Create a 25 character alphanumeric password (easier to select with a browser and won't cause confusion like it could if it ends in "." or something).
+			$_pass_string = substr(preg_replace("#([^a-zA-Z0-9])#", '', phpbb_hash(unique_id())), 2, 25);
 
 			// The password is usable for 6 hours from now
 			$_pass_exprire = time() + 21600;
@@ -316,15 +316,15 @@ function perform_unauthed_quick_tasks($action)
 function perform_authed_quick_tasks($action)
 {
 	global $user;
-	
+
 	switch ($action)
 	{
 		// User wants to logout and remove the password file
 		case 'delpasswdfilelogout' :
 			$logout = true;
-		
+
 			// No Break;
-		
+
 		// If the user wants to distroy the passwd file
 		case 'delpasswdfile' :
 			if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
@@ -332,7 +332,7 @@ function perform_authed_quick_tasks($action)
 				// Shouldn't happen. Kill the script
 				trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
 			}
-			
+
 			// Log him out
 			if ($logout)
 			{
