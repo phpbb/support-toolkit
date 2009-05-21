@@ -362,6 +362,12 @@ class database_cleaner
 				$last_output_table = '';
 				foreach ($cleaner->tables as $table_name => $data)
 				{
+					// We shouldn't mess with profile fields here.  Users probably will not know what this table does or what would happen if they remove fields added to it.
+					if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+					{
+						continue;
+					}
+
 					$existing_columns = $this->get_columns($table_name);
 
 					if ($existing_columns === false)
@@ -405,6 +411,11 @@ class database_cleaner
 				{
 					foreach ($cleaner->tables as $table_name => $data)
 					{
+						if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+						{
+							continue;
+						}
+
 						$existing_columns = $this->get_columns($table_name);
 
 						if ($existing_columns === false)
