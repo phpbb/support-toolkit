@@ -82,7 +82,7 @@ $lang = array_merge($lang, array(
 	'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is trying to load a not existing file: %1$s',
 	'TOOL_NAME'							=> 'Tool Name',
 
-	'USING_STK_LOGIN'					=> 'You are loged in using the internal STK authentication method. It is adviced to <strong>only</strong> use this method when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
+	'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to <strong>only</strong> use this method when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
 
 	'WELCOME'							=> 'Support Tool Kit',
 	'WELCOME_EXPLAIN'					=> 'The Support Tool Kit, or STK, is a package that can be used to recover phpBB 3.0.x installations, or fix common issues within a working installation. The package is a second ACP that can be easily installed on any working phpBB 3 board, and has the look and feel of the phpBB 3 ACP, but gives the administrator access to a whole new set of tools that can be used in cases where phpBB might not function correctly anymore.',
