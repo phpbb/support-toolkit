@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Tool Kit - Reparse BBCode
-* @version $Id$
+* @version $Id: reparse_bbcode.php 89 2009-05-21 17:11:20Z exreaction $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -42,10 +42,13 @@ class reparse_bbcode
 		$user->add_lang('posting');
 
 		$step = request_var('step', 0);
-		$start = request_var('start', 0);
+		$limit = 500;
+		$start = $step * $limit;
+		$i = 0;
 
 		if (!class_exists('parse_message'))
 		{
+			global $phpbb_root_path, $phpEx; // required!
 			include(PHPBB_ROOT_PATH . "includes/message_parser." . PHP_EXT);
 		}
 
@@ -56,14 +59,19 @@ class reparse_bbcode
 		$sql = 'SELECT * FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t
 			WHERE t.topic_id = p.topic_id
 			ORDER BY p.post_id ASC';
-		$result = $db->sql_query_limit($sql, 200, $start);
+		$result = $db->sql_query_limit($sql, $limit, $start);
 
 		while ($row = $db->sql_fetchrow($result))
 		{
+			$i++;
+
+			// This should make the text the same as it would be coming from a new post submitted
 			decode_message($row['post_text'], $row['bbcode_uid']);
+			$row['post_text'] = html_entity_decode($row['post_text']);
+			set_var($row['post_text'], $row['post_text'], 'string', true);
 
 			$message_parser = new parse_message();
-			$message_parser->message = str_replace('"', '&quot;', html_entity_decode($row['post_text']));
+			$message_parser->message = $row['post_text'];
 			$message_parser->parse((($bbcode_status) ? $row['enable_bbcode'] : false), (($config['allow_post_links']) ? $row['enable_magic_url'] : false), $row['enable_smilies'], $img_status, $flash_status, true, $config['allow_post_links']);
 
 			if ($row['poll_title'] && $row['post_id'] == $row['topic_first_post_id'])
@@ -132,21 +140,15 @@ class reparse_bbcode
 		}
 		$db->sql_freeresult($result);
 
-		$sql = 'SELECT count(post_id) as post_count FROM ' . POSTS_TABLE;
-		$result = $db->sql_query($sql);
-		$post_count = $db->sql_fetchfield('post_count');
-
-		$next_step = $start + 200;
-		$step++;
-
-		if ($post_count > $next_step)
+		if ($i < $limit)
 		{
-			meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;start={$next_step}&amp;step={$step}"));
-			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
+			trigger_error($user->lang['BBCODE_REPARSE_COMPLETE']);
 		}
 		else
 		{
-			trigger_error($user->lang['BBCODE_REPARSE_COMPLETE']);
+			$step++;
+			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;step={$step}"));
+			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
 		}
 	}
 }
