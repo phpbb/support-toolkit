@@ -8,12 +8,6 @@
 *
 */
 
-/**
-* TODO
-*
-* - Remove the ignore variable for the internal authentication method before packing.
-*/
-
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
@@ -84,32 +78,26 @@ $submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
 // Perform some quick tasks here that don't require any authentication!
 perform_unauthed_quick_tasks($action);
 
-/**
- * @debug
- * A temp variable that allows us to bypass the internal authentication with the passwd file in place
- */
-$_ignore_pass = FALSE;
-
 /*
 * Start Login
 */
 $stk_passwd = $stk_passwd_expiration = FALSE;
 // See whether we have an emergency login file
-if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && !$_ignore_pass)
+if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && $user->data['user_type'] != USER_FOUNDER)
 {
 	// Include the file
-	include STK_ROOT_PATH . 'passwd.' . PHP_EXT;
+	include(STK_ROOT_PATH . 'passwd.' . PHP_EXT);
 
 	// Can we use trust this password
 	if ($stk_passwd_expiration === false || time() > $stk_passwd_expiration)
 	{
 		// No. Unset the password and try to remove the file
-		unset ($stk_passwd);
+		unset($stk_passwd);
 		perform_authed_quick_tasks('delpasswdfile');
 	}
 }
 
-// Do the actual login. If we have an emergency login we'll use that over the phpBB authentication method
+// Do the actual login.
 if ($stk_passwd !== false)
 {
 	// Set some vars
@@ -134,7 +122,12 @@ if ($stk_passwd !== false)
 		// We're trying to login
 		if (isset($_POST['login']))
 		{
-			if (!check_form_key('stk_login_form'))
+			if ($cache->get('_stk_last_login') !== false)
+			{
+				// Make sure that we do not have an stk_last_login cache file (expires after 3 seconds).  To prevent a bruteforce attack
+				$err_msg = 'STK_LOGIN_WAIT';
+			}
+			else if (!check_form_key('stk_login_form'))
 			{
 				$err_msg = 'FORM_INVALID';
 			}
@@ -152,6 +145,9 @@ if ($stk_passwd !== false)
 				}
 				else
 				{
+					// Store a cache file letting us know when the last login failure attempt was
+					$cache->put('_stk_last_login', true, 3);
+
 					$err_msg = 'INCORRECT_PASSWORD';
 				}
 			}

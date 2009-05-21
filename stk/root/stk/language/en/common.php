@@ -70,6 +70,7 @@ $lang = array_merge($lang, array(
 
 	'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Tool Kit!',
 	'STK_LOGIN'							=> 'Support Took Kit Login',
+	'STK_LOGIN_WAIT'					=> 'You can only attempt one login every 3 seconds, please try again.',
 	'STK_LOGOUT'						=> 'STK Logout',
 	'STK_LOGOUT_SUCCESS'				=> 'You have successfully logged out from the Support Tool Kit.',
 	'STK_NON_LOGIN'						=> 'Login to access the STK.',
