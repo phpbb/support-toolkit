@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Tool Kit - Reparse BBCode
-* @version $Id: reparse_bbcode.php 89 2009-05-21 17:11:20Z exreaction $
+* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Tool Kit - Reset Styles
-* @version $Id: reset_styles.php 46 2009-03-29 21:30:21Z EXreaction $
+* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
