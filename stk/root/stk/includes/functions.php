@@ -241,7 +241,7 @@ function parse_page($file, $title = '', $sprintf_title = array(), $sprintf_expla
 /**
  * Perform all quick tasks that has to be ran before we authenticate
  *
- * @param unknown_type $action
+ * @param String $action
  */
 function perform_unauthed_quick_tasks($action)
 {
@@ -311,7 +311,7 @@ function perform_unauthed_quick_tasks($action)
 /**
  * Perform all quick tasks that require the user to be authenticated
  *
- * @param unknown_type $action
+ * @param String $action
  */
 function perform_authed_quick_tasks($action)
 {
