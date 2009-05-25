@@ -372,20 +372,17 @@ else
 	// Output the main page
 	page_header($user->lang['SUPPORT_TOOL_KIT']);
 
-	// Set what is being displayed
-	if (empty($plugin->req_cat) || $plugin->req_cat == 'main')
+	// In de event the request category is empty force it to main.
+	if (empty($plugin->req_cat))
 	{
-		// Just the welcome page
-		$template->assign_var('S_WELCOME', true);
+		$this->req_cat = 'main';
 	}
-	else
-	{
-		// Category title and desc if available
-		$template->assign_vars(array(
-			'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->req_cat)],
-			'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN'] : '',
-		));
-	}
+	
+	// Category title and desc if available
+	$template->assign_vars(array(
+		'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->req_cat)],
+		'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN'] : '',
+	));
 
 	$template->set_filenames(array(
 		'body' => 'index_body.html',

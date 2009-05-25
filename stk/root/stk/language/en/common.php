@@ -42,10 +42,15 @@ $lang = array_merge($lang, array(
 	'BOARD_FOUNDER_ONLY'				=> 'Only Board Founders may access the Support Tool Kit.',
 
 	'CAT_ADMIN'							=> 'Admin Tools',
+	'CAT_ADMIN_EXPLAIN'					=> 'The tools within this category are tools that can be used by the administrator to perform tasks that don\'t ship with a vanilla phpBB 3.0.x installation.',
 	'CAT_DEV'							=> 'Developer Tools',
-	'CAT_MAIN'							=> 'main',
+	'CAT_DEV_EXPLAIN'					=> 'The "developer tools" are tools that can be used by phpBB developers.',
+	'CAT_MAIN'							=> 'Main',
+	'CAT_MAIN_EXPLAIN'					=> 'The Support Tool Kit, or STK, is a package that can be used to recover phpBB 3.0.x installations, or fix common issues within a working installation. The package is a second ACP that can be easily installed on any working phpBB 3 board, and has the look and feel of the phpBB 3 ACP, but gives the administrator access to a whole new set of tools that can be used in cases where phpBB might not function correctly anymore.',
 	'CAT_SUPPORT'						=> 'Support Tools',
+	'CAT_SUPPORT_EXPLAIN'				=> 'The support tools are tools that are used to fix or recover certein parts of a phpBB 3.0.x installation.',
 	'CAT_USER_GROUP'					=> 'User/Group Tools',
+	'CAT_USER_GROUP_EXPLAIN'			=> 'This category contains tools that are focused on users and groups',
 	'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn\'t be loaded. Please check your installation',
 
 	'DOWNLOAD_PASS'						=> 'Download the password file.',
@@ -54,7 +59,7 @@ $lang = array_merge($lang, array(
 
 	'FAIL_REMOVE_PASSWD'				=> 'Couldn\'t remove the expired password file. Please remove this file manually!',
 
-	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.'
+	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.',
 	'GEN_PASS_FILE'						=> 'Generate password file.',
 	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren\'t able to login to phpBB at all you can use the internal authentication method of the support tool kit. To use this method you must <a href="%s">generate</a> a new password file.',
 
@@ -84,9 +89,6 @@ $lang = array_merge($lang, array(
 	'TOOL_NAME'							=> 'Tool Name',
 
 	'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to <strong>only</strong> use this method when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
-
-	'WELCOME'							=> 'Support Tool Kit',
-	'WELCOME_EXPLAIN'					=> 'The Support Tool Kit, or STK, is a package that can be used to recover phpBB 3.0.x installations, or fix common issues within a working installation. The package is a second ACP that can be easily installed on any working phpBB 3 board, and has the look and feel of the phpBB 3 ACP, but gives the administrator access to a whole new set of tools that can be used in cases where phpBB might not function correctly anymore.',
 ));
 
 ?>

@@ -31,7 +31,8 @@ class plugin
 	 * @access private
 	 */
 	var $plugin_list = array(
-		'main' => array()
+		'main' 		=> array(),
+		'support'	=> array(),
 	);
 
 	/**
@@ -40,7 +41,7 @@ class plugin
 	 * @var String
 	 * @access public
 	 */
-	var $tool_box = '';
+	var $tool_box_path = '';
 
 	/**
 	 * The requested tool category
@@ -48,7 +49,7 @@ class plugin
 	 * @var String
 	 * @access public
 	 */
-	var $req_cat = '';
+	var $req_cat = 'main';
 
 	/**
 	 * The requested tool
@@ -65,14 +66,14 @@ class plugin
 	function plugin()
 	{
 		// Set the path
-		$this->tool_box = STK_ROOT_PATH . 'tools/';
+		$this->tool_box_path = STK_ROOT_PATH . 'tools/';
 
 		// Create a list with tools
-		$this->plugin_list += $this->build_tool_list($this->tool_box);
+		$this->plugin_list = array_merge($this->plugin_list, $this->build_tool_list($this->tool_box_path));
 
 		// Get the requested cat and tool
-		$this->req_cat	= request_var('c', 'main');
-		$this->req_tool	= request_var('t', '');
+		$this->req_cat	= request_var('c', $this->req_cat);
+		$this->req_tool	= request_var('t', $this->req_tool);
 
 		// We shouldn't rely on the given category request, unless there really is a tool with that name in the given category
 		if ($this->req_tool && (!isset($this->plugin_list[$this->req_cat]) || !in_array($this->req_tool, $this->plugin_list[$this->req_cat])))
@@ -174,7 +175,7 @@ class plugin
 			return ($return) ? $tools_loaded[$tool_name] : true;
 		}
 
-		$tool_path = $this->tool_box . $tool_cat . '/' . $tool_name . '.' . PHP_EXT;
+		$tool_path = $this->tool_box_path . $tool_cat . '/' . $tool_name . '.' . PHP_EXT;
 		if (false === (@include $tool_path))
 		{
 			trigger_error(sprintf($user->lang['TOOL_INCLUTION_NOT_FOUND'], $tool_path), E_USER_ERROR);
