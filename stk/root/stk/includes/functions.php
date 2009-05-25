@@ -288,7 +288,7 @@ function perform_unauthed_quick_tasks($action)
 			// Something went wrong, stop execution
 			if (!isset($_POST['download_passwd']) || empty($_pass_string) || $_pass_exprire <= 0)
 			{
-				trigger_error('', E_USER_ERROR);
+				trigger_error($user->lang['GEN_PASS_FAILED'], E_USER_ERROR);
 			}
 
 			// Create the file and let the user download it
@@ -297,7 +297,7 @@ function perform_unauthed_quick_tasks($action)
 
 			print ("<?php
 /**
-* Support Tool Kit emergency password. Generated on: " . $user->format_date(time(), false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
+* Support Tool Kit emergency password. Generated on: " . $user->format_date($_pass_exprire - 21600, false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
 */
 
 \$stk_passwd\t\t\t\t= '{$_pass_string}';

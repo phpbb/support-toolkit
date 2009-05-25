@@ -54,6 +54,7 @@ $lang = array_merge($lang, array(
 
 	'FAIL_REMOVE_PASSWD'				=> 'Couldn\'t remove the expired password file. Please remove this file manually!',
 
+	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.'
 	'GEN_PASS_FILE'						=> 'Generate password file.',
 	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren\'t able to login to phpBB at all you can use the internal authentication method of the support tool kit. To use this method you must <a href="%s">generate</a> a new password file.',
 
