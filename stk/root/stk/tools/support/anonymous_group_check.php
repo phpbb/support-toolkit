@@ -15,11 +15,11 @@ if (!defined('IN_PHPBB'))
 
 class anonymous_group_check
 {
-	var $guest_group_name	= 'GUESTS';
-	
-	var $in_guests_group	= FALSE;
-	
-	var $in_other_groups	= FALSE;
+	/**
+	 * Keep track of the groups.
+	 */
+	var $_in_guests_group	= FALSE;
+	var $_in_other_groups	= FALSE;
 	
 	/**
 	* Tool Info
@@ -50,18 +50,18 @@ class anonymous_group_check
 		foreach ($groups as $group)
 		{
 			// The guests group
-			if ($group['group_name'] == $this->guest_group_name)
+			if ($group['group_name'] == 'GUESTS')
 			{
-				$this->in_guests_group = true;
+				$this->_in_guests_group = true;
 				continue;
 			}
 			
 			// Other groups
-			$this->in_other_groups = true;
+			$this->_in_other_groups = true;
 		}
 		
 		// Display the correct page
-		if ($this->in_guests_group == true && $this->in_other_groups == false)
+		if ($this->_in_guests_group == true && $this->_in_other_groups == false)
 		{
 			trigger_error($user->lang['GROUPS_CORRECT']);
 		}
@@ -79,9 +79,6 @@ class anonymous_group_check
 		// Fetch the groups
 		$groups = $this->_get_anon_groups();
 		
-		// Keep track whether this user is in the "GUESTS" group
-		$in_guests = false;
-		
 		if (!function_exists('group_user_del'))
 		{
 			include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
@@ -96,12 +93,12 @@ class anonymous_group_check
 			}
 			else
 			{
-				$in_guests = true;
+				$this->_in_guests_group = true;
 			}
 		}
 		
 		// No GUESTS group?
-		if (!$in_guests)
+		if (!$this->_in_guests_group)
 		{
 			// Get the GUESTS group id
 			global $db;
