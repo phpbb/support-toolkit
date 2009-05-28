@@ -11,6 +11,10 @@
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
+// This seems like a rather nasty thing to do, but the only places this IN_LOGIN is checked is in session.php when creating a session
+// Reason for having it is that it allows us in the STK if we can not login and the board is disabled.
+define('IN_LOGIN', true);
+
 if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
 if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
 define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
@@ -100,6 +104,10 @@ if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && $user->data['user_type']
 // Do the actual login.
 if ($stk_passwd !== false)
 {
+	// We need to reset the session_id here.
+	// If an incorrect session_id is in the user's cookies (with the correct sid in the URL) we will keep failing the check_form_key and we can not login to fix the cookie problem otherwise!
+	$user->session_id = '';
+
 	// Set some vars
 	$cookie_token	= request_var('stk_token', '', true, true);
 	$err_msg		= '';
@@ -377,7 +385,7 @@ else
 	{
 		$this->req_cat = 'main';
 	}
-	
+
 	// Category title and desc if available
 	$template->assign_vars(array(
 		'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->req_cat)],
