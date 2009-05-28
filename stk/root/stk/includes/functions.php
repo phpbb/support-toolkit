@@ -327,7 +327,7 @@ function perform_authed_quick_tasks($action)
 
 		// If the user wants to distroy the passwd file
 		case 'delpasswdfile' :
-			if (false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
+			if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && false === @unlink(STK_ROOT_PATH . 'passwd.' . PHP_EXT))
 			{
 				// Shouldn't happen. Kill the script
 				trigger_error($user->lang['FAIL_REMOVE_PASSWD'], E_USER_ERROR);
