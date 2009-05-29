@@ -37,10 +37,6 @@ class reclean_usernames
 	*/
 	function display_options()
 	{
-		global $config, $user;
-
-		$user->add_lang('acp/board');
-
 		return 'RECLEAN_USERNAMES';
 	}
 
@@ -51,12 +47,17 @@ class reclean_usernames
 	*/
 	function run_tool()
 	{
-		global $db;
+		global $db, $template;
+
+		$part = request_var('part', 0);
+		$limit = 500;
+		$i = 0;
 
         $sql = 'SELECT user_id, username, username_clean FROM ' . USERS_TABLE;
-        $result = $db->sql_query($sql);
+        $result = $db->sql_query_limit($sql, $limit, ($part * $limit));
         while ($row = $db->sql_fetchrow($result))
         {
+        	$i++;
         	$username_clean = utf8_clean_string($row['username']);
 
         	if ($username_clean != $row['username_clean'])
@@ -66,7 +67,17 @@ class reclean_usernames
 		}
 		$db->sql_freeresult($result);
 
-		trigger_error('RECLEAN_USERNAMES_COMPLETE');
+		if ($i == $limit)
+		{
+			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=reclean_usernames&amp;submit=1&amp;part=' . (++$part)));
+			$template->assign_var('U_BACK_TOOL', false);
+
+			trigger_error('RECLEAN_USERNAMES_NOT_COMPLETE');
+		}
+		else
+		{
+			trigger_error('RECLEAN_USERNAMES_COMPLETE');
+		}
 	}
 }
 

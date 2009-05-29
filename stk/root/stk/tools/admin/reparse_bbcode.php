@@ -36,13 +36,13 @@ class reparse_bbcode
 
 	function run_tool()
 	{
-		global $user, $db, $config;
+		global $user, $db, $config, $template;
 
 		// Prevent some errors from missing language strings.
 		$user->add_lang('posting');
 
 		$step = request_var('step', 0);
-		$limit = 500;
+		$limit = 1;
 		$start = $step * $limit;
 		$i = 0;
 
@@ -148,6 +148,8 @@ class reparse_bbcode
 		{
 			$step++;
 			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;step={$step}"));
+			$template->assign_var('U_BACK_TOOL', false);
+
 			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
 		}
 	}

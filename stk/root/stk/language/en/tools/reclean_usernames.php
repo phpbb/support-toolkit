@@ -41,10 +41,11 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RECLEAN_USERNAMES' 			=> 'Reclean Usernames',
-	'RECLEAN_USERNAMES_COMPLETE'	=> 'The usernames have been recleaned successfully.',
-	'RECLEAN_USERNAMES_CONFIRM'		=> 'Are you sure you want to reclean the usernames?',
-	'RECLEAN_USERNAMES_EXPLAIN'		=> 'This tool was built to go through and reset the username_clean field in the database in case it contains corrupt data.',
+	'RECLEAN_USERNAMES' 				=> 'Reclean Usernames',
+	'RECLEAN_USERNAMES_COMPLETE'		=> 'The usernames have been recleaned successfully.',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Are you sure you want to reclean the usernames?',
+	'RECLEAN_USERNAMES_EXPLAIN'			=> 'This tool was built to go through and reset the username_clean field in the database in case it contains corrupt data.',
+	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'The reclean usernames tool is not yet finished.  Please wait.',
 ));
 
 ?>
