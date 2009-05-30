@@ -169,7 +169,7 @@ class profile_list
 				'YIM'				=> $row['user_yim'],
 
 				'OPTION_SECTION'		=> (isset($options[$display])) ? $row[$display] : '',
-				'ORDER_SECTION'			=> (in_array($order_by, $timestamps)) ? $user->format_date($row[$order_by]) : $row[$order_by],
+				'ORDER_SECTION'			=> (in_array($order_by, $timestamps)) ? (($row[$order_by]) ? $user->format_date($row[$order_by]) : $user->lang['NEVER']) : $row[$order_by],
 				'USER_INACTIVE_REASON'	=> $inactive_reason,
 
 				'U_USER_ADMIN'		=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'i=users&amp;mode=overview&amp;u=' . $row['user_id'], true, $user->session_id),
