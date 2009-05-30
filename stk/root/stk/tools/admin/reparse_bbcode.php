@@ -137,7 +137,7 @@ class reparse_bbcode
 		else
 		{
 			$step++;
-			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;step={$step}"));
+			meta_refresh(0, append_sid(STK_INDEX, "t=reparse_bbcode&amp;submit=1&amp;step={$step}"));
 			$template->assign_var('U_BACK_TOOL', false);
 
 			trigger_error(sprintf($user->lang['REPARSE_BBCODE_PROGRESS'], ($step - 1), $step));

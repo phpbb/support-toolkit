@@ -54,7 +54,7 @@ class reclean_usernames
 
 		if ($i == $limit)
 		{
-			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 't=reclean_usernames&amp;submit=1&amp;part=' . (++$part)));
+			meta_refresh(0, append_sid(STK_INDEX, 't=reclean_usernames&amp;submit=1&amp;part=' . (++$part)));
 			$template->assign_var('U_BACK_TOOL', false);
 
 			trigger_error('RECLEAN_USERNAMES_NOT_COMPLETE');

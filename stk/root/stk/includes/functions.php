@@ -271,7 +271,7 @@ function perform_unauthed_quick_tasks($action)
 				'PASS_GENERATED'			=> sprintf($user->lang['PASS_GENERATED'], $_pass_string, $user->format_date($_pass_exprire, false, true)),
 				'PASS_GENERATED_REDIRECT'	=> sprintf($user->lang['PASS_GENERATED_REDIRECT'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT)),
 				'S_HIDDEN_FIELDS'			=> build_hidden_fields(array('pass_string' => $_pass_string, 'pass_exp' => $_pass_exprire)),
-				'U_ACTION'					=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'downpasswdfile')),
+				'U_ACTION'					=> append_sid(STK_INDEX, array('action' => 'downpasswdfile')),
 			));
 
 			$template->set_filenames(array(

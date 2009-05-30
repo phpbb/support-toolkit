@@ -85,7 +85,7 @@ class make_founder
 			$hidden_fields = build_hidden_fields(array('user_to_founder' => $user_req, 'submit' => true));
 			confirm_box(false, sprintf($user->lang['MAKE_FOUNDER_CONFIRM'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username), $hidden_fields);
 		}
-		redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $plugin->req_cat, 't' => 'make_founder', true, $user->session_id)));
+		redirect(append_sid(STK_INDEX, array('c' => $plugin->req_cat, 't' => 'make_founder', true, $user->session_id)));
 	}
 }
 ?>

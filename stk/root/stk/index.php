@@ -18,6 +18,7 @@ define('IN_LOGIN', true);
 if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
 if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
 define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
+define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_EXT);
 
 $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
@@ -27,7 +28,7 @@ if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
 {
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
 	critical_config_repair();
-	header('Location: ' . STK_ROOT_PATH . 'index.' . PHP_EXT);
+	header('Location: ' . STK_INDEX);
 	exit;
 }
 
@@ -56,7 +57,7 @@ if (!$db->sql_fetchrow($result))
 	// Styles appear to be broken.  Attempt automatic repair
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
 	critical_style_repair();
-	header('Location: ' . STK_ROOT_PATH . 'index.' . PHP_EXT);
+	header('Location: ' . STK_INDEX);
 	exit;
 }
 $db->sql_freeresult($result);
@@ -177,7 +178,7 @@ if ($stk_passwd !== false)
 				// Other page stuff
 				'LOGIN_ERROR'			=> (!empty($err_msg)) ? $user->lang[$err_msg] : false,
 
-				'U_ACTION'				=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
+				'U_ACTION'				=> append_sid(STK_INDEX, false, true, $user->session_id),
 				'U_INDEX'				=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
 
 				// Identify this method in the template
@@ -197,7 +198,7 @@ if ($stk_passwd !== false)
 	// Tell the template engine we're logged through this
 	$template->assign_vars(array(
 		'S_STK_LOGIN'			=> true,
-		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'delpasswdfile'))),
+		'STK_LOGIN_DISABLE_MSG'	=> sprintf($user->lang['USING_STK_LOGIN'], append_sid(STK_INDEX, array('action' => 'delpasswdfile'))),
 	));
 
 	// Don't use "Anonymous" as username
@@ -209,7 +210,7 @@ else
 	if (!$user->data['is_registered'])
 	{
 		// Assign a string only used here
-		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('action' => 'genpasswdfile'))));
+		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_INDEX, array('action' => 'genpasswdfile'))));
 
 		// A user can potentially access this file directly
 		login_box('', $user->lang['STK_NON_LOGIN'], '', false, false);
@@ -243,7 +244,7 @@ perform_authed_quick_tasks($action);
 // If they canceled redirect them to the STK index.
 if (isset($_POST['cancel']))
 {
-	redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id));
+	redirect(append_sid(STK_INDEX, false, true, $user->session_id));
 }
 
 // Setup the plugin manager
@@ -251,12 +252,12 @@ $plugin = new plugin();
 
 // Output common stuff
 $template->assign_vars(array(
-	'U_ACTION'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $plugin->url_arg(), true, $user->session_id),
+	'U_ACTION'		=> append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id),
 	'U_ADM_INDEX'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
 	'U_ADM_LOGOUT'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
-	'U_STK_INDEX'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id),
-	'U_STK_LOGOUT'	=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'action=stklogout', true, $user->session_id),
-	'U_BACK_TOOL'	=> ($plugin->req_tool) ? append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $plugin->url_arg(), true, $user->session_id) : false,
+	'U_STK_INDEX'	=> append_sid(STK_INDEX, false, true, $user->session_id),
+	'U_STK_LOGOUT'	=> append_sid(STK_INDEX, 'action=stklogout', true, $user->session_id),
+	'U_BACK_TOOL'	=> ($plugin->req_tool) ? append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id) : false,
 	'U_INDEX'		=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
 	'U_LOGOUT'		=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
 
@@ -376,7 +377,7 @@ if ($plugin->req_tool)
 	}
 
 	// Should never get here...
-	redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, false, true, $user->session_id));
+	redirect(append_sid(STK_INDEX, false, true, $user->session_id));
 }
 else
 {

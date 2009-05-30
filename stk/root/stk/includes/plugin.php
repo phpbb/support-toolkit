@@ -246,7 +246,7 @@ class plugin
 			$template->assign_block_vars('top_nav', array(
 				'L_TITLE'		=> $user->lang['CAT_' . strtoupper($cat)],
 				'S_SELECTED'	=> $_s_active,
-				'U_TITLE'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $cat)),
+				'U_TITLE'		=> append_sid(STK_INDEX, array('c' => $cat)),
 			));
 		}
 	}
@@ -288,7 +288,7 @@ class plugin
 			$template->assign_block_vars('left_nav', array(
 				'L_TITLE'		=> $info['NAME'],
 				'S_SELECTED'	=> $_s_active,
-				'U_TITLE'		=> append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => $this->req_cat, 't' => $tool)),
+				'U_TITLE'		=> append_sid(STK_INDEX, array('c' => $this->req_cat, 't' => $tool)),
 			));
 		}
 	}
