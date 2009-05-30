@@ -218,6 +218,9 @@ else
 	// This requires that the user is logged in as an administrator (like how the ACP requires two logins)
 	if (!isset($user->data['session_admin']) || !$user->data['session_admin'])
 	{
+		// Proceed to ACP is misleading
+		$user->lang['PROCEED_TO_ACP'] = $user->lang['PROCEED_TO_STK'];
+
 		login_box('', $user->lang['STK_FOUNDER_ONLY'], $user->lang['LOGIN_STK_SUCCESS'], true, false);
 	}
 

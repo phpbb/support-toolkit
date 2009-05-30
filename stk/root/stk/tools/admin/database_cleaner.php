@@ -15,19 +15,6 @@ if (!defined('IN_PHPBB'))
 
 class database_cleaner
 {
-	// Will hold existing modules when we get to the modules part
-	var $modules = array();
-
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['DATABASE_CLEANER'],
-			'NAME_EXPLAIN'	=> $user->lang['DATABASE_CLEANER_EXPLAIN'],
-		);
-	}
-
 	function display_options()
 	{
 		global $config, $db, $plugin, $template, $user;

@@ -31,18 +31,10 @@ if (!defined('IN_PHPBB'))
 class tutorial
 {
 	/*
-	* Version specific tool
-	*
-	* In order to make a tool phpBB version specific (for example the clean database tool), set the following variable
-	* so that it holds the supported version number. If the phpBB version isn't correct the tool won't be displayed on
-	* the stk index page.
-	*/
-	var $phpbb_version = '3.0.2';
-
-	/*
 	* Tool Info
 	*
-	* This function is required and returns the tool info to the Support Tool Kit
+	* This function returns the tool info to the Support Tool Kit
+	* This funtion is not required.  If you want to strtoupper(*class name*) as the name of the tool you can skip this function
 	*/
 	function info()
 	{
@@ -51,12 +43,6 @@ class tutorial
 		return array(
 			// The name of this tool that will be shown to the user (required)
 			'NAME'			=> $user->lang['TUTORIAL'],
-
-			// This is an explaination shown to the user about this tool (not required)
-			'NAME_EXPLAIN'	=> $user->lang['TUTORIAL_EXPLAIN'],
-
-			// The category this tool should be shown in, by default ADMIN_TOOLS, DEV_TOOLS, and USER_GROUP_TOOLS are the categories, but you may add any extras you would like (required)
-			'CATEGORY'		=> $user->lang['ADMIN_TOOLS'],
 		);
 	}
 

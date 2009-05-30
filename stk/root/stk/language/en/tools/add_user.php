@@ -39,7 +39,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ADD_USER'				=> 'Add user',
-	'ADD_USER_EXPLAIN'		=> 'Create a new user.',
 	'ADD_USER_GROUP'		=> 'Add user to groups',
 
 	'DEFAULT_GROUP'			=> 'Default group',

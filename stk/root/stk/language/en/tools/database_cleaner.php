@@ -45,7 +45,6 @@ $lang = array_merge($lang, array(
 	'CONTINUE'						=> 'Continue',
 
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
-	'DATABASE_CLEANER_EXPLAIN'		=> 'Reverts the database structure to a base 3.0.x install (used to remove mods and re-add missing items).',
 	'DATABASE_CLEANER_EXTRA'		=> 'Any others are extra items added by modifications.  <strong>If the check box is selected it will be removed</strong>.',
 	'DATABASE_CLEANER_MISSING'		=> 'Any fields with a red background like this are missing items that should be added.  <strong>If the check box is selected it will be added</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',

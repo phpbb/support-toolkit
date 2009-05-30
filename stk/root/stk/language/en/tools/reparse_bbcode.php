@@ -41,11 +41,10 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'BBCODE_REPARSE_COMPLETE'		=> 'BBCodes have been reparsed.',
-	'BBCODE_REPARSE_CONFIRM'		=> 'Are you sure you want to reparse all BBCodes? This may take some time.',
-	'BBCODE_REPARSE_PROGRESS'		=> 'Step %1$d completed. Moving on to step %2$d in a moment...',
-	'BBCODE_REPARSE_TITLE'			=> 'Reparse BBCode',
-	'BBCODE_REPARSE_TITLE_EXPLAIN'	=> 'This tool will reparse all the bbcodes that are used on the board',
+	'REPARSE_BBCODE'				=> 'Reparse BBCode',
+	'REPARSE_BBCODE_COMPLETE'		=> 'BBCodes have been reparsed.',
+	'REPARSE_BBCODE_CONFIRM'		=> 'Are you sure you want to reparse all BBCodes? This may take some time.',
+	'REPARSE_BBCODE_PROGRESS'		=> 'Step %1$d completed. Moving on to step %2$d in a moment...',
 ));
 
 ?>

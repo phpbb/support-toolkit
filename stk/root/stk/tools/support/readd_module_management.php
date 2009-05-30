@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class readd_module_management
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['READD_MODULE_MANATEMENT'],
-			'NAME_EXPLAIN'	=> $user->lang['READD_MODULE_MANATEMENT_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

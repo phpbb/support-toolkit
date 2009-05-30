@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class change_password
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['CHANGE_PASSWORD'],
-			'NAME_EXPLAIN'	=> $user->lang['CHANGE_PASSWORD_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

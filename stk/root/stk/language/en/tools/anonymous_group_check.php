@@ -38,8 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ANONYMOUS_GROUP_CHECK'			=> 'Anonymous user group check',
-	'ANONYMOUS_GROUP_CHECK_EXPLAIN'	=> 'This tool will check whether the Anonymous user is in the correct user group.',
+	'ANONYMOUS_GROUP_CHECK'		=> 'Anonymous user group check',
 
 	'GROUPS_CORRECT'			=> 'The anonymous user is only part of the "GUESTS" group. No further actions are required.',
 	'GROUPS_INCORRECT'			=> 'The anonymous user is in the wrong groups!',

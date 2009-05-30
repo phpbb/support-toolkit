@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class reset_styles
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['RESET_STYLES'],
-			'NAME_EXPLAIN'	=> $user->lang['RESET_STYLES_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

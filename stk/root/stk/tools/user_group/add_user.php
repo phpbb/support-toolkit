@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class add_user
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['ADD_USER'],
-			'NAME_EXPLAIN'	=> $user->lang['ADD_USER_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class auto_cookies
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['AUTO_COOKIES'],
-			'NAME_EXPLAIN'	=> $user->lang['AUTO_COOKIES_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

@@ -19,19 +19,9 @@ if (!defined('IN_PHPBB'))
 
 class reparse_bbcode
 {
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['BBCODE_REPARSE_TITLE'],
-			'NAME_EXPLAIN'	=> $user->lang['BBCODE_REPARSE_TITLE_EXPLAIN'],
-		);
-	}
-
 	function display_options()
 	{
-		return 'BBCODE_REPARSE';
+		return 'REPARSE_BBCODE';
 	}
 
 	function run_tool()
@@ -142,7 +132,7 @@ class reparse_bbcode
 
 		if ($i < $limit)
 		{
-			trigger_error($user->lang['BBCODE_REPARSE_COMPLETE']);
+			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
 		}
 		else
 		{
@@ -150,7 +140,7 @@ class reparse_bbcode
 			meta_refresh(0, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, "t=reparse_bbcode&amp;submit=1&amp;step={$step}"));
 			$template->assign_var('U_BACK_TOOL', false);
 
-			trigger_error(sprintf($user->lang['BBCODE_REPARSE_PROGRESS'], ($step - 1), $step));
+			trigger_error(sprintf($user->lang['REPARSE_BBCODE_PROGRESS'], ($step - 1), $step));
 		}
 	}
 }

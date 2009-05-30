@@ -44,7 +44,6 @@ $lang = array_merge($lang, array(
 	'DUPLICATES_FOUND'						=> 'The tool has found and finished removing the duplicate permissions.',
 	'DUPLICATE_PERMISSIONS_REMOVER'			=> 'Remove duplicate permissions',
 	'DUPLICATE_PERMISSIONS_REMOVER_CONFIRM'	=> 'Are you ready to remove the duplicate permissions?',
-	'DUPLICATE_PERMISSIONS_REMOVER_EXPLAIN'	=> 'This tool is used to remove duplicate permissions from the database.',
 
 	'NO_DUPLICATES_FOUND'					=> 'The tool has finished checking for duplicate permissions and has found none.',
 ));

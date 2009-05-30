@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class make_founder
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['MAKE_FOUNDER'],
-			'NAME_EXPLAIN'	=> $user->lang['MAKE_FOUNDER_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

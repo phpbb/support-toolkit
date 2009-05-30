@@ -26,7 +26,6 @@ class sql_query
 
 		return array(
 			'NAME'			=> $user->lang['RUN_SQL_QUERY'],
-			'NAME_EXPLAIN'	=> $user->lang['RUN_SQL_QUERY_TOOL_EXPLAIN'],
 		);
 	}
 

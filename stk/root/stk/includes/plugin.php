@@ -257,7 +257,7 @@ class plugin
 	 */
 	function gen_left_nav()
 	{
-		global $template;
+		global $template, $user;
 
 		// Grep the correct category
 		$tool_list = $this->plugin_list[$this->req_cat];
@@ -272,7 +272,17 @@ class plugin
 			$class = $this->load_tool($this->req_cat, $tool);
 
 			// Get the info
-			$info = $class->info();
+			if (method_exists($class, 'info'))
+			{
+				$info = $class->info();
+			}
+			else
+			{
+				// For us lazy people
+				$info = array(
+					'NAME'			=> (isset($user->lang[strtoupper($tool)])) ? $user->lang[strtoupper($tool)] : strtoupper($tool),
+				);
+			}
 
 			// Assign to the template
 			$template->assign_block_vars('left_nav', array(

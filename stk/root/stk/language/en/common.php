@@ -73,6 +73,7 @@ $lang = array_merge($lang, array(
 
 	'PASS_GENERATED'					=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you\'ve downloaded this file you must upload it to your server into the "stk" directory',
 	'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',
+	'PROCEED_TO_STK'					=> '%sProceed to the Support Tool Kit%s',
 
 	'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Tool Kit!',
 	'STK_LOGIN'							=> 'Support Took Kit Login',

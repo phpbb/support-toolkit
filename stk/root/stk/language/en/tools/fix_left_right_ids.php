@@ -40,7 +40,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'FIX_LEFT_RIGHT_IDS'			=> 'Fix Left/Right ID\'s',
 	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Are you sure you want to fix the left and right ID\'s?<br /><br /><strong>Make sure you backup your database before running this just in case something goes wrong.</strong>',
-	'FIX_LEFT_RIGHT_IDS_EXPLAIN'	=> 'Repair the forum/module left and right ID\'s.  For more info <a href="http://www.lithiumstudios.org/forum/viewtopic.php?f=9&t=691">read this topic</a>.',
 
 	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'The left/right ID\'s have been successfully fixed.',
 	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'The tool has finished going through all of the left and right id\'s and all rows are already correct so no changes were made.',

@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class purge_cache
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['PURGE_CACHE'],
-			'NAME_EXPLAIN'	=> $user->lang['PURGE_CACHE_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

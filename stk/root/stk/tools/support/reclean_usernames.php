@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class reclean_usernames
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['RECLEAN_USERNAMES'],
-			'NAME_EXPLAIN'	=> $user->lang['RECLEAN_USERNAMES_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available

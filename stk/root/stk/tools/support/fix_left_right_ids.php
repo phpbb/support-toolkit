@@ -16,21 +16,6 @@ if (!defined('IN_PHPBB'))
 class fix_left_right_ids
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['FIX_LEFT_RIGHT_IDS'],
-			'NAME_EXPLAIN'	=> $user->lang['FIX_LEFT_RIGHT_IDS_EXPLAIN'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available
