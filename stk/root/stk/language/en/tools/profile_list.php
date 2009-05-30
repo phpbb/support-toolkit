@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Reclean Usernames
+* @package Support Tool Kit - Profile List
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -16,9 +16,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -41,10 +38,17 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RECLEAN_USERNAMES'					=> 'Reclean Usernames',
-	'RECLEAN_USERNAMES_COMPLETE'		=> 'The usernames have been recleaned successfully.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Are you sure you want to reclean the usernames?',
-	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'The reclean usernames tool is not yet finished.  Please wait.',
+	'ALL'					=> 'All',
+
+	'FILTER'				=> 'Filter',
+
+	'LIMIT'					=> 'Limit',
+
+	'ONLY_NON_EMPTY'		=> 'Only Non-Empty',
+	'ORDER_BY'				=> 'Order By',
+
+	'PROFILE_LIST'			=> 'Profile List',
+	'PROFILE_LIST_EXPLAIN'	=> 'A memberlist like tool for displaying advanced profile information for multiple users and sorting through profiles.  This tool was mainly designed to aid in detecting spam accounts registered on the board.',
 ));
 
 ?>

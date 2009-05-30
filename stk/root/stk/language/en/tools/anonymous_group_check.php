@@ -45,4 +45,5 @@ $lang = array_merge($lang, array(
 	'GROUPS_INCORRECT_CONFIRM'	=> 'The anonymous should only be part of the "GUESTS" group. Do you want to reset the user groups of this user?',
 	'GROUPS_SUCESSFULLY_RESET'	=> 'The user groups for the anonymous user where sucessfully reset.',
 ));
+
 ?>
