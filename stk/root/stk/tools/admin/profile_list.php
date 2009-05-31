@@ -19,6 +19,8 @@ class profile_list
 	{
 		global $db, $template, $user;
 
+		page_header($user->lang['PROFILE_LIST']);
+
 		$user->add_lang('memberlist');
 
 		$display = request_var('display', '');
