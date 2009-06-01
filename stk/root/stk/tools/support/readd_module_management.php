@@ -32,7 +32,7 @@ class readd_module_management
 	*/
 	function run_tool()
 	{
-		$umil = new umil();
+		global $umil;
 
 		if (!$umil->module_exists('acp', 0, 'ACP_CAT_SYSTEM'))
 		{

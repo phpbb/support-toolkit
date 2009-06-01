@@ -17,7 +17,7 @@ class database_cleaner
 {
 	function display_options()
 	{
-		global $config, $db, $plugin, $template, $user;
+		global $config, $db, $plugin, $template, $umil, $user;
 
 		$continue = (isset($_POST['continue'])) ? true : false;
 		$step = request_var('step', 0);
@@ -41,9 +41,6 @@ class database_cleaner
 		include(STK_ROOT_PATH . 'includes/database_cleaner/functions.' . PHP_EXT);
 		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file);
 		$cleaner = new database_cleaner_data();
-
-		// We will need UMIL
-		$umil = new umil();
 
 		$user->add_lang('acp/common');
 

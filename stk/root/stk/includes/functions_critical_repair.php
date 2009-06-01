@@ -190,7 +190,7 @@ function critical_config_repair()
 
 function critical_style_repair()
 {
-	global $cache, $db, $table_prefix;
+	global $cache, $db, $table_prefix, $umil;
 
 	$sql = 'SELECT s.style_id
 		FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
@@ -287,7 +287,6 @@ function critical_style_repair()
 			set_config('default_style', $style_id);
 			$cache->purge();
 
-			$umil = new umil();
 			$umil->cache_purge(array('template', 'theme', 'imageset'));
 		}
 		else
