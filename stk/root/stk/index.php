@@ -8,6 +8,9 @@
 *
 */
 
+// What version are we using?
+define('STK_VERSION', '0.0.1');
+
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
 
@@ -39,6 +42,14 @@ require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
 // Make sure that umil is always usable
 $umil = new umil();
+
+// Before we continue check whether this is the latest version of the STK
+// if not. Block access.
+/*
+* Disabled for now. Untill we actually have a real file to check against.
+*stk_version_check();
+*/
+stk_version_check();
 
 /* For testing the style repair (when testing comment out the header redirect line below or you'll have an infinate loop :P)
 set_config('default_style', 0);

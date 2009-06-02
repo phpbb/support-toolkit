@@ -341,4 +341,59 @@ function perform_authed_quick_tasks($action)
 		break;
 	}
 }
+
+/**
+ * Check the STK version. If out of date
+ * block access to the kit
+ * @return unknown_type
+ */
+function stk_version_check()
+{
+	global $cache, $template, $umil, $user;
+	
+	// We run this before the session is start so we'll have to define some language constructs here.
+	$user->lang['FILE_NOT_FOUND']	= 'The requested file could not be found.';
+	$user->lang['FSOCK_DISABLED']	= 'The operation could not be completed because the <var>fsockopen</var> function has been disabled or the server being queried could not be found.';
+	$user->lang['STK_OUT_DATED']	= 'Your Support Tool Kit installation (%1$s) isn\'t the latest version. Please install the latest version of the Support Tool Kit (%2$s) before continuing.<br />Click <a href="%3$s">here</a> to go to the release topic.';
+	
+	// We cache the result, check once per session
+	$version_check = $cache->get('_stk_version_check');
+	if (!$version_check || $version_check['last_check_session'] != $user->session_id)
+	{
+		// If we have a cache file trash it
+		if ($version_check)
+		{
+			$cache->destroy('_stk_version_check');
+		}
+		
+		// Lets collect the latest version data. We can use UMIL for this
+		$info = $umil->version_check('local.phpbb.com', '/updatecheck', ((defined('PHPBB_QA')) ? 'stk_qa.txt' : 'stk.txt'));
+		
+		// Compare it and cache the info
+		if (is_array($info) && isset($info[0]) && isset($info[1]))
+		{
+			$version_check = array();
+			if (version_compare(STK_VERSION, $info[0], '<'))
+			{
+				$version_check['outdated']	= true;
+				$version_check['latest']	= $info[0];
+				$version_check['topic']		= $info[1];
+			}
+			
+			$version_check['last_check_session'] = $user->session_id;
+		}
+		$cache->put('_stk_version_check', $version_check);
+	}
+	
+	// If we're out of date display the warning
+	if (isset($version_check['outdated']) && $version_check['outdated'] == true)
+	{
+		// Need to clear the $user->lang array to prevent the error page from breaking
+		$msg = sprintf($user->lang['STK_OUT_DATED'], STK_VERSION, $version_check['latest'], $version_check['topic']);
+		$user->lang = array();
+		
+		// Trigger
+		trigger_error($msg, E_USER_ERROR);
+	}
+}
 ?>
