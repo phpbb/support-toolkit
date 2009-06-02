@@ -387,7 +387,7 @@ function stk_version_check()
 	}
 	
 	// If we're out of date display the warning
-	if (isset($version_check['outdated']) && $version_check['outdated'] == true || true)
+	if (isset($version_check['outdated']) && $version_check['outdated'] == true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
 		$msg = sprintf($user->lang['STK_OUTDATED'], STK_VERSION, $version_check['latest'], $version_check['topic']);
