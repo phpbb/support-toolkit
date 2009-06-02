@@ -23,6 +23,7 @@ if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)
 define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
 define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_EXT);
 
+// Make that phpBB itself understands out paths
 $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
 

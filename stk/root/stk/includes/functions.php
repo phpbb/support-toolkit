@@ -354,7 +354,8 @@ function stk_version_check()
 	// We run this before the session is start so we'll have to define some language constructs here.
 	$user->lang['FILE_NOT_FOUND']	= 'The requested file could not be found.';
 	$user->lang['FSOCK_DISABLED']	= 'The operation could not be completed because the <var>fsockopen</var> function has been disabled or the server being queried could not be found.';
-	$user->lang['STK_OUT_DATED']	= 'Your Support Tool Kit installation (%1$s) isn\'t the latest version. Please install the latest version of the Support Tool Kit (%2$s) before continuing.<br />Click <a href="%3$s">here</a> to go to the release topic.';
+	$user->lang['STK_OUTDATED']		= 'Your Support Tool Kit installation appears to be out of date. The latest available version is <strong style="color: #008000;">0.0.2</strong>, while the version your have installed is <strong style="color: #FF0000;">0.0.1</strong>.<br /><br />Due to the large impact of this tool on your phpBB installation, it has been disabled until an update is performed. We strongly recommend keeping all software running on your server up to date. For more information regarding the latest update, please see the <a href="%3$s">release topic</a>.';
+	
 	
 	// We cache the result, check once per session
 	$version_check = $cache->get('_stk_version_check');
@@ -367,7 +368,7 @@ function stk_version_check()
 		}
 		
 		// Lets collect the latest version data. We can use UMIL for this
-		$info = $umil->version_check('local.phpbb.com', '/updatecheck', ((defined('PHPBB_QA')) ? 'stk_qa.txt' : 'stk.txt'));
+		$info = $umil->version_check('www.phpbb.com', '/updatecheck', ((defined('PHPBB_QA')) ? 'stk_qa.txt' : 'stk.txt'));
 		
 		// Compare it and cache the info
 		if (is_array($info) && isset($info[0]) && isset($info[1]))
@@ -386,10 +387,10 @@ function stk_version_check()
 	}
 	
 	// If we're out of date display the warning
-	if (isset($version_check['outdated']) && $version_check['outdated'] == true)
+	if (isset($version_check['outdated']) && $version_check['outdated'] == true || true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
-		$msg = sprintf($user->lang['STK_OUT_DATED'], STK_VERSION, $version_check['latest'], $version_check['topic']);
+		$msg = sprintf($user->lang['STK_OUTDATED'], STK_VERSION, $version_check['latest'], $version_check['topic']);
 		$user->lang = array();
 		
 		// Trigger
