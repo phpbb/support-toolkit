@@ -158,7 +158,7 @@ class sanitize_anonymous_user
 				// Not in the guests group?
 				if ($_in_guests === false)
 				{
-					if (($ret = group_user_add($guests_gr, ANONYMOUS)) !== false)
+					if (($ret = group_user_add($guests_gr, ANONYMOUS, false, false, true)) !== false)
 					{
 						trigger_error($user->lang[$ret]);
 					}
