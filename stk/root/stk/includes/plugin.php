@@ -44,20 +44,12 @@ class plugin
 	var $tool_box_path = '';
 
 	/**
-	 * The requested tool category
-	 *
-	 * @var String
-	 * @access public
+	 * Parts, used to build the query string
 	 */
-	var $req_cat = 'main';
-
-	/**
-	 * The requested tool
-	 *
-	 * @var String
-	 * @access public
-	 */
-	var $req_tool = '';
+	var $_parts = array(
+		'c' => 'main',
+		't' => '',
+	);
 
 	/**
 	 * Constructor
@@ -72,32 +64,32 @@ class plugin
 		$this->plugin_list = array_merge($this->plugin_list, $this->build_tool_list($this->tool_box_path));
 
 		// Get the requested cat and tool
-		$this->req_cat	= request_var('c', $this->req_cat);
-		$this->req_tool	= request_var('t', $this->req_tool);
-
+		$this->_parts['c'] = request_var('c', $this->_parts['c']);
+		$this->_parts['t'] = request_var('t', $this->_parts['t']);
+		
 		// We shouldn't rely on the given category request, unless there really is a tool with that name in the given category
-		if ($this->req_tool && (!isset($this->plugin_list[$this->req_cat]) || !in_array($this->req_tool, $this->plugin_list[$this->req_cat])))
+		if ($this->_parts['t'] && (!isset($this->plugin_list[$this->_parts['c']]) || !in_array($this->_parts['t'], $this->plugin_list[$this->_parts['c']])))
 		{
 			foreach ($this->plugin_list as $cat => $tools)
 			{
 				foreach ($tools as $tool)
 				{
-					if ($tool == $this->req_tool)
+					if ($tool == $this->_parts['t'])
 					{
-						$this->req_cat = $cat;
+						$this->_parts['c'] = $cat;
 					}
 				}
 			}
 		}
 
 		// Check if they want to use a tool or not, make sure that the tool name is legal, and make sure the tool exists
-		if (!$this->req_tool || preg_match('#([^a-zA-Z0-9_])#', $this->req_tool) || !file_exists(STK_ROOT_PATH . 'tools/' . $this->req_cat . '/' . $this->req_tool . '.' . PHP_EXT))
+		if (!$this->_parts['t'] || preg_match('#([^a-zA-Z0-9_])#', $this->_parts['t']) || !file_exists(STK_ROOT_PATH . 'tools/' . $this->_parts['c'] . '/' . $this->_parts['t'] . '.' . PHP_EXT))
 		{
-			$this->req_tool = '';
+			$this->_parts['t'] = '';
 		}
 
 		// Make sure the form_key is set
-		add_form_key($this->req_tool);
+		add_form_key($this->_parts['t']);
 
 		// Assign the two menus to the template
 		$this->gen_top_nav();
@@ -199,27 +191,46 @@ class plugin
 	/**
 	 * Create the correct URI arguments for the current page
 	 *
-	 * @return An array with the URI parameters
+	 * @param Define whether this function returns an array with elements or a string
+	 * @return An array|String with the URI parameters
 	 */
-	function url_arg()
+	function url_arg($string = false)
 	{
-		$_args = array();
-
-		// The category
-		$_args += array('c' => $this->req_cat);
-
-		// A tool?
-		if (!empty($this->req_tool))
+		$args	= array();
+		$str	= '?';
+		
+		// Run through the parts
+		foreach ($this->_parts as $key => $value)
 		{
-			$_args += array('t' => $this->req_tool);
+			if ($value != '')
+			{
+				$args[$key] = $value;
+				$str .= $key . '=' . $value . '&amp;';
+			}
 		}
 
-		return $_args;
+		return ($string) ? $str : $args;
 	}
-
-	function get_cat()
+	
+	/**
+	 * Get a given part
+	 */
+	function get_part($key)
 	{
-		return $this->req_cat;
+		if (empty($this->_parts))
+		{
+			return false;
+		}
+		
+		return $this->_parts[$key];
+	}
+	
+	/**
+	 * Add a new part
+	 */
+	function set_part($key, $value)
+	{
+		$this->_parts[$key] = $value;
 	}
 
 	/**
@@ -240,7 +251,7 @@ class plugin
 			}
 
 			// Active cat?
-			$_s_active = ($cat == $this->req_cat) ? true : false;
+			$_s_active = ($cat == $this->_parts['c']) ? true : false;
 
 			// Assign to the template
 			$template->assign_block_vars('top_nav', array(
@@ -260,16 +271,16 @@ class plugin
 		global $template, $user;
 
 		// Grep the correct category
-		$tool_list = $this->plugin_list[$this->req_cat];
+		$tool_list = $this->plugin_list[$this->_parts['c']];
 
 		// Loop through the tools and create the template
 		foreach ($tool_list as $tool)
 		{
 			// Active tool?
-			$_s_active = ($tool == $this->req_tool) ? true : false;
+			$_s_active = ($tool == $this->_parts['t']) ? true : false;
 
 			// Make sure the tool is loaded
-			$class = $this->load_tool($this->req_cat, $tool);
+			$class = $this->load_tool($this->_parts['c'], $tool);
 
 			// Get the info
 			if (method_exists($class, 'info'))
@@ -288,7 +299,7 @@ class plugin
 			$template->assign_block_vars('left_nav', array(
 				'L_TITLE'		=> $info['NAME'],
 				'S_SELECTED'	=> $_s_active,
-				'U_TITLE'		=> append_sid(STK_INDEX, array('c' => $this->req_cat, 't' => $tool)),
+				'U_TITLE'		=> append_sid(STK_INDEX, array('c' => $this->_parts['c'], 't' => $tool)),
 			));
 		}
 	}

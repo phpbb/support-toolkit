@@ -269,7 +269,7 @@ $template->assign_vars(array(
 	'U_ADM_LOGOUT'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
 	'U_STK_INDEX'	=> append_sid(STK_INDEX, false, true, $user->session_id),
 	'U_STK_LOGOUT'	=> append_sid(STK_INDEX, 'action=stklogout', true, $user->session_id),
-	'U_BACK_TOOL'	=> ($plugin->req_tool) ? append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id) : false,
+	'U_BACK_TOOL'	=> ($plugin->get_part('t')) ? append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id) : false,
 	'U_INDEX'		=> append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT),
 	'U_LOGOUT'		=> append_sid(PHPBB_ROOT_PATH . 'ucp.' . PHP_EXT, 'mode=logout', true, $user->session_id),
 
@@ -277,10 +277,10 @@ $template->assign_vars(array(
 ));
 
 // Does the user want to run a tool?
-if ($plugin->req_tool)
+if ($plugin->get_part('t'))
 {
 	// Load the tool
-	$tool = $plugin->load_tool($plugin->req_cat, $plugin->req_tool);
+	$tool = $plugin->load_tool($plugin->get_part('c'), $plugin->get_part('t'));
 
 	$error = array();
 	if ($submit)
@@ -378,7 +378,7 @@ if ($plugin->req_tool)
 			}
 			else
 			{
-				confirm_box(false, $options);
+				confirm_box(false, $options, '', 'confirm_body.html', STK_INDEX . $plugin->url_arg(true));
 			}
 		}
 		else
@@ -397,15 +397,15 @@ else
 	page_header($user->lang['SUPPORT_TOOL_KIT']);
 
 	// In de event the request category is empty force it to main.
-	if (empty($plugin->req_cat))
+	if (!$plugin->get_part('c'))
 	{
-		$this->req_cat = 'main';
+		$plugin->set_part('c', 'main');
 	}
 
 	// Category title and desc if available
 	$template->assign_vars(array(
-		'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->req_cat)],
-		'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->req_cat) . '_EXPLAIN'] : '',
+		'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->get_part('c'))],
+		'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->get_part('c')) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->get_part('c')) . '_EXPLAIN'] : '',
 	));
 
 	$template->set_filenames(array(
