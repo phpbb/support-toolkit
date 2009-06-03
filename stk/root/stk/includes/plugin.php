@@ -205,7 +205,13 @@ class plugin
 			if ($value != '')
 			{
 				$args[$key] = $value;
-				$str .= $key . '=' . $value . '&amp;';
+				
+				if (substr($str, -5) != '&amp;')
+				{
+					$str .= '&amp;';
+				}
+				
+				$str .= $key . '=' . $value;
 			}
 		}
 

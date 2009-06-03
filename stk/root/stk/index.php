@@ -378,7 +378,7 @@ if ($plugin->get_part('t'))
 			}
 			else
 			{
-				confirm_box(false, $options, '', 'confirm_body.html', STK_INDEX . $plugin->url_arg(true));
+				confirm_box(false, $options, '', 'confirm_body.html', 'stk/index.' . PHP_EXT . $plugin->url_arg(true));
 			}
 		}
 		else
