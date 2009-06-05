@@ -38,9 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'READD_MODULE_MANATEMENT'			=> 'Recreate Module Management modules',
-	'READD_MODULE_MANATEMENT_CONFIRM'	=> 'Are you sure you want to recreate the Module Management modules to the ACP?',
-	'READD_MODULE_MANATEMENT_SUCCESS'	=> 'The modules have been recreated successfully!',
+	'READD_MODULE_MANAGEMENT'			=> 'Recreate Module Management modules',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Are you sure you want to recreate the Module Management modules to the ACP?',
+	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'The modules have been recreated successfully!',
 ));
 
 ?>

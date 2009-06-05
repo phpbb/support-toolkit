@@ -96,7 +96,7 @@ class duplicate_permissions
 					{
 						$sql_ary = array(
 							$column				=> $row[$column],
-							'auth_option_id'	=> $row['auth_option_id'],
+							'auth_option_id'	=> $orig_id,
 							'auth_setting'		=> $row['auth_setting'],
 						);
 
