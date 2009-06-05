@@ -95,6 +95,8 @@ class change_password
 
 		$db->sql_query('UPDATE ' . USERS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', array('user_password' => phpbb_hash($data['new_password']),)) . ' WHERE user_id = ' . $user_id);
 
+		add_log('admin', 'LOG_USER_NEW_PASSWORD', $user_req);
+
 		trigger_error(sprintf($user->lang['CHANGE_PASSWORD_SUCCESS'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username));
 	}
 }
