@@ -29,7 +29,7 @@ class database_cleaner
 		if ($step > 0)
 		{
 			// Kick them if bad form key
-			check_form_key('database_cleaner', false, append_sid(STK_INDEX, array('c' => $plugin->req_cat, 't' => 'database_cleaner')), true);
+			check_form_key('database_cleaner', false, append_sid(STK_INDEX, 't=database_cleaner'), true);
 		}
 
 		// include the required file for this version
@@ -561,7 +561,7 @@ class database_cleaner
 		$template->assign_vars(array(
 			'STEP'			=> $step,
 
-			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => $plugin->req_cat, 't' => 'database_cleaner&amp;step=' . ($step + 1))),
+			'U_NEXT_STEP'	=> append_sid(STK_INDEX, 't=database_cleaner&amp;step=' . ($step + 1)),
 		));
 
 		$template->set_filenames(array(
