@@ -13,6 +13,12 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
+// Load functions_admin.php if required
+if (!function_exists('filelist'))
+{
+	include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
+}
+
 class plugin
 {
 	/**
@@ -61,12 +67,37 @@ class plugin
 		$this->tool_box_path = STK_ROOT_PATH . 'tools/';
 
 		// Create a list with tools
-		$this->plugin_list = array_merge($this->plugin_list, $this->build_tool_list($this->tool_box_path));
+		$filelist = filelist($this->tool_box_path, '', 'php');
+
+		// Need to do some sanitization on the result of filelist
+		foreach ($filelist as $cat => $tools)
+		{
+			// Don't need those
+			if (empty($cat))
+			{
+				continue;
+			}
+
+			$cat = (substr($cat, -1) == '/') ? substr($cat, 0, -1) : $cat;
+
+			if (!isset($this->plugin_list[$cat]))
+			{
+				$this->plugin_list[$cat] = array();
+			}
+
+			// Don't want the extension
+			foreach ($tools as $key => $tool)
+			{
+				$tools[$key] = (($pos = strpos($tool, '.' . PHP_EXT)) !== false) ? substr($tool, 0, $pos) : $tool;
+			}
+
+			$this->plugin_list[$cat] = $tools;
+		}
 
 		// Get the requested cat and tool
 		$this->_parts['c'] = request_var('c', $this->_parts['c']);
 		$this->_parts['t'] = request_var('t', $this->_parts['t']);
-		
+
 		// We shouldn't rely on the given category request, unless there really is a tool with that name in the given category
 		if ($this->_parts['t'] && (!isset($this->plugin_list[$this->_parts['c']]) || !in_array($this->_parts['t'], $this->plugin_list[$this->_parts['c']])))
 		{
@@ -94,58 +125,6 @@ class plugin
 		// Assign the two menus to the template
 		$this->gen_top_nav();
 		$this->gen_left_nav();
-	}
-
-	/**
-	 * Build the list with tools. This method will look recursifley in the given directory
-	 *
-	 * @param String $dir The directory to look in
-	 */
-	function build_tool_list($dir)
-	{
-		// Tools in this directory
-		$_plugin_list = array();
-
-		// Path
-		if (substr($dir, -1) != '/')
-		{
-			$dir .= '/';
-		}
-
-		if (false !== ($handle = opendir($dir)))
-		{
-			while (false !== ($file = readdir($handle)))
-			{
-				// Force lowercase
-				$file = utf8_strtolower($file);
-
-				// Skip all *nix hidden files
-				if ($file[0] == '.')
-				{
-					continue;
-				}
-
-				// Skip ignores
-				if (in_array($file, $this->ignore_tools))
-				{
-					continue;
-				}
-
-				if (is_dir($dir . $file))
-				{
-					$_plugin_list[$file] = $this->build_tool_list($dir . $file);
-				}
-				else
-				{
-					// Strip the extention and add the file to the list
-					$file = substr($file, 0, strpos($file, '.'));
-					$_plugin_list[] = $file;
-				}
-			}
-			closedir($handle);
-		}
-
-		return $_plugin_list;
 	}
 
 	/**
@@ -198,26 +177,26 @@ class plugin
 	{
 		$args	= array();
 		$str	= '?';
-		
+
 		// Run through the parts
 		foreach ($this->_parts as $key => $value)
 		{
 			if ($value != '')
 			{
 				$args[$key] = $value;
-				
+
 				if (substr($str, -5) != '&amp;')
 				{
 					$str .= '&amp;';
 				}
-				
+
 				$str .= $key . '=' . $value;
 			}
 		}
 
 		return ($string) ? $str : $args;
 	}
-	
+
 	/**
 	 * Get a given part
 	 */
@@ -227,10 +206,10 @@ class plugin
 		{
 			return false;
 		}
-		
+
 		return $this->_parts[$key];
 	}
-	
+
 	/**
 	 * Add a new part
 	 */
