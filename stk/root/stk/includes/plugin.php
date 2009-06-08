@@ -67,7 +67,7 @@ class plugin
 		$this->tool_box_path = STK_ROOT_PATH . 'tools/';
 
 		// Create a list with tools
-		$filelist = filelist($this->tool_box_path, '', 'php');
+		$filelist = filelist($this->tool_box_path, '', PHP_EXT);
 
 		// Need to do some sanitization on the result of filelist
 		foreach ($filelist as $cat => $tools)
