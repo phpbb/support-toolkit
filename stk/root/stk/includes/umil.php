@@ -2221,7 +2221,7 @@ class umil
 	}
 
 	// Ignore, function was renamed to table_row_insert and keeping for backwards compatibility
-	function table_insert($table_name, $data = array()) { table_row_insert($table_name, $data); }
+	function table_insert($table_name, $data = array()) { $this->table_row_insert($table_name, $data); }
 
 	/**
 	* Table Insert
