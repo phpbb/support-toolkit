@@ -31,22 +31,6 @@ if (!defined('IN_PHPBB'))
 class tutorial
 {
 	/*
-	* Tool Info
-	*
-	* This function returns the tool info to the Support Tool Kit
-	* This funtion is not required.  If you want to strtoupper(*class name*) as the name of the tool you can skip this function
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			// The name of this tool that will be shown to the user (required)
-			'NAME'			=> $user->lang['TUTORIAL'],
-		);
-	}
-
-	/*
 	* Display Options
 	*
 	* This function sets up the display page which will show the options we want to show for this tool
@@ -83,7 +67,7 @@ class tutorial
 		/*
 		* Method 3
 		*/
-		// Do anything here
+		// Setup your own page here, as example see tools/admin/database_cleaner.php
 
 		return false;
 	}
