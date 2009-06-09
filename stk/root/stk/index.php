@@ -43,7 +43,7 @@ require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
 // Make sure that umil is always usable
-$umil = new umil();
+$umil = new umil(true);
 
 // Before we continue check whether this is the latest version of the STK
 // if not. Block access.

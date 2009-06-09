@@ -349,14 +349,14 @@ function perform_authed_quick_tasks($action)
  */
 function stk_version_check()
 {
-	global $cache, $template, $umil, $user;
-	
+	global $cache, $umil, $user;
+
 	// We run this before the session is start so we'll have to define some language constructs here.
 	$user->lang['FILE_NOT_FOUND']	= 'The requested file could not be found.';
 	$user->lang['FSOCK_DISABLED']	= 'The operation could not be completed because the <var>fsockopen</var> function has been disabled or the server being queried could not be found.';
 	$user->lang['STK_OUTDATED']		= 'Your Support Tool Kit installation appears to be out of date. The latest available version is <strong style="color: #008000;">%1$s</strong>, while the version your have installed is <strong style="color: #FF0000;">%2$s</strong>.<br /><br />Due to the large impact of this tool on your phpBB installation, it has been disabled until an update is performed. We strongly recommend keeping all software running on your server up to date. For more information regarding the latest update, please see the <a href="%3$s">release topic</a>.';
-	
-	
+
+
 	// We cache the result, check once per session
 	$version_check = $cache->get('_stk_version_check');
 	if (!$version_check || $version_check['last_check_session'] != $user->session_id)
@@ -366,10 +366,10 @@ function stk_version_check()
 		{
 			$cache->destroy('_stk_version_check');
 		}
-		
+
 		// Lets collect the latest version data. We can use UMIL for this
 		$info = $umil->version_check('code.phpbb.com', '/svn/support-toolkit/versioncheck', ((defined('STK_QA')) ? 'stk_qa_version.txt' : 'stk_version.txt'));
-		
+
 		// Compare it and cache the info
 		if (is_array($info) && isset($info[0]) && isset($info[1]))
 		{
@@ -380,19 +380,24 @@ function stk_version_check()
 				$version_check['latest']	= $info[0];
 				$version_check['topic']		= $info[1];
 			}
-			
+
 			$version_check['last_check_session'] = $user->session_id;
+		}
+		else
+		{
+			// Something went wrong. At this point $info should contain the relevant data
+			trigger_error($info, E_USER_ERROR);
 		}
 		$cache->put('_stk_version_check', $version_check);
 	}
-	
+
 	// If we're out of date display the warning
 	if (isset($version_check['outdated']) && $version_check['outdated'] == true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
 		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], STK_VERSION, $version_check['topic']);
 		$user->lang = array();
-		
+
 		// Trigger
 		trigger_error($msg, E_USER_ERROR);
 	}

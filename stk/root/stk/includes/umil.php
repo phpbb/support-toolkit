@@ -29,10 +29,10 @@ define('UMIL_VERSION', '1.0.0-RC3');
 *
 * Example:
 * $umil->config_add(array(
-*	array('config_name', 'config_value', false),
-*	array('config_name1', 'config_value1', false),
-*	array('config_name2', 'config_value2', false),
-*	array('config_name3', 'config_value3', false),
+*	array('config_name', 'config_value'),
+*	array('config_name1', 'config_value1'),
+*	array('config_name2', 'config_value2', true),
+*	array('config_name3', 'config_value3', true),
 * );
 */
 
@@ -75,6 +75,11 @@ define('UMIL_VERSION', '1.0.0-RC3');
 *	table_index_exists($table_name, $index_name)
 *	table_index_add($table_name, $index_name = '', $column = array())
 *	table_index_remove($table_name, $index_name = '')
+*
+* Table Row Functions
+*	table_row_insert($table_name, $data = array())
+*	table_row_remove($table_name, $data = array())
+*	table_row_update($table_name, $data = array(), $new_data = array())
 *
 * Version Check Function
 * 	version_check($url, $path, $file)
@@ -125,12 +130,14 @@ class umil
 	*/
 	function umil($stand_alone = false, $db = false)
 	{
-		// Force Stand Alone for the Support Tool Kit
-		$stand_alone = true;
-
 		// Setup $this->db
 		if ($db !== false)
 		{
+			if (!is_object($db) || !method_exists($db, 'sql_query'))
+			{
+				trigger_error('Invalid $db Object');
+			}
+
 			$this->db = $db;
 		}
 		else
@@ -1208,6 +1215,7 @@ class umil
 
 		// The "manual" way
 		$this->umil_start('MODULE_ADD', $class, ((isset($user->lang[$data['module_langname']])) ? $user->lang[$data['module_langname']] : $data['module_langname']));
+		add_log('admin', 'LOG_MODULE_ADD', ((isset($user->lang[$data['module_langname']])) ? $user->lang[$data['module_langname']] : $data['module_langname']));
 
 		$class = $this->db->sql_escape($class);
 
@@ -1305,8 +1313,7 @@ class umil
 			if (isset($module['module_langname']))
 			{
 				// Manual Method
-				call_user_func(array($this, 'module_remove'), $class, $parent, $module['module_langname']);
-				return;
+				return $this->module_remove($class, $parent, $module['module_langname'], $include_path);
 			}
 
 			// Failed.
@@ -1338,13 +1345,15 @@ class umil
 			$module_info = $info->module();
 			unset($info);
 
+			$result = '';
 			foreach ($module_info['modes'] as $mode => $info)
 			{
 				if (!isset($module['modes']) || in_array($mode, $module['modes']))
 				{
-					call_user_func(array($this, 'module_remove'), $class, $parent, $info['title']);
+					$result .= $this->module_remove($class, $parent, $info['title']) . '<br />';
 				}
 			}
+			return $result;
 		}
 		else
 		{
@@ -1369,7 +1378,6 @@ class umil
 					$this->db->sql_freeresult($result);
 
 					// we know it exists from the module_exists check
-
 					$parent_sql = 'AND parent_id = ' . (int) $row['module_id'];
 				}
 				else
@@ -1411,6 +1419,7 @@ class umil
 			}
 
 			$this->umil_start('MODULE_REMOVE', $class, ((isset($user->lang[$module_name])) ? $user->lang[$module_name] : $module_name));
+			add_log('admin', 'LOG_MODULE_REMOVED', ((isset($user->lang[$module_name])) ? $user->lang[$module_name] : $module_name));
 
 			if (!class_exists('acp_modules'))
 			{
@@ -1892,6 +1901,12 @@ class umil
 	{
 		$this->get_table_name($table_name);
 
+		// Use sql_table_exists if available
+		if (method_exists($this->db_tools, 'sql_table_exists'))
+		{
+			return $this->db_tools->sql_table_exists($table_name);
+		}
+
 		if (!function_exists('get_tables'))
 		{
 			global $phpbb_root_path, $phpEx;
@@ -2205,26 +2220,29 @@ class umil
 		return $this->umil_end();
 	}
 
+	// Ignore, function was renamed to table_row_insert and keeping for backwards compatibility
+	function table_insert($table_name, $data = array()) { table_row_insert($table_name, $data); }
+
 	/**
 	* Table Insert
 	*
 	* Insert data into a table
 	*/
-	function table_insert($table_name, $data = array())
+	function table_row_insert($table_name, $data = array())
 	{
 		// Multicall
 		if (is_array($table_name))
 		{
 			foreach ($table_name as $params)
 			{
-				call_user_func_array(array($this, 'table_insert'), $params);
+				call_user_func_array(array($this, 'table_row_insert'), $params);
 			}
 			return;
 		}
 
 		$this->get_table_name($table_name);
 
-		$this->umil_start('TABLE_INSERT_DATA', $table_name);
+		$this->umil_start('TABLE_ROW_INSERT_DATA', $table_name);
 
 		if (!$this->table_exists($table_name))
 		{
@@ -2232,6 +2250,120 @@ class umil
 		}
 
 		$this->db->sql_multi_insert($table_name, $data);
+
+		return $this->umil_end();
+	}
+
+	/**
+	* Table Row Update
+	*
+	* Update a row in a table
+	*
+	* $data should be an array with the column names as keys and values as the items to check for each column.  Example:
+	* array('user_id' => 123, 'user_name' => 'test user') would become:
+	* WHERE user_id = 123 AND user_name = 'test user'
+	*
+	* $new_data is the new data it will be updated to (same format as you'd enter into $db->sql_build_array('UPDATE' ).
+	*/
+	function table_row_update($table_name, $data = array(), $new_data = array())
+	{
+		// Multicall
+		if (is_array($table_name))
+		{
+			foreach ($table_name as $params)
+			{
+				call_user_func_array(array($this, 'table_row_remove'), $params);
+			}
+			return;
+		}
+
+		if (!sizeof($data))
+		{
+			return $this->umil_end('FAIL');
+		}
+
+		$this->get_table_name($table_name);
+
+		$this->umil_start('TABLE_ROW_UPDATE_DATA', $table_name);
+
+		if (!$this->table_exists($table_name))
+		{
+			return $this->umil_end('TABLE_NOT_EXIST', $table_name);
+		}
+
+		$sql = '';
+		foreach ($data as $key => $value)
+		{
+			$sql .= ($sql == '') ? 'UPDATE ' . $table_name . ' SET ' . $this->db->sql_build_array('UPDATE', $new_data) . ' WHERE ' : ' AND ';
+			$sql .= $key . ' = ';
+
+			if (is_int($value))
+			{
+				$sql .= $value;
+			}
+			else
+			{
+				$sql .= "'$value'";
+			}
+		}
+
+		$this->db->sql_query($sql);
+
+		return $this->umil_end();
+	}
+
+	/**
+	* Table Row Remove
+	*
+	* Remove a row from a table
+	*
+	* $data should be an array with the column names as keys and values as the items to check for each column.  Example:
+	* array('user_id' => 123, 'user_name' => 'test user') would become:
+	* WHERE user_id = 123 AND user_name = 'test user'
+	*/
+	function table_row_remove($table_name, $data = array())
+	{
+		// Multicall
+		if (is_array($table_name))
+		{
+			foreach ($table_name as $params)
+			{
+				call_user_func_array(array($this, 'table_row_remove'), $params);
+			}
+			return;
+		}
+
+		if (!sizeof($data))
+		{
+			return $this->umil_end('FAIL');
+		}
+
+		$this->get_table_name($table_name);
+
+		$this->umil_start('TABLE_ROW_REMOVE_DATA', $table_name);
+
+		if (!$this->table_exists($table_name))
+		{
+			return $this->umil_end('TABLE_NOT_EXIST', $table_name);
+		}
+
+		$sql = '';
+		foreach ($data as $key => $value)
+		{
+			$sql .= ($sql == '') ? 'DELETE FROM ' . $table_name . ' WHERE ' : ' AND ';
+			$sql .= $key . ' = ';
+
+			if (is_int($value))
+			{
+				$sql .= $value;
+			}
+			else
+			{
+				$sql .= "'$value'";
+			}
+		}
+
+		$this->db->sql_query($sql);
 
 		return $this->umil_end();
 	}
@@ -2246,7 +2378,7 @@ class umil
 	* @param string $path The path to access (ex: /updatecheck)
 	* @param string $file The name of the file to access (ex: 30x.txt)
 	*
-	* @return array|bool False if there was any error, or an array (each line in the file as a value)
+	* @return array|string Error Message if there was any error, or an array (each line in the file as a value)
 	*/
 	function version_check($url, $path, $file, $timeout = 10, $port = 80)
 	{
@@ -2263,7 +2395,7 @@ class umil
 
 		if ($info === false)
 		{
-			return false;
+			return $errstr . ' [ ' . $errno . ' ]';
 		}
 
 		$info = str_replace("\r\n", "\n", $info);
