@@ -22,7 +22,7 @@ class readd_module_management
 	*/
 	function display_options()
 	{
-		return 'READD_MODULE_MANATEMENT';
+		return 'READD_MODULE_MANAGEMENT';
 	}
 
 	/**
@@ -64,7 +64,7 @@ class readd_module_management
 			'modes'				=> $to_add,
 		));
 
-		trigger_error('READD_MODULE_MANATEMENT_SUCCESS');
+		trigger_error('READD_MODULE_MANAGEMENT_SUCCESS');
 	}
 }
 ?>
