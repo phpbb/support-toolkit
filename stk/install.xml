@@ -25,19 +25,29 @@
 		<author>
 			<username>Erik Frèrerejean</username>
 			<realname>Erik Frèrerejean</realname>
-			<homepage></homepage>
-			<email></email>
+			<homepage>http://www.erikfrerejean.nl</homepage>
+			<email>erikfrerejean@phpbb.com</email>
 		</author>
 	</author-group>
 
-	<mod-version>1.0.0-dev</mod-version>
+	<mod-version>1.0.0-b1</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.4</target-version>
+		<target-version>3.0.5</target-version>
 	</installation>
 
+		<history>
+			<entry>
+				<date>2009-06-09</date>
+				<rev-version>1.0.0-b1</rev-version>
+				<changelog lang="en">
+					<change>First public beta</change>
+				</changelog>
+			</entry>
+	</history>
+	
 	<link-group>
 		<link type="contrib" href="contrib/stk_acp_link.xml" lang="en">Add link to Support Tool Kit in the ACP.</link>
 		<link type="contrib" href="contrib/stk_forum_link.xml" lang="en">Add a link to the Support Tool Kit in the forum footer.</link>
