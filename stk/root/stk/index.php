@@ -21,8 +21,8 @@ define('IN_LOGIN', true);
 
 if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
 if (!defined('PHPBB_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
-define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/');
-define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_EXT);
+if (!defined('STK_ROOT_PATH')) { define('STK_ROOT_PATH', PHPBB_ROOT_PATH . 'stk/'); }
+if (!defined('STK_INDEX')) { define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_EXT); }
 
 // Make that phpBB itself understands out paths
 $phpbb_root_path = PHPBB_ROOT_PATH;
