@@ -52,7 +52,7 @@ class duplicate_permissions
 		}
 		$db->sql_freeresult($result);
 
-		if (!sizeof($acl_duplicates))
+		if (empty($acl_duplicates))
 		{
 			trigger_error('NO_DUPLICATES_FOUND');
 		}

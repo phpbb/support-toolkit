@@ -95,7 +95,7 @@ class add_user
 		$this->validate_data($data, $error);
 
 		// Something went wrong
-		if (sizeof($error))
+		if (!empty($error))
 		{
 			$user->add_lang('ucp');
 			return false;
@@ -136,7 +136,7 @@ class add_user
 		$this->add_groups($user_id, $groups, $error);
 
 		// Last check for errors
-		if (sizeof($error))
+		if (!empty($error))
 		{
 			return false;
 		}

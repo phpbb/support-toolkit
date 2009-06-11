@@ -88,7 +88,7 @@ class change_password
 			'new_password'		=> array('password'),
 			'password_confirm'	=> array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
 		));
-		if (sizeof($error))
+		if (!empty($error))
 		{
 			return;
 		}

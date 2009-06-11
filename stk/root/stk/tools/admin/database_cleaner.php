@@ -298,7 +298,7 @@ class database_cleaner
 							$uids[] = $row['user_id'];
 						}
 						$db->sql_freeresult($result);
-						if (sizeof($uids))
+						if (!empty($uids))
 						{
 							$db->sql_query('DELETE FROM ' . USERS_TABLE . ' WHERE ' . $db->sql_in_set('user_id', $uids));
 							$db->sql_query('DELETE FROM ' . BOTS_TABLE);
@@ -452,7 +452,7 @@ class database_cleaner
 					}
 				}
 
-				if (sizeof($error))
+				if (!empty($error))
 				{
 					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
 				}
@@ -526,7 +526,7 @@ class database_cleaner
 					}
 				}
 
-				if (sizeof($error))
+				if (!empty($error))
 				{
 					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
 				}

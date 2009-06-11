@@ -40,7 +40,7 @@ function critical_config_repair()
 		}
 	}
 
-	if (isset($_POST['submit']) && !sizeof($error))
+	if (isset($_POST['submit']) && empty($error))
 	{
 		// Time to convert the data provided into a config file
 		$config_data = "<?php\n";
@@ -128,7 +128,7 @@ function critical_config_repair()
 								</p>
 								<form id="stk" method="post" action="<?php echo STK_ROOT_PATH . 'index.' . PHP_EXT; ?>" name="support_tool_kit">
 									<fieldset>
-										<?php if (sizeof($error)) {?>
+										<?php if (!empty($error)) {?>
 											<div class="errorbox">
 												<h3>Error</h3>
 												<p><?php echo implode('<br />', $error); ?></p>
@@ -674,7 +674,7 @@ function critical_connect_check_db($error_connect, &$error, $dbms_details, $tabl
 		}
 	}
 
-	if ($error_connect && (!isset($error) || !sizeof($error)))
+	if ($error_connect && empty($error))
 	{
 		return true;
 	}

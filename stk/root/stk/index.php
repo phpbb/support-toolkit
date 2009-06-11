@@ -289,7 +289,7 @@ if ($plugin->get_part('t'))
 		$tool->run_tool($error);
 	}
 
-	if (!$submit || sizeof($error))
+	if (!$submit || !empty($error))
 	{
         /*
         * Instead of building a page yourself you may return an array with the options you want to show.  This is outputted similar to how the acp_board is.
@@ -302,7 +302,7 @@ if ($plugin->get_part('t'))
 			page_header($user->lang[$options['title']]);
 
 			// Go through each error and see if the key exists in the $user->lang.  If it does, use that.
-			if (sizeof($error))
+			if (!empty($error))
 			{
 				array_walk($error, 'use_lang');
 			}
@@ -311,8 +311,8 @@ if ($plugin->get_part('t'))
 				'L_TITLE'			=> $user->lang[$options['title']],
 				'L_TITLE_EXPLAIN'	=> (isset($user->lang[$options['title'] . '_EXPLAIN'])) ? $user->lang[$options['title'] . '_EXPLAIN'] : '',
 
-				'S_ERROR'			=> (sizeof($error)) ? true : false,
-				'ERROR_MSG'			=> (sizeof($error)) ? implode('<br />', $error) : '',
+				'S_ERROR'			=> (!empty($error)) ? true : false,
+				'ERROR_MSG'			=> (!empty($error)) ? implode('<br />', $error) : '',
 			));
 
 			foreach ($options['vars'] as $name => $vars)
@@ -346,7 +346,7 @@ if ($plugin->get_part('t'))
 
 				$content = build_cfg_template($type, $name, $vars);
 
-				if (!sizeof($content))
+				if (empty($content))
 				{
 					continue;
 				}

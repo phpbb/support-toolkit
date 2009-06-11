@@ -230,7 +230,7 @@ class plugin
 		foreach ($cats as $cat)
 		{
 			// Ignore all categories that are empty (excluding "main")
-			if (!sizeof($this->plugin_list[$cat]) && $cat != 'main')
+			if (empty($this->plugin_list[$cat]) && $cat != 'main')
 			{
 				continue;
 			}

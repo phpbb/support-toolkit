@@ -78,7 +78,7 @@ class fix_left_right_ids
 
 		$sql = 'SELECT * FROM ' . $table . '
 			WHERE parent_id = ' . (int) $parent_id .
-			((sizeof($where)) ? ' AND ' . implode(' AND ', $where) : '') . '
+			((!empty($where)) ? ' AND ' . implode(' AND ', $where) : '') . '
 			ORDER BY left_id ASC';
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
