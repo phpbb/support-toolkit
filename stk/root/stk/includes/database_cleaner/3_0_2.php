@@ -9,6 +9,14 @@
 */
 
 /**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
+/**
 * Database Cleaner Data file for phpBB 3.0.2
 */
 class database_cleaner_data

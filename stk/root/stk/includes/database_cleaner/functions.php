@@ -8,6 +8,14 @@
 *
 */
 
+/**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
 function get_config_rows(&$cleaner, &$config_rows, &$existing_config)
 {
 	global $db;

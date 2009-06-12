@@ -8,13 +8,16 @@
 *
 */
 
+/**
+ * @ignore
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
 class sanitize_anonymous_user
-{	
+{
 	/**
 	* Display Options
 	*
@@ -31,21 +34,21 @@ class sanitize_anonymous_user
 		$result	= $db->sql_query($sql);
 		$anon	= $db->sql_fetchrow($result);
 		$db->sql_freeresult($result);
-		
+
 		// No anonymous user
 		if (!$anon)
 		{
 			$plugin->set_part('a', 'missing');
 			return 'ANONYMOUS_MISSING';
 		}
-		
+
 		// Make sure that the anonymous user doesn't has an e-mail and correct usernames
 		if ($anon['username'] != 'Anonymous' || $anon['username_clean'] != 'anonymous' || $anon['user_password'] != '' || $anon['user_email'] != '')
 		{
 			$plugin->set_part('a', 'clean');
 			return 'ANONYMOUS_WRONG_DATA';
 		}
-		
+
 		// Check the groups
 		$_in_guests = false;
 		$_other		= array();
@@ -56,7 +59,7 @@ class sanitize_anonymous_user
 			$plugin->set_part('a', 'groups');
 			return 'ANONYMOUS_WRONG_GROUPS';
 		}
-		
+
 		trigger_error('SANITIZE_SUCCESSFULL');
 	}
 
@@ -68,7 +71,7 @@ class sanitize_anonymous_user
 	function run_tool()
 	{
 		global $config, $db, $plugin, $user;
-		
+
 		// Collect all the information a clean "Anonymous" should have
 		$sql = 'SELECT group_id, group_rank, group_colour
 			FROM ' . GROUPS_TABLE . "
@@ -118,10 +121,10 @@ class sanitize_anonymous_user
 			'user_newpasswd'			=> '',
 			'user_allow_massemail'		=> 0,
 		);
-		
+
 		// Return message
 		$msg = '';
-		
+
 		// Do those thangs
 		$action = request_var('a', '');
 		switch ($action)
@@ -134,18 +137,18 @@ class sanitize_anonymous_user
 				$db->sql_query($sql);
 				$msg = $user->lang['ANONYMOUS_CLEANED'];
 			break;
-			
+
 			case 'groups' :
 				// Re-get all the group data
 				$_in_guests = false;
 				$_other		= array();
 				$guests_gr	= $this->_anon_groups($_in_guests, $_other);
-				
+
 				if (!function_exists('group_user_del'))
 				{
 					include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 				}
-				
+
 				// Loop through the others and remove this user from all these groups
 				foreach ($_other as $group)
 				{
@@ -154,7 +157,7 @@ class sanitize_anonymous_user
 						trigger_error($user->lang[$ret]);
 					}
 				}
-				
+
 				// Not in the guests group?
 				if ($_in_guests === false)
 				{
@@ -163,10 +166,10 @@ class sanitize_anonymous_user
 						trigger_error($user->lang[$ret]);
 					}
 				}
-				
+
 				$msg = $user->lang['ANONYMOUS_GROUPS_REMOVED'];
 			break;
-			
+
 			case 'missing' :
 				// Lets re-create the anonymous user
 				$sql = 'INSERT INTO ' . USERS_TABLE . '
@@ -178,11 +181,11 @@ class sanitize_anonymous_user
 				}
 				$msg = $user->lang['ANONYMOUS_CREATED'];
 			break;
-			
+
 			default :
 				trigger_error('NO_MODE');
 		}
-		
+
 		// Inform the user
 		meta_refresh(3, append_sid(STK_INDEX, $plugin->url_arg()));
 		trigger_error($msg . '<br />' . $user->lang['REDIRECT_NEXT_STEP']);
@@ -191,19 +194,19 @@ class sanitize_anonymous_user
 	function _anon_groups(&$_in_guests, &$_other_groups)
 	{
 		global $db;
-		
+
 		// Fetch the groups our user is in
 		if (!function_exists('group_memberships'))
 		{
 			include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 		}
 		$groups = group_memberships(false, ANONYMOUS);
-		
+
 		if (empty($groups))
 		{
 			$groups = array();
 		}
-		
+
 		// Get the group id of GUESTS
 		$sql = 'SELECT group_id
 			FROM ' . GROUPS_TABLE . "
@@ -211,7 +214,7 @@ class sanitize_anonymous_user
 		$result	= $db->sql_query_limit($sql, 1, 0);
 		$gid	= $db->sql_fetchfield('group_id', false, $result);
 		$db->sql_freeresult($result);
-		
+
 		// Build the information
 		foreach ($groups as $group => $group_data)
 		{
@@ -220,10 +223,10 @@ class sanitize_anonymous_user
 				$_in_guests = $group_data['group_id'];
 				continue;
 			}
-			
+
 			$_other_groups[] = $group_data['group_id'];
 		}
-		
+
 		if ($_in_guests === false)
 		{
 			return $gid;

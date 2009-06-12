@@ -20,6 +20,9 @@
 /*
 * Make sure you have this check for security reasons.
 */
+/**
+ * @ignore
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;

@@ -8,6 +8,13 @@
 *
 */
 
+/**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
 function critical_config_repair()
 {
 	include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);

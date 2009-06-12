@@ -9,6 +9,14 @@
 */
 
 /**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
+/**
 * Build configuration template for acp configuration pages
 *
 * Slightly modified from adm/index.php
