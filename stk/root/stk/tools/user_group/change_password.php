@@ -71,7 +71,10 @@ class change_password
 		}
 
 		$user->add_lang('ucp');
-		include_once(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+		if (!function_exists('validate_data'))
+		{
+			include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+		}
 
 		$data = array(
 			'new_password'		=> request_var('new_password', '', true),
