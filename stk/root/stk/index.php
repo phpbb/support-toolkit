@@ -90,7 +90,7 @@ $user->theme['template_storedb'] = false;
 
 // Setup some variables
 $action = request_var('action', '');
-$submit = (isset($_POST['submit']) || isset($_GET['submit'])) ? true : false;
+$submit = request_var('submit', false);
 
 // Perform some quick tasks here that don't require any authentication!
 perform_unauthed_quick_tasks($action);
