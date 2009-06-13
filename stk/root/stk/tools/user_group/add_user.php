@@ -131,6 +131,19 @@ class add_user
 		);
 		$user_id = user_add($user_row, false);
 
+		// Remove the default group from the groups array. Keeping it here causes an error
+		if (in_array($groups['default'], $groups['groups']))
+		{
+			foreach ($groups['groups'] as $group_key => $group_id)
+			{
+				if ($group_id == $groups['default'])
+				{
+					unset($groups['groups'][$group_key]);
+					break;
+				}
+			}
+		}
+
 		// This should not happen, because the required variables are listed above...
 		if ($user_id === false)
 		{
@@ -217,9 +230,10 @@ class add_user
 			}
 
 			// Add to the group
-			if ($error[] = group_user_add($group_id, array($user_id), false, false, $default, $leader))
+			if (($msg = group_user_add($group_id, array($user_id), false, false, $default, $leader)) !== false)
 			{
 				// Something went wrong
+				$error[] = $msg;
 				return false;
 			}
 		}
