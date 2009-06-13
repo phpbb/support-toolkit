@@ -359,12 +359,6 @@ function stk_version_check()
 {
 	global $cache, $umil, $user;
 
-	// We run this before the session is start so we'll have to define some language constructs here.
-	$user->lang['FILE_NOT_FOUND']	= 'The requested file could not be found.';
-	$user->lang['FSOCK_DISABLED']	= 'The operation could not be completed because the <var>fsockopen</var> function has been disabled or the server being queried could not be found.';
-	$user->lang['STK_OUTDATED']		= 'Your Support Tool Kit installation appears to be out of date. The latest available version is <strong style="color: #008000;">%1$s</strong>, while the version your have installed is <strong style="color: #FF0000;">%2$s</strong>.<br /><br />Due to the large impact of this tool on your phpBB installation, it has been disabled until an update is performed. We strongly recommend keeping all software running on your server up to date. For more information regarding the latest update, please see the <a href="%3$s">release topic</a>.';
-
-
 	// We cache the result, check once per session
 	$version_check = $cache->get('_stk_version_check');
 	if (!$version_check || $version_check['last_check_session'] != $user->session_id)
