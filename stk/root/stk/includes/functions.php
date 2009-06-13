@@ -390,7 +390,8 @@ function stk_version_check()
 			// Something went wrong. At this point $info should contain the relevant data
 			trigger_error($info, E_USER_ERROR);
 		}
-		$cache->put('_stk_version_check', $version_check);
+		// Cache for a week, or untill the session id changed
+		$cache->put('_stk_version_check', $version_check, 60 * 60 * 24 * 7);
 	}
 
 	// If we're out of date display the warning
