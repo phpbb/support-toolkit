@@ -10,8 +10,8 @@
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.2.xsd">
 <header>
 	<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
-	<title lang="en">Support Tool Kit ACP link</title>
-	<description lang="en">Adds a link in the ACP to the Support Tool Kit</description>
+	<title lang="en">Support Toolkit ACP link</title>
+	<description lang="en">Adds a link in the ACP to the Support Toolkit</description>
 
 	<author-notes lang="en"></author-notes>
 
@@ -47,10 +47,10 @@
 	<open src="adm/index.php">
 		<edit>
 			<find><![CDATA['S_CONTENT_FLOW_END'	=> ($user->]]></find>
-			<action type="after-add"><![CDATA[		//-- Support Tool Kit
+			<action type="after-add"><![CDATA[		//-- Support Toolkit
 		//-- Add:
 		'U_STK_INDEX'	=> append_sid("{$phpbb_root_path}stk/index.$phpEx"),
-		//-- End Support Tool Kit]]></action>
+		//-- End Support Toolkit]]></action>
 		</edit>
 	</open>
 
@@ -67,10 +67,10 @@
 	<open src="language/en/acp/common.php">
 		<edit>
 			<find><![CDATA['WARNING'				=> 'Warning',]]></find>
-			<action type="after-add"><![CDATA[	//-- Support Tool Kit
+			<action type="after-add"><![CDATA[	//-- Support Toolkit
 	//-- Add:
-	'SUPPORT_TOOL_KIT_INDEX'	=> 'Support Tool Kit Index',
-	//-- End Support Tool Kit]]></action>
+	'SUPPORT_TOOL_KIT_INDEX'	=> 'Support Toolkit Index',
+	//-- End Support Toolkit]]></action>
 		</edit>
 	</open>
 </action-group>
