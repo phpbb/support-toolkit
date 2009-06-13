@@ -249,7 +249,7 @@ function parse_page($file, $title = '', $sprintf_title = array(), $sprintf_expla
 /**
  * Perform all quick tasks that has to be ran before we authenticate
  *
- * @param String $action
+ * @param	String	$action	The action to perform
  */
 function perform_unauthed_quick_tasks($action)
 {
@@ -319,7 +319,7 @@ function perform_unauthed_quick_tasks($action)
 /**
  * Perform all quick tasks that require the user to be authenticated
  *
- * @param String $action
+ * @param	String	$action	The action we'll be performing
  */
 function perform_authed_quick_tasks($action)
 {
@@ -399,7 +399,6 @@ function stk_version_check()
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
 		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], STK_VERSION, $version_check['topic']);
-		$user->lang = array();
 
 		// Trigger
 		trigger_error($msg, E_USER_ERROR);
