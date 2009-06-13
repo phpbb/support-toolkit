@@ -10,8 +10,8 @@
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.2.xsd">
 <header>
 	<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
-	<title lang="en">Support Tool Kit forum link</title>
-	<description lang="en">Adds a link in the footer (under the ACP link) that points to the Support Tool Kit</description>
+	<title lang="en">Support Tool Kit ACP link</title>
+	<description lang="en">Adds a link in the ACP to the Support Tool Kit</description>
 
 	<author-notes lang="en"></author-notes>
 
@@ -25,48 +25,52 @@
 		<author>
 			<username>Erik Frèrerejean</username>
 			<realname>Erik Frèrerejean</realname>
-			<homepage></homepage>
-			<email></email>
+			<homepage>http://www.erikfrerejean.nl</homepage>
+			<email>erikfrerejean@phpbb.com</email>
 		</author>
 	</author-group>
 
-	<mod-version>1.0.0-dev</mod-version>
+	<mod-version>1.0.0-b2</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.4</target-version>
+		<target-version>3.0.5</target-version>
 	</installation>
+	
+	<link-group>
+		<link type="parent" href="./../install.xml" lang="en">Main installation file.</link>
+	</link-group>
 </header>
 
 <action-group>
-	<open src="includes/functions.php">
+	<open src="adm/index.php">
 		<edit>
-			<find><![CDATA['U_ACP' => ($auth->acl_get('a_') && $user->data['is_registered']]]></find>
-			<action type="before-add"><![CDATA[		//-- Support Tool Kit
+			<find><![CDATA['S_CONTENT_FLOW_END'	=> ($user->]]></find>
+			<action type="after-add"><![CDATA[		//-- Support Tool Kit
 		//-- Add:
-		'U_STK' => ($auth->acl_get('a_') && $user->data['is_registered']) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
+		'U_STK_INDEX'	=> append_sid("{$phpbb_root_path}stk/index.$phpEx"),
 		//-- End Support Tool Kit]]></action>
 		</edit>
 	</open>
 
-	<open src="language/en/common.php">
+	<open src="adm/style/overall_header.html">
 		<edit>
-			<find><![CDATA['ASCENDING']]></find>
-			<action type="after-add"><![CDATA[	//-- Support Tool Kit
-	//-- Add:
-	'STK'							=> 'Support Tool Kit',
-	//-- End Support Tool Kit]]></action>
+			<find><![CDATA[<p><a href="{U_ADM_INDEX}">{L_ADMIN_INDEX}</a>]]></find>
+			<inline-edit>
+				<inline-find><![CDATA[<p>]]></inline-find>
+				<inline-action type="after-add"><![CDATA[<a href="{U_STK_INDEX}">{L_SUPPORT_TOOL_KIT_INDEX}</a> &bull; ]]></inline-action>
+			</inline-edit>
 		</edit>
 	</open>
 
-	<open src="styles/prosilver/template/overall_footer.html">
+	<open src="language/en/acp/common.php">
 		<edit>
-			<find><![CDATA[<!-- IF U_ACP --><br /><strong>]]></find>
-			<inline-edit>
-				<inline-find><![CDATA[</strong>]]></inline-find>
-				<inline-action type="after-add"><![CDATA[<br /><strong><a href="{U_STK}" title="{L_STK}">{L_STK}</a></strong>]]></inline-action>
-			</inline-edit>
+			<find><![CDATA['WARNING'				=> 'Warning',]]></find>
+			<action type="after-add"><![CDATA[	//-- Support Tool Kit
+	//-- Add:
+	'SUPPORT_TOOL_KIT_INDEX'	=> 'Support Tool Kit Index',
+	//-- End Support Tool Kit]]></action>
 		</edit>
 	</open>
 </action-group>
