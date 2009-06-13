@@ -58,6 +58,8 @@ class add_user
 	{
 		global $config, $user;
 
+		$user->add_lang('acp/groups');
+
 		if (!check_form_key('add_user'))
 		{
 			$error[] = 'FORM_INVALID';

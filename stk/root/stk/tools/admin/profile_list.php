@@ -123,8 +123,7 @@ class profile_list
 		*/
 		$sql = 'SELECT COUNT(user_id) AS cnt FROM ' . USERS_TABLE . '
 			WHERE user_type <> ' . USER_IGNORE .
-			$profile_where .
-			$order_sql;
+			$profile_where;
 		$db->sql_query($sql);
 		$count = $db->sql_fetchfield('cnt');
 
