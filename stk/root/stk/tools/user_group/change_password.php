@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Change Password
+* @package Support Toolkit - Change Password
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

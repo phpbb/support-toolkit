@@ -38,20 +38,20 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ANONYMOUS_CLEANED'					=> 'The user information for the anonymous user has been cleaned.',
-	'ANONYMOUS_CREATED'					=> 'The anonymous user was recreated',
-	'ANONYMOUS_CREATION_FAILED'			=> 'The tool kit couldn\'t create a new anonymous user. Please ask further support in the phpbb.com support forums.',
-	'ANONYMOUS_GROUPS_REMOVED'			=> 'The anonymous user was removed from all access groups',
-	'ANONYMOUS_MISSING'					=> 'Anonymous user is missing',
+	'ANONYMOUS_CLEANED'					=> 'The Anonymous user’s profile data has been successfully sanitised.',
+	'ANONYMOUS_CREATED'					=> 'The Anonymous user has been successfully re-created.',
+	'ANONYMOUS_CREATION_FAILED'			=> 'It was not possible to recreate the Anonymous user. Please ask for further assistance in the phpBB.com Support Forum.',
+	'ANONYMOUS_GROUPS_REMOVED'			=> 'The Anonymous user was successfully removed from all access groups.',
+	'ANONYMOUS_MISSING'					=> 'The Anonymous user is missing.',
 	'ANONYMOUS_MISSING_CONFIRM'			=> 'The anonymous user is missing in your database. This user is used to allow guests to visit your board. Do you want to create a new one?',
-	'ANONYMOUS_WRONG_DATA'				=> 'The anonymous user data is incorrect',
-	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'Some of the anonymous user data is incorrect. Do you want to fix this?',
-	'ANONYMOUS_WRONG_GROUPS'			=> 'The anonymous user is in the wrong groups',
-	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'The anonymous user is in the wrong user groups. The anonymous user should only be in the "GUESTS" group. Do you want to fix this?',
+	'ANONYMOUS_WRONG_DATA'				=> 'The Anonymous user’s profile data is incorrect.',
+	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'The Anonymous user’s profile data is partially incorrect. Would you like to repair this?',
+	'ANONYMOUS_WRONG_GROUPS'			=> 'The Anonymous user improperly belongs to multiple user groups.',
+	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'The Anonymous user improperly belongs to multiple user groups. Would you like to remove the Anonymous user from all but the "GUESTS" group?',
 
-	'REDIRECT_NEXT_STEP'	=> 'You are being redirected to the next step',
+	'REDIRECT_NEXT_STEP'	=> 'You are being redirected to the next step.',
 
-	'SANITIZE_ANONYMOUS_USER'	=> 'Sanitize Anonymous user',
-	'SANITIZE_SUCCESSFULL'		=> 'The anonymous user was successfully sanitized.',
+	'SANITISE_ANONYMOUS_USER'	=> 'Sanitise Anonymous user',
+	'SANITISE_SUCCESSFULL'		=> 'The anonymous user was successfully sanitised.',
 ));
 ?>

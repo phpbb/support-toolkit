@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Anonymous group check
+* @package Support Toolkit - Anonymous group check
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -16,7 +16,7 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-class sanitize_anonymous_user
+class sanitise_anonymous_user
 {
 	/**
 	* Display Options
@@ -60,7 +60,7 @@ class sanitize_anonymous_user
 			return 'ANONYMOUS_WRONG_GROUPS';
 		}
 
-		trigger_error('SANITIZE_SUCCESSFULL');
+		trigger_error('SANITISE_SUCCESSFULL');
 	}
 
 	/**

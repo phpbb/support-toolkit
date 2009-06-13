@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Tutorial
+* @package Support Toolkit - Tutorial
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -9,9 +9,9 @@
 */
 
 /*
-* This will be a tutorial page for how to build a new tool to be used with the Support Tool Kit.
+* This will be a tutorial page for how to build a new tool to be used with the Support Toolkit.
 *
-* Before you ask why this tool does not show in the Tools list in the Support Tool Kit, that is because the Support Tool Kit is setup to ignore the file named tutorial.php.
+* Before you ask why this tool does not show in the Tools list in the Support Toolkit, that is because the Support Toolkit is setup to ignore the file named tutorial.php.
 *
 * You do not need to add any language files.
 * If you name your language file the same as the name of this file and put it in the stk/language/en/tools/ directory it will be loaded automatically

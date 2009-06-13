@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Duplicate Permission Remover
+* @package Support Toolkit - Duplicate Permission Remover
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
