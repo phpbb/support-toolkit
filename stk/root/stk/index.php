@@ -58,7 +58,7 @@ $db->sql_query('TRUNCATE TABLE ' . STYLES_IMAGESET_TABLE);*/
 
 // A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
 $sql = 'SELECT s.style_id
-	FROM (' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i)
+	FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
 	WHERE s.style_id = {$config['default_style']}
 		AND t.template_id = s.template_id
 		AND c.theme_id = s.theme_id
