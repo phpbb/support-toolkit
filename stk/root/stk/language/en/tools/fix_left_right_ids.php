@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Fix Left/Right ID's
+* @package Support Toolkit - Fix Left/Right ID's
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

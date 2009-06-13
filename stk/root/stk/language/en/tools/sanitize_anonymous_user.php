@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Anonymous group check
+* @package Support Toolkit - Anonymous group check
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

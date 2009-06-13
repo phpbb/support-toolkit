@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Database Cleaner
+* @package Support Toolkit - Database Cleaner
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -68,7 +68,7 @@ $lang = array_merge($lang, array(
 
 	'PERMISSION_SETTINGS'			=> 'Permission Options',
 	'PERMISSION_UPDATE_SUCCESS'		=> 'The permission settings have been updated successfully!',
-	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Tool Kit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time between a new version of phpBB3 being released and this tool being updated to support the newest version.',
+	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Toolkit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time between a new version of phpBB3 being released and this tool being updated to support the newest version.',
 
 	'QUIT'							=> 'Quit',
 

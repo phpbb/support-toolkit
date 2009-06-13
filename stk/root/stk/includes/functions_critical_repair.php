@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit
+* @package Support Toolkit
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -115,7 +115,7 @@ function critical_config_repair()
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Style-Type" content="text/css" />
 		<meta http-equiv="imagetoolbar" content="no" />
-		<title>Config Repair - Support Tool Kit</title>
+		<title>Config Repair - Support Toolkit</title>
 		<link href="<?php echo PHPBB_ROOT_PATH; ?>adm/style/admin.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
 	<body id="errorpage">
@@ -213,7 +213,7 @@ function critical_style_repair()
 	}
 	else
 	{
-		// Not so lucky...need to add a style into the database to access the Support Tool Kit (can not guarentee this style will work for the board however).
+		// Not so lucky...need to add a style into the database to access the Support Toolkit (can not guarentee this style will work for the board however).
 		$template_id = $theme_id = $imageset_id = $style_id = $style_name = false;
 		foreach (array('template', 'theme', 'imageset') as $mode)
 		{

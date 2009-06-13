@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit - Auto Cookies
+* @package Support Toolkit - Auto Cookies
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

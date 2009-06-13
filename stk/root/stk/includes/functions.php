@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Tool Kit
+* @package Support Toolkit
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -305,7 +305,7 @@ function perform_unauthed_quick_tasks($action)
 
 			print ("<?php
 /**
-* Support Tool Kit emergency password. Generated on: " . $user->format_date($_pass_exprire - 21600, false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
+* Support Toolkit emergency password. Generated on: " . $user->format_date($_pass_exprire - 21600, false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
 */
 
 \$stk_passwd\t\t\t\t= '{$_pass_string}';
