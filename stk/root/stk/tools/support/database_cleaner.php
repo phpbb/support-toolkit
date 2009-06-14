@@ -74,7 +74,204 @@ class database_cleaner
 				}
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang['BOARD_DISABLE_SUCCESS']);
 
-				// Start off simple by displaying extra config variables and let them check/uncheck the ones they want to add/remove
+				// Find any extra tables and list them as options to remove
+				if (!function_exists('get_tables'))
+				{
+					include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
+				}
+
+				$existing_tables = get_tables($db);
+				$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
+				sort($tables);
+
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang['DATABASE_TABLES'],
+					'TITLE'		=> $user->lang['DATABASE_TABLES'],
+				));
+
+				foreach ($tables as $table)
+				{
+					if ((isset($cleaner->tables[$table]) && !in_array($table, $existing_tables)) || (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables)))
+					{
+						$template->assign_block_vars('section.items', array(
+							'NAME'			=> $table,
+							'FIELD_NAME'	=> $table,
+							'MISSING'		=> (isset($cleaner->tables[$table])) ? true : false,
+						));
+					}
+				}
+
+			break;
+
+			case 2:
+
+				// Remove the extra selected tables, and add the missing removed tables
+				$error = array();
+				if ($apply_changes)
+				{
+					if (!function_exists('get_tables'))
+					{
+						include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
+					}
+
+					$existing_tables = get_tables($db);
+					$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
+
+					foreach ($tables as $table)
+					{
+						if (isset($selected[$table]))
+						{
+							if (isset($cleaner->tables[$table]) && !in_array($table, $existing_tables))
+							{
+								$result = $umil->table_add($table, $cleaner->tables[$table]);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+							}
+							else if (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables))
+							{
+								$result = $umil->table_remove($table);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+							}
+						}
+					}
+				}
+
+				if (!empty($error))
+				{
+					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
+				}
+				else
+				{
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_TABLES_SUCCESS']);
+				}
+
+				// Time to start going through the database and listing any extra/missing fields
+				$last_output_table = '';
+				foreach ($cleaner->tables as $table_name => $data)
+				{
+					// We shouldn't mess with profile fields here.  Users probably will not know what this table does or what would happen if they remove fields added to it.
+					if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+					{
+						continue;
+					}
+
+					$existing_columns = $this->get_columns($table_name);
+
+					if ($existing_columns === false)
+					{
+						// Table doesn't exist, don't handle here.
+						continue;
+					}
+
+					$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+					sort($columns);
+
+					foreach ($columns as $column)
+					{
+						if ((!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns)) || (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns)))
+						{
+							// Output the table block if it's not been done yet
+							if ($last_output_table != $table_name)
+							{
+								$last_output_table = $table_name;
+
+								$template->assign_block_vars('section', array(
+									'NAME'		=> $table_name,
+									'TITLE'		=> $user->lang['ROWS'],
+								));
+							}
+
+							$template->assign_block_vars('section.items', array(
+								'NAME'			=> $column,
+								'FIELD_NAME'	=> $table_name . '_' . $column,
+								'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
+							));
+						}
+					}
+				}
+
+			break;
+
+			case 3:
+
+				// Update the tables according to what they selected last time
+				$error = array();
+				if ($apply_changes)
+				{
+					foreach ($cleaner->tables as $table_name => $data)
+					{
+						if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+						{
+							continue;
+						}
+
+						$existing_columns = $this->get_columns($table_name);
+
+						if ($existing_columns === false)
+						{
+							// Table doesn't exist, don't handle here.
+							continue;
+						}
+
+						$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+
+						foreach ($columns as $column)
+						{
+							if (isset($selected[$table_name . '_' . $column]))
+							{
+								if (!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns))
+								{
+									$result = $umil->table_column_remove($table_name, $column);
+									if (stripos($result, 'SQL ERROR'))
+									{
+										$error[] = $result;
+									}
+								}
+								else if (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns))
+								{
+									// This can return an error under some circumstances, like when trying to add an auto-increment field (hope to hell nobody drops one of those)
+									$result = $umil->table_column_add($table_name, $column, $data['COLUMNS'][$column]);
+									if (stripos($result, 'SQL ERROR'))
+									{
+										$error[] = $result;
+									}
+
+									// We can re-add *some* keys
+									if (isset($data['KEYS']))
+									{
+										if (in_array($column, $data['KEYS']))
+										{
+											if ($data['KEYS'][$column][0] == 'INDEX' && $data['KEYS'][$column][1] == $column)
+											{
+												$result = $umil->table_index_add($table_name, $column, $column);
+												if (stripos($result, 'SQL ERROR'))
+												{
+													$error[] = $result;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (!empty($error))
+				{
+					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
+				}
+				else
+				{
+					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_COLUMNS_SUCCESS']);
+				}
+
+				// display extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
 					'NAME'		=> $user->lang['CONFIG_SETTINGS'],
 					'TITLE'		=> $user->lang['ROWS'],
@@ -98,7 +295,7 @@ class database_cleaner
 				}
 			break;
 
-			case 2 :
+			case 4 :
 				// Add/remove the extra config variables they selected.
 				if ($apply_changes)
 				{
@@ -152,7 +349,7 @@ class database_cleaner
 				}
 			break;
 
-			case 3 :
+			case 5 :
 				// Add/remove the permission fields they selected
 				if ($apply_changes)
 				{
@@ -208,7 +405,7 @@ class database_cleaner
 				}
 			break;
 
-			case 4:
+			case 6:
 				// Add/remove selected system groups
 				if ($apply_changes)
 				{
@@ -248,7 +445,7 @@ class database_cleaner
 				));
 			break;
 
-			case 5 :
+			case 7 :
 				// Reset the modules if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -268,7 +465,7 @@ class database_cleaner
 				));
 			break;
 
-			case 6 :
+			case 8 :
 				// Reset the bots if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -343,199 +540,6 @@ class database_cleaner
 
 						$template->assign_var('SUCCESS_MESSAGE', $user->lang['RESET_BOT_SUCCESS']);
 					}
-				}
-
-				// Time to start going through the database and listing any extra/missing fields
-				$last_output_table = '';
-				foreach ($cleaner->tables as $table_name => $data)
-				{
-					// We shouldn't mess with profile fields here.  Users probably will not know what this table does or what would happen if they remove fields added to it.
-					if ($table_name == PROFILE_FIELDS_DATA_TABLE)
-					{
-						continue;
-					}
-
-					$existing_columns = $this->get_columns($table_name);
-
-					if ($existing_columns === false)
-					{
-						// Table doesn't exist, don't handle here.
-						continue;
-					}
-
-					$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
-					sort($columns);
-
-					foreach ($columns as $column)
-					{
-						if ((!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns)) || (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns)))
-						{
-							// Output the table block if it's not been done yet
-							if ($last_output_table != $table_name)
-							{
-								$last_output_table = $table_name;
-
-								$template->assign_block_vars('section', array(
-									'NAME'		=> $table_name,
-									'TITLE'		=> $user->lang['ROWS'],
-								));
-							}
-
-							$template->assign_block_vars('section.items', array(
-								'NAME'			=> $column,
-								'FIELD_NAME'	=> $table_name . '_' . $column,
-								'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
-							));
-						}
-					}
-				}
-			break;
-
-			case 7 :
-				// Update the tables according to what they selected last time
-				$error = array();
-				if ($apply_changes)
-				{
-					foreach ($cleaner->tables as $table_name => $data)
-					{
-						if ($table_name == PROFILE_FIELDS_DATA_TABLE)
-						{
-							continue;
-						}
-
-						$existing_columns = $this->get_columns($table_name);
-
-						if ($existing_columns === false)
-						{
-							// Table doesn't exist, don't handle here.
-							continue;
-						}
-
-						$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
-
-						foreach ($columns as $column)
-						{
-							if (isset($selected[$table_name . '_' . $column]))
-							{
-								if (!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns))
-								{
-									$result = $umil->table_column_remove($table_name, $column);
-									if (stripos($result, 'SQL ERROR'))
-									{
-										$error[] = $result;
-									}
-								}
-								else if (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns))
-								{
-									// This can return an error under some circumstances, like when trying to add an auto-increment field (hope to hell nobody drops one of those)
-									$result = $umil->table_column_add($table_name, $column, $data['COLUMNS'][$column]);
-									if (stripos($result, 'SQL ERROR'))
-									{
-										$error[] = $result;
-									}
-
-									// We can re-add *some* keys
-									if (isset($data['KEYS']))
-									{
-										if (in_array($column, $data['KEYS']))
-										{
-											if ($data['KEYS'][$column][0] == 'INDEX' && $data['KEYS'][$column][1] == $column)
-											{
-												$result = $umil->table_index_add($table_name, $column, $column);
-												if (stripos($result, 'SQL ERROR'))
-												{
-													$error[] = $result;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-
-				if (!empty($error))
-				{
-					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
-				}
-				else
-				{
-					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_COLUMNS_SUCCESS']);
-				}
-
-				// Find any extra tables and list them as options to remove
-				if (!function_exists('get_tables'))
-				{
-					include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
-				}
-
-				$existing_tables = get_tables($db);
-				$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
-				sort($tables);
-
-				$template->assign_block_vars('section', array(
-					'NAME'		=> $user->lang['DATABASE_TABLES'],
-					'TITLE'		=> $user->lang['DATABASE_TABLES'],
-				));
-
-				foreach ($tables as $table)
-				{
-					if ((isset($cleaner->tables[$table]) && !in_array($table, $existing_tables)) || (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables)))
-					{
-						$template->assign_block_vars('section.items', array(
-							'NAME'			=> $table,
-							'FIELD_NAME'	=> $table,
-							'MISSING'		=> (isset($cleaner->tables[$table])) ? true : false,
-						));
-					}
-				}
-			break;
-
-			case 8 :
-				// Remove the extra selected tables
-				$error = array();
-				if ($apply_changes)
-				{
-					if (!function_exists('get_tables'))
-					{
-						include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
-					}
-
-					$existing_tables = get_tables($db);
-					$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
-
-					foreach ($tables as $table)
-					{
-						if (isset($selected[$table]))
-						{
-							if (isset($cleaner->tables[$table]) && !in_array($table, $existing_tables))
-							{
-								$result = $umil->table_add($table, $cleaner->tables[$table]);
-								if (stripos($result, 'SQL ERROR'))
-								{
-									$error[] = $result;
-								}
-							}
-							else if (!isset($cleaner->tables[$table]) && in_array($table, $existing_tables))
-							{
-								$result = $umil->table_remove($table);
-								if (stripos($result, 'SQL ERROR'))
-								{
-									$error[] = $result;
-								}
-							}
-						}
-					}
-				}
-
-				if (!empty($error))
-				{
-					$template->assign_var('ERROR_MESSAGE', implode('<br />', $error));
-				}
-				else
-				{
-					$template->assign_var('SUCCESS_MESSAGE', $user->lang['DATABASE_TABLES_SUCCESS']);
 				}
 
 				// Misc things will be done next
