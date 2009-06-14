@@ -19,20 +19,6 @@ if (!defined('IN_PHPBB'))
 class sql_query
 {
 	/**
-	* Tool Info
-	*
-	* @return Returns an array with the info about this tool.
-	*/
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['RUN_SQL_QUERY'],
-		);
-	}
-
-	/**
 	* Display Options
 	*
 	* Output the options available
@@ -42,7 +28,7 @@ class sql_query
 		return array(
 			'title'	=> 'RUN_SQL_QUERY',
 			'vars'	=> array(
-				'legend1'			=> 'SQL_QUERY',
+				'legend1'			=> 'SQL_QUERY_LEGEND',
 				'sql_query'			=> array('lang' => 'SQL_QUERY', 'type' => 'textarea:20:255', 'explain' => true),
 				'show_results'		=> array('lang' => 'SHOW_RESULTS', 'type' => 'checkbox', 'explain' => true),
 			)

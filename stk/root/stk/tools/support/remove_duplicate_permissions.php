@@ -18,18 +18,9 @@ if (!defined('IN_PHPBB'))
 
 class remove_duplicate_permissions
 {
-	function info()
-	{
-		global $user;
-
-		return array(
-			'NAME'			=> $user->lang['DUPLICATE_PERMISSIONS_REMOVER'],
-		);
-	}
-
 	function display_options()
 	{
-		return 'DUPLICATE_PERMISSIONS_REMOVER';
+		return 'REMOVE_DUPLICATE_PERMISSIONS';
 	}
 
 	function run_tool()

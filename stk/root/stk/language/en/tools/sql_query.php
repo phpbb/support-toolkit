@@ -41,13 +41,13 @@ $lang = array_merge($lang, array(
 	'NO_RESULTS'					=> 'No Results',
 	'NO_SQL_QUERY'					=> 'You must enter in a Query to run',
 
-	'RUN_SQL_QUERY'					=> 'Run SQL Query',
 	'RUN_SQL_QUERY_EXPLAIN'			=> 'Here you can run a SQL Query.  This script does not backup your database and you can easily damage your phpBB install if you enter something you shouldn\'t.  Use at your own risk.',
 	'RUN_SQL_QUERY_TOOL_EXPLAIN'	=> 'With this you can run an SQL query on your database.  You can also view the results if there are any.',
 
 	'SHOW_RESULTS'					=> 'Show Results',
-	'SQL_QUERY'						=> 'SQL Query',
+	'SQL_QUERY'						=> 'Run SQL Query',
 	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query to run.  If phpbb_ is entered as the prefix and that is not the prefix you use for this phpBB install it will automatically be changed to the prefix for this phpBB install.',
+	'SQL_QUERY_LEGEND'				=> 'SQL Query',
 	'SQL_QUERY_SUCCESS'				=> 'The SQL Query has been run successfully.',
 ));
 
