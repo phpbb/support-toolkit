@@ -16,7 +16,7 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-class duplicate_permissions
+class remove_duplicate_permissions
 {
 	function info()
 	{
