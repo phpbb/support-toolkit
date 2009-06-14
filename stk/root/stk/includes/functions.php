@@ -305,8 +305,15 @@ function perform_unauthed_quick_tasks($action)
 
 			print ("<?php
 /**
-* Support Toolkit emergency password. Generated on: " . $user->format_date($_pass_exprire - 21600, false, true)) . " expires on: " . $user->format_date($_pass_exprire, false, true) . "
+* Support Toolkit emergency password.
+* The file was generated on: " . $user->format_date($_pass_exprire - 21600, 'd/M/Y H:i.s', true)) . " and will expire on: " . $user->format_date($_pass_exprire, 'd/M/Y H:i.s', true) . ".
 */
+
+// This file can only be from inside the Support Toolkit
+if (!defined('IN_PHPBB') || !defined('STK_VERSION'))
+{
+	exit;
+}
 
 \$stk_passwd\t\t\t\t= '{$_pass_string}';
 \$stk_passwd_expiration\t= {$_pass_exprire};
