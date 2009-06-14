@@ -293,9 +293,11 @@ class database_cleaner
 						'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
 					));
 				}
+
 			break;
 
 			case 4 :
+
 				// Add/remove the extra config variables they selected.
 				if ($apply_changes)
 				{
@@ -347,9 +349,11 @@ class database_cleaner
 						'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
 					));
 				}
+
 			break;
 
 			case 5 :
+
 				// Add/remove the permission fields they selected
 				if ($apply_changes)
 				{
@@ -403,9 +407,11 @@ class database_cleaner
 						'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
 					));
 				}
+
 			break;
 
 			case 6:
+
 				// Add/remove selected system groups
 				if ($apply_changes)
 				{
@@ -443,9 +449,11 @@ class database_cleaner
 					'S_MODULE_OPTIONS'		=> true,
 					'S_NO_INSTRUCTIONS'		=> true,
 				));
+
 			break;
 
 			case 7 :
+
 				// Reset the modules if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -463,9 +471,11 @@ class database_cleaner
 					'S_BOT_OPTIONS'		=> true,
 					'S_NO_INSTRUCTIONS'	=> true,
 				));
+
 			break;
 
 			case 8 :
+
 				// Reset the bots if they wanted to
 				if (isset($_POST['yes']) && $apply_changes)
 				{
@@ -547,9 +557,11 @@ class database_cleaner
 					'SUCCESS_MESSAGE'	=> $user->lang['FINAL_STEP'],
 					'S_NO_INSTRUCTIONS'	=> true,
 				));
+
 			break;
 
 			case 9 :
+
 				if ($apply_changes)
 				{
 					set_config('board_disable', 0);
@@ -560,6 +572,7 @@ class database_cleaner
 
 				// Finished?
 				trigger_error('DATABASE_CLEANER_SUCCESS');
+
 			break;
 		}
 
@@ -579,7 +592,7 @@ class database_cleaner
 	}
 
 	/**
-	* Bot list from phpBB 3.0.4
+	* Bot list from phpBB 3.0.5
 	*
 	*/
 	var $bot_list = array(
