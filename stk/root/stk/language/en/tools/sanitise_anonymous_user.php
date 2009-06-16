@@ -49,9 +49,10 @@ $lang = array_merge($lang, array(
 	'ANONYMOUS_WRONG_GROUPS'			=> 'The Anonymous user improperly belongs to multiple user groups.',
 	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'The Anonymous user improperly belongs to multiple user groups. Would you like to remove the Anonymous user from all but the "GUESTS" group?',
 
-	'REDIRECT_NEXT_STEP'	=> 'You are being redirected to the next step.',
+	'REDIRECT_NEXT_STEP'				=> 'You are being redirected to the next step.',
 
-	'SANITISE_ANONYMOUS_USER'	=> 'Sanitise Anonymous user',
-	'SANITISE_SUCCESSFULL'		=> 'The anonymous user was successfully sanitised.',
+	'SANITISE_ANONYMOUS_USER'			=> 'Sanitise Anonymous user',
+	'SANITISE_SUCCESSFULL'				=> 'The anonymous user was successfully sanitised.',
 ));
+
 ?>
