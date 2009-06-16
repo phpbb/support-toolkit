@@ -45,11 +45,11 @@ $lang = array_merge($lang, array(
 	'DEFAULT_GROUP_EXPLAIN'	=> 'The default group for this user.',
 
 	'GROUP_LEADER'			=> 'Group leader',
-	'GROUP_LEADER_EXPLAIN'	=> 'Select here the groups of which this user should become a group leader <em>leave empty if none</em>.',
+	'GROUP_LEADER_EXPLAIN'	=> 'Make this user the group leader of the selected groups.',
 
 	'USER_ADDED'			=> 'The user was sucessfully created!',
 	'USER_GROUPS'			=> 'User groups',
-	'USER_GROUPS_EXPLAIN'	=> 'Select the groups of which this user will become a member.',
+	'USER_GROUPS_EXPLAIN'	=> 'Make this user a member of the selected groups.',
 ));
 
 ?>
