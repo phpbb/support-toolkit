@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	'ORDER_BY'				=> 'Order By',
 
 	'PROFILE_LIST'			=> 'Profile List',
-	'PROFILE_LIST_EXPLAIN'	=> 'A memberlist like tool for displaying advanced profile information for multiple users and sorting through profiles.  This tool was mainly designed to aid in detecting spam accounts registered on the board.',
+	'PROFILE_LIST_EXPLAIN'	=> 'A tool for displaying profile information for multiple users.  This tool can aid in detecting spam accounts.',
 ));
 
 ?>
