@@ -42,7 +42,7 @@ $lang = array_merge($lang, array(
 	'BOARD_FOUNDER_ONLY'				=> 'Only Board Founders may access the Support Toolkit.',
 
 	'CAT_ADMIN'							=> 'Admin Tools',
-	'CAT_ADMIN_EXPLAIN'					=> 'The tools within this category are tools that can be used by the administrator to perform tasks that don\'t ship with a vanilla phpBB 3.0.x installation.',
+	'CAT_ADMIN_EXPLAIN'					=> 'The tools within this category are tools that can be used by the administrator to perform tasks that don’t ship with a vanilla phpBB 3.0.x installation.',
 	'CAT_DEV'							=> 'Developer Tools',
 	'CAT_DEV_EXPLAIN'					=> 'The "developer tools" are tools that can be used by phpBB developers.',
 	'CAT_MAIN'							=> 'Main',
@@ -51,27 +51,27 @@ $lang = array_merge($lang, array(
 	'CAT_SUPPORT_EXPLAIN'				=> 'The support tools are tools that are used to fix or recover certain parts of a phpBB 3.0.x installation.',
 	'CAT_USER_GROUP'					=> 'User/Group Tools',
 	'CAT_USER_GROUP_EXPLAIN'			=> 'This category contains tools that are focused on users and groups',
-	'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn\'t be loaded. Please check your installation',
+	'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn’t be loaded. Please check your installation',
 
 	'DOWNLOAD_PASS'						=> 'Download the password file.',
 
 	'EMERGENCY_LOGIN_NAME'				=> 'STK Emergency login',
 
-	'FAIL_REMOVE_PASSWD'				=> 'Couldn\'t remove the expired password file. Please remove this file manually!',
+	'FAIL_REMOVE_PASSWD'				=> 'Couldn’t remove the expired password file. Please remove this file manually!',
 
 	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.',
 	'GEN_PASS_FILE'						=> 'Generate password file.',
-	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren\'t able to login to phpBB at all you can use the internal authentication method of the support Toolkit. To use this method you must <a href="%s">generate</a> a new password file.',
+	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the support Toolkit. To use this method you must <a href="%s">generate</a> a new password file.',
 
 	'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
 	'INCORRECT_PASSWORD'				=> 'Password is incorrect',
-	'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn\'t compatible with this tool. Make sure that you are running phpBB version: %1$s, in order to run this tool',
+	'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn’t compatible with this tool. Make sure that you are running phpBB version: %1$s, in order to run this tool',
 
 	'LOGIN_STK_SUCCESS'					=> 'You have successfully authenticated and will now be redirected to the Support Toolkit.',
 
 	'NOTICE'							=> 'Notice',
 
-	'PASS_GENERATED'					=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you\'ve downloaded this file you must upload it to your server into the "stk" directory',
+	'PASS_GENERATED'					=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you’ve downloaded this file you must upload it to your server into the "stk" directory',
 	'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',
 	'PROCEED_TO_STK'					=> '%sProceed to the Support Toolkit%s',
 

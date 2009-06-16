@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
 
-	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your board\'s cache.',
+	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your board’s cache.',
 
 	'INSTRUCTIONS'					=> 'Instructions',
 

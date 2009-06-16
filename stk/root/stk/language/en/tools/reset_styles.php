@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESET_STYLES'			=> 'Reset Styles',
-	'RESET_STYLES_EXPLAIN'	=> 'Allows you to change the default board style and reset every user\'s style.',
+	'RESET_STYLES_EXPLAIN'	=> 'Allows you to change the default board style and reset every user’s style.',
 	'RESET_STYLE_COMPLETE'	=> 'The style has been set as the default successfully.',
 
 	'STYLE'					=> 'Style',
