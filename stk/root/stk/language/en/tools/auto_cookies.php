@@ -41,7 +41,7 @@ $lang = array_merge($lang, array(
 	'AUTO_COOKIES'				=> 'Auto Cookies',
 	'AUTO_COOKIES_EXPLAIN'		=> 'Allows you to change your forum\'s cookie settings and suggests what they (probably) should be.',
 
-	'COOKIE_SETTINGS_UPDATED'	=> 'Cookie settings successfull updated.',
+	'COOKIE_SETTINGS_UPDATED'	=> 'Cookie settings successfully updated.',
 ));
 
 ?>
