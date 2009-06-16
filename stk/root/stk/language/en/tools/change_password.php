@@ -40,12 +40,12 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Change Password',
 	'CHANGE_PASSWORD_EXPLAIN'	=> 'Change a user\'s password.',
-	'CHANGE_PASSWORD_SUCCESS'	=> 'The password for <a href="%s">%s</a> has been successfull changed.',
+	'CHANGE_PASSWORD_SUCCESS'	=> 'The password for <a href="%s">%s</a> has been successfully changed.',
 
 	'PASSWORD_CONFIRM'			=> 'Re-Enter Password',
 
-	'USERNAMEID'				=> 'Username or UserID',
-	'USERNAMEID_EXPLAIN'		=> 'Enter the Username or the User ID of the user you want to change the password for.',
+	'USERNAMEID'				=> 'Username or User ID',
+	'USERNAMEID_EXPLAIN'		=> 'Enter the Username or the User ID of the user whose password you want to change.',
 ));
 
 ?>
