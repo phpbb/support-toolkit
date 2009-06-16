@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
-	'CONFIG_SETTINGS'				=> 'Config Settings',
+	'CONFIG_SETTINGS'				=> 'Configuration Settings',
 	'CONFIG_UPDATE_SUCCESS'			=> 'The configuration settings have been updated successfully!',
 	'CONTINUE'						=> 'Continue',
 
@@ -49,7 +49,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_CLEANER_MISSING'		=> 'Any fields with a red background like this are missing items that should be added.  <strong>If the check box is selected it will be added</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',
 	'DATABASE_CLEANER_WARNING'		=> 'This tool comes with NO WARRANTY and users of this tool should back up their entire database in case of a failure.<br /><br />Before continuing, make sure you have a database backup!',
-	'DATABASE_CLEANER_WELCOME'		=> 'Welcome to the Database Cleaner tool!<br /><br />This tool was designed to remove extra columns, rows, and tables from the database not present in the default installation of phpBB3.<br /><br />When you are ready to continue click the Continue button to start using the Database Cleaner tool (note that your board will be disabled until this is finished).',
+	'DATABASE_CLEANER_WELCOME'		=> 'Welcome to the Database Cleaner tool!<br /><br />This tool was designed to remove extra columns, rows, and tables from the database not present in the default installation of phpBB3, and to add missing database elements that may be needed.<br /><br />When you are ready to continue click the Continue button to start using the Database Cleaner tool (note that your board will be disabled until this is finished).',
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
 
-	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your forum\'s cache.',
+	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your board\'s cache.',
 
 	'INSTRUCTIONS'					=> 'Instructions',
 
