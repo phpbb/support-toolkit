@@ -26,7 +26,7 @@ class sql_query
 	function display_options()
 	{
 		return array(
-			'title'	=> 'RUN_SQL_QUERY',
+			'title'	=> 'SQL_QUERY',
 			'vars'	=> array(
 				'legend1'			=> 'SQL_QUERY_LEGEND',
 				'sql_query'			=> array('lang' => 'SQL_QUERY', 'type' => 'textarea:20:255', 'explain' => true),
