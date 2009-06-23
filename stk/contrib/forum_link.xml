@@ -13,7 +13,7 @@
 	<title lang="en">Support Toolkit forum link</title>
 	<description lang="en">Adds a link in the footer (under the ACP link) that points to the Support Toolkit</description>
 
-	<author-notes lang="en"></author-notes>
+	<author-notes lang="en">The first public Release Candidate of the Support Tool Kit is only intended for private testing; use of this package in the support forums is not permitted.</author-notes>
 
 	<author-group>
 		<author>
@@ -30,7 +30,7 @@
 		</author>
 	</author-group>
 
-	<mod-version>1.0.0-b2</mod-version>
+	<mod-version>1.0.0-RC1</mod-version>
 
 	<installation>
 		<level>easy</level>
