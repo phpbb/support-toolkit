@@ -261,13 +261,10 @@ class plugin
 		// Grep the correct category
 		$tool_list = $this->plugin_list[$this->_parts['c']];
 
-		// Loop through the tools and create the template
+		// Run through the tools and collect all info we need
+		$tpl_data = array();
 		foreach ($tool_list as $tool)
 		{
-			// Active tool?
-			$_s_active = ($tool == $this->_parts['t']) ? true : false;
-
-			// Make sure the tool is loaded
 			$class = $this->load_tool($this->_parts['c'], $tool);
 
 			// Get the info
@@ -283,9 +280,20 @@ class plugin
 				);
 			}
 
+			$tpl_data[$tool] = $info['NAME'];
+		}
+
+		// Sort the data based on the tool name. This way we'll keep the menu sorted correctly for translations
+		asort($tpl_data);
+
+		// Now go ahead and build the template
+		foreach ($tpl_data as $tool => $name)
+		{
+			$_s_active = ($tool == $this->_parts['t']) ? true : false;
+
 			// Assign to the template
 			$template->assign_block_vars('left_nav', array(
-				'L_TITLE'		=> $info['NAME'],
+				'L_TITLE'		=> $name,
 				'S_SELECTED'	=> $_s_active,
 				'U_TITLE'		=> append_sid(STK_INDEX, array('c' => $this->_parts['c'], 't' => $tool)),
 			));
