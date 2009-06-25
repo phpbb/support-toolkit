@@ -60,7 +60,7 @@ class sanitise_anonymous_user
 			return 'ANONYMOUS_WRONG_GROUPS';
 		}
 
-		trigger_error('SANITISE_SUCCESSFULL');
+		trigger_error('ANONYMOUS_CORRECT');
 	}
 
 	/**
