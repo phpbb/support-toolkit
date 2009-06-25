@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 
 	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.',
 	'GEN_PASS_FILE'						=> 'Generate password file.',
-	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the support Toolkit. To use this method you must <a href="%s">generate</a> a new password file.',
+	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the support Toolkit. To use this method you must <a href="%s"><strong>generate</strong></a> a new password file.',
 
 	'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
 	'INCORRECT_PASSWORD'				=> 'Password is incorrect',
