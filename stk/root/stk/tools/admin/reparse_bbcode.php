@@ -31,7 +31,7 @@ class reparse_bbcode
 		$user->add_lang('posting');
 
 		$step = request_var('step', 0);
-		$limit = 1;
+		$limit = 500;
 		$start = $step * $limit;
 		$i = 0;
 
