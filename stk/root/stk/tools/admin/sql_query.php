@@ -42,7 +42,7 @@ class sql_query
 	*/
 	function run_tool(&$error)
 	{
-		global $cache, $db, $dbms, $table_prefix, $template, $user;
+		global $cache, $db, $dbms, $table_prefix, $template;
 
         if (!check_form_key('sql_query'))
 		{
@@ -76,11 +76,13 @@ class sql_query
 		$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
-		$display = '';
-
 		foreach ($sql_query as $sql)
 		{
 			$result = $db->sql_query($sql);
+
+			// Display the query
+			$template->assign_block_vars('queries', array('QUERY' => $sql));
+
 			if (isset($_POST['show_results']))
 			{
 				$cnt = 0;
@@ -88,29 +90,23 @@ class sql_query
 				{
 					if ($cnt == 0)
 					{
-						$display .= '<h2>' . $sql . '</h2><table cellspacing="1" style="color: #000000;"><thead><tr>';
-						foreach ($row as $key => $value)
+						// Assign the return fields
+						foreach(array_keys($row) as $key)
 						{
-							$display .= '<th><strong>' . $key . '</strong></th>';
+							$template->assign_block_vars('queries.headings', array('FIELD_NAME' => $key));
 						}
-						$display .= '</tr></thead><tbody>';
-						$first = false;
 					}
 
-					$display .= '<tr class="row' . (($cnt % 2) + 2) . '">';
-					foreach ($row as $key => $value)
+					// Set row class
+					$template->assign_block_vars('queries.resultdata', array('ROWSTYLE' => ($cnt % 2 == 0) ? 1 : 2));
+
+					// Output resultset
+					foreach ($row as $value)
 					{
-						$display .= '<td style="text-align: center;"><strong>' . $value . '</strong></td>';
+						$template->assign_block_vars('queries.resultdata.resultdatafields', array('VALUE' => $value));
 					}
-					$display .= '</tr>';
 
 					$cnt++;
-				}
-				$display .= '</tbody></table>';
-
-				if ($cnt == 0)
-				{
-					$display .= '<strong>' . $user->lang['NO_RESULTS'] . '</strong><br /><br />';
 				}
 			}
 			$db->sql_freeresult($result);
@@ -119,7 +115,7 @@ class sql_query
 		// Purge the cache
 		$cache->purge();
 
-		$template->assign_var('ADDITIONAL_MESSAGE', $display);
+		$template->assign_var('S_QUERY_RESULT', isset($_POST['show_results']) ? true : false);
 		trigger_error('SQL_QUERY_SUCCESS');
 	}
 }

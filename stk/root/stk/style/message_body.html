@@ -9,6 +9,8 @@
 	</p>
 </div>
 
-<!-- IF ADDITIONAL_MESSAGE --><div>{ADDITIONAL_MESSAGE}</div><!-- ENDIF -->
+<!-- IF S_QUERY_RESULT -->
+	<!-- INCLUDE tools/sql_query.html -->
+<!-- ENDIF -->
 
 <!-- IF S_STK_FULL_BODY --><!-- INCLUDE overall_footer.html --><!-- ELSE --><!-- INCLUDE simple_footer.html --><!-- ENDIF -->
