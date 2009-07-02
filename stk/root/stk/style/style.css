@@ -101,6 +101,18 @@ hr {
 	font-size: 0.85em; 
 }
 
+.column1 {
+	float: left;
+	clear: left;
+	width: 49%;
+}
+
+.column2 {
+	float: right;
+	clear: right;
+	width: 49%;
+}
+
 /* General links  */
 a:link, a:visited {
 	color: #105289;
@@ -1635,3 +1647,113 @@ fieldset.permissions .padding {
 .phpinfo td, .phpinfo th, .phpinfo h2, .phpinfo h1 {
 	text-align: left;
 }
+
+/* BB Code styles
+----------------------------------------*/
+/* Quote block */
+.rtl blockquote {
+	margin: 0.5em 25px 0 1px;
+}
+
+.rtl blockquote blockquote {
+	/* Nested quotes */
+	margin: 0.5em 15px 0 1px;
+}
+
+.rtl blockquote cite {
+	/* Username/source of quoter */
+	margin-right: 20px;
+	margin-left: 0;
+}
+
+.rtl blockquote dl.codebox {
+	margin-right: 0;
+}
+
+.rtl code {
+	direction: ltr;
+}
+
+/* Quote block */
+blockquote {
+	border: 1px solid #DBDBCE;
+	font-size: 0.95em;
+	margin: 0.5em 1px 0 25px;
+	overflow: hidden;
+	padding: 5px;
+	background-color: #EBEADD;
+	background-image: url("{T_THEME_PATH}/images/quote.gif");
+	border-color:#DBDBCE;
+}
+
+blockquote blockquote {
+	/* Nested quotes */
+	background-color: #EFEED9;
+	font-size: 1em;
+	margin: 0.5em 1px 0 15px;
+}
+
+blockquote blockquote blockquote {
+	/* Nested quotes */
+	background-color: #EBEADD;
+}
+
+blockquote cite {
+	/* Username/source of quoter */
+	font-style: normal;
+	font-weight: bold;
+	margin-left: 20px;
+	display: block;
+	font-size: 0.9em;
+}
+
+blockquote cite cite {
+	font-size: 1em;
+}
+
+blockquote.uncited {
+	padding-top: 25px;
+}
+
+/* Code block */
+dl.codebox {
+	padding: 3px;
+	background-color: #FFFFFF;
+	border: 1px solid #C9D2D8;
+	font-size: 1em;
+}
+
+dl.codebox dt {
+	text-transform: uppercase;
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 3px;
+	font-size: 0.8em;
+	font-weight: bold;
+	display: block;
+	float: none;
+}
+
+blockquote dl.codebox {
+	margin-left: 0;
+}
+
+dl.codebox code {
+	/* Also see tweaks.css */
+	overflow: auto;
+	display: block;
+	height: auto;
+	max-height: 200px;
+	white-space: normal;
+	padding-top: 5px;
+	font: 0.9em Monaco, "Andale Mono","Courier New", Courier, mono;
+	line-height: 1.3em;
+	color: #2E8B57;
+	margin: 2px 0;
+}
+
+.syntaxbg		{ color: #FFFFFF; }
+.syntaxcomment	{ color: #FF8000; }
+.syntaxdefault	{ color: #0000BB; }
+.syntaxhtml		{ color: #000000; }
+.syntaxkeyword	{ color: #007700; }
+.syntaxstring	{ color: #DD0000; }
