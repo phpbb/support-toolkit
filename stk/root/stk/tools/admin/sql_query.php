@@ -80,11 +80,11 @@ class sql_query
 		{
 			$result = $db->sql_query($sql);
 
-			// Display the query
-			$template->assign_block_vars('queries', array('QUERY' => $sql));
-
 			if (isset($_POST['show_results']))
 			{
+				// Display the query
+				$template->assign_block_vars('queries', array('QUERY' => $sql));
+
 				$cnt = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -115,7 +115,6 @@ class sql_query
 		// Purge the cache
 		$cache->purge();
 
-		$template->assign_var('S_QUERY_RESULT', isset($_POST['show_results']) ? true : false);
 		trigger_error('SQL_QUERY_SUCCESS');
 	}
 }
