@@ -61,7 +61,8 @@ $sql = 'SELECT s.style_id, t.template_path
 		AND i.imageset_id = s.imageset_id";
 $result = $db->sql_query($sql);
 // No styles in the database
-if (($data = $db->sql_fetchrow($result)) === false)
+$data = $db->sql_fetchrow($result);
+if (empty($data))
 {
 	// Styles appear to be broken.  Attempt automatic repair
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);

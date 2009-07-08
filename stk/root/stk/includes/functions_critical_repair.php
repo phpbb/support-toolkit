@@ -314,7 +314,7 @@ function critical_style_repair()
  */
 function critical_style_dir_repair()
 {
-	global $cache, $db $umil;
+	global $cache, $db, $umil;
 
 	$dh = @opendir(PHPBB_ROOT_PATH . 'styles/');
 	while (($fname = readdir($dh)) !== false)
