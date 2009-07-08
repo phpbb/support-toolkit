@@ -53,14 +53,15 @@ $db->sql_query('TRUNCATE TABLE ' . STYLES_THEME_TABLE);
 $db->sql_query('TRUNCATE TABLE ' . STYLES_IMAGESET_TABLE);*/
 
 // A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
-$sql = 'SELECT s.style_id
+$sql = 'SELECT s.style_id, t.template_path
 	FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
 	WHERE s.style_id = {$config['default_style']}
 		AND t.template_id = s.template_id
 		AND c.theme_id = s.theme_id
 		AND i.imageset_id = s.imageset_id";
 $result = $db->sql_query($sql);
-if (!$db->sql_fetchrow($result))
+// No styles in the database
+if (($data = $db->sql_fetchrow($result)) === false)
 {
 	// Styles appear to be broken.  Attempt automatic repair
 	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
@@ -69,6 +70,16 @@ if (!$db->sql_fetchrow($result))
 	exit;
 }
 $db->sql_freeresult($result);
+
+// Style directory doesn't exist
+if (!is_dir(PHPBB_ROOT_PATH . 'styles/' . $data['template_path']))
+{
+	// The style directory of the active style doesn't exist anymore
+	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
+	critical_style_dir_repair();
+	header('Location: ' . STK_INDEX);
+	exit;
+}
 
 // Start session management
 $user->session_begin();

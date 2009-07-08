@@ -15,6 +15,7 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 function critical_config_repair()
 {
 	include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
@@ -305,6 +306,57 @@ function critical_style_repair()
 		}
 	}
 	$db->sql_freeresult($result2);
+}
+
+/**
+ * The current active style doesn't have a directory. Lets look in the styles dir and find a valid style
+ * @return unknown_type
+ */
+function critical_style_dir_repair()
+{
+	global $cache, $db $umil;
+
+	$dh = @opendir(PHPBB_ROOT_PATH . 'styles/');
+	while (($fname = readdir($dh)) !== false)
+	{
+		if (!is_dir(PHPBB_ROOT_PATH . 'styles/' . $fname) || $fname[0] == '.')
+		{
+			continue;
+		}
+
+		if ($cfg = file(PHPBB_ROOT_PATH . "styles/$fname/style.cfg"))
+		{
+			$items = parse_cfg_file('', $cfg);
+		}
+
+		// A style folder *could* be renamed only take the first style of which the name in the style.cfg is the same as the directory.
+		if ($items['name'] == $fname)
+		{
+			// Set this style as the default
+			$sql = 'SELECT s.style_id
+				FROM (' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . " t)
+				WHERE t.template_path = '" . $db->sql_escape($fname) . "'
+					AND s.template_id = t.template_id";
+			$result = $db->sql_query($sql);
+			$sid	= $db->sql_fetchfield('style_id', false, $result);
+			$db->sql_freeresult($result);
+
+			// Set default style
+			set_config('default_style', $sid);
+			closedir($dh);
+
+			$cache->purge();
+			$umil->cache_purge(array('template', 'theme', 'imageset'));
+
+			return;
+		}
+	}
+	closedir($dh);
+
+	// Couldn't restore
+	echo 'The support toolkit couldn\'t find an available style. Please seek further assistance in the support forums on http://www.phpbb.com';
+	garbage_collection();
+	exit_handler();
 }
 
 if (!function_exists('phpbb_chmod'))
