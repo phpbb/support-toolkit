@@ -204,49 +204,6 @@ function stk_add_lang($lang_file = '')
 }
 
 /**
-* Output a custom page. This function will do two things:
-* 1) Assign two template variables: {L_TITLE} and {L_TITLE_EXPLAIN}, based on the content of $title.
-* 2) Parse the page
-*
-* @param	String	$file				The template file that is used for this page (minus .html)
-* @param	String	$title				The page title, can be a key for the user->lang array
-* @param	array	$sprintf_title		A array with replacements for the title
-* @param	array	$sprintf_explain	A array with replacemetns for the explain text
-*/
-function parse_page($file, $title = '', $sprintf_title = array(), $sprintf_explain = array())
-{
-	global $template, $user;
-
-	// Also allow the tool author to use only the lang key
-	$l_title	= (isset($user->lang[$title])) ? $user->lang[$title] : $title;
-	$l_explain	= (isset($user->lang[$title . '_EXPLAIN'])) ? $user->lang[$title . '_EXPLAIN'] : '';	// Only set if the key exists
-
-	// Run vsprintf if needed
-	if (!empty($sprintf_title))
-	{
-		$l_title = vsprintf($l_title, $sprintf_title);
-	}
-	if (!empty($sprintf_explain))
-	{
-		$l_explain = vsprintf($l_explain, $sprintf_explain);
-	}
-
-	// Set the template vars
-	$template->assign_vars(array(
-		'L_TITLE'			=> $l_title,
-		'L_TITLE_EXPLAIN'	=> $l_explain,
-	));
-
-	page_header($l_title);
-
-	$template->set_filenames(array(
-		'body' => $file . '.html',
-	));
-
-	page_footer();
-}
-
-/**
  * Perform all quick tasks that has to be ran before we authenticate
  *
  * @param	String	$action	The action to perform
