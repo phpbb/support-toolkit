@@ -28,7 +28,7 @@ function show_hide(id)
 
 <ul style="margin-top: 10px;">
 <!-- BEGIN urls -->
-	<li><a href="#" onclick="show_hide('locations_{urls.S_ROW_COUNT}');">{urls.URL}</a></li>
+	<li><a onclick="show_hide('locations_{urls.S_ROW_COUNT}'); return false;" href="#">{urls.URL}</a></li>
 	<div class="row1" id="locations_{urls.S_ROW_COUNT}" style="display: none; position: absolute;">
 		<ul>
 		<!-- BEGIN locations -->
