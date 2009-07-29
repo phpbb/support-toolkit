@@ -27,16 +27,25 @@ function show_hide(id)
 <!-- ENDIF -->
 
 <ul style="margin-top: 10px;">
-<!-- BEGIN urls -->
-	<li><a onclick="show_hide('locations_{urls.S_ROW_COUNT}'); return false;" href="#">{urls.URL}</a></li>
-	<div class="row1" id="locations_{urls.S_ROW_COUNT}" style="display: none; position: absolute;">
-		<ul>
-		<!-- BEGIN locations -->
-			<li>{urls.locations.L_TYPE} - <a href="{urls.locations.U_VIEW}"><!-- IF urls.locations.L_VIEW -->{urls.locations.L_VIEW}<!-- ELSE -->{L_VIEW}<!-- ENDIF --></a></li>
-		<!-- END locations -->
+
+<!-- BEGIN domains -->
+	<li><a onclick="show_hide('domains_{domains.S_ROW_COUNT}'); return false;" href="#">{domains.DOMAIN}</a></li>
+		<ul class="row2" id="domains_{domains.S_ROW_COUNT}" style="display: none; position: absolute; padding: 10px; min-width: 300px">
+
+		<!-- BEGIN urls -->
+			<li><a onclick="show_hide('urls_{domains.urls.S_ROW_COUNT}'); return false;" href="#">{domains.urls.URL}</a></li>
+				<ul class="row3" id="urls_{domains.urls.S_ROW_COUNT}" style="display: none; position: absolute; padding: 10px; min-width: 300px;">
+
+				<!-- BEGIN locations -->
+					<li>{domains.urls.locations.L_TYPE} - <a href="{domains.urls.locations.U_VIEW}"><!-- IF domains.urls.locations.L_VIEW -->{domains.urls.locations.L_VIEW}<!-- ELSE -->{L_VIEW}<!-- ENDIF --></a></li>
+				<!-- END locations -->
+
+				</ul>
+		<!-- END urls -->
+
 		</ul>
-	</div>
-<!-- END urls -->
+<!-- END domains -->
+
 </ul>
 
 <!-- IF PAGINATION -->

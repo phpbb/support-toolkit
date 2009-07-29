@@ -44,41 +44,48 @@ class url_list
 		else if ($url_list !== false)
 		{
 			// Display the list of urls
-			foreach ($url_list as $url => $found)
+			foreach ($url_list as $domain => $urls)
 			{
-				if ($url == 'generated')
+				if ($domain == 'generated')
 				{
-					$template->assign_var('GENERATED_ON', $user->format_date($found));
+					$template->assign_var('GENERATED_ON', $user->format_date($urls));
 					continue;
 				}
 
-				$template->assign_block_vars('urls', array(
-					'URL'	=> $url,
+				$template->assign_block_vars('domains', array(
+					'DOMAIN'	=> $domain,
 				));
 
-				foreach ($found as $type => $ids)
+				foreach ($urls as $url => $found)
 				{
-					switch ($type)
+					$template->assign_block_vars('domains.urls', array(
+						'URL'	=> $url,
+					));
+
+					foreach ($found as $type => $ids)
 					{
-						case 'posts' :
-							foreach ($ids as $id)
-							{
-								$template->assign_block_vars('urls.locations', array(
-									'U_VIEW'	=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", "p=$id#p$id"),
-									'L_TYPE'	=> $user->lang['POST'],
-								));
-							}
-						break;
-						case 'pms' :
-							foreach ($ids as $id)
-							{
-								$template->assign_block_vars('urls.locations', array(
-									'U_VIEW'	=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=viewprofile&amp;u=$id"),
-									'L_TYPE'	=> $user->lang['PRIVATE_MESSAGE'],
-									'L_VIEW'	=> $user->lang['VIEW_AUTHOR'],
-								));
-							}
-						break;
+						switch ($type)
+						{
+							case 'post' :
+								foreach ($ids as $id)
+								{
+									$template->assign_block_vars('domains.urls.locations', array(
+										'U_VIEW'	=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", "p=$id#p$id"),
+										'L_TYPE'	=> $user->lang['POST'],
+									));
+								}
+							break;
+							case 'pm' :
+								foreach ($ids as $id)
+								{
+									$template->assign_block_vars('domains.urls.locations', array(
+										'U_VIEW'	=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=viewprofile&amp;u=$id"),
+										'L_TYPE'	=> $user->lang['PRIVATE_MESSAGE'],
+										'L_VIEW'	=> $user->lang['VIEW_AUTHOR'],
+									));
+								}
+							break;
+						}
 					}
 				}
 			}
@@ -129,26 +136,9 @@ class url_list
 				{
 					$i++;
 
-					$matches = array();
-					preg_match_all('!(https?|ftp):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+\-=\\\.&]*!', $row['post_text'], $matches);
-					if (sizeof($matches))
-					{
-						foreach ($matches[0] as $match)
-						{
-							if (!isset($url_list[$match]))
-							{
-								$url_list[$match] = array('posts' => array($row['post_id']));
-							}
-							else if (!isset($url_list[$match]['posts']))
-							{
-								$url_list[$match]['posts'] = array($row['post_id']);
-							}
-							else if (!in_array($row['post_id'], $url_list[$match]['posts']))
-							{
-								$url_list[$match]['posts'][] = $row['post_id'];
-							}
-						}
-					}
+					$matches = $this->find_matches($row['post_text']);
+
+					$this->merge_matches($url_list, 'post', $matches, $row['post_id']);
 				}
 				$db->sql_freeresult($result);
 			break;
@@ -162,31 +152,15 @@ class url_list
 				{
 					$i++;
 
-					$matches = array();
-					preg_match_all('!(https?|ftp):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+\-=\\\.&]*!', $row['message_text'], $matches);
-					if (sizeof($matches))
-					{
-						foreach ($matches[0] as $match)
-						{
-							if (!isset($url_list[$match]))
-							{
-								$url_list[$match] = array('pms' => array($row['author_id']));
-							}
-							else if (!isset($url_list[$match]['pms']))
-							{
-								$url_list[$match]['pms'] = array($row['author_id']);
-							}
-							else if (!in_array($row['author_id'], $url_list[$match]['pms']))
-							{
-								$url_list[$match]['pms'][] = $row['author_id'];
-							}
-						}
-					}
+					$matches = $this->find_matches($row['message_text']);
+
+					$this->merge_matches($url_list, 'pm', $matches, $row['author_id']);
 				}
 				$db->sql_freeresult($result);
 			break;
 		}
 
+		$url_list = ksort($url_list);
 		$url_list['generated'] = time();
 		$cache->put('_url_list', $url_list);
 
@@ -205,6 +179,40 @@ class url_list
 
 		meta_refresh(0, $redirect_url);
 		trigger_error('GENERATE_IN_PROGRESS');
+	}
+
+	function find_matches($text)
+	{
+		$matches = array();
+		preg_match_all('!https?:([\/]+)[\w\d:#@%/;$()~_?\+\-=\\\.&]*!', $text, $matches);
+		if (isset($matches[0]))
+		{
+			return $matches[0];
+		}
+
+		return array();
+	}
+
+	function merge_matches(&$url_list, $type, $matches, $id)
+	{
+		foreach ($matches as $match)
+		{
+
+			$domain_matches = array();
+			preg_match('#https?:([\/]+)([^\/]+)(.*)#', $match, $domain_matches);
+
+			if (!isset($domain_matches[2]))
+			{
+				continue;
+			}
+
+			$domain = $domain_matches[2];
+
+			//var_dump($domain_matches);
+			//echo '<br /><br />';
+
+			$url_list[$domain][$match][$type][] = $id;
+		}
 	}
 }
 
