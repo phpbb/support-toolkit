@@ -115,6 +115,11 @@ class url_list
 
 		$url_list = $cache->get('_url_list');
 
+		if ($url_list === false) // Seems we get false here sometimes when we shouldn't be...
+		{
+			$url_list = array();
+		}
+
 		$part = request_var('part', 0);
 		$start = request_var('start', 0);
 		$limit = 1000;
