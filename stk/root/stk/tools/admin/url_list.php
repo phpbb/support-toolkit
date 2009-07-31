@@ -115,11 +115,6 @@ class url_list
 
 		$url_list = $cache->get('_url_list');
 
-		if ($url_list === false) // Seems we get false here sometimes when we shouldn't be...
-		{
-			$url_list = array();
-		}
-
 		$part = request_var('part', 0);
 		$start = request_var('start', 0);
 		$limit = 1000;
@@ -165,7 +160,7 @@ class url_list
 			break;
 		}
 
-		$url_list = ksort($url_list);
+		ksort($url_list);
 		$url_list['generated'] = time();
 		$cache->put('_url_list', $url_list);
 
@@ -212,9 +207,6 @@ class url_list
 			}
 
 			$domain = $domain_matches[2];
-
-			//var_dump($domain_matches);
-			//echo '<br /><br />';
 
 			$url_list[$domain][$match][$type][] = $id;
 		}
