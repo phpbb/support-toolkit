@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 
 	'GEN_PASS_FAILED'					=> 'Something went wrong during the generation of the password file. Please re-generate a new one.',
 	'GEN_PASS_FILE'						=> 'Generate password file.',
-	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the support Toolkit. To use this method you must <a href="%s"><strong>generate</strong></a> a new password file.',
+	'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the Support Toolkit. To use this method you must <a href="%s"><strong>generate</strong></a> a new password file.',
 
 	'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
 	'INCORRECT_PASSWORD'				=> 'Password is incorrect',
@@ -76,7 +76,7 @@ $lang = array_merge($lang, array(
 	'PROCEED_TO_STK'					=> '%sProceed to the Support Toolkit%s',
 
 	'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit!',
-	'STK_LOGIN'							=> 'Support Took Kit Login',
+	'STK_LOGIN'							=> 'Support Toolkit Login',
 	'STK_LOGIN_WAIT'					=> 'You can only attempt one login every 3 seconds, please try again.',
 	'STK_LOGOUT'						=> 'STK Logout',
 	'STK_LOGOUT_SUCCESS'				=> 'You have successfully logged out from the Support Toolkit.',
