@@ -187,7 +187,7 @@ class url_list
 			break;
 		}
 
-		ksort($url_list);
+		//ksort($url_list);
 		$url_list['generated'] = time();
 		$cache->put('_url_list', $url_list);
 
@@ -210,8 +210,10 @@ class url_list
 
 	function find_matches($text)
 	{
+		$text = html_entity_decode($text);
+
 		$matches = array();
-		preg_match_all('|https?:([/\\\]+)[\w\d:#@%/;$()~_?\+\-=\\\&\.]*|', $text, $matches);
+		preg_match_all('|https?://[\w\d:#@%/;$()~_?\+\-=\\\&\.]*|', $text, $matches);
 		if (isset($matches[0]))
 		{
 			return $matches[0];
@@ -225,15 +227,15 @@ class url_list
 		foreach ($matches as $match)
 		{
 			$domain_matches = array();
-			preg_match('#https?:([\\\/]+)([^\\\/]+)(.*)#', $match, $domain_matches);
+			preg_match('#https?://([^\\\/]+)(.*)#', $match, $domain_matches);
 
-			if (!isset($domain_matches[2]))
+			if (!isset($domain_matches[1]))
 			{
 				continue;
 			}
 
 			// remove www. subdomains
-			$domain = str_replace('www.', '', $domain_matches[2]);
+			$domain = str_replace('www.', '', $domain_matches[1]);
 
 			$url_list[$domain][$match][$type][$data['id']] = $data;
 		}
