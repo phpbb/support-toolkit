@@ -23,7 +23,8 @@ class url_list
 		global $cache, $db, $template, $user, $phpbb_root_path, $phpEx;
 
 		$action = request_var('action', '');
-		$limit = request_var('limit', 100);
+		$start = request_var('start', 0);
+		$limit = request_var('limit', 250);
 
 		page_header($user->lang['URL_LIST']);
 
@@ -44,12 +45,24 @@ class url_list
 		else if ($url_list !== false)
 		{
 			// Display the list of urls
+			$i = 0;
 			foreach ($url_list as $domain => $urls)
 			{
 				if ($domain == 'generated')
 				{
 					$template->assign_var('GENERATED_ON', $user->format_date($urls));
 					continue;
+				}
+
+				$i++;
+
+				if ($i <= $start)
+				{
+					continue;
+				}
+				else if ($i > ($start + $limit))
+				{
+					break;
 				}
 
 				$template->assign_block_vars('domains', array(
@@ -62,24 +75,25 @@ class url_list
 						'URL'	=> $url,
 					));
 
-					foreach ($found as $type => $ids)
+					foreach ($found as $type => $rows)
 					{
 						switch ($type)
 						{
 							case 'post' :
-								foreach ($ids as $id)
+								foreach ($rows as $row)
 								{
 									$template->assign_block_vars('domains.urls.locations', array(
-										'U_VIEW'	=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", "p=$id#p$id"),
+										'U_VIEW'	=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", "p={$row['id']}#p{$row['id']}"),
+										'SUBJECT'	=> $row['subject'],
 										'L_TYPE'	=> $user->lang['POST'],
 									));
 								}
 							break;
 							case 'pm' :
-								foreach ($ids as $id)
+								foreach ($rows as $row)
 								{
 									$template->assign_block_vars('domains.urls.locations', array(
-										'U_VIEW'	=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=viewprofile&amp;u=$id"),
+										'U_VIEW'	=> append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['id']),
 										'L_TYPE'	=> $user->lang['PRIVATE_MESSAGE'],
 										'L_VIEW'	=> $user->lang['VIEW_AUTHOR'],
 									));
@@ -98,8 +112,12 @@ class url_list
 			break;
 		}
 
+		$base_url = append_sid(STK_INDEX, 't=url_list&amp;limit=' . $limit);
+		$count = ($url_list !== false) ? (sizeof($url_list) - 1) : 0;
+
 		$template->assign_vars(array(
 			'U_REGENERATE'		=> append_sid(STK_INDEX, 't=url_list&amp;action=generate'),
+			'PAGINATION'		=> generate_pagination($base_url, $count, $limit, $start, true),
 		));
 
 		$template->set_filenames(array(
@@ -128,7 +146,7 @@ class url_list
 					$url_list = array();
 				}
 
-				$sql = 'SELECT post_id, post_text FROM ' . POSTS_TABLE . "
+				$sql = 'SELECT post_id, post_subject, post_text FROM ' . POSTS_TABLE . "
 					WHERE post_text LIKE '%http%'
 					ORDER BY post_id DESC";
 				$result = $db->sql_query_limit($sql, $limit, $start);
@@ -138,7 +156,12 @@ class url_list
 
 					$matches = $this->find_matches($row['post_text']);
 
-					$this->merge_matches($url_list, 'post', $matches, $row['post_id']);
+					$data = array(
+						'id'		=> $row['post_id'],
+						'subject'	=> $row['post_subject'],
+					);
+
+					$this->merge_matches($url_list, 'post', $matches, $data);
 				}
 				$db->sql_freeresult($result);
 			break;
@@ -154,7 +177,11 @@ class url_list
 
 					$matches = $this->find_matches($row['message_text']);
 
-					$this->merge_matches($url_list, 'pm', $matches, $row['author_id']);
+					$data = array(
+						'id'		=> $row['author_id'],
+					);
+
+					$this->merge_matches($url_list, 'pm', $matches, $data);
 				}
 				$db->sql_freeresult($result);
 			break;
@@ -184,7 +211,7 @@ class url_list
 	function find_matches($text)
 	{
 		$matches = array();
-		preg_match_all('!https?:([\/]+)[\w\d:#@%/;$()~_?\+\-=\\\.&]*!', $text, $matches);
+		preg_match_all('|https?:([/\\\]+)[\w\d:#@%/;$()~_?\+\-=\\\&\.]*|', $text, $matches);
 		if (isset($matches[0]))
 		{
 			return $matches[0];
@@ -193,22 +220,22 @@ class url_list
 		return array();
 	}
 
-	function merge_matches(&$url_list, $type, $matches, $id)
+	function merge_matches(&$url_list, $type, $matches, $data)
 	{
 		foreach ($matches as $match)
 		{
-
 			$domain_matches = array();
-			preg_match('#https?:([\/]+)([^\/]+)(.*)#', $match, $domain_matches);
+			preg_match('#https?:([\\\/]+)([^\\\/]+)(.*)#', $match, $domain_matches);
 
 			if (!isset($domain_matches[2]))
 			{
 				continue;
 			}
 
-			$domain = $domain_matches[2];
+			// remove www. subdomains
+			$domain = str_replace('www.', '', $domain_matches[2]);
 
-			$url_list[$domain][$match][$type][] = $id;
+			$url_list[$domain][$match][$type][$data['id']] = $data;
 		}
 	}
 }

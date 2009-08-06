@@ -1751,6 +1751,24 @@ dl.codebox code {
 	margin: 2px 0;
 }
 
+#url-list {
+	margin-top: 10px;
+}
+
+#url-list ul {
+	padding: 10px;
+	min-width: 300px;
+	list-style: none;
+	background-color: #ECF3F7;
+}
+
+#url-list ul ul {
+	padding: 0;
+	margin: 5px 10px 0 30px;
+	background-color: transparent;
+	list-style: square;
+}
+
 .syntaxbg		{ color: #FFFFFF; }
 .syntaxcomment	{ color: #FF8000; }
 .syntaxdefault	{ color: #0000BB; }

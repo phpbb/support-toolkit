@@ -26,27 +26,32 @@ function show_hide(id)
 </div>
 <!-- ENDIF -->
 
-<ul style="margin-top: 10px;">
+<fieldset>
+	<ul id="url-list">
+	<!-- BEGIN domains -->
+		<li>
+			<a onclick="show_hide('domains_{domains.S_ROW_COUNT}'); return false;" href="#">{domains.DOMAIN}</a>
+			<ul id="domains_{domains.S_ROW_COUNT}" style="display: none;">
+			<!-- BEGIN urls -->
+				<li>
+					<em><a onclick="show_hide('urls_{domains.S_ROW_COUNT}_{domains.urls.S_ROW_COUNT}'); return false;" href="#">{domains.urls.URL}</a></em>
+					<ul id="urls_{domains.S_ROW_COUNT}_{domains.urls.S_ROW_COUNT}" style="display: none;">
+					<!-- BEGIN locations -->
+						<!-- IF domains.urls.locations.SUBJECT -->
+							<li>{domains.urls.locations.L_TYPE} - <a href="{domains.urls.locations.U_VIEW}">{domains.urls.locations.SUBJECT}</a></li>
+						<!-- ELSE -->
+							<li>{domains.urls.locations.L_TYPE} - <a href="{domains.urls.locations.U_VIEW}"><!-- IF domains.urls.locations.L_VIEW -->{domains.urls.locations.L_VIEW}<!-- ELSE -->{L_VIEW}<!-- ENDIF --></a></li>
+						<!-- ENDIF -->
+					<!-- END locations -->
+					</ul>
+				</li>
+			<!-- END urls -->
+			</ul>
+		</li>
+	<!-- END domains -->
 
-<!-- BEGIN domains -->
-	<li><a onclick="show_hide('domains_{domains.S_ROW_COUNT}'); return false;" href="#">{domains.DOMAIN}</a></li>
-		<ul class="row2" id="domains_{domains.S_ROW_COUNT}" style="display: none; position: absolute; padding: 10px; min-width: 300px">
-
-		<!-- BEGIN urls -->
-			<li><a onclick="show_hide('urls_{domains.urls.S_ROW_COUNT}'); return false;" href="#">{domains.urls.URL}</a></li>
-				<ul class="row3" id="urls_{domains.urls.S_ROW_COUNT}" style="display: none; position: absolute; padding: 10px; min-width: 300px;">
-
-				<!-- BEGIN locations -->
-					<li>{domains.urls.locations.L_TYPE} - <a href="{domains.urls.locations.U_VIEW}"><!-- IF domains.urls.locations.L_VIEW -->{domains.urls.locations.L_VIEW}<!-- ELSE -->{L_VIEW}<!-- ENDIF --></a></li>
-				<!-- END locations -->
-
-				</ul>
-		<!-- END urls -->
-
-		</ul>
-<!-- END domains -->
-
-</ul>
+	</ul>
+</fieldset>
 
 <!-- IF PAGINATION -->
 <div class="pagination">
