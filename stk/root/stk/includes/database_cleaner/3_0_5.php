@@ -650,8 +650,21 @@ class database_cleaner_data
 
 	function database_cleaner_data()
 	{
+		global $table_prefix;
+
 		// This makes it easier, just copy & paste the get_schema_struct function from the develop/create_schema_files.php file
 		$this->tables = $this->get_schema_struct();
+
+		// Get the right table prefix!
+		if ($table_prefix != 'phpbb_')
+		{
+			foreach ($this->tables as $table_name => $table_data)
+			{
+				$this->tables[str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $table_name))] = $table_data;
+
+				unset($this->tables[$table_name]);
+			}
+		}
 	}
 
 	function get_schema_struct()
