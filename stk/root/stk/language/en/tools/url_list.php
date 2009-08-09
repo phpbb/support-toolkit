@@ -13,12 +13,12 @@
 */
 if (!defined('IN_PHPBB'))
 {
-	exit;
+   exit;
 }
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+   $lang = array();
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -38,18 +38,18 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'GENERATE_IN_PROGRESS'		=> 'Generation of the URL List is currently in progress, once we are finished you will be redirected to the list of URLs',
-	'REGENERATE'				=> 'Regenerate List',
-	'GENERATE_LIST_CONFIRM'		=> 'Are you ready to generate a new list?  This may take a while...',
-	'GENERATED_ON'				=> 'Generated on',
+   'GENERATE_IN_PROGRESS'     => 'Generation of the URL List is currently in progress, once we are finished you will be redirected to the list of URLs',
+   'REGENERATE'            => 'Regenerate List',
+   'GENERATE_LIST_CONFIRM'    => 'Are you ready to generate a new list?  This may take a while...',
+   'GENERATED_ON'          => 'Generated on',
 
-	'URL_LIST'					=> 'URL List',
-	'URL_LIST_EXPLAIN'			=> 'The URL List is sorted by the most recently posted URLs and domains.',
+   'URL_LIST'              => 'URL List',
+   'URL_LIST_EXPLAIN'         => 'This tool generate a list of all the URLs in posts and Privae Messages.  The URL List is sorted by the most recently posted URLs and domains.',
 
-	'VIEW'						=> 'View',
-	'VIEW_AUTHOR'				=> 'View Author',
-	'VIEW_LIST'					=> 'View List',
-	'VIEW_POST'					=> 'View Post',
+   'VIEW'                  => 'View',
+   'VIEW_AUTHOR'           => 'View Author',
+   'VIEW_LIST'             => 'View List',
+   'VIEW_POST'             => 'View Post',
 ));
 
 ?>
