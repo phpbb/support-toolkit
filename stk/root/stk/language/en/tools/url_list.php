@@ -44,7 +44,7 @@ $lang = array_merge($lang, array(
    'GENERATED_ON'          => 'Generated on',
 
    'URL_LIST'              => 'URL List',
-   'URL_LIST_EXPLAIN'         => 'This tool generate a list of all the URLs in posts and Privae Messages.  The URL List is sorted by the most recently posted URLs and domains.',
+   'URL_LIST_EXPLAIN'         => 'This tool generateg a list of all the URLs in posts and Private Messages.  The URL List is sorted by the most recently posted URLs and domains.',
 
    'VIEW'                  => 'View',
    'VIEW_AUTHOR'           => 'View Author',
