@@ -70,6 +70,7 @@ $lang = array_merge($lang, array(
 	'LOGIN_STK_SUCCESS'					=> 'You have successfully authenticated and will now be redirected to the Support Toolkit.',
 
 	'NOTICE'							=> 'Notice',
+	'NO_VERSION_FILE'					=> 'The Support Toolkit coudn\'t determine the latest version of the package. Please go the Support Toolkit <a href="http://www.phpbb.com/support/stk/">pages</a> and make sure that you are using the latest version of the package before continueing using it.',
 
 	'PASS_GENERATED'					=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you’ve downloaded this file you must upload it to your server into the "stk" directory',
 	'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',

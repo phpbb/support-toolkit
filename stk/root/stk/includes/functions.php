@@ -321,7 +321,7 @@ function perform_authed_quick_tasks($action)
  */
 function stk_version_check()
 {
-	global $cache, $umil, $user;
+	global $cache, $template, $umil, $user;
 
 	// We cache the result, check once per session
 	$version_check = $cache->get('_stk_version_check');
@@ -337,9 +337,9 @@ function stk_version_check()
 		$info = $umil->version_check('www.phpbb.com', '/updatecheck', ((defined('STK_QA')) ? 'stk_qa.txt' : 'stk.txt'));
 
 		// Compare it and cache the info
+		$version_check = array();
 		if (is_array($info) && isset($info[0]) && isset($info[1]))
 		{
-			$version_check = array();
 			if (version_compare(STK_VERSION, $info[0], '<'))
 			{
 				$version_check['outdated']	= true;
@@ -348,19 +348,20 @@ function stk_version_check()
 			}
 
 			$version_check['last_check_session'] = $user->session_id;
+			
+			// We've gotten some version data, cache the result for a week or until the session id changes
+			$cache->put('_stk_version_check', $version_check, 604800);
 		}
-		else
-		{
-			// Error getting the file
-			return;
-		}
-
-		// Cache for a week, or untill the session id changed
-		$cache->put('_stk_version_check', $version_check, 60 * 60 * 24 * 7);
 	}
-
-	// If we're out of date display the warning
-	if (isset($version_check['outdated']) && $version_check['outdated'] == true)
+	
+	// Something went wrong while retrieving the version file, lets inform the user about this, but don't kill the STK
+	if (empty($version_check))
+	{
+		$template->assign_var('S_NO_VERSION_FILE', true);
+		return;
+	}
+	// The STK is outdated, kill it!!!
+	else if (isset($version_check['outdated']) && $version_check['outdated'] === true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
 		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], STK_VERSION, $version_check['topic']);
