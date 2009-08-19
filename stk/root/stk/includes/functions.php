@@ -189,7 +189,7 @@ function stk_add_lang($lang_file = '')
 	}
 
 	// Switch the lang path to our own language directory
-	$user->set_custom_lang_path(STK_ROOT_PATH . 'language/');
+	$user->lang_path = STK_ROOT_PATH . 'language/';
 	
 	// Determine the correct language directory for this file
 	if (file_exists($user->lang_path . $user->data['user_lang'] . "/{$lang_file}." . PHP_EXT))
@@ -214,7 +214,7 @@ function stk_add_lang($lang_file = '')
 	$user->add_lang($lang_file);
 	
 	// Reset the settings
-	$user->set_custom_lang_path($lang_org['lang_path']);
+	$user->lang_path = $lang_org['lang_path'];
 	$user->lang_name = $lang_org['lang_name'];
 }
 
