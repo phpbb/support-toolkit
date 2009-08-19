@@ -351,9 +351,10 @@ function stk_version_check()
 		}
 		else
 		{
-			// Something went wrong. At this point $info should contain the relevant data
-			trigger_error($info, E_USER_ERROR);
+			// Error getting the file
+			return;
 		}
+
 		// Cache for a week, or untill the session id changed
 		$cache->put('_stk_version_check', $version_check, 60 * 60 * 24 * 7);
 	}
