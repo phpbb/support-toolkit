@@ -13,7 +13,7 @@
 	<title lang="en">Support Toolkit</title>
 	<description lang="en">Support Toolkit for phpBB3</description>
 
-	<author-notes lang="en">The first public Release Candidate of the Support Tool Kit is only intended for private testing; use of this package in the support forums is not permitted.</author-notes>
+	<author-notes lang="en"></author-notes>
 
 	<author-group>
 		<author>
@@ -30,14 +30,35 @@
 		</author>
 	</author-group>
 
-	<mod-version>1.0.0-RC1</mod-version>
+	<mod-version>1.0.0-RC2</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
 		<target-version>3.0.5</target-version>
 	</installation>
-	
+
+	<history>
+		<entry>
+			<date>2008-06-24</date>
+			<rev-version>1.0.0-RC1</rev-version>
+		</entry>
+		<entry>
+			<date>2008-08-21</date>
+			<rev-version>1.0.0-RC2</rev-version>
+			<changelog lang="en">
+				<change>[Fix] Remove hardcoded location of the toolkit (Bug #47375)</change>
+				<change>[Fix] Make sure the menu is sorted correctly when using a translated version</change>
+				<change>[Fix] Changed the message displayed when the Sanitise user tool doesn't do anything (Bug #47405)</change>
+				<change>[Fix] Invalid XHTML in the profile list tool</change>
+				<change>[Fix] Don't break the layout when displaying large query results</change>
+				<change>[Fix] Non-existant style causes STK to not start (Bug #47925)</change>
+				<change>[Fix] Version check for hosts with strange fsockopen settings (Bug #47445)</change>
+				<change>[Fix] Don't disable the STK if the version check file couldn't be found (Bug #48845)</change>
+			</changelog>
+		</entry>
+	</history>
+
 	<link-group>
 		<link type="contrib" href="contrib/acp_link.xml" lang="en">Add link to Support Toolkit in the ACP.</link>
 		<link type="contrib" href="contrib/forum_link.xml" lang="en">Add a link to the Support Toolkit in the forum footer.</link>
