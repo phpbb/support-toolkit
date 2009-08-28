@@ -40,8 +40,11 @@
 
 	<history>
 		<entry>
-			<date>2008-06-24</date>
-			<rev-version>1.0.0-RC1</rev-version>
+			<date></date>
+			<rev-version></rev-version>
+			<changelog lang="en">
+				<change>[Fix] "Recreate Module Management modules" tool now also re-enabled the modules if required.</change>
+			</changelog>
 		</entry>
 		<entry>
 			<date>2008-08-21</date>
@@ -56,6 +59,10 @@
 				<change>[Fix] Version check for hosts with strange fsockopen settings (Bug #47445)</change>
 				<change>[Fix] Don't disable the STK if the version check file couldn't be found (Bug #48845)</change>
 			</changelog>
+		</entry>
+		<entry>
+			<date>2008-06-24</date>
+			<rev-version>1.0.0-RC1</rev-version>
 		</entry>
 	</history>
 
