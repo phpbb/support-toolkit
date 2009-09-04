@@ -143,7 +143,7 @@ a:active {
 #page-header {
 	clear: both;
 	text-align: right;
-	background: url("../images/phpbb_logo.gif") top left no-repeat;
+	background: url("../images/support_toolkit_logo_trans.png") top left no-repeat;
 	height: 49px;
 	font-size: 0.85em;
 	margin-bottom: 10px;
@@ -151,7 +151,7 @@ a:active {
 
 .rtl #page-header {
 	text-align: left;
-	background: url("../images/phpbb_logo.gif") top right no-repeat;
+	background: url("../images/support_toolkit_logo_trans.png") top right no-repeat;
 }
 
 #page-header h1 {
