@@ -135,7 +135,7 @@ class url_list
 
 		$part = request_var('part', 0);
 		$start = request_var('start', 0);
-		$limit = 1000;
+		$limit = 500;
 		$i = 0;
 		switch ($part)
 		{
