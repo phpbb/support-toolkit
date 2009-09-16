@@ -69,8 +69,8 @@ h2, caption {
 h3, h4 {
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 1.20em;
-	text-decoration: none; 
-	line-height: 1.20em; 
+	text-decoration: none;
+	line-height: 1.20em;
 	margin-top: 25px;
 }
 
@@ -97,8 +97,8 @@ hr {
 	height: 1px;
 }
 
-.small { 
-	font-size: 0.85em; 
+.small {
+	font-size: 0.85em;
 }
 
 .column1 {
@@ -203,8 +203,8 @@ a:active {
 	margin: 0 3% 0 0;
 }
 
-* html #main { 
-	height: 350px; 
+* html #main {
+	height: 350px;
 }
 
 #page-body.simple-page-body {
@@ -316,7 +316,7 @@ a:active {
 	padding: 0;
 }
 
-span.corners-top, span.corners-bottom, 
+span.corners-top, span.corners-bottom,
 span.corners-top span, span.corners-bottom span {
 	font-size: 1px;
 	line-height: 1px;
@@ -795,7 +795,7 @@ label img {
 
 fieldset.quick, p.quick {
 	margin: 0 0 5px;
-	padding: 5px 0 0; 
+	padding: 5px 0 0;
 	border: none;
 	background-color: transparent;
 	text-align: right;
@@ -848,7 +848,7 @@ select option.disabled {
 }
 
 /* Special case inputs */
-select#board_timezone, 
+select#board_timezone,
 select#full_folder_action {
 	width: 95%;
 }
@@ -1241,12 +1241,12 @@ input.disabled {
 }
 
 /* Nice method for clearing floated blocks without having to insert any extra markup
-	From http://www.positioniseverything.net/easyclearing.html 
+	From http://www.positioniseverything.net/easyclearing.html
 .clearfix:after, #tabs:after, .row:after, #content:after, fieldset dl:after, #page-body:after {
-	content: "."; 
-	display: block; 
-	height: 0; 
-	clear: both; 
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
 	visibility: hidden;
 }*/
 
@@ -1313,7 +1313,7 @@ fieldset.permissions legend input{
 	height: 1.1em;
 }
 
-/* Permission sections */ 
+/* Permission sections */
 fieldset.permissions .permissions-simple {
 	text-align: left;
 	padding-top: 3px;
@@ -1521,7 +1521,7 @@ fieldset.permissions .padding {
 	background-image: url("../images/corners_right2.gif");
 }
 
-.permissions-panel span.corners-top, .permissions-panel span.corners-bottom, 
+.permissions-panel span.corners-top, .permissions-panel span.corners-bottom,
 .permissions-panel span.corners-top span, .permissions-panel span.corners-bottom span {
 	font-size: 1px;
 	line-height: 1px;
@@ -1599,7 +1599,7 @@ fieldset.permissions .padding {
 }
 
 .permissions-panel th.row4 {
-	background-image: none;	
+	background-image: none;
 	background-color: #E4E8EB;
 	color: #536482;
 	border: none;
@@ -1607,8 +1607,8 @@ fieldset.permissions .padding {
 
 .permissions-panel th a:link, .permissions-panel th a:hover, .permissions-panel th a:visited {
 	display: block;
-	color: #FFFFFF; 
-	text-decoration: underline; 
+	color: #FFFFFF;
+	text-decoration: underline;
 }
 
 .permissions-panel td.permissions-yes label:hover {
@@ -1775,3 +1775,8 @@ dl.codebox code {
 .syntaxhtml		{ color: #000000; }
 .syntaxkeyword	{ color: #007700; }
 .syntaxstring	{ color: #DD0000; }
+
+/* Database cleaner
+----------------------------------------*/
+.missing { color: #FFFFFF; background-color: #BC2A4D; }
+.extra { color: #000000; background-color: #F0F0F0; }
