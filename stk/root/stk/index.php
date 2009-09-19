@@ -232,6 +232,8 @@ else
 {
 	if (!$user->data['is_registered'])
 	{
+		$user->add_lang('ucp');
+
 		// Assign a string only used here
 		$template->assign_var('GEN_PASS_FILE_EXPLAIN', sprintf($user->lang['GEN_PASS_FILE_EXPLAIN'], append_sid(STK_INDEX, array('action' => 'genpasswdfile'))));
 
