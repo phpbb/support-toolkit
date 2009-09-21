@@ -177,45 +177,72 @@ function stk_add_lang($lang_file = '')
 {
 	global $config, $user;
 
-	// Remember the original settings, only overwrite this once
-	static $lang_org = array();
-	
-	if (empty($lang_org))
+	// Internally cache some data
+	static $lang_data	= array();
+	static $lang_dirs	= array();
+	static $is_302		= null;
+
+	// Store current phpBB data
+	if (empty($lang_data))
 	{
-		$lang_org = array(
+		$lang_data = array(
 			'lang_path'	=> $user->lang_path,
 			'lang_name'	=> $user->lang_name,
 		);
 	}
 
-	// Switch the lang path to our own language directory
+	// Find out what languages we could use
+	if (empty($lang_dirs))
+	{
+		$lang_dirs = array(
+			$user->data['user_lang'],			// User default
+			basename($config['default_lang']),	// Board default
+			'en',								// System default
+		);
+
+		// Only unique dirs
+		$lang_dirs = array_unique($lang_dirs);
+	}
+
+	// Which phpBB version is the user using
+	if (is_null($is_302))
+	{
+		// There are different ways of handling language paths due to the changes
+		// made in phpBB 3.0.3 (set custom lang path)
+		if (version_compare($config['version'], '3.0.2', '<='))
+		{
+			$is_302 = true;
+		}
+	}
+
+	// Switch to the STK language dir
 	$user->lang_path = STK_ROOT_PATH . 'language/';
-	
-	// Determine the correct language directory for this file
-	if (file_exists($user->lang_path . $user->data['user_lang'] . "/{$lang_file}." . PHP_EXT))
+
+	// Test all languages
+	foreach ($lang_dirs as $dir)
 	{
-		$user->lang_name = $user->data['user_lang'];
-	}
-	else if (file_exists($user->lang_path . basename($config['default_lang'] . "/{$lang_file}." . PHP_EXT)))
-	{
-		$user->lang_name = basename($config['default_lang']);
-	}
-	else if (file_exists($user->lang_path . "en/{$lang_file}." . PHP_EXT))
-	{
-		$user->lang_name = 'en';
-	}
-	else
-	{
+		if (file_exists($user->lang_path . $dir . "/{$lang_file}." . PHP_EXT))
+		{
+			$user->lang_name = $dir;
+			break;
+		}
+
 		// This should really never happen
-		trigger_error('Language file ' . STK_ROOT_PATH . "language/{$user->data['user_lang']}/$lang_file." . PHP_EXT . ' missing!', E_USER_ERROR);
+		trigger_error('Language file ' . STK_ROOT_PATH . "$lang_file." . PHP_EXT . ' missing!', E_USER_ERROR);
+	}
+
+	// In phpBB <= 3.0.2 the lang_name is stored in the lang_path
+	if ($is_302)
+	{
+		$user->lang_path .= $user->lang_name . '/';
 	}
 
 	// Add the file
 	$user->add_lang($lang_file);
-	
-	// Reset the settings
-	$user->lang_path = $lang_org['lang_path'];
-	$user->lang_name = $lang_org['lang_name'];
+
+	// Now reset the paths so phpBB can continue to operate as usual
+	$user->lang_path = $lang_data['lang_path'];
+	$user->lang_name = $lang_data['lang_name'];
 }
 
 /**
@@ -363,12 +390,12 @@ function stk_version_check()
 			}
 
 			$version_check['last_check_session'] = $user->session_id;
-			
+
 			// We've gotten some version data, cache the result for a week or until the session id changes
 			$cache->put('_stk_version_check', $version_check, 604800);
 		}
 	}
-	
+
 	// Something went wrong while retrieving the version file, lets inform the user about this, but don't kill the STK
 	if (empty($version_check))
 	{
