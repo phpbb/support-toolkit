@@ -173,7 +173,7 @@ function use_lang(&$lang_key)
 *
 * @param	String	$lang_file	the name of the language file
 */
-function stk_add_lang($lang_file = '')
+function stk_add_lang($lang_file)
 {
 	global $config, $user;
 
@@ -228,7 +228,7 @@ function stk_add_lang($lang_file = '')
 		}
 
 		// This should really never happen
-		trigger_error('Language file ' . STK_ROOT_PATH . "$lang_file." . PHP_EXT . ' missing!', E_USER_ERROR);
+		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
 	}
 
 	// In phpBB <= 3.0.2 the lang_name is stored in the lang_path
