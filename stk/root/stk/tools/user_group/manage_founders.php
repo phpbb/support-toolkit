@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Toolkit - Make Founder
-* @version $Id: manage_founders.php -1   $
+* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
