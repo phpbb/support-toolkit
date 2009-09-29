@@ -1,0 +1,43 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF .founders -->
+<form id="stk_demote_founder" method="post" action="{U_DEMOTE_FOUNDERS}">
+    <fieldset>
+	<legend>{L_FOUNDERS}</legend>
+	<!-- BEGIN founders -->
+	<dl>
+	    <dt><label for="founder[{founders.S_ROW_COUNT}]">{founders.L_FOUNDER_FULL}</label></dt>
+	    <dd><input type="checkbox" id="founder_{founders.S_ROW_COUNT}" name="founders[{founders.L_FOUNDER_ID}]" <!-- IF founders.S_DISABLED -->disabled="disabled"<!-- ENDIF --> /></dd>
+	</dl>
+	<!-- END founders -->
+	<p class="submit-buttons">
+	    <input type="submit" name="demote" id="demote" value="{L_DEMOTE_FOUNDERS}" class="button1" />&nbsp;
+	    <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+    </fieldset>
+
+    {S_HIDDEN_FIELDS}
+    {S_FORM_TOKEN}
+</form>
+
+<form id="stk_promote_founder" method="post" action="{U_PROMOTE_FOUNDER}">
+    <fieldset>
+	<legend>{L_MAKE_FOUNDER}</legend>
+	<dl>
+	    <dt><label for="user">{L_USER_TO_FOUNDER}:</label><br /><span>{L_USER_TO_FOUNDER_EXPLAIN}</span></dt>
+	    <dd><input id="user" type="text" size="40" maxlength="255" name="user" value="" /></dd>
+	    <dd>[ <a href="{U_FIND_USER}" onclick="find_username(this.href); return false;">Find a member</a> ]</dd>
+	</dl>
+
+	<p class="submit-buttons">
+	    <input class="button1" type="submit" id="promote" name="promote" value="{L_PROMOTE_FOUNDER}" />&nbsp;
+	    <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+    </fieldset>
+
+    {S_HIDDEN_FIELDS}
+    {S_FORM_TOKEN}
+</form>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->
