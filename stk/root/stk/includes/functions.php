@@ -213,6 +213,10 @@ function stk_add_lang($lang_file)
 		{
 			$is_302 = true;
 		}
+		else
+		{
+			$is_302 = false;
+		}
 	}
 
 	// Switch to the STK language dir
