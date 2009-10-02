@@ -32,14 +32,14 @@ class add_user
 		return array(
 			'title'	=> 'ADD_USER',
 			'vars'	=> array(
-				'legend1'				=> 'ADD_USER',
-				'ad_username'			=> array('lang' => 'USERNAME', 'explain' => false, 'type' => 'text:40:255'),
-				'ad_userpass'			=> array('lang' => 'PASSWORD', 'explain' => false, 'type' => 'password:40:255'),
-				'ad_userpass_confirm'	=> array('lang' => 'PASSWORD_CONFIRM', 'explain' => false, 'type' => 'password:40:255'),
-				'ad_email'				=> array('lang' => 'EMAIL_ADDRESS', 'explain' => false, 'type' => 'text:40:255'),
-				'ad_email_confirm'		=> array('lang' => 'CONFIRM_EMAIL', 'explain' => false, 'type' => 'text:40:255'),
-				'ad_lang'				=> array('lang' => 'LANGUAGE', 'explain' => false, 'type' => 'select', 'function' => 'language_select'),
-				'ad_tz'					=> array('lang' => 'TIMEZONE', 'explain' => false, 'type' => 'select', 'function' => 'tz_select'),
+				'legend1'			=> 'ADD_USER',
+				'username'			=> array('lang' => 'USERNAME', 'explain' => false, 'type' => 'text:40:255'),
+				'new_password'		=> array('lang' => 'PASSWORD', 'explain' => false, 'type' => 'password:40:255'),
+				'password_confirm'	=> array('lang' => 'PASSWORD_CONFIRM', 'explain' => false, 'type' => 'password:40:255'),
+				'email'				=> array('lang' => 'EMAIL_ADDRESS', 'explain' => false, 'type' => 'text:40:255'),
+				'email_confirm'		=> array('lang' => 'CONFIRM_EMAIL', 'explain' => false, 'type' => 'text:40:255'),
+				'lang'				=> array('lang' => 'LANGUAGE', 'explain' => false, 'type' => 'select', 'function' => 'language_select'),
+				'tz'				=> array('lang' => 'TIMEZONE', 'explain' => false, 'type' => 'select', 'function' => 'tz_select'),
 
 				'legend2'				=> 'ADD_USER_GROUP',
 				'ad_usergroups'			=> array('lang' => 'USER_GROUPS', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
@@ -58,7 +58,7 @@ class add_user
 	{
 		global $config, $user;
 
-		$user->add_lang('acp/groups');
+		$user->add_lang(array('acp/groups', 'ucp'));
 
 		if (!check_form_key('add_user'))
 		{
@@ -87,13 +87,13 @@ class add_user
 
 		// Collect the user data
 		$data = array(
-			'ad_username'		=> utf8_normalize_nfc(request_var('ad_username', '', true)),
-			'ad_pass'			=> request_var('ad_userpass', '', true),
-			'ad_pass_confirm'	=> request_var('ad_userpass_confirm', '', true),
-			'ad_email'			=> utf8_strtolower(request_var('ad_email', '')),
-			'ad_email_confirm'	=> utf8_strtolower(request_var('ad_email_confirm', '')),
-			'ad_lang'			=> basename(request_var('ad_lang', $user->lang_name)),
-			'ad_tz'				=> request_var('ad_tz', (float) $timezone),
+			'username'			=> utf8_normalize_nfc(request_var('username', '', true)),
+			'new_password'		=> request_var('new_password', '', true),
+			'password_confirm'	=> request_var('password_confirm', '', true),
+			'email'				=> strtolower(request_var('email', '')),
+			'email_confirm'		=> strtolower(request_var('email_confirm', '')),
+			'lang'				=> basename(request_var('lang', $user->lang_name)),
+			'tz'				=> request_var('tz', (float) $timezone),
 		);
 
 		// Check vars
@@ -102,7 +102,6 @@ class add_user
 		// Something went wrong
 		if (!empty($error))
 		{
-			$user->add_lang('ucp');
 			return false;
 		}
 
@@ -180,26 +179,26 @@ class add_user
 		}
 
 		$error = validate_data($data, array(
-			'ad_username'			=> array(
+			'username'			=> array(
 				array('string', false, $config['min_name_chars'], $config['max_name_chars']),
 				array('username', '')),
-			'ad_pass'				=> array(
+			'new_password'		=> array(
 				array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
 				array('password')),
-			'ad_pass_confirm'		=> array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
-			'ad_email'				=> array(
+			'password_confirm'	=> array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
+			'email'				=> array(
 				array('string', false, 6, 60),
 				array('email')),
-			'ad_email_confirm'		=> array('string', false, 6, 60),
-			'ad_tz'					=> array('num', false, -14, 14),
-			'ad_lang'				=> array('match', false, '#^[a-z_\-]{2,}$#i'),
+			'email_confirm'		=> array('string', false, 6, 60),
+			'tz'				=> array('num', false, -14, 14),
+			'lang'				=> array('match', false, '#^[a-z_\-]{2,}$#i'),
 		));
-		if ($data['ad_pass'] != $data['ad_pass_confirm'])
+		if ($data['new_password'] != $data['password_confirm'])
 		{
 			$error[] = $user->lang['NEW_PASSWORD_ERROR'];
 		}
 
-		if ($data['ad_email'] != $data['ad_email_confirm'])
+		if ($data['email'] != $data['email_confirm'])
 		{
 			$error[] = $user->lang['NEW_EMAIL_ERROR'];
 		}
