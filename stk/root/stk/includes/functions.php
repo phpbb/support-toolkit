@@ -169,8 +169,7 @@ function use_lang(&$lang_key)
 * A wrapper for the $user->add_lang method that will use the custom language path that is used
 * in this tool kit.
 * The function shall first try to include the file in the users language, if that fails it will
-* take the boards default language, if that also fails it will fall back to the system default
-* British English (en)
+* take the boards default language, if that also fails it will fall back to English
 *
 * @param	String	$lang_file	the name of the language file
 */
@@ -201,7 +200,7 @@ function stk_add_lang($lang_file)
 			'en',								// System default
 		);
 
-		// Check every language only once
+		// Only unique dirs
 		$lang_dirs = array_unique($lang_dirs);
 	}
 
@@ -214,13 +213,12 @@ function stk_add_lang($lang_file)
 		{
 			$is_302 = true;
 		}
-		else
-		{
-			$is_302 = false;
-		}
 	}
 
-	// Find out the language we'll be using
+	// Switch to the STK language dir
+	$user->lang_path = STK_ROOT_PATH . 'language/';
+
+	// Test all languages
 	foreach ($lang_dirs as $dir)
 	{
 		if (file_exists($user->lang_path . $dir . "/{$lang_file}." . PHP_EXT))
@@ -232,9 +230,6 @@ function stk_add_lang($lang_file)
 		// This should really never happen
 		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
 	}
-
-	// Set the correct lang path for this file
-	$user->lang_path = STK_ROOT_PATH . 'language/';
 
 	// In phpBB <= 3.0.2 the lang_name is stored in the lang_path
 	if ($is_302)
