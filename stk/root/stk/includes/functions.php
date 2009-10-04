@@ -416,4 +416,25 @@ function stk_version_check()
 		trigger_error($msg, E_USER_ERROR);
 	}
 }
+
+/**
+* Wrapper function for the default phpBB msg_handler method.
+* This function will overwrite the $phpbb_root_path variable
+* if $errno == E_USER_ERROR. This way the "return to index"
+* link on the error page will point towards the STK index
+* instead of the phpBB index
+*/
+function stk_msg_handler($errno, $msg_text, $errfile, $errline)
+{
+	// This is nasty :(
+	if ($errno == E_USER_ERROR)
+	{
+		global $phpbb_root_path;
+
+		$phpbb_root_path = STK_ROOT_PATH;
+	}
+
+	// Call the phpBB error message handler
+	msg_handler($errno, $msg_text, $errfile, $errline);
+}
 ?>

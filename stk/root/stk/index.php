@@ -42,6 +42,9 @@ require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
 
+// Overwrite the phpBB error handler
+set_error_handler('stk_msg_handler');
+
 // Make sure that umil is always usable
 $umil = new umil(true);
 
