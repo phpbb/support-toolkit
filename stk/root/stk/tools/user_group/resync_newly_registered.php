@@ -112,7 +112,11 @@ class resync_newly_registered
 
 		if (($error = call_user_func_array($function, $args)) !== false)
 		{
-			trigger_error($error);
+			// Handle the errors, though continue if all users are already part of the group
+			if ($error != 'GROUP_USERS_EXIST')
+			{
+				trigger_error($error);
+			}
 		}
 
 		// Next batch
