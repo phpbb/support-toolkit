@@ -4,7 +4,7 @@
  * @author Nathan Guse (EXreaction) http://lithiumstudios.org
  * @author David Lewis (Highway of Life) highwayoflife@gmail.com
  * @package umil
- * @version $Id: umil.php 158 2009-07-09 03:42:37Z exreaction $
+ * @version $Id: umil.php 177 2009-09-19 03:18:41Z exreaction $
  * @copyright (c) 2008 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
@@ -18,7 +18,7 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-define('UMIL_VERSION', '1.0.0');
+define('UMIL_VERSION', '1.0.1-dev');
 
 /**
 * Multicall instructions
@@ -76,7 +76,7 @@ define('UMIL_VERSION', '1.0.0');
 *	table_index_add($table_name, $index_name = '', $column = array())
 *	table_index_remove($table_name, $index_name = '')
 *
-* Table Row Functions
+* Table Row Functions (note that these actions are not reversed automatically during uninstallation)
 *	table_row_insert($table_name, $data = array())
 *	table_row_remove($table_name, $data = array())
 *	table_row_update($table_name, $data = array(), $new_data = array())
@@ -229,64 +229,13 @@ class umil
 		global $user;
 
 		// Set up the command.  This will get the arguments sent to the function.
-		$this->command = '';
 		$args = func_get_args();
-		if (sizeof($args))
-		{
-			$lang_key = array_shift($args);
+		$this->command = call_user_func_array(array($this, 'get_output_text'), $args);
 
-			if (sizeof($args))
-			{
-				$lang_args = array();
-				foreach ($args as $arg)
-				{
-					$lang_args[] = (isset($user->lang[$arg])) ? $user->lang[$arg] : $arg;
-				}
-
-				$this->command = @vsprintf(((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key), $lang_args);
-			}
-			else
-			{
-				$this->command = ((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key);
-			}
-		}
-
-		$this->result('SUCCESS');
+		$this->result = (isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS';
 		$this->db->sql_return_on_error(true);
 
 		//$this->db->sql_transaction('begin');
-	}
-
-	/**
-	* result function
-	*
-	* This makes it easy to manage the stand alone version.
-	*/
-	function result()
-	{
-		global $user;
-
-		// Set up the command.  This will get the arguments sent to the function.
-		$args = func_get_args();
-		if (sizeof($args))
-		{
-			$lang_key = array_shift($args);
-
-			if (sizeof($args))
-			{
-				$lang_args = array();
-				foreach ($args as $arg)
-				{
-					$lang_args[] = (isset($user->lang[$arg])) ? $user->lang[$arg] : $arg;
-				}
-
-				$this->result = @vsprintf(((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key), $lang_args);
-			}
-			else
-			{
-				$this->result = ((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key);
-			}
-		}
 	}
 
 	/**
@@ -300,10 +249,8 @@ class umil
 
 		// Set up the result.  This will get the arguments sent to the function.
 		$args = func_get_args();
-		if (sizeof($args))
-		{
-			call_user_func_array(array($this, 'result'), $args);
-		}
+		$result = call_user_func_array(array($this, 'get_output_text'), $args);
+		$this->result = ($result) ? $result : $this->result;
 
 		if ($this->db->sql_error_triggered)
 		{
@@ -332,6 +279,45 @@ class umil
 		}
 
 		return '<strong>' . $this->command . '</strong><br />' . $this->result;
+	}
+
+	/**
+	* Get text for output
+	*
+	* Takes the given arguments and prepares them for the UI
+	*
+	* First argument sent is used as the language key
+	* Further arguments (if send) are used on the language key through vsprintf()
+	*
+	* @return string Returns the prepared string for output
+	*/
+	function get_output_text()
+	{
+		global $user;
+
+		// Set up the command.  This will get the arguments sent to the function.
+		$args = func_get_args();
+		if (sizeof($args))
+		{
+			$lang_key = array_shift($args);
+
+			if (sizeof($args))
+			{
+				$lang_args = array();
+				foreach ($args as $arg)
+				{
+					$lang_args[] = (isset($user->lang[$arg])) ? $user->lang[$arg] : $arg;
+				}
+
+				return @vsprintf(((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key), $lang_args);
+			}
+			else
+			{
+				return ((isset($user->lang[$lang_key])) ? $user->lang[$lang_key] : $lang_key);
+			}
+		}
+
+		return '';
 	}
 
 	/**
@@ -451,9 +437,8 @@ class umil
 							continue;
 						}
 
-						// update mode (reversing an action) isn't possible for uninstallations
-						// Skip the table insert function as we can not undo that either
-						if (strpos($method, 'update') !== false || strpos($method, 'table_insert') !== false)
+						// A few things are not possible for uninstallations update actions and table_row actions
+						if (strpos($method, 'update') !== false || strpos($method, 'table_insert') !== false || strpos($method, 'table_row_') !== false)
 						{
 							continue;
 						}
@@ -527,13 +512,42 @@ class umil
 
 					if (isset($return['result']))
 					{
-						$this->result($return['result']);
+						$this->result = $this->get_output_text($return['result']);
 					}
 
 					$this->umil_end();
 				}
 			}
 		}
+	}
+
+	/**
+	* Multicall Helper
+	*
+	* @param mixed $function Function name to call
+	* @param mixed $params The parameters array
+	*
+	* @return bool True if we have done a multicall ($params is an array), false if not ($params is not an array)
+	*/
+	function multicall($function, $params)
+	{
+		if (is_array($params) && !empty($params))
+		{
+			foreach ($params as $param)
+			{
+				if (!is_array($param))
+				{
+					call_user_func(array($this, $function), $param);
+				}
+				else
+				{
+					call_user_func_array(array($this, $function), $param);
+				}
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -549,16 +563,9 @@ class umil
 		global $auth, $cache, $user, $phpbb_root_path, $phpEx;
 
 		// Multicall
-		if (is_array($type))
+		if ($this->multicall(__FUNCTION__, $type))
 		{
-			if (!empty($type)) // Allow an empty array sent for the cache purge.
-			{
-				foreach ($type as $params)
-				{
-					call_user_func_array(array($this, 'cache_purge'), $params);
-				}
-				return;
-			}
+			return;
 		}
 
 		$style_id = (int) $style_id;
@@ -815,6 +822,9 @@ class umil
 						unset($filelist);
 					}
 
+					// Purge the forum's cache as well.
+					$cache->purge();
+
 					return $this->umil_end();
 				}
 			break;
@@ -865,6 +875,11 @@ class umil
 						{
 							foreach ($matches[0] as $idx => $match)
 							{
+								if (!file_exists("{$phpbb_root_path}styles/{$theme_row['theme_path']}/theme/{$matches[1][$idx]}"))
+								{
+									continue;
+								}
+
 								$content = trim(file_get_contents("{$phpbb_root_path}styles/{$theme_row['theme_path']}/theme/{$matches[1][$idx]}"));
 								$stylesheet = str_replace($match, $content, $stylesheet);
 							}
@@ -960,12 +975,8 @@ class umil
 	function config_add($config_name, $config_value = '', $is_dynamic = false)
 	{
 		// Multicall
-		if (is_array($config_name))
+		if ($this->multicall(__FUNCTION__, $config_name))
 		{
-			foreach ($config_name as $params)
-			{
-				call_user_func_array(array($this, 'config_add'), $params);
-			}
 			return;
 		}
 
@@ -995,12 +1006,8 @@ class umil
 	function config_update($config_name, $config_value = '', $is_dynamic = false)
 	{
 		// Multicall
-		if (is_array($config_name))
+		if ($this->multicall(__FUNCTION__, $config_name))
 		{
-			foreach ($config_name as $params)
-			{
-				call_user_func_array(array($this, 'config_update'), $params);
-			}
 			return;
 		}
 
@@ -1030,12 +1037,8 @@ class umil
 		global $cache, $config;
 
 		// Multicall
-		if (is_array($config_name))
+		if ($this->multicall(__FUNCTION__, $config_name))
 		{
-			foreach ($config_name as $params)
-			{
-				call_user_func_array(array($this, 'config_remove'), $params);
-			}
 			return;
 		}
 
@@ -1062,19 +1065,19 @@ class umil
 	*
 	* @param string $class The module class(acp|mcp|ucp)
 	* @param int|string|bool $parent The parent module_id|module_langname (0 for no parent).  Use false to ignore the parent check and check class wide.
-	* @param mixed $module The module_langname you would like to check for to see if it exists
+	* @param int|string $module The module_id|module_langname you would like to check for to see if it exists
 	*/
 	function module_exists($class, $parent, $module)
 	{
 		$class = $this->db->sql_escape($class);
 		$module = $this->db->sql_escape($module);
 
-		// Allows '' to be sent
-		$parent = (!$parent) ? 0 : $parent;
-
 		$parent_sql = '';
 		if ($parent !== false)
 		{
+			// Allows '' to be sent as 0
+			$parent = (!$parent) ? 0 : $parent;
+
 			if (!is_numeric($parent))
 			{
 				$sql = 'SELECT module_id FROM ' . MODULES_TABLE . "
@@ -1100,7 +1103,7 @@ class umil
 		$sql = 'SELECT module_id FROM ' . MODULES_TABLE . "
 			WHERE module_class = '$class'
 			$parent_sql
-			AND module_langname = '$module'";
+			AND " . ((is_numeric($module)) ? 'module_id = ' . (int) $module : "module_langname = '$module'");
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
@@ -1147,12 +1150,8 @@ class umil
 		global $cache, $user, $phpbb_root_path, $phpEx;
 
 		// Multicall
-		if (is_array($class))
+		if ($this->multicall(__FUNCTION__, $class))
 		{
-			foreach ($class as $params)
-			{
-				call_user_func_array(array($this, 'module_add'), $params);
-			}
 			return;
 		}
 
@@ -1163,7 +1162,7 @@ class umil
 			return $this->umil_end('FAIL');
 		}
 
-        // Allows '' to be sent
+        // Allows '' to be sent as 0
 		$parent = (!$parent) ? 0 : $parent;
 
 		// allow sending the name as a string in $data to create a category
@@ -1209,6 +1208,8 @@ class umil
 						'module_mode'		=> $mode,
 						'module_auth'		=> $module_info['auth'],
 						'module_display'	=> (isset($module_info['display'])) ? $module_info['display'] : true,
+						'before'			=> (isset($module_info['before'])) ? $module_info['before'] : false,
+						'after'				=> (isset($module_info['after'])) ? $module_info['after'] : false,
 					);
 
 					// Run the "manual" way with the data we've collected.
@@ -1241,7 +1242,7 @@ class umil
 
 			$parent = $data['parent_id'] = $row['module_id'];
 		}
-		else if ($parent && !$this->module_exists($class, false, $parent))
+		else if (!$this->module_exists($class, false, $parent))
 		{
 			return $this->umil_end('PARENT_NOT_EXIST');
 		}
@@ -1258,26 +1259,69 @@ class umil
 		}
 		$acp_modules = new acp_modules();
 
-		$data = array_merge(array(
-			'module_enabled'	=> 1,
-			'module_display'	=> 1,
-			'module_basename'	=> '',
+		$module_data = array(
+			'module_enabled'	=> (isset($data['module_enabled'])) ? $data['module_enabled'] : 1,
+			'module_display'	=> (isset($data['module_display'])) ? $data['module_display'] : 1,
+			'module_basename'	=> (isset($data['module_basename'])) ? $data['module_basename'] : '',
 			'module_class'		=> $class,
 			'parent_id'			=> (int) $parent,
-			'module_langname'	=> '',
-			'module_mode'		=> '',
-			'module_auth'		=> '',
-		), $data);
-		$result = $acp_modules->update_module_data($data, true);
+			'module_langname'	=> (isset($data['module_langname'])) ? $data['module_langname'] : '',
+			'module_mode'		=> (isset($data['module_mode'])) ? $data['module_mode'] : '',
+			'module_auth'		=> (isset($data['module_auth'])) ? $data['module_auth'] : '',
+		);
+		$result = $acp_modules->update_module_data($module_data, true);
 
-		// update_module_data can either return a string, an empty array, or an array with a language string in...
-		if (is_array($result) && !empty($result))
+		// update_module_data can either return a string or an empty array...
+		if (is_string($result))
 		{
-			$this->result = implode('<br />', $result);
+			// Error
+			$this->result = $this->get_output_text($result);
 		}
-		else if (!is_array($result) && $result !== '')
+		else
 		{
-			$this->result($result);
+			// Success
+
+			// Move the module if requested above/below an existing one
+			if (isset($data['before']) && $data['before'])
+			{
+				$sql = 'SELECT left_id FROM ' . MODULES_TABLE . '
+					WHERE module_class = \'' . $class . '\'
+					AND parent_id = ' . (int) $parent . '
+					AND module_langname = \'' . $this->db->sql_escape($data['before']) . '\'';
+				$this->db->sql_query($sql);
+				$to_left = $this->db->sql_fetchfield('left_id');
+
+				$sql = 'UPDATE ' . MODULES_TABLE . " SET left_id = left_id + 2, right_id = right_id + 2
+					WHERE module_class = '$class'
+					AND left_id >= $to_left
+					AND left_id < {$module_data['left_id']}";
+				$this->db->sql_query($sql);
+
+				$sql = 'UPDATE ' . MODULES_TABLE . " SET left_id = $to_left, right_id = " . ($to_left + 1) . "
+					WHERE module_class = '$class'
+					AND module_id = {$module_data['module_id']}";
+				$this->db->sql_query($sql);
+			}
+			else if (isset($data['after']) && $data['after'])
+			{
+				$sql = 'SELECT right_id FROM ' . MODULES_TABLE . '
+					WHERE module_class = \'' . $class . '\'
+					AND parent_id = ' . (int) $parent . '
+					AND module_langname = \'' . $this->db->sql_escape($data['after']) . '\'';
+				$this->db->sql_query($sql);
+				$to_right = $this->db->sql_fetchfield('right_id');
+
+				$sql = 'UPDATE ' . MODULES_TABLE . " SET left_id = left_id + 2, right_id = right_id + 2
+					WHERE module_class = '$class'
+					AND left_id >= $to_right
+					AND left_id < {$module_data['left_id']}";
+				$this->db->sql_query($sql);
+
+				$sql = 'UPDATE ' . MODULES_TABLE . ' SET left_id = ' . ($to_right + 1) . ', right_id = ' . ($to_right + 2) . "
+					WHERE module_class = '$class'
+					AND module_id = {$module_data['module_id']}";
+				$this->db->sql_query($sql);
+			}
 		}
 
 		// Clear the Modules Cache
@@ -1301,17 +1345,10 @@ class umil
 		global $cache, $user, $phpbb_root_path, $phpEx;
 
 		// Multicall
-		if (is_array($class))
+		if ($this->multicall(__FUNCTION__, $class))
 		{
-			foreach ($class as $params)
-			{
-				call_user_func_array(array($this, 'module_remove'), $params);
-			}
 			return;
 		}
-
-        // Allows '' to be sent
-		$parent = (!$parent) ? 0 : $parent;
 
 		// Imitation of module_add's "automatic" and "manual" method so the uninstaller works from the same set of instructions for umil_auto
 		if (is_array($module))
@@ -1374,6 +1411,9 @@ class umil
 			$parent_sql = '';
 			if ($parent !== false)
 			{
+				// Allows '' to be sent as 0
+				$parent = (!$parent) ? 0 : $parent;
+
 				if (!is_numeric($parent))
 				{
 					$sql = 'SELECT module_id FROM ' . MODULES_TABLE . "
@@ -1508,12 +1548,8 @@ class umil
 	function permission_add($auth_option, $global = true)
 	{
 		// Multicall
-		if (is_array($auth_option))
+		if ($this->multicall(__FUNCTION__, $auth_option))
 		{
-			foreach ($auth_option as $params)
-			{
-				call_user_func_array(array($this, 'permission_add'), $params);
-			}
 			return;
 		}
 
@@ -1577,12 +1613,8 @@ class umil
 		global $auth, $cache;
 
 		// Multicall
-		if (is_array($auth_option))
+		if ($this->multicall(__FUNCTION__, $auth_option))
 		{
-			foreach ($auth_option as $params)
-			{
-				call_user_func_array(array($this, 'permission_remove'), $params);
-			}
 			return;
 		}
 
@@ -1649,12 +1681,8 @@ class umil
 		global $auth;
 
 		// Multicall
-		if (is_array($name))
+		if ($this->multicall(__FUNCTION__, $name))
 		{
-			foreach ($name as $params)
-			{
-				call_user_func_array(array($this, 'permission_set'), $params);
-			}
 			return;
 		}
 
@@ -1803,12 +1831,8 @@ class umil
 		global $auth;
 
 		// Multicall
-		if (is_array($name))
+		if ($this->multicall(__FUNCTION__, $name))
 		{
-			foreach ($name as $params)
-			{
-				call_user_func_array(array($this, 'permission_unset'), $params);
-			}
 			return;
 		}
 
@@ -1950,15 +1974,10 @@ class umil
 		global $dbms, $user;
 
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_add'), $params);
-			}
 			return;
 		}
-
 
 		/**
 		* $table_data can be empty when uninstalling a mod and table_remove was used, but no 2rd argument was given.
@@ -2018,12 +2037,8 @@ class umil
 	function table_remove($table_name)
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_remove'), $params);
-			}
 			return;
 		}
 
@@ -2069,12 +2084,8 @@ class umil
 	function table_column_add($table_name, $column_name = '', $column_data = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_column_add'), $params);
-			}
 			return;
 		}
 
@@ -2109,12 +2120,8 @@ class umil
 	function table_column_update($table_name, $column_name = '', $column_data = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_column_update'), $params);
-			}
 			return;
 		}
 
@@ -2140,12 +2147,8 @@ class umil
 	function table_column_remove($table_name, $column_name = '')
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_column_remove'), $params);
-			}
 			return;
 		}
 
@@ -2190,22 +2193,15 @@ class umil
 	function table_index_add($table_name, $index_name = '', $column = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_index_add'), $params);
-			}
 			return;
 		}
 
-		/**
-		* $column can be empty when uninstalling a mod and table_index_remove was used, but no 3rd argument was given.
-		* In that case we'll assume that it was an index previously added by the mod (if not the author should specify a 3rd argument) and skip this to prevent an error
-		*/
+		// Let them skip the column field and just use the index name in that case as the column as well
 		if (empty($column))
 		{
-			return;
+			$column = array($index_name);
 		}
 
 		$this->get_table_name($table_name);
@@ -2222,11 +2218,6 @@ class umil
 			$column = array($column);
 		}
 
-		if (empty($column))
-		{
-			$column = array($index_name);
-		}
-
 		$this->db_tools->sql_create_index($table_name, $index_name, $column);
 
 		return $this->umil_end();
@@ -2240,12 +2231,8 @@ class umil
 	function table_index_remove($table_name, $index_name = '')
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_index_remove'), $params);
-			}
 			return;
 		}
 
@@ -2274,12 +2261,8 @@ class umil
 	function table_row_insert($table_name, $data = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_row_insert'), $params);
-			}
 			return;
 		}
 
@@ -2311,12 +2294,8 @@ class umil
 	function table_row_update($table_name, $data = array(), $new_data = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_row_remove'), $params);
-			}
 			return;
 		}
 
@@ -2334,22 +2313,9 @@ class umil
 			return $this->umil_end('TABLE_NOT_EXIST', $table_name);
 		}
 
-		$sql = '';
-		foreach ($data as $key => $value)
-		{
-			$sql .= ($sql == '') ? 'UPDATE ' . $table_name . ' SET ' . $this->db->sql_build_array('UPDATE', $new_data) . ' WHERE ' : ' AND ';
-			$sql .= $key . ' = ';
-
-			if (is_int($value))
-			{
-				$sql .= $value;
-			}
-			else
-			{
-				$sql .= "'$value'";
-			}
-		}
-
+		$sql = 'UPDATE ' . $table_name . '
+			SET ' . $this->db->sql_build_array('UPDATE', $new_data) . '
+			WHERE ' . $this->db->sql_build_array('SELECT', $data);
 		$this->db->sql_query($sql);
 
 		return $this->umil_end();
@@ -2367,12 +2333,8 @@ class umil
 	function table_row_remove($table_name, $data = array())
 	{
 		// Multicall
-		if (is_array($table_name))
+		if ($this->multicall(__FUNCTION__, $table_name))
 		{
-			foreach ($table_name as $params)
-			{
-				call_user_func_array(array($this, 'table_row_remove'), $params);
-			}
 			return;
 		}
 
@@ -2390,22 +2352,7 @@ class umil
 			return $this->umil_end('TABLE_NOT_EXIST', $table_name);
 		}
 
-		$sql = '';
-		foreach ($data as $key => $value)
-		{
-			$sql .= ($sql == '') ? 'DELETE FROM ' . $table_name . ' WHERE ' : ' AND ';
-			$sql .= $key . ' = ';
-
-			if (is_int($value))
-			{
-				$sql .= $value;
-			}
-			else
-			{
-				$sql .= "'$value'";
-			}
-		}
-
+		$sql = 'DELETE FROM ' . $table_name . ' WHERE ' . $this->db->sql_build_array('SELECT', $data);
 		$this->db->sql_query($sql);
 
 		return $this->umil_end();
