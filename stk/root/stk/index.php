@@ -299,6 +299,24 @@ if ($plugin->get_part('t'))
 	// Load the tool
 	$tool = $plugin->load_tool($plugin->get_part('c'), $plugin->get_part('t'));
 
+	// Can we use this tool?
+	if (method_exists($tool, 'tool_active'))
+	{
+		if (($msg = $tool->tool_active()) !== true)
+		{
+			if ($msg === false)
+			{
+				$msg = $user->lang['TOOL_NOT_AVAILABLE'];
+			}
+			else
+			{
+				$msg = isset($user->lang[$msg]) ? $user->lang[$msg] : $msg;
+			}
+
+			trigger_error($msg);
+		}
+	}
+
 	$error = array();
 	if ($submit)
 	{

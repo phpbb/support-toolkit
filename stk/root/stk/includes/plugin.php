@@ -267,6 +267,15 @@ class plugin
 		{
 			$class = $this->load_tool($this->_parts['c'], $tool);
 
+			// Can this tool be used?
+			if (method_exists($class, 'tool_active'))
+			{
+				if ($class->tool_active() !== true)
+				{
+					continue;
+				}
+			}
+
 			// Get the info
 			if (method_exists($class, 'info'))
 			{

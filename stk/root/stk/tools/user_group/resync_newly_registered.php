@@ -33,6 +33,19 @@ class resync_newly_registered
 	);
 
 	/**
+	* Limit tool access to <= phpBB 3.0.5
+	*/
+	function tool_active()
+	{
+		if (version_compare(PHPBB_VERSION, '3.0.5', '<='))
+		{
+			return 'PLUGIN_INCOMPATIBLE_PHPBB_VERSION';
+		}
+
+		return true;
+	}
+
+	/**
 	* Display Options
 	*
 	* Output the options available

@@ -18,6 +18,19 @@ if (!defined('IN_PHPBB'))
 
 class database_cleaner
 {
+	/**
+	* Do we have a datafile for this version?
+	*/
+	function tool_active()
+	{
+		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . PHPBB_VERSION . '.' . PHP_EXT))
+		{
+			return 'DATAFILE_NOT_FOUND';
+		}
+
+		return true;
+	}
+
 	function display_options()
 	{
 		global $config, $db, $plugin, $template, $umil, $user;

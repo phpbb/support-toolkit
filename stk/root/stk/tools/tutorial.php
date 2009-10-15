@@ -33,6 +33,27 @@ if (!defined('IN_PHPBB'))
 */
 class tutorial
 {
+	/**
+	* Tool active
+	*
+	* This method allows you to limit access to the tool based upon certain criteria. For example if a tool is designed to fix an issue
+	* that only arises in certain phpBB version you can activate this tool only for that version through this method.
+	* If you leave this method out no limit will be set
+	*
+	* If the tool can be used this method must return true. If not you can both return the boolean value "false" or a language entry
+	* explaining why the tool can't be used
+	*/
+	function tool_active()
+	{
+		// Limit access to phpBB 3.0.2
+		if (version_compare(PHPBB_VERSION, '3.0.2', '='))
+		{
+			return 'TUTORIAL_NOT_AVAILABLE';
+		}
+
+		return true;
+	}
+
 	/*
 	* Display Options
 	*
