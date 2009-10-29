@@ -23,7 +23,9 @@ class database_cleaner
 	*/
 	function tool_active()
 	{
-		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . PHPBB_VERSION . '.' . PHP_EXT))
+		$phpbb_version = str_replace('.', '_', PHPBB_VERSION);
+
+		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $phpbb_version . '.' . PHP_EXT))
 		{
 			return 'DATAFILE_NOT_FOUND';
 		}
