@@ -46,7 +46,7 @@
 <action-group>
 	<open src="includes/functions.php">
 		<edit>
-			<find><![CDATA['U_ACP' =>]]]></find>
+			<find><![CDATA['U_ACP' =>]]></find>
 			<action type="before-add"><![CDATA[		//-- Support Toolkit
 		//-- Add:
 		'U_STK' => ($user->data['user_type'] == USER_FOUNDER) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
