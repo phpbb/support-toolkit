@@ -37,7 +37,7 @@
 		<time>60</time>
 		<target-version>3.0.5</target-version>
 	</installation>
-	
+
 	<link-group>
 		<link type="parent" href="./../install.xml" lang="en">Main installation file.</link>
 	</link-group>
@@ -46,7 +46,7 @@
 <action-group>
 	<open src="includes/functions.php">
 		<edit>
-			<find><![CDATA['U_ACP' => ($auth->acl_get('a_') && $user->data['is_registered']]]></find>
+			<find><![CDATA['U_ACP' =>]]]></find>
 			<action type="before-add"><![CDATA[		//-- Support Toolkit
 		//-- Add:
 		'U_STK' => ($user->data['user_type'] == USER_FOUNDER) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
@@ -66,11 +66,8 @@
 
 	<open src="styles/prosilver/template/overall_footer.html">
 		<edit>
-			<find><![CDATA[<!-- IF U_ACP --><br /><strong>]]></find>
-			<inline-edit>
-				<inline-find><![CDATA[</strong>]]></inline-find>
-				<inline-action type="after-add"><![CDATA[<br /><strong><a href="{U_STK}" title="{L_STK}">{L_STK}</a></strong>]]></inline-action>
-			</inline-edit>
+			<find><![CDATA[<!-- IF U_ACP --><br /><strong><a href="{U_ACP}">{L_ACP}</a></strong><!-- ENDIF -->]]></find>
+			<action type="after-add"><![CDATA[<!-- IF U_STK --><br /><strong><a href="{U_STK}" title="{L_STK}">{L_STK}</a></strong><!-- ENDIF -->]]></action>
 		</edit>
 	</open>
 </action-group>
