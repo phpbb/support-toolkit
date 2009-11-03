@@ -1,0 +1,28 @@
+= Support Toolkit =
+The Support Toolkit (STK) was developed by the phpBB.com Support Team in cooperation with EXreaction. The STK provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software.
+
+= Install =
+In order to install the Support Toolkit you must upload the complete "stk" directory into your forums root directory on your server, you can identify this directory by a file named "config.php". Once you have uploaded the directory into the correct place you only have to point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
+In the "contrib" folder you will find some additional installation instructions (in the MODX format) that will allow you to intergrate the STK better in your phpBB installation.
+
+= Changelog =
+== Changes since RC2 ==
+* [Add] Add the ability to "mass demote" founders through the list founders tool. (Bug #51435)
+* [Add] "Resync users with newly registered users group" tool. (Bug #52405)
+* [Fix] "Recreate Module Management modules" tool now also re-enables the modules if required.
+* [Fix] Set the correct language packs for phpBB <= 3.0.2. (Bug #51535)
+* [Fix] Display correct messages when fields are filled out incorrect in the add user tool. (Bug #52385)
+* [Fix] Updates of UMIL break the Support Toolkit. (Bug #53375)
+
+== Changes since RC1 ==
+* [Fix] Remove the hardcoded location of the toolkit. (Bug #47375)
+* [Fix] Make sure the menu is sorted correctly when using a translated version.
+* [Fix] Changed the message displayed when the Sanitise user tool doesn't do anything. (Bug #47405)
+* [Fix] Invalid XHTML in the profile list tool.
+* [Fix] Don't break the layout when displaying large query results.
+* [Fix] Non-existant style causes STK to not start. (Bug #47925)
+* [Fix] Version check for hosts with strange fsockopen settings. (Bug #47445)
+* [Fix] Don't disable the STK if the version check file on phpbb.com couldn't be found. (Bug #48845)
+* [Fix] Non-existant style causes STK crash. (Bug #47925)
+* [Fix] Double table prefix in the database cleaner. (Bug #49255)
+
