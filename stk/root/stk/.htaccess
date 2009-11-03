@@ -1,9 +1,0 @@
-<Files "config.php">
-Order Allow,Deny
-Deny from All
-</Files>
-
-<Files "passwd.php">
-Order Allow,Deny
-Deny from All
-</Files>
