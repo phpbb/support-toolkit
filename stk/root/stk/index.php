@@ -52,13 +52,6 @@ $auth->acl($user->data);
 // Make sure that umil is always usable
 $umil = new umil(true);
 
-/* For testing the style repair (when testing comment out the header redirect line below or you'll have an infinate loop :P)
-set_config('default_style', 0);
-$db->sql_query('TRUNCATE TABLE ' . STYLES_TABLE);
-$db->sql_query('TRUNCATE TABLE ' . STYLES_TEMPLATE_TABLE);
-$db->sql_query('TRUNCATE TABLE ' . STYLES_THEME_TABLE);
-$db->sql_query('TRUNCATE TABLE ' . STYLES_IMAGESET_TABLE);*/
-
 // A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
 $config['default_style'] = (!isset($config['default_style']) || !$config['default_style']) ? 1 : $config['default_style'];
 $sql = 'SELECT s.style_id, t.template_path
