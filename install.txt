@@ -3,7 +3,7 @@ The Support Toolkit (STK) was developed by the phpBB.com Support Team in coopera
 
 = Install =
 To install the Support Toolkit, upload the complete "stk" directory into your forum's root directory on your server (the one containing a file named "config.php"). Once you have uploaded the directory into the correct place, point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
-In the "contrib" folder you will find some additional installation instructions (in the MODX format) which will allow you to better integrate the STK better with your phpBB installation.
+In the "contrib" folder you will find some additional installation instructions (in the MODX format) which will allow you to better integrate the STK with your phpBB installation.
 
 = Changelog =
 == Changes since RC2 ==
