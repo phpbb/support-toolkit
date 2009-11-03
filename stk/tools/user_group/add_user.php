@@ -41,11 +41,11 @@ class add_user
 				'lang'				=> array('lang' => 'LANGUAGE', 'explain' => false, 'type' => 'select', 'function' => 'language_select'),
 				'tz'				=> array('lang' => 'TIMEZONE', 'explain' => false, 'type' => 'select', 'function' => 'tz_select'),
 
-				'legend2'				=> 'ADD_USER_GROUP',
-				'ad_usergroups'			=> array('lang' => 'USER_GROUPS', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
-				'ad_defaultgroup'		=> array('lang' => 'DEFAULT_GROUP', 'explain' => true, 'type' => 'select', 'function' => 'get_groups'),
-				'ad_groupleader'		=> array('lang' => 'GROUP_LEADER', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
-			)
+				'legend2'			=> 'ADD_USER_GROUP',
+				'usergroups'		=> array('lang' => 'USER_GROUPS', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
+				'defaultgroup'		=> array('lang' => 'DEFAULT_GROUP', 'explain' => true, 'type' => 'select', 'function' => 'get_groups'),
+				'groupleader'		=> array('lang' => 'GROUP_LEADER', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_groups'),
+			),
 		);
 	}
 
@@ -107,20 +107,20 @@ class add_user
 
 		// Collect the groups data
 		$groups = array(
-			'default'	=> request_var('ad_defaultgroup', 0),
-			'groups'	=> request_var('ad_usergroups', array(0)),
-			'leaders'	=> request_var('ad_groupleader', array(0)),
+			'default'	=> request_var('defaultgroup', 0),
+			'groups'	=> request_var('usergroups', array(0)),
+			'leaders'	=> request_var('groupleader', array(0)),
 		);
 
 		// Register the user
 		$user_row = array(
-			'username'				=> $data['ad_username'],
-			'user_password'			=> phpbb_hash($data['ad_pass']),
-			'user_email'			=> $data['ad_email'],
+			'username'				=> $data['username'],
+			'user_password'			=> phpbb_hash($data['new_password']),
+			'user_email'			=> $data['email'],
 			'group_id'				=> (int) $groups['default'],
-			'user_timezone'			=> (float) $data['ad_tz'],
+			'user_timezone'			=> (float) $data['tz'],
 			'user_dst'				=> $is_dst,
-			'user_lang'				=> $data['ad_lang'],
+			'user_lang'				=> $data['lang'],
 			'user_type'				=> USER_NORMAL,
 			'user_actkey'			=> '',
 			'user_ip'				=> $user->ip,
