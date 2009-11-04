@@ -2,8 +2,8 @@
 The Support Toolkit (STK) was developed by the phpBB.com Support Team in cooperation with EXreaction. The STK provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit RC2
-Supported phpBB versions 3.0.0 - 3.0.5
+Support Toolkit RC3
+Supported phpBB versions 3.0.0 - 3.0.6
 
 == Authors ==
 Erik Frèrejean
