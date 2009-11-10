@@ -41,7 +41,7 @@ $lang = array_merge($lang, array(
 	'RESYNC_NEWLY_REGISTERED'				=> 'Resynchronise newly registered users',
 	'RESYNC_NEWLY_REGISTERED_CONFIRM'		=> 'Are you sure that you want to resynchronise the newly registered users group? This will remove/add all users to/from the "Newly Registered Users Group" that fit the settings in the ACP.',
 	'RESYNC_NEWLY_REGISTERED_FINISHED'		=> 'The newly registered users group was successfully resyncronised!',
-	'RESYNC_NEWLY_REGISTERED_NOT_FINISHED'	=> 'Resyncing of the newly registered users group is in process. Please don\'t interrupt this process',
+	'RESYNC_NEWLY_REGISTERED_NOT_FINISHED'	=> 'Resyncing of the newly registered users group is in process. Please donÕt interrupt this process',
 ));
 
 ?>

@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
-	'DATAFILE_NOT_FOUND'			=> 'The support toolkit couldn\'t find the required datafile for your phpBB version!',
+	'DATAFILE_NOT_FOUND'			=> 'The support toolkit couldn’t find the required datafile for your phpBB version!',
 
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',

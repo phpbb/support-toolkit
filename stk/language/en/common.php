@@ -70,11 +70,11 @@ $lang = array_merge($lang, array(
    'LOGIN_STK_SUCCESS'					=> 'You have successfully authenticated and will now be redirected to the Support Toolkit.',
 
    'NOTICE'								=> 'Notice',
-   'NO_VERSION_FILE'					=> 'The Support Toolkit coudn\'t determine the latest version of the package. Please go the Support Toolkit <a href="http://www.phpbb.com/support/stk/">pages</a> and make sure that you are using the latest version of the package before continueing using it.',
+   'NO_VERSION_FILE'					=> 'The Support Toolkit coudn’t determine the latest version of the package. Please go the Support Toolkit <a href="http://www.phpbb.com/support/stk/">pages</a> and make sure that you are using the latest version of the package before continueing using it.',
 
    'PASS_GENERATED'						=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>, after this time you <strong>must</strong> generate a new file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you’ve downloaded this file you must upload it to your server into the "stk" directory',
    'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',
-   'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn\'t compatible with the version of phpBB that you are running',
+   'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn’t compatible with the version of phpBB that you are running',
    'PROCEED_TO_STK'						=> '%sProceed to the Support Toolkit%s',
 
    'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit!',
@@ -91,7 +91,7 @@ $lang = array_merge($lang, array(
 
    'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is trying to load a file that does not exist: %1$s',
    'TOOL_NAME'							=> 'Tool Name',
-   'TOOL_NOT_AVAILABLE'					=> 'The requested tool isn\'t available!',
+   'TOOL_NOT_AVAILABLE'					=> 'The requested tool isn’t available!',
 
    'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to <strong>only</strong> use this method when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
 ));
