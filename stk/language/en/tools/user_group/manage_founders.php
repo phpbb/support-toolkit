@@ -47,7 +47,7 @@ $lang = array_merge($lang, array(
 	'MAKE_FOUNDER'				=> 'Make a user Board Founder',
 	'MAKE_FOUNDER_CONFIRM'		=> 'Are you sure you want to make <a href="%1$s">%2$s</a> a Board Founder?  This will give <a href="%1$s">%2$s</a> the ability to delete your account, among other powers.',
 	'MAKE_FOUNDER_EXPLAIN'		=> 'Here you can change a user’s type to be that of a board founder which has FULL administrative permissions.',
-	'MAKE_FOUNDER_FAILED'		=> 'Couldn’t promte this user to a founder',
+	'MAKE_FOUNDER_FAILED'		=> 'Couldn’t promote this user to a founder',
 	'MAKE_FOUNDER_SUCCESS'		=> 'Successfully made <a href="%1$s">%2$s</a> a Board Founder.',
 	'MANAGE_FOUNDERS'			=> 'Manage board founders',
 
