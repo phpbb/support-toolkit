@@ -388,15 +388,18 @@ function stk_version_check()
 		{
 			if (version_compare(STK_VERSION, $info[0], '<'))
 			{
-				$version_check['outdated']	= true;
-				$version_check['latest']	= $info[0];
-				$version_check['topic']		= $info[1];
+				$version_check = array(
+					'outdated'	=> true,
+					'latest'	=> $info[0],
+					'topic'		=> $info[1],
+					'current'	=> STK_VERSION,
+				);
 			}
 
 			$version_check['last_check_session'] = $user->session_id;
 
-			// We've gotten some version data, cache the result for a week or until the session id changes
-			$cache->put('_stk_version_check', $version_check, 604800);
+			// We've gotten some version data, cache the result for a hour or until the session id changes
+			$cache->put('_stk_version_check', $version_check, 3600);
 		}
 	}
 
@@ -410,7 +413,7 @@ function stk_version_check()
 	else if (isset($version_check['outdated']) && $version_check['outdated'] === true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
-		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], STK_VERSION, $version_check['topic'], append_sid(STK_ROOT_PATH . $user->page['page_name'], $user->page['query_string'] . '&amp;force_check=1'));
+		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], $version_check['current'], $version_check['topic'], append_sid(STK_ROOT_PATH . $user->page['page_name'], $user->page['query_string'] . '&amp;force_check=1'));
 
 		// Trigger
 		trigger_error($msg, E_USER_ERROR);

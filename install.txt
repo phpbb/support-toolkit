@@ -21,6 +21,10 @@ In the "contrib" folder you will find some additional installation instructions 
 
 
 = Changelog =
+== Changes since RC3 ==
+* [Fix] Corrected a couple small language issues (Bug #53725, #53835, #53845)
+* [Fix] Display the correct "old" version number when triggering the outdated message after a STK update due to cached information.
+
 == Changes since RC2 ==
 * [Add] Add the ability to "mass demote" founders through the list founders tool. (Bug #51435)
 * [Add] "Resync users with newly registered users group" tool. (Bug #52405)
