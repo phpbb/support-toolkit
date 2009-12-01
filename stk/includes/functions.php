@@ -191,6 +191,9 @@ function stk_add_lang($lang_file)
 		);
 	}
 
+	// Empty the lang_name
+	$user->lang_name = '';
+
 	// Find out what languages we could use
 	if (empty($lang_dirs))
 	{
@@ -230,8 +233,11 @@ function stk_add_lang($lang_file)
 			$user->lang_name = $dir;
 			break;
 		}
+	}
 
-		// This should really never happen
+	// No language file :/
+	if (empty($user->lang_name))
+	{
 		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
 	}
 
