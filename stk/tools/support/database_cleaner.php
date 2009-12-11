@@ -96,6 +96,7 @@ class database_cleaner
 				}
 
 				$existing_tables = get_tables($db);
+				filter_phpbb_tables($existing_tables);
 				$tables = array_unique(array_merge(array_keys($cleaner->tables), $existing_tables));
 				sort($tables);
 

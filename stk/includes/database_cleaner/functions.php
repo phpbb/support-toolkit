@@ -66,4 +66,27 @@ function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
 	$group_rows = array_unique(array_merge(array_keys($cleaner->groups), $existing_groups));
 	sort($group_rows);
 }
+
+function filter_phpbb_tables(&$existing_tables)
+{
+	global $table_prefix;
+
+	if (empty($existing_tables))
+	{
+		return;
+	}
+
+	// tmp array
+	$_existing_tables = array();
+	foreach ($existing_tables as $table)
+	{
+		if (strpos($table, $table_prefix) === 0)
+		{
+			$_existing_tables[] = $table;
+		}
+	}
+
+	// Overwrite array
+	$existing_tables = $_existing_tables;
+}
 ?>
