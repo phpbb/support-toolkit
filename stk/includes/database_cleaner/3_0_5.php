@@ -198,6 +198,8 @@ class database_cleaner_data
 		'min_name_chars'				=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'min_pass_chars'				=> array('config_value' => '6', 'is_dynamic' => '0'),
 		'min_search_author_chars'		=> array('config_value' => '3', 'is_dynamic' => '0'),
+		'min_time_reg'					=> array('config_value' => '0',	'is_dynamic' => '0'),
+		'min_time_terms'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'mime_triggers'					=> array('config_value' => 'body|head|html|img|plaintext|a href|pre|script|table|title', 'is_dynamic' => '0'),
 		'override_user_style'			=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'pass_complex'					=> array('config_value' => 'PASS_TYPE_ANY', 'is_dynamic' => '0'),
