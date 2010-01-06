@@ -602,6 +602,7 @@ class database_cleaner_data
 		array('module_id' => '187', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'profile', 'module_class' => 'ucp', 'parent_id' => '164', 'left_id' => '20', 'right_id' => '21', 'module_langname' => 'UCP_PROFILE_REG_DETAILS', 'module_mode' => 'reg_details', 'module_auth' => ''),
 		array('module_id' => '188', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'zebra', 'module_class' => 'ucp', 'parent_id' => '168', 'left_id' => '50', 'right_id' => '51', 'module_langname' => 'UCP_ZEBRA_FRIENDS', 'module_mode' => 'friends', 'module_auth' => ''),
 		array('module_id' => '189', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'zebra', 'module_class' => 'ucp', 'parent_id' => '168', 'left_id' => '52', 'right_id' => '53', 'module_langname' => 'UCP_ZEBRA_FOES', 'module_mode' => 'foes', 'module_auth' => ''),
+		array('module_id' => '190', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'board', 'module_class' => 'acp', 'parent_id' => '3', 'left_id' => '39', 'right_id' => '40', 'module_langname' => 'ACP_FEED_SETTINGS', 'module_mode' => 'feed', 'module_auth' => 'acl_a_board'),
 	);
 
 	// All default groups
