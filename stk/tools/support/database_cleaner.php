@@ -18,14 +18,24 @@ if (!defined('IN_PHPBB'))
 
 class database_cleaner
 {
+	var $phpbb_version = '';
+
 	/**
 	* Do we have a datafile for this version?
 	*/
 	function tool_active()
 	{
-		$phpbb_version = str_replace('.', '_', PHPBB_VERSION);
+		global $config;
 
-		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $phpbb_version . '.' . PHP_EXT))
+		$this->phpbb_version = str_replace('.', '_', $config['version']);
+
+		// @Debug, can be removed later
+		if (defined('DEBUG_EXTRA') && $this->phpbb_version == '3_0_7-dev')
+		{
+			$this->phpbb_version = '3_0_6';
+		}
+
+		if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $this->phpbb_version . '.' . PHP_EXT) === false)
 		{
 			return 'DATAFILE_NOT_FOUND';
 		}
@@ -51,13 +61,8 @@ class database_cleaner
 		}
 
 		// include the required file for this version
-		$version_file = preg_replace('#([^0-9]+)#', '_', $config['version']) . '.' . PHP_EXT;
-		if (!file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file))
-		{
-			trigger_error('PHPBB_VERSION_NOT_SUPPORTED');
-		}
 		include(STK_ROOT_PATH . 'includes/database_cleaner/functions.' . PHP_EXT);
-		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $version_file);
+		include(STK_ROOT_PATH . 'includes/database_cleaner/' . $this->phpbb_version . '.' . PHP_EXT);
 		$cleaner = new database_cleaner_data();
 
 		$user->add_lang('acp/common');
