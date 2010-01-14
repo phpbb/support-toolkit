@@ -1808,6 +1808,58 @@ class database_cleaner_data
 			'PRIMARY_KEY'	=> array('user_id', 'zebra_id'),
 		);
 
+		// QA captcha tables
+		// Only if required
+		if (file_exists(PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT))
+		{
+			global $umil;
+
+			include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+
+			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE))
+			{
+				$schema_data['phpbb_captcha_answers'] = array(
+					'COLUMNS' => array(
+						'question_id'	=> array('UINT', 0),
+						'answer_text'	=> array('STEXT_UNI', ''),
+					),
+					'KEYS'				=> array(
+						'question_id'			=> array('INDEX', 'question_id'),
+					),
+				);
+
+				$schema_data['phpbb_captcha_questions'] = array(
+					'COLUMNS' => array(
+						'question_id'	=> array('UINT', Null, 'auto_increment'),
+						'strict'		=> array('BOOL', 0),
+						'lang_id'		=> array('UINT', 0),
+						'lang_iso'		=> array('VCHAR:30', ''),
+						'question_text'	=> array('TEXT_UNI', ''),
+					),
+					'PRIMARY_KEY'		=> 'question_id',
+					'KEYS'				=> array(
+						'lang_iso'			=> array('INDEX', 'lang_iso'),
+					),
+				);
+
+				$schema_data['phpbb_qa_confirm'] = array(
+					'COLUMNS' => array(
+						'session_id'	=> array('CHAR:32', ''),
+						'confirm_id'	=> array('CHAR:32', ''),
+						'lang_iso'		=> array('VCHAR:30', ''),
+						'question_id'	=> array('UINT', 0),
+						'attempts'		=> array('UINT', 0),
+						'confirm_type'	=> array('USINT', 0),
+					),
+					'KEYS'				=> array(
+						'session_id'			=> array('INDEX', 'session_id'),
+						'lookup'				=> array('INDEX', array('confirm_id', 'session_id', 'lang_iso')),
+					),
+					'PRIMARY_KEY'		=> 'confirm_id',
+				);
+			}
+		}
+
 		return $schema_data;
 	}
 }
