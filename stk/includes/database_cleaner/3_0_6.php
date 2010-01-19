@@ -1816,7 +1816,7 @@ class database_cleaner_data
 
 			include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
 
-			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE))
+			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE) || $umil->table_exists(CAPTCHA_ANSWERS_TABLE) || $umil->table_exists(CAPTCHA_QA_CONFIRM_TABLE))
 			{
 				$schema_data['phpbb_captcha_answers'] = array(
 					'COLUMNS' => array(
