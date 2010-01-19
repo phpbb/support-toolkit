@@ -456,6 +456,10 @@ class database_cleaner
 							}
 							else if (!isset($cleaner->groups[$name]) && in_array($name, $existing_groups))
 							{
+								if (!function_exists('group_delete'))
+								{
+									include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+								}
 								// Remove it
 								$db->sql_query('SELECT group_id FROM ' . GROUPS_TABLE . ' WHERE group_name = \'' . $name . '\'');
 								$group_id = $db->sql_fetchfield('group_id');
