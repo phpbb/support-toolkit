@@ -38,9 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'GENERATE_IN_PROGRESS'	  => 'Generation of the URL List is currently in progress, once we are finished you will be redirected to the list of URLs',
+	'GENERATE_IN_PROGRESS'	  => 'A URL list is currently being generated. You will be redirected to the list upon completion.',
 	'REGENERATE'				=> 'Regenerate List',
-	'GENERATE_LIST_CONFIRM'	 => 'Are you ready to generate a new list?  This may take a while...',
+	'GENERATE_LIST_CONFIRM'	 => 'Are you sure you want to generate a new URL list? This process may take some time.',
 	'GENERATED_ON'			 => 'Generated on',
 
 	'URL_LIST'				  => 'URL List',

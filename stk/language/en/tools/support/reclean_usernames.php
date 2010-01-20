@@ -42,8 +42,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RECLEAN_USERNAMES'					=> 'Reclean Usernames',
-	'RECLEAN_USERNAMES_COMPLETE'		=> 'The usernames have been recleaned successfully.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Are you sure you want to reclean the usernames?',
+	'RECLEAN_USERNAMES_COMPLETE'		=> 'All usernames have been recleaned successfully.',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Are you sure you want to reclean all usernames?',
 	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'The reclean usernames tool is not yet finished.  Please wait.',
 ));
 
