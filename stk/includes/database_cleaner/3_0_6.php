@@ -117,6 +117,7 @@ class database_cleaner_data
 		'enable_pm_icons'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'enable_post_confirm'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'feed_enable'					=> array('config_value' => '0', 'is_dynamic' => '0'),
+		'feed_http_auth'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'feed_limit_post'				=> array('config_value' => '15', 'is_dynamic' => '0'),
 		'feed_limit_topic'				=> array('config_value' => '10', 'is_dynamic' => '0'),
 		'feed_overall_forums'			=> array('config_value' => '0', 'is_dynamic' => '0'),
