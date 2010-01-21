@@ -6,7 +6,7 @@ Support Toolkit RC3
 Supported phpBB versions 3.0.0 - 3.0.6
 
 == Authors ==
-Erik Frèrejean
+Erik Fr√®rejean
 EXreaction
 
 == Contributors ==
@@ -33,7 +33,7 @@ To upgrade a previous version of the STK to 1.0.0, remove your previous installa
 * [Fix] Users added to the "Newly Registered Users Group" won't be automatically removed (Bug #55695)
 * [Fix] STK shouldn't remove "old" config entries for backwards compatibility (Bug #55375)
 * [Fix] Database cleaner removes feed related items from the database (Bug #54765)
-* [Fix] Reparse BBCode empties some posts (Bug #55765, patch by D¡key)
+* [Fix] Reparse BBCode empties some posts (Bug #55765, patch by D¬°cky)
 * [Fix] Database cleaner removes the Q/A captcha tables (Bug #56605)
 * [Fix] Correct error when attempting to remove groups (Bug #56065)
 * [Fix] SQL error on attempting to replace previously removed default bots (Bug #56065)
