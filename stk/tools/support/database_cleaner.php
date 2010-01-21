@@ -542,6 +542,19 @@ class database_cleaner
 						// Add the bots
 						foreach ($this->bot_list as $bot_name => $bot_ary)
 						{
+							/* Clean the users table of any bots matching this...
+							* this is an issue if a default bot was removed from the bots group. */
+							$username_clean = utf8_clean_string($bot_name);
+							
+							if (empty($username_clean))
+							{
+								// This shouldn't happen but we should handle it anyway...
+								continue;
+							}
+							
+							$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $username_clean . '\'';
+							$db->sql_query($sql);
+							
 							$user_row = array(
 								'user_type'				=> USER_IGNORE,
 								'group_id'				=> $group_id,
