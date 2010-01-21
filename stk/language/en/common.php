@@ -49,8 +49,8 @@ $lang = array_merge($lang, array(
    'CAT_MAIN_EXPLAIN'					=> 'The Support Toolkit (STK) may be used to fix common issues within a working installation of phpBB 3.0.x. It serves as a second Administration Control Panel, providing an administrator with a set of tools to resolve common problems that may prevent a phpBB3 installation from functioning properly.',
    'CAT_SUPPORT'						=> 'Support Tools',
    'CAT_SUPPORT_EXPLAIN'				=> 'Support Tools may be used to aid in the recovery of a phpBB 3.0.x installation that is no longer functioning properly.',
-   'CAT_USER_GROUP'						=> 'User/Group Tools',
-   'CAT_USER_GROUP_EXPLAIN'				=> 'User and Group Tools may be used to manage users and groups in ways that are not available in a stock phpBB 3.0.x installation.',
+   'CAT_USERGROUP'						=> 'User/Group Tools',
+   'CAT_USERGROUP_EXPLAIN'				=> 'User and Group Tools may be used to manage users and groups in ways that are not available in a stock phpBB 3.0.x installation.',
    'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn’t be loaded. Please check your installation',
 
    'DOWNLOAD_PASS'						=> 'Download the password file.',
