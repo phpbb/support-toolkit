@@ -40,6 +40,7 @@ To upgrade a previous version of the STK to 1.0.0, remove your previous installa
 * [Fix] Rename user_group section to usergroup to avoid triggering mod_security (Bug #48225)
 * [Fix] Select the "registered users" group as default in the Add user tool
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
+* [Remove] URL List tool deferred until post-1.0.0 due to necessary refactoring (Bug #50255)
 
 == Changes since RC2 ==
 * [Add] Add the ability to "mass demote" founders through the list founders tool. (Bug #51435)
