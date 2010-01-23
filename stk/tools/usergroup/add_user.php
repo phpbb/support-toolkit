@@ -245,6 +245,7 @@ class add_user
 function get_groups()
 {
 	static $option_list = null;
+	$args = func_get_args();
 
 	// Only run this once
 	if ($option_list == null)
@@ -263,11 +264,18 @@ function get_groups()
 		$option_list = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
+			$selected	= ($row['group_name'] == 'REGISTERED') ? 'selected=selected' : '';
 			$group_name = ($row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $row['group_name']] : $row['group_name'];
-			$option_list .= "<option value='{$row['group_id']}'>{$group_name}</option>";
+			$option_list .= "<option value='{$row['group_id']}'{$selected}>{$group_name}</option>";
 		}
 
 		$db->sql_freeresult($result);
+	}
+
+	// Remove the selected statement if we are displaying the leaderships group list
+	if ($args[1] == 'groupleader')
+	{
+		return str_replace('selected=selected', '', $option_list);
 	}
 
 	return $option_list;
