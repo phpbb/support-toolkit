@@ -39,6 +39,7 @@ To upgrade a previous version of the STK to 1.0.0, remove your previous installa
 * [Fix] SQL error on attempting to replace previously removed default bots (Bug #56065)
 * [Fix] Rename user_group section to usergroup to avoid triggering mod_security (Bug #48225)
 * [Fix] Select the "registered users" group as default in the Add user tool
+* [Fix] Reparse BBCode encodes some previously encoded entities (Bug #56885, patch by D¡cky)
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
 * [Remove] URL List tool deferred until post-1.0.0 due to necessary refactoring (Bug #50255)
 

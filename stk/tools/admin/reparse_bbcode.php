@@ -56,8 +56,8 @@ class reparse_bbcode
 
 			// This should make the text the same as it would be coming from a new post submitted
 			decode_message($row['post_text'], $row['bbcode_uid']);
-			$row['post_text'] = html_entity_decode($row['post_text'], ENT_COMPAT, 'UTF-8');
-			set_var($row['post_text'], $row['post_text'], 'string', true);
+			$row['post_text'] = html_entity_decode(htmlspecialchars_decode($row['post_text'], ENT_NOQUOTES),  ENT_COMPAT, 'UTF-8');
+ 			set_var($row['post_text'], $row['post_text'], 'string', true);
 
 			$message_parser = new parse_message();
 			$message_parser->message = $row['post_text'];
