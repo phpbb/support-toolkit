@@ -29,12 +29,6 @@ class database_cleaner
 
 		$this->phpbb_version = str_replace('.', '_', $config['version']);
 
-		// @Debug, can be removed later
-		if (defined('DEBUG_EXTRA') && $this->phpbb_version == '3_0_7-dev')
-		{
-			$this->phpbb_version = '3_0_6';
-		}
-
 		if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $this->phpbb_version . '.' . PHP_EXT) === false)
 		{
 			return 'DATAFILE_NOT_FOUND';
@@ -545,16 +539,16 @@ class database_cleaner
 							/* Clean the users table of any bots matching this...
 							* this is an issue if a default bot was removed from the bots group. */
 							$username_clean = utf8_clean_string($bot_name);
-							
+
 							if (empty($username_clean))
 							{
 								// This shouldn't happen but we should handle it anyway...
 								continue;
 							}
-							
+
 							$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $username_clean . '\'';
 							$db->sql_query($sql);
-							
+
 							$user_row = array(
 								'user_type'				=> USER_IGNORE,
 								'group_id'				=> $group_id,
