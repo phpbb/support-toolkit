@@ -706,7 +706,7 @@ class database_cleaner
 			// PostgreSQL
 			case 'postgres'	:
 				$sql = "SELECT a.attname
-					FROM (pg_class c, pg_attribute a)
+					FROM pg_class AS c, pg_attribute AS a
 					WHERE c.relname = '{$table}'
 						AND a.attnum > 0
 						AND a.attrelid = c.oid";
