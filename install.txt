@@ -42,6 +42,7 @@ To upgrade a previous version of the STK to 1.0.0, remove your previous installa
 * [Fix] Select the "registered users" group as default in the Add user tool.
 * [Fix] Reparse BBCode encodes some previously encoded entities. (Bug #56885, patch by D¡cky)
 * [Fix] "Database Cleaner" doesn't work with PostgreSQL. (Bug #56565, patch by we3b)
+* [Fix] Reparse BBCode does not properly handle UTF8 on PHP4 (Bug #56885, patch by D¡cky)
 * [Remove] URL List tool deferred until post-1.0.0 due to necessary refactoring. (Bug #50255)
 
 == Changes since RC2 ==
