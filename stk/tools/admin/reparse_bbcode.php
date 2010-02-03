@@ -16,6 +16,10 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
+/**
+* @note: the backup feature currently only crates a backup of the posts that are
+* 		 being reparsed. There is not yet an interface to restore it!
+*/
 class reparse_bbcode
 {
 	/**
@@ -89,14 +93,14 @@ class reparse_bbcode
 	*/
 	function run_tool()
 	{
-		global $config, $db, $template, $user;
+		global $config, $db, $user;
 
 		// Prevent some errors from missing language strings.
 		$user->add_lang('posting');
 
 		// Define some vars that we'll need
 		$step	= request_var('step', 0);
-		$start	= $step * $this->step_size;
+		$start	= ($step - 1) * $this->step_size;
 		$cnt	= 0;
 
 		// The message parser
@@ -116,6 +120,7 @@ class reparse_bbcode
 		if ($step == 0)
 		{
 			$this->_prepare_backup();
+			$this->_next_step($step);
 		}
 
 		// Greb our batch
@@ -126,7 +131,7 @@ class reparse_bbcode
 				POSTS_TABLE		=> 'p',
 				TOPICS_TABLE	=> 't',
 			),
-			'WHERE'		=> "p.bbcode_bitfield != '' AND t.topic_id = p.topic_id",
+			'WHERE'		=> "p.bbcode_bitfield != '' AND t.topic_id = p.topic_id AND f.forum_id = t.forum_id",
 		);
 		$sql	= $db->sql_build_query('SELECT', $sql_ary);
 		$result	= $db->sql_query_limit($sql, $this->step_size, $start);
@@ -166,7 +171,7 @@ class reparse_bbcode
 			$this->_reparse_post($post_data);
 
 			// Now its time to submit the post
-			submit_post('edit', $this->post['post_subject'], $this->post['post_username'], $this->post['topic_type'], $this->post, $post_data, true, true);
+			submit_post('edit', $this->post['post_subject'], $this->post['post_username'], $this->post['topic_type'], $this->poll, $post_data, true, true);
 
 			// Unset some vars for the next round
 			$this->message_parser = null;
@@ -175,7 +180,18 @@ class reparse_bbcode
 		}
 
 		// Next step
-		meta_refresh(3, append_sid(STK_ROOT_PATH, array('c' => 'user_group', 't' => 'resync_newly_registered', 'step' => $step++, 'submit' => 1)));
+		$this->_next_step($step);
+	}
+
+	/**
+	* Move the tool to the next step
+	* @param Integer $step The current step
+	*/
+	function _next_step($step)
+	{
+		global $template, $user;
+
+		meta_refresh(3, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => 'admin', 't' => 'reparse_bbcode', 'step' => ++$step, 'submit' => 1)));
 		$template->assign_var('U_BACK_TOOL', false);
 
 		trigger_error($user->lang('REPARSE_BBCODE_PROGRESS', ($step - 1), $step));
@@ -186,9 +202,6 @@ class reparse_bbcode
 	*/
 	function _reparse_poll()
 	{
-		// Doesn't work correctly yet
-		return;
-
 		global $db;
 
 		// Setup the poll parser
@@ -201,6 +214,8 @@ class reparse_bbcode
 
 		// Parse the title
 		$poll_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
+		// tmp var
+		$poll_title = $poll_parser->message;;
 
 		// Fetch the options
 		$poll_options = array();
@@ -210,14 +225,15 @@ class reparse_bbcode
 		$result = $db->sql_query($sql);
 		while ($option = $db->sql_fetchrow($result))
 		{
-			$this->_clean_message($option['poll_option_text']);
-			$poll_options[$option['poll_option_id']] = $option['poll_option_text'];
+			$poll_parser->message = $option['poll_option_text'];
+			$this->_clean_message($poll_parser);
+			$poll_options[$option['poll_option_id']] = $poll_parser->message;
 		}
 		$db->sql_freeresult($result);
 
 		// Fill the poll array
 		$this->poll = array(
-			'poll_title'		=> $poll_parser->message,
+			'poll_title'		=> $poll_title,
 			'poll_length'		=> $this->post['poll_length'],
 			'poll_max_options'	=> $this->post['poll_max_options'],
 			'poll_option_text'	=> implode("\n", $poll_options),
@@ -232,23 +248,6 @@ class reparse_bbcode
 
 		// Parse the poll
 		$poll_parser->parse_poll($this->poll);
-
-		// Update the database entries
-		$sql = 'UPDATE ' . TOPICS_TABLE . "
-			SET poll_title = '" . $poll_parser->message . "'
-			WHERE topic_id = " . $this->post['topic_id'];
-		$db->sql_query($sql);
-
-		// Update the poll_options
-		$poll_options = explode("\n", $this->poll['poll_option_text']);
-		foreach($poll_options as $option_id => $option)
-		{
-			$sql = 'UPDATE ' . POLL_OPTIONS_TABLE . '
-				SET poll_option_text = ' . $option . '
-				WHERE topic_id = ' . $this->post['topic_id'] . '
-					AND poll_option_id = ' . $option_id;
-			$db->sql_query($sql);
-		}
 	}
 
 	function _reparse_post(&$post_data)
@@ -303,7 +302,6 @@ class reparse_bbcode
 	*/
 	function _clean_message($parser)
 	{
-//		echo'<pre>';print_r($parser);echo'</pre><hr />';
 		// Format the content as if it where *INSIDE* the posting field.
 		call_user_func(array($parser, 'decode_message'), $this->post['bbcode_uid']); //Do not change to: $parser->decode_message($this->post['bbcode_uid']);, for some reason doesn't work :/
 		$message = &$parser->message;	// tmp copy
@@ -316,7 +314,6 @@ class reparse_bbcode
 		// Update the parser
 		$parser->message = &$message;
 		unset($message);
-//		*/
 	}
 
 	/**
