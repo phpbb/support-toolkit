@@ -136,7 +136,7 @@ class resync_newly_registered
 		$this->fix_new_flag($users, $group_name);
 
 		// Next batch
-		meta_refresh(3, append_sid(STK_ROOT_PATH, array('c' => 'user_group', 't' => 'resync_newly_registered', 'step' => $step, 'last' => array_pop($users), 'submit' => 1)));
+		meta_refresh(3, append_sid(STK_ROOT_PATH, array('c' => 'usergroup', 't' => 'resync_newly_registered', 'step' => $step, 'last' => array_pop($users), 'submit' => 1)));
 		trigger_error('RESYNC_NEWLY_REGISTERED_NOT_FINISHED');
 	}
 
@@ -210,7 +210,7 @@ class resync_newly_registered
 
 		// Value?
 		$new_group_value = ($group_name == 'REGISTERED' || $group_name == 'REGISTERED_COPPA') ? 1 : 0;
-		
+
 		// Set the flag
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_new = ' . $new_group_value . ' WHERE ' . $db->sql_in_set('user_id', $user_ids);
 		$db->sql_query($sql);
