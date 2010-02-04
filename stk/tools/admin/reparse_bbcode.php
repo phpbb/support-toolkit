@@ -191,7 +191,7 @@ class reparse_bbcode
 	{
 		global $template, $user;
 
-		meta_refresh(3, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => 'admin', 't' => 'reparse_bbcode', 'step' => ++$step, 'submit' => 1)));
+		meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, array('c' => 'admin', 't' => 'reparse_bbcode', 'step' => ++$step, 'submit' => 1)));
 		$template->assign_var('U_BACK_TOOL', false);
 
 		trigger_error($user->lang('REPARSE_BBCODE_PROGRESS', ($step - 1), $step));
@@ -252,20 +252,37 @@ class reparse_bbcode
 
 	function _reparse_post(&$post_data)
 	{
-		global $user;
+		global $db, $user;
 
 		// Clean it
 		$this->_clean_message($this->message_parser);
+
+		// Attachments?
+		if ($this->post['post_attachment'] == 1)
+		{
+			// Fetch the attachments for this post
+			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
+				FROM ' . ATTACHMENTS_TABLE . '
+				WHERE post_msg_id = ' . $this->post['post_id'] . '
+					AND in_message = 0
+					AND is_orphan = 0
+				ORDER BY filetime DESC';
+			$result = $db->sql_query($sql);
+			$this->message_parser->attachment_data = $db->sql_fetchrowset($result);
+			$db->sql_freeresult($result);
+		}
 
 		// Re-parse it
 		$this->message_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
 
 		// Update the post data
 		$post_data = array_merge($this->post, $this->post_flags, array(
-			'message'			=> $this->message_parser->message,
-			'message_md5'		=> md5($this->message_parser->message),
 			'bbcode_bitfield'	=> $this->message_parser->bbcode_bitfield,
 			'bbcode_uid'		=> $this->message_parser->bbcode_uid,
+			'message'			=> $this->message_parser->message,
+			'message_md5'		=> md5($this->message_parser->message),
+			'attachment_data'	=> $this->message_parser->attachment_data,
+			'filename_data'		=> $this->message_parser->filename_data,
 		));
 
 		// Make sure some required vars are set
