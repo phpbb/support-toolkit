@@ -446,4 +446,25 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 	// Call the phpBB error message handler
 	msg_handler($errno, $msg_text, $errfile, $errline);
 }
+
+// php >= 5.2.0 function
+if (!function_exists('array_fill_keys'))
+{
+	/**
+	* Fills an array with the value of the value parameter, using the values of the keys array as keys.
+	* @param Array $keys Array of values that will be used as keys. Illegal values for key will be converted to string.
+	* @param mixed $value Value to use for filling
+	*/
+	function array_fill_keys($keys, $value)
+	{
+		$array = array();
+
+		foreach ($keys as $key)
+		{
+			$array[$key] = $value;
+		}
+
+		return $array;
+	}
+}
 ?>
