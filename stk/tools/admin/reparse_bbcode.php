@@ -153,6 +153,9 @@ class reparse_bbcode
 			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
 		}
 
+		// Backup
+		$this->_backup($batch);
+
 		// Walk through the batch
 		foreach ($batch as $this->post)
 		{
@@ -167,12 +170,6 @@ class reparse_bbcode
 			// Setup the message parser
 			$this->message_parser = new parse_message($this->post['post_text']);
 			unset($this->post['post_text']);
-
-			// Post has a poll?
-			if ($this->post['poll_title'] && $this->post['post_id'] == $this->post['topic_first_post_id'])
-			{
-				$this->_reparse_poll();
-			}
 
 			// Reparse the actual pst
 			$post_data = array();
@@ -223,13 +220,14 @@ class reparse_bbcode
 		// Parse the title
 		$poll_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
 		// tmp var
-		$poll_title = $poll_parser->message;;
+		$poll_title = $poll_parser->message;
 
 		// Fetch the options
 		$poll_options = array();
 		$sql	= 'SELECT poll_option_id, poll_option_text
 			FROM ' . POLL_OPTIONS_TABLE . '
-			WHERE topic_id = ' . $this->post['topic_id'];
+			WHERE topic_id = ' . $this->post['topic_id'] . '
+				ORDER BY poll_option_id';
 		$result = $db->sql_query($sql);
 		while ($option = $db->sql_fetchrow($result))
 		{
@@ -256,6 +254,14 @@ class reparse_bbcode
 
 		// Parse the poll
 		$poll_parser->parse_poll($this->poll);
+
+		// There is a case where the poll has BBCodes but the post doesn't.
+		// In this case we give the post the bbcode_bitfield from the poll inorder
+		// to keep the bbcodes working
+		if (!$this->message_parser->bbcode_bitfield && $poll_parser->bbcode_bitfield)
+		{
+			$this->message_parser->bbcode_bitfield = $poll_parser->bbcode_bitfield;
+		}
 	}
 
 	function _reparse_post(&$post_data)
@@ -278,6 +284,12 @@ class reparse_bbcode
 			$result = $db->sql_query($sql);
 			$this->message_parser->attachment_data = $db->sql_fetchrowset($result);
 			$db->sql_freeresult($result);
+		}
+
+		// Post has a poll?
+		if ($this->post['poll_title'] && $this->post['post_id'] == $this->post['topic_first_post_id'])
+		{
+			$this->_reparse_poll();
 		}
 
 		// Re-parse it
