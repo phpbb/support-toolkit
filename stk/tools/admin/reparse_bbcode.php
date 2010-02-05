@@ -31,9 +31,14 @@ define('RUN_HTMLSPECIALCHARS_DECODE', false);
 class reparse_bbcode
 {
 	/**
-	* The parser object
+	* The message parser object
 	*/
 	var $message_parser = null;
+
+	/**
+	* The poll parser object
+	*/
+	var $poll_parser = null;
 
 	/**
 	* Variable to store poll data
@@ -180,6 +185,7 @@ class reparse_bbcode
 
 			// Unset some vars for the next round
 			$this->message_parser = null;
+			$this->poll_parser = null;
 			$this->poll = array();
 			array_fill_keys(array_keys($this->post_flags), false);
 		}
@@ -210,17 +216,16 @@ class reparse_bbcode
 		global $db;
 
 		// Setup the poll parser
-		$poll_parser = new parse_message($this->post['poll_title']);
-		$poll_parser->bbcode_uid		= $this->message_parser->bbcode_uid;
-		$poll_parser->bbcode_bitfield	= $this->message_parser->bbcode_bitfield;
+		$this->poll_parser = new parse_message($this->post['poll_title']);
+		$this->poll_parser->bbcode_uid		= $this->message_parser->bbcode_uid;
 
 		// Clean the poll title
-		$this->_clean_message($poll_parser);
+		$this->_clean_message($this->poll_parser);
 
 		// Parse the title
-		$poll_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
+		$this->poll_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
 		// tmp var
-		$poll_title = $poll_parser->message;
+		$poll_title = $this->poll_parser->message;
 
 		// Fetch the options
 		$poll_options = array();
@@ -231,9 +236,9 @@ class reparse_bbcode
 		$result = $db->sql_query($sql);
 		while ($option = $db->sql_fetchrow($result))
 		{
-			$poll_parser->message = $option['poll_option_text'];
-			$this->_clean_message($poll_parser);
-			$poll_options[$option['poll_option_id']] = $poll_parser->message;
+			$this->poll_parser->message = $option['poll_option_text'];
+			$this->_clean_message($this->poll_parser);
+			$poll_options[$option['poll_option_id']] = $this->poll_parser->message;
 		}
 		$db->sql_freeresult($result);
 
@@ -253,15 +258,7 @@ class reparse_bbcode
 		);
 
 		// Parse the poll
-		$poll_parser->parse_poll($this->poll);
-
-		// There is a case where the poll has BBCodes but the post doesn't.
-		// In this case we give the post the bbcode_bitfield from the poll inorder
-		// to keep the bbcodes working
-		if (!$this->message_parser->bbcode_bitfield && $poll_parser->bbcode_bitfield)
-		{
-			$this->message_parser->bbcode_bitfield = $poll_parser->bbcode_bitfield;
-		}
+		$this->poll_parser->parse_poll($this->poll);
 	}
 
 	function _reparse_post(&$post_data)
@@ -294,6 +291,12 @@ class reparse_bbcode
 
 		// Re-parse it
 		$this->message_parser->parse($this->post_flags['enable_bbcode'], $this->post_flags['enable_magic_url'], $this->post_flags['enable_smilies'], $this->post_flags['img_status'], $this->post_flags['flash_status'], true, $this->post_flags['enable_urls']);
+
+		// Consider the bbcode_bitfield required for the poll
+		if (!empty($this->poll_parser) && !empty($this->poll_parser->bbcode_bitfield))
+		{
+			$this->message_parser->bbcode_bitfield = base64_encode(base64_decode($this->poll_parser->bbcode_bitfield) | base64_decode($this->message_parser->bbcode_bitfield));
+		}
 
 		// Update the post data
 		$post_data = array_merge($this->post, $this->post_flags, array(
