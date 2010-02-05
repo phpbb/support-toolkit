@@ -17,6 +17,14 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
+* Allow our end user to define whether we decode htmlspecialchars. Doing so
+* *will* transform entities that where posted as one (&#156;) to their
+* representing character. But this will fix broken htmlentities (&amp;#156;).
+* By default we won't run it, but at least give the user this option :)
+*/
+define('RUN_HTMLSPECIALCHARS_DECODE', false);
+
+/**
 * @note: the backup feature currently only crates a backup of the posts that are
 * 		 being reparsed. There is not yet an interface to restore it!
 */
@@ -320,9 +328,13 @@ class reparse_bbcode
 	function _clean_message($parser)
 	{
 		// Format the content as if it where *INSIDE* the posting field.
-		call_user_func(array($parser, 'decode_message'), $this->post['bbcode_uid']); //Do not change to: $parser->decode_message($this->post['bbcode_uid']);, for some reason doesn't work :/
+		$parser->decode_message($this->post['bbcode_uid']);
 		$message = &$parser->message;	// tmp copy
-		$message = $this->_html_entity_decode_utf8($message);
+		if (defined('RUN_HTMLSPECIALCHARS_DECODE') && RUN_HTMLSPECIALCHARS_DECODE == true)
+		{
+			$message = htmlspecialchars_decode($message);
+		}
+		$message = html_entity_decode_utf8($message);
 
 		// Now we'll *request_var* the post
 		set_var($message, $message, 'string', true);
@@ -376,54 +388,6 @@ class reparse_bbcode
 		}
 
 		$db->sql_multi_insert($this->_backup_table_name, $data);
-	}
-
-	// php.net, laurynas dot butkus at gmail dot com, http://us.php.net/manual/en/function.html-entity-decode.php#75153
-	function _html_entity_decode_utf8($string)
-	{
-		static $trans_tbl;
-
-		// replace numeric entities
-		$string = preg_replace('~&#x([0-9a-f]+);~ei', '$this->_code2utf8(hexdec("\\1"))', $string);
-	    $string = preg_replace('~&#([0-9]+);~e', '$this->_code2utf8(\\1)', $string);
-
-		// replace literal entities
-	    if (!isset($trans_tbl))
-		{
-			$trans_tbl = array();
-
-	        foreach (get_html_translation_table(HTML_ENTITIES) as $val => $key)
-			{
-		        $trans_tbl[$key] = utf8_encode($val);
-			}
-		}
-
-	    return strtr($string, $trans_tbl);
-	}
-
-	// Returns the utf string corresponding to the unicode value (from php.net, courtesy - romans@void.lv)
-	function _code2utf8($num)
-	{
-		$return = '';
-
-		if ($num < 128)
-		{
-			$return = chr($num);
-		}
-		else if ($num < 2048)
-		{
-			$return = chr(($num >> 6) + 192) . chr(($num & 63) + 128);
-		}
-		else if ($num < 65536)
-		{
-			$return = chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-		}
-		else if ($num < 2097152)
-		{
-			$return = chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-		}
-
-		return $return;
 	}
 }
 ?>

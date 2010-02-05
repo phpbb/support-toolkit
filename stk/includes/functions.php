@@ -447,7 +447,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 	msg_handler($errno, $msg_text, $errfile, $errline);
 }
 
-// php >= 5.2.0 function
+//-- Wrappers for functions that only exist in newer php version
 if (!function_exists('array_fill_keys'))
 {
 	/**
@@ -466,5 +466,53 @@ if (!function_exists('array_fill_keys'))
 
 		return $array;
 	}
+}
+
+// php.net, laurynas dot butkus at gmail dot com, http://us.php.net/manual/en/function.html-entity-decode.php#75153
+function html_entity_decode_utf8($string)
+{
+	static $trans_tbl;
+
+	// replace numeric entities
+	$string = preg_replace('~&#x([0-9a-f]+);~ei', '_code2utf8(hexdec("\\1"))', $string);
+	$string = preg_replace('~&#([0-9]+);~e', '_code2utf8(\\1)', $string);
+
+	// replace literal entities
+	if (!isset($trans_tbl))
+	{
+		$trans_tbl = array();
+
+		foreach (get_html_translation_table(HTML_ENTITIES) as $val => $key)
+		{
+			$trans_tbl[$key] = utf8_encode($val);
+		}
+	}
+
+	return strtr($string, $trans_tbl);
+}
+
+// Returns the utf string corresponding to the unicode value (from php.net, courtesy - romans@void.lv)
+function _code2utf8($num)
+{
+	$return = '';
+
+	if ($num < 128)
+	{
+		$return = chr($num);
+	}
+	else if ($num < 2048)
+	{
+		$return = chr(($num >> 6) + 192) . chr(($num & 63) + 128);
+	}
+	else if ($num < 65536)
+	{
+		$return = chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+	}
+	else if ($num < 2097152)
+	{
+		$return = chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+	}
+
+	return $return;
 }
 ?>
