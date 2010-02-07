@@ -338,9 +338,9 @@ class reparse_bbcode
 	* been just *after* request_var.
 	* It expects the parse_message object related to this post but the object
 	* should only be filled, no changes should be made before this call
-	* @param Object $parser the parser object
+	* @param Object &$parser the parser object
 	*/
-	function _clean_message($parser)
+	function _clean_message(&$parser)
 	{
 		// Format the content as if it where *INSIDE* the posting field.
 		$parser->decode_message($this->post['bbcode_uid']);
