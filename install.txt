@@ -6,14 +6,14 @@ Support Toolkit RC3
 Supported phpBB versions 3.0.0 - 3.0.6
 
 == Authors ==
-Erik Frèrejean
-EXreaction
-iWisdom
+Erik Frèrejean	(Erik Frèrejean)
+EXreaction	(Nathan Guse) 
+iWisdom		(Phil Crumm)
 
 == Contributors ==
-Marshalrusty
-stevemaury
-
+Marshalrusty	(Yuriy Rusko)
+stevemaury	(Steve Atkinson)
+Tom		(Tom Catullo)
 
 = Installation Instructions =
 To install the Support Toolkit, upload the complete "stk" directory into your forum's root directory on your server (the one containing a file named "config.php"). Once you have uploaded the directory into the correct place, point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
