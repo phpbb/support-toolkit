@@ -7,7 +7,7 @@ Supported phpBB versions 3.0.0 - 3.0.6
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
-EXreaction	(Nathan Guse) 
+EXreaction	(Nathan Guse)
 iWisdom		(Phil Crumm)
 
 == Contributors ==
@@ -27,7 +27,7 @@ To upgrade a previous version of the STK to 1.0.0, remove your previous installa
 = Changelog =
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
-* [Fix] Corrected some language related issues. (Bug #53725, #53835, #53845, #56865)
+* [Fix] Corrected some language related issues. (Bug #53725, #53835, #53845, #56865, #57815)
 * [Fix] Display the correct "old" version number when triggering the outdated message after a STK update due to cached information.
 * [Fix] Allow the use of a non default language pack. (Bug #54785)
 * [Fix] Database cleaner removes non phpBB related tables. (Bug #55355)
