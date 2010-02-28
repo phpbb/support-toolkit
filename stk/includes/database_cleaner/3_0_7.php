@@ -17,7 +17,7 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
-* Database Cleaner Data file for phpBB 3.0.7-dev
+* Database Cleaner Data file for phpBB 3.0.7
 */
 class database_cleaner_data
 {
@@ -268,7 +268,7 @@ class database_cleaner_data
 		'tpl_allow_php'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'upload_icons_path'				=> array('config_value' => 'images/upload_icons', 'is_dynamic' => '0'),
 		'upload_path'					=> array('config_value' => 'files', 'is_dynamic' => '0'),
-		'version'						=> array('config_value' => '3.0.6', 'is_dynamic' => '0'),
+		'version'						=> array('config_value' => '3.0.7', 'is_dynamic' => '0'),
 		'warnings_expire_days'			=> array('config_value' => '90', 'is_dynamic' => '0'),
 		'warnings_gc'					=> array('config_value' => '14400', 'is_dynamic' => '0'),
 		'cache_last_gc'					=> array('config_value' => '0', 'is_dynamic' => '1'),
@@ -1105,7 +1105,6 @@ class database_cleaner_data
 			'PRIMARY_KEY'	=> 'log_id',
 			'KEYS'			=> array(
 				'log_type'				=> array('INDEX', 'log_type'),
-				'log_time'				=> array('INDEX', 'log_time'),
 				'forum_id'				=> array('INDEX', 'forum_id'),
 				'topic_id'				=> array('INDEX', 'topic_id'),
 				'reportee_id'			=> array('INDEX', 'reportee_id'),
@@ -1654,6 +1653,7 @@ class database_cleaner_data
 			),
 			'PRIMARY_KEY'	=> array('user_id', 'topic_id'),
 			'KEYS'			=> array(
+				'topic_id'			=> array('INDEX', 'topic_id'),
 				'forum_id'			=> array('INDEX', 'forum_id'),
 			),
 		);
