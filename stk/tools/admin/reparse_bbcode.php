@@ -181,8 +181,6 @@ class reparse_bbcode
 			$post_data = array();
 			$this->_reparse_post($post_data);
 
-			//$first_poster = ($this->post['poster_id'] == ANONYMOUS) ? $this->post['post_username'] : false;
-
 			// Now its time to submit the post
 			submit_post('edit', $this->post['post_subject'], $this->post['username'], $this->post['topic_type'], $this->poll, $post_data, true, true);
 
