@@ -7,13 +7,11 @@
 	Database which can be found at http://www.phpbb.com/mods/
 -->
 <!-- @id $Id$ -->
-<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.2.xsd">
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.3.xsd">
 <header>
 	<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
 	<title lang="en">Support Toolkit forum link</title>
 	<description lang="en">Adds a link in the footer (under the ACP link) that points to the Support Toolkit</description>
-
-	<author-notes lang="en">The first public Release Candidate of the Support Tool Kit is only intended for private testing; use of this package in the support forums is not permitted.</author-notes>
 
 	<author-group>
 		<author>
@@ -28,19 +26,21 @@
 			<homepage>http://www.erikfrerejean.nl</homepage>
 			<email>erikfrerejean@phpbb.com</email>
 		</author>
+		<author>
+			<username>iWisdom</username>
+			<realname>Phil Crumm</realname>
+			<homepage>http://p3net.net</homepage>
+			<email>iwisdom@phpbb.com</email>
+		</author>
 	</author-group>
 
-	<mod-version>1.0.0-RC1</mod-version>
+	<mod-version>1.0.0</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.5</target-version>
+		<target-version>3.0.7</target-version>
 	</installation>
-
-	<link-group>
-		<link type="parent" href="./../install.xml" lang="en">Main installation file.</link>
-	</link-group>
 </header>
 
 <action-group>
