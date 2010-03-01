@@ -138,13 +138,14 @@ class reparse_bbcode
 
 		// Greb our batch
 		$sql_ary = array(
-			'SELECT'	=> 'f.*, p.*, t.*',
+			'SELECT'	=> 'f.*, p.*, t.*, u.username',
 			'FROM'		=> array(
 				FORUMS_TABLE	=> 'f',
 				POSTS_TABLE		=> 'p',
 				TOPICS_TABLE	=> 't',
+				USERS_TABLE		=> 'u',
 			),
-			'WHERE'		=> "p.bbcode_bitfield != '' AND t.topic_id = p.topic_id AND f.forum_id = t.forum_id",
+			'WHERE'		=> "p.bbcode_bitfield != '' AND t.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id",
 		);
 		$sql	= $db->sql_build_query('SELECT', $sql_ary);
 		$result	= $db->sql_query_limit($sql, $this->step_size, $start);
@@ -180,8 +181,10 @@ class reparse_bbcode
 			$post_data = array();
 			$this->_reparse_post($post_data);
 
+			//$first_poster = ($this->post['poster_id'] == ANONYMOUS) ? $this->post['post_username'] : false;
+
 			// Now its time to submit the post
-			submit_post('edit', $this->post['post_subject'], $this->post['post_username'], $this->post['topic_type'], $this->poll, $post_data, true, true);
+			submit_post('edit', $this->post['post_subject'], $this->post['username'], $this->post['topic_type'], $this->poll, $post_data, true, true);
 
 			// Unset some vars for the next round
 			$this->message_parser = null;
