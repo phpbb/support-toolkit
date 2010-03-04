@@ -28,6 +28,7 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 == Changes since 1.0.0 ==
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Fix] Remove unused language strings. (Bug #58265)
+* [Fix] Redirect to the correct page after logging in.
 
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)

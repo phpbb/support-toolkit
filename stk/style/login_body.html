@@ -16,13 +16,14 @@
 				<dt><label for="stk_pass">{TITLE}</label><br /><span class="explain">{TITLE_EXPLAIN}</span></dt>
 				<dd><input id="stk_pass" type="password" size="40" maxlength="255" name="stk_pass" value="" tabindex="1" /></dd>
 			</dl>
-			
+
 			<p class="submit-buttons">
 				<input class="button1" type="submit" id="login" name="login" value="{L_LOGIN}" tabindex="2" />&nbsp;
 				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" tabindex="3" />
 			</p>
 			{S_HIDDEN_FIELDS}
 			{S_FORM_TOKEN}
+			{S_LOGIN_REDIRECT}
 		</fieldset>
 	</form>
 <!-- ELSE -->
@@ -44,12 +45,13 @@
 				<dt><label for="{PASSWORD_CREDENTIAL}">{L_PASSWORD}:</label></dt>
 				<dd><input type="password" tabindex="2" id="{PASSWORD_CREDENTIAL}" name="{PASSWORD_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>
 			</dl>
-			
+
 			<p class="submit-buttons">
 				<input type="submit" name="login" tabindex="3" value="{L_LOGIN}" class="button1" />
 			</p>
 			{S_HIDDEN_FIELDS}
 			{S_FORM_TOKEN}
+			{S_LOGIN_REDIRECT}
 		</fieldset>
 		<!-- IF GEN_PASS_FILE_EXPLAIN -->
 		<fieldset>
