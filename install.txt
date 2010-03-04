@@ -2,7 +2,7 @@
 The Support Toolkit (STK) was developed by the phpBB.com Support Team in cooperation with EXreaction. The STK provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.0
+Support Toolkit 1.0.1
 Supported phpBB versions 3.0.0 - 3.0.7
 
 == Authors ==
@@ -20,11 +20,14 @@ To install the Support Toolkit, upload the complete "stk" directory into your fo
 In the "contrib" folder you will find some additional installation instructions (in the MODX format) which will allow you to better integrate the STK with your phpBB installation.
 
 = Upgrade Instructions=
-== Upgrade to 1.0.0 ==
-To upgrade a previous version of the STK to 1.0.0, remove your previous installation by deleting the stk/ directory, then follow the Installation Instructions above.
+== Upgrade to 1.0.1 ==
+To upgrade a previous version of the STK to 1.0.1, remove your previous installation by deleting the stk/ directory, then follow the Installation Instructions above.
 
 
 = Changelog =
+== Changes since 1.0.0 ==
+* [Fix] Remove unused language strings (Bug #58265)
+
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
 * [Fix] Corrected some language related issues. (Bug #53725, #53835, #53845, #56865, #57815)
