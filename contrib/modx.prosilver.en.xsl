@@ -5,7 +5,7 @@
 <!DOCTYPE xsl:stylesheet[
 	<!ENTITY nbsp "&#160;">
 ]>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:mod="http://www.phpbb.com/mods/xml/modx-1.2.4.xsd">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:mod="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
 	<xsl:output method="html" omit-xml-declaration="no" indent="yes" />
 	<xsl:variable name="title" select="mod:mod/mod:header/mod:title" />
 	<xsl:variable name="version">
@@ -410,12 +410,12 @@ span.key { font-size:12px; line-height:14px; padding-bottom:2px; width:20px; bor
 
 dl.author-info dd { margin-left:112px; margin-bottom:8px; }
 .rtl dl.author-info dd { margin-left:112px; margin-bottom:8px; }
-ol#file-copy { padding:5px; margin-left:20px; margin-right:20px; margin-bottom:10px; }
-ol#file-copy li { margin-left:30px; margin-right:30px; vertical-align:top;}
-ol#file-copy span { font-weight:bold; }
-ol#file-copy dt {margin-right:5px; float:none !important }
-ol#file-copy dl {width:100%}
-h2#lang-fca, h2#lang-edts, h2#lang-diy, h2#lang-sql { margin-left:5px; }
+ol#file-copy, ol#file-delete { padding:5px; margin-left:20px; margin-right:20px; margin-bottom:10px; }
+ol#file-copy li, ol#file-delete li { margin-left:30px; margin-right:30px; vertical-align:top;}
+ol#file-copy span, ol#file-delete span { font-weight:bold; }
+ol#file-copy dt, ol#file-delete dt {margin-right:5px; float:none !important }
+ol#file-copy dl, ol#file-delete dl {width:100%}
+h2#lang-fca, h2#lang-edts, h2#lang-diy, h2#lang-sql, h2#lang-installer-h2, h2#lang-del-head { margin-left:5px; }
 
 /* Code block */
 div.codebox {
@@ -534,8 +534,10 @@ div.endMOD { padding:0 5px; }
 			</xsl:for-each>
 
 			var finds_ll = [];
+			var removes_ll = [];
 			var regex_ll = [];
 			var ifinds_ll = [];
+			var iremoves_ll = [];
 			var iregex_ll = [];
 			var addafters_ll = [];
 			var iaddafters_ll = [];
@@ -549,6 +551,9 @@ div.endMOD { padding:0 5px; }
 			<xsl:for-each select="mod:action-group/mod:open/mod:edit">
 				<xsl:for-each select="mod:find">
 					finds_ll.push('<xsl:value-of select="generate-id()"/>');
+				</xsl:for-each>
+				<xsl:for-each select="mod:remove">
+					removes_ll.push('<xsl:value-of select="generate-id()"/>');
 				</xsl:for-each>
 				<xsl:if test="count(mod:comment) > 0">
 					comments_ll.push('<xsl:value-of select="generate-id()"/>');
@@ -577,6 +582,9 @@ div.endMOD { padding:0 5px; }
 							iregex_ll.push('<xsl:value-of select="generate-id()"/>');
 						</xsl:if>
 					</xsl:for-each>
+					<xsl:for-each select="mod:inline-remove">
+						iremoves_ll.push('<xsl:value-of select="generate-id()"/>');
+					</xsl:for-each>
 					<xsl:for-each select="mod:inline-find|mod:inline-action">
 						codes_ll.push('<xsl:value-of select="generate-id()"/>');
 						<xsl:if test="name() = 'inline-action'">
@@ -604,6 +612,11 @@ div.endMOD { padding:0 5px; }
 			var copies_ll = [];
 			<xsl:for-each select="mod:action-group/mod:copy/mod:file">
 				copies_ll.push('<xsl:value-of select="generate-id()"/>');
+			</xsl:for-each>
+
+			var delete_ll = [];
+			<xsl:for-each select="mod:action-group/mod:delete/mod:file">
+				delete_ll.push('<xsl:value-of select="generate-id()"/>');
 			</xsl:for-each>
 
 			<xsl:text disable-output-escaping="yes">
@@ -664,6 +677,8 @@ var enStrings = "dir=ltr\n" +
 "cm-cmt=Comments\n" +
 "fnd=Find\n" +
 "fndt=<strong>Tip:</strong> This may be a partial find and not the whole line.\n" +
+"remove=Find and Delete\n" +
+"removet=<strong>Tip:</strong> Find and delete this code.\n" +
 "rplw=Replace with\n" +
 "rplwt=<strong>Tip:</strong> Replace the preceding line(s) to find with the following lines.\n" +
 "aft=Add after\n" +
@@ -674,6 +689,8 @@ var enStrings = "dir=ltr\n" +
 "inct=<strong>Tip:</strong> This allows you to alter integers.\n" +
 "ifnd=In-line Find\n" +
 "ifndt=<strong>Tip:</strong> This is a partial match of a line for in-line operations.\n" +
+"iremove=In-line Find and Delete\n" +
+"iremovet=<strong>Tip:</strong> Find this code in the line and delete it.\n" +
 "irplw=In-line Replace with\n" +
 "irplwt=\n" +
 "iaft=In-line Add after\n" +
@@ -702,6 +719,13 @@ var enStrings = "dir=ltr\n" +
 "link-txt=Text file\n" +
 "link-tl=Template lang\n" +
 "link-un=Uninstall instructions\n" +
+"installer-h2=PHP install file\n" +
+"installer-exp1=There is a PHP install file that needs to be run in order to complete the installation.\n" +
+"installer-exp2=To run it point your browser to, for example,\n" +
+"ispt-int=Support in your language <strong>might</strong> be available at a <a href=\"http://www.phpbb.com/support/intl/\">international support site</a>.\n" +
+"del-heads=Delete files\n" +
+"del-head=Delete file\n" +
+"del-file=Delete\n" +
 "atm=About this MOD";
 
 var box = codes_ll;
@@ -711,17 +735,20 @@ var languages = ['en'];
 var arrClasCnt = [
 	['a-'	, authors_ll		],
 	['c-'	, copies_ll			],
+	['del-'	, delete_ll			],
 	['cm-'	, comments_ll		],
 	['opn'	, opens_ll			],
 	['cde-'	, codes_ll			],
 	['edt-'	, edits_ll			],
 	['fnd'	, finds_ll			],
+	['fnd'	, removes_ll			],
 	['regex', regex_ll			],
 	['rplw'	, replacewiths_ll	],
 	['aft'	, addafters_ll		],
 	['bef'	, addbefores_ll		],
 	['inc'	, increments_ll		],
 	['ifnd'	, ifinds_ll			],
+	['ifnd'	, iremoves_ll			],
 	['regex', iregex_ll			],
 	['irplw', ireplacewiths_ll	],
 	['iaft'	, iaddafters_ll		],
@@ -1758,38 +1785,36 @@ function toggle_edit(o)
 
 		<ul class="link-group" id="link-group">
 			<xsl:for-each select="mod:link-group/mod:link">
-				<xsl:if test="@type != 'php-installer'">
-					<li lang="{@lang}">
-						<span class="link-group-lang"><xsl:value-of select="@lang" />&nbsp;</span>
-						<strong>
-							<xsl:if test="@type = 'contrib'">
-								<span id="lang-link-c[{generate-id()}]">Contrib</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'dependency'">
-								<span id="lang-link-d[{generate-id()}]">Dependency</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'language'">
-								<span id="lang-link-l[{generate-id()}]">Language</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'parent'">
-								<span id="lang-link-p[{generate-id()}]">Parent</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'template'">
-								<span id="lang-link-te[{generate-id()}]">Template</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'template-lang'">
-								<span id="lang-link-tl[{generate-id()}]">Template lang</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'text'">
-								<span id="lang-link-txt[{generate-id()}]">Text file</span>:
-							</xsl:if>
-							<xsl:if test="@type = 'uninstall'">
-								<span id="lang-link-un[{generate-id()}]">Uninstall instructions</span>:
-							</xsl:if>
-						</strong>
-						&nbsp;<a href="{@href}"><xsl:value-of select="current()" /></a>
-					</li>
-				</xsl:if>
+				<li lang="{@lang}">
+					<span class="link-group-lang"><xsl:value-of select="@lang" />&nbsp;</span>
+					<strong>
+						<xsl:if test="@type = 'contrib'">
+							<span id="lang-link-c[{generate-id()}]">Contrib</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'dependency'">
+							<span id="lang-link-d[{generate-id()}]">Dependency</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'language'">
+							<span id="lang-link-l[{generate-id()}]">Language</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'parent'">
+							<span id="lang-link-p[{generate-id()}]">Parent</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'template'">
+							<span id="lang-link-te[{generate-id()}]">Template</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'template-lang'">
+							<span id="lang-link-tl[{generate-id()}]">Template lang</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'text'">
+							<span id="lang-link-txt[{generate-id()}]">Text file</span>:
+						</xsl:if>
+						<xsl:if test="@type = 'uninstall'">
+							<span id="lang-link-un[{generate-id()}]">Uninstall instructions</span>:
+						</xsl:if>
+					</strong>
+					&nbsp;<a href="{@href}"><xsl:value-of select="current()" /></a>
+				</li>
 			</xsl:for-each>
 		</ul>
 		<hr />
@@ -1818,6 +1843,7 @@ function toggle_edit(o)
 					<p><span id="lang-lict">This MOD has been licensed under the following license:</span></p>
 					<p style='white-space:pre;'><a href="license.txt"><xsl:value-of select="mod:license" /></a></p>
 					<p><span id="lang-ispt">English support can be obtained at <a href="http://www.phpbb.com/mods/">http://www.phpbb.com/mods/</a> for released MODs.</span></p>
+					<p><span id="lang-ispt-int">Support in your language <strong>might</strong> be available at a <a href="http://www.phpbb.com/support/intl/">international support site</a>.</span></p>
 				</div>
 				<span class="corners-bottom"><span></span></span>
 			</div>
@@ -2067,23 +2093,49 @@ function toggle_edit(o)
 					<xsl:for-each select="mod:sql">
 						<xsl:call-template name="give-sql"></xsl:call-template>
 					</xsl:for-each>
-				<span class="corners-bottom"><span></span></span></div>
+				<span class="corners-bottom"><span></span></span>
+			</div>
 		</xsl:if>
 		<xsl:if test="count(mod:copy) > 0">
 			<xsl:for-each select="mod:copy">
 				<xsl:call-template name="give-filez"></xsl:call-template>
 			</xsl:for-each>
 		</xsl:if>
+		<xsl:if test="count(mod:delete) > 0">
+			<xsl:for-each select="mod:delete">
+				<xsl:call-template name="away-filez"></xsl:call-template>
+			</xsl:for-each>
+		</xsl:if>
 		<xsl:if test="count(mod:open) > 0">
-		<h2 id="lang-edts">Edits</h2>
-		<p><span class="key">s</span><span class="key">w</span><span class="key">x</span><span id="lang-edtt">Use your keyboard to navigate the code boxes. You may also hit '<em>s</em>' on your keyboard to go to the first code box.</span></p>
-		<div id="edits">
-			<div class="inner">
-				<xsl:for-each select="mod:open">
-					<xsl:call-template name="give-fileo"></xsl:call-template>
-				</xsl:for-each>
+			<h2 id="lang-edts">Edits</h2>
+			<p><span class="key">s</span><span class="key">w</span><span class="key">x</span><span id="lang-edtt">Use your keyboard to navigate the code boxes. You may also hit '<em>s</em>' on your keyboard to go to the first code box.</span></p>
+			<div id="edits">
+				<div class="inner">
+					<xsl:for-each select="mod:open">
+						<xsl:call-template name="give-fileo"></xsl:call-template>
+					</xsl:for-each>
+				</div>
 			</div>
-		</div>
+		</xsl:if>
+		<xsl:if test="count(mod:php-installer) > 0">
+			<h2 id="lang-installer-h2">PHP install file</h2>
+			<div class="mod-about">
+				<span class="corners-top"><span></span></span>
+					<div class="mod-about-padding">
+						<p>
+							<span id="lang-installer-exp1">There is a PHP install file that needs to be run in order to complete the installation.</span>
+							<br />
+							<span id="lang-installer-exp2">To run it point your browser to, for example,</span><span dir="ltr"> domain.tld/phpBB3/<xsl:value-of select="mod:php-installer" /></span>
+						</p>
+						<div class="content">
+							<div class="codebox">
+								<div class="codeHead"><span id="lang-cde-c[{generate-id()}]">Code:</span><a href="#" onclick="select_code(this); return false;" class="codeSelect"><span id="lang-cde-sa[{generate-id()}]">Select All</span></a></div>
+								<div class="codePre"><pre id="{generate-id()}" dir="ltr"><xsl:value-of select="mod:php-installer" /></pre></div>
+							</div>
+						</div>
+					</div>
+				<span class="corners-bottom"><span></span></span>
+			</div>
 		</xsl:if>
 		<xsl:call-template name="give-manual" />
 	</xsl:template>
@@ -2150,7 +2202,7 @@ function toggle_edit(o)
 								</dl>
 							</div>
 						</xsl:if>
-						<xsl:for-each select="mod:find|mod:action|mod:inline-edit">
+						<xsl:for-each select="mod:find|mod:remove|mod:action|mod:inline-edit">
 							<xsl:if test="name() = 'find'">
 								<h4 id="lang-fnd[{generate-id()}]">Find</h4>
 								<p><span id="lang-fndt[{generate-id()}]"><strong>Tip:</strong> This may be a partial find and not the whole line.</span>
@@ -2158,6 +2210,14 @@ function toggle_edit(o)
 										<br /><em id="lang-regex[{generate-id()}]">This find contains an advanced feature known as regular expressions.</em>
 									</xsl:if>
 								</p>
+								<div class="codebox">
+									<div class="codeHead"><span id="lang-cde-c[{generate-id()}]">Code:</span><a href="#" onclick="select_code(this); return false;" class="codeSelect"><span id="lang-cde-sa[{generate-id()}]">Select All</span></a></div>
+									<div class="codePre"><pre id="{generate-id()}" dir="ltr"><xsl:value-of select="current()" /></pre></div>
+								</div>
+							</xsl:if>
+							<xsl:if test="name() = 'remove'">
+								<h4 id="lang-remove[{generate-id()}]" style="color: #FF0FFF;">Find and Delete</h4>
+								<p><span id="lang-removet[{generate-id()}]"><strong>Tip:</strong>  Find and delete this code.</span></p>
 								<div class="codebox">
 									<div class="codeHead"><span id="lang-cde-c[{generate-id()}]">Code:</span><a href="#" onclick="select_code(this); return false;" class="codeSelect"><span id="lang-cde-sa[{generate-id()}]">Select All</span></a></div>
 									<div class="codePre"><pre id="{generate-id()}" dir="ltr"><xsl:value-of select="current()" /></pre></div>
@@ -2187,7 +2247,7 @@ function toggle_edit(o)
 							</xsl:if>
 							<xsl:if test="name() = 'inline-edit'">
 								<div class="mod-inlineedit">
-									<xsl:for-each select="mod:inline-find|mod:inline-action|mod:inline-comment">
+									<xsl:for-each select="mod:inline-find|mod:inline-remove|mod:inline-action|mod:inline-comment">
 										<xsl:if test="name() = 'inline-find'">
 											<h5 id="lang-ifnd[{generate-id()}]">In-line Find</h5>
 											<p><span id="lang-ifndt[{generate-id()}]"><strong>Tip:</strong> This is a partial match of a line for in-line operations.</span>
@@ -2195,6 +2255,14 @@ function toggle_edit(o)
 													<br /><em id="lang-regex[{generate-id()}]">This find contains an advanced feature known as regular expressions.</em>
 												</xsl:if>
 											</p>
+											<div class="codebox">
+												<div class="codeHead"><span id="lang-cde-c[{generate-id()}]">Code:</span><a href="#" onclick="select_code(this); return false;" class="codeSelect"><span id="lang-cde-sa[{generate-id()}]">Select all</span></a></div>
+												<div class="codePre"><pre id="{generate-id()}" dir="ltr"><xsl:value-of select="current()" /></pre></div>
+											</div>
+										</xsl:if>
+										<xsl:if test="name() = 'inline-remove'">
+											<h5 id="lang-iremove[{generate-id()}]" style="color: #FF0FFF;">In-line Find and Delete</h5>
+											<p><span id="lang-iremovet[{generate-id()}]"><strong>Tip:</strong> Find this code in the line and delete it.</span></p>
 											<div class="codebox">
 												<div class="codeHead"><span id="lang-cde-c[{generate-id()}]">Code:</span><a href="#" onclick="select_code(this); return false;" class="codeSelect"><span id="lang-cde-sa[{generate-id()}]">Select all</span></a></div>
 												<div class="codePre"><pre id="{generate-id()}" dir="ltr"><xsl:value-of select="current()" /></pre></div>
@@ -2249,6 +2317,26 @@ function toggle_edit(o)
 					<dl>
 						<dt><span id="lang-c-copy[{generate-id()}]">Copy:</span>&nbsp;<xsl:value-of select="@from" /></dt>
 						<dd><span id="lang-c-to[{generate-id()}]">To:</span>&nbsp;<xsl:value-of select="@to" /></dd>
+					</dl>
+				</li>
+			</xsl:for-each>
+		</ol>
+	</xsl:template>
+
+	<xsl:template name="away-filez">
+		<xsl:choose>
+			<xsl:when test="count(mod:file) > 1">
+				<h2 id="lang-del-heads">Delete files</h2>
+			</xsl:when>
+			<xsl:otherwise>
+				<h2 id="lang-del-head">Delete file</h2>
+			</xsl:otherwise>
+		</xsl:choose>
+		<ol id="file-delete">
+			<xsl:for-each select="mod:file">
+				<li>
+					<dl>
+						<dt><span id="lang-del-file[{generate-id()}]">Delete:</span>&nbsp;<xsl:value-of select="@name" /></dt>
 					</dl>
 				</li>
 			</xsl:for-each>
