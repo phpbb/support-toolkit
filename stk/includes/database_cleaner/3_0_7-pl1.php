@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Toolkit - Database Cleaner
-* @version $Id: 3_0_7.php 321 2010-03-06 06:27:41Z erikfrerejean $
+* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
