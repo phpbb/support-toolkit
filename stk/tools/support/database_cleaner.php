@@ -29,6 +29,12 @@ class database_cleaner
 
 		$this->phpbb_version = str_replace('.', '_', $config['version']);
 
+		// Block access form data files for "-dev" releases when not debugging
+		if (!defined('DEBUG') && strpos($this->phpbb_version, '-dev') !== false)
+		{
+			return false;
+		}
+
 		if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/' . $this->phpbb_version . '.' . PHP_EXT) === false)
 		{
 			return 'DATAFILE_NOT_FOUND';
