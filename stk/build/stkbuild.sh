@@ -30,3 +30,5 @@ tar -cvjf "$file".tar.bz2 "$file" --exclude "develop" "build" 1> /dev/null 2>&1
 
 echo "Moving files to the Desktop"
 mv "$file".* ~/Desktop
+
+echo "Done!";
