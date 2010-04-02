@@ -19,6 +19,14 @@
     {S_HIDDEN_FIELDS}
     {S_FORM_TOKEN}
 </form>
+<!-- ELSE -->
+<fieldset>
+    <legend>{L_FOUNDERS}</legend>
+	<dl>
+	    <dd><b>{L_NO_FOUNDERS}</b></dd>
+    </dl>
+</fieldset>
+<!-- ENDIF -->
 
 <form id="stk_promote_founder" method="post" action="{U_PROMOTE_FOUNDER}">
     <fieldset>
@@ -38,6 +46,5 @@
     {S_HIDDEN_FIELDS}
     {S_FORM_TOKEN}
 </form>
-<!-- ENDIF -->
 
 <!-- INCLUDE overall_footer.html -->
