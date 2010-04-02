@@ -3,7 +3,7 @@ The Support Toolkit (STK) was developed by the phpBB.com Support Team in coopera
 
 == Version ==
 Support Toolkit 1.0.1
-Supported phpBB versions 3.0.0 - 3.0.7
+Supported phpBB versions 3.0.0 - 3.0.7-pl1
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -19,6 +19,9 @@ Tom		(Tom Catullo)
 To install the Support Toolkit, upload the complete "stk" directory into your forum's root directory on your server (the one containing a file named "config.php"). Once you have uploaded the directory into the correct place, point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
 In the "contrib" folder you will find some additional installation instructions (in the MODX format) which will allow you to better integrate the STK with your phpBB installation.
 
+= Translations =
+The Support Toolkit is also available in multiple languages, to install your own language pack first download the appropriate package from the STK page on phpbb.com (http://www.phpbb.com/support/stk/). After that simply upload the language folder to "stk/language/"
+
 = Upgrade Instructions=
 == Upgrade to 1.0.1 ==
 To upgrade a previous version of the STK to 1.0.1, remove your previous installation by deleting the stk/ directory, then follow the Installation Instructions above.
@@ -29,6 +32,7 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Fix] Remove unused language strings. (Bug #58265)
 * [Fix] Redirect to the correct page after logging in.
+* [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
 
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
