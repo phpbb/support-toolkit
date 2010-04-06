@@ -16,7 +16,10 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-function get_config_rows(&$cleaner, &$config_rows, &$existing_config)
+/**
+* Collect all configiration data.
+*/
+function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 {
 	global $db;
 
@@ -29,7 +32,7 @@ function get_config_rows(&$cleaner, &$config_rows, &$existing_config)
 	}
 	$db->sql_freeresult($result);
 
-	$config_rows = array_unique(array_merge(array_keys($cleaner->config), $existing_config));
+	$config_rows = array_unique(array_merge(array_keys($phpbb_config), $existing_config));
 	sort($config_rows);
 }
 
@@ -88,5 +91,58 @@ function filter_phpbb_tables(&$existing_tables)
 
 	// Overwrite array
 	$existing_tables = $_existing_tables;
+}
+
+/**
+* Compile the cleaner data
+* @param database_cleaner_data The database cleaner data object
+* @param String The version
+*/
+function fetch_cleaner_data(&$data, $phpbb_version)
+{
+	// Fetch all the files
+	if (!function_exists('filelist'))
+	{
+		include PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT;
+	}
+	$filelist = array_shift(filelist(STK_ROOT_PATH . 'includes/database_cleaner/data/', '', PHP_EXT));
+
+	// Add the data
+	foreach ($filelist as $file)
+	{
+		$version	= pathinfo($file, PATHINFO_FILENAME);
+		$class		= 'datafile_' . $version;
+		if (!class_exists($class))
+		{
+			include STK_ROOT_PATH . "includes/database_cleaner/data/{$version}." . PHP_EXT;
+		}
+		$_datafile = new $class();
+
+		// Set the data
+		$data->config_data = array_merge($data->config_data, $_datafile->config_data);
+
+		// Break after our version
+		if (version_compare($version, $phpbb_version, '>'))
+		{
+			break;
+		}
+	}
+
+	// Some things need to be changed later
+	switch ($version)
+	{
+		case '3_0_8_dev' :
+		case '3_0_7_pl1' :
+		case '3_0_7' :
+		case '3_0_6' :
+		case '3_0_5' :
+		case '3_0_4' :
+		case '3_0_3' :
+		case '3_0_2' :
+		case '3_0_1' :
+		case '3_0_0' :
+			$data->config_data['version'] = $phpbb_version;
+		break;
+	}
 }
 ?>
