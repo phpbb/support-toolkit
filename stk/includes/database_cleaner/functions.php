@@ -70,27 +70,32 @@ function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
 	sort($group_rows);
 }
 
-function filter_phpbb_tables(&$existing_tables)
+/**
+* Get all tables used by phpBB
+*/
+function get_phpbb_tables()
 {
-	global $table_prefix;
+	global $db, $table_prefix;
 
-	if (empty($existing_tables))
+	if (!function_exists('get_tables'))
 	{
-		return;
+		include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
 	}
 
-	// tmp array
-	$_existing_tables = array();
-	foreach ($existing_tables as $table)
+	// Function returns all tables in the database
+	$all_tables = get_tables($db);
+
+	// Only get tables using the phpBB prefix
+	$_tables = array();
+	foreach ($all_tables as $table)
 	{
 		if (strpos($table, $table_prefix) === 0)
 		{
-			$_existing_tables[] = $table;
+			$_tables[] = $table;
 		}
 	}
 
-	// Overwrite array
-	$existing_tables = $_existing_tables;
+	return $_tables;
 }
 
 /**
@@ -120,9 +125,10 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 
 		// Set the data
 		$data->config_data = array_merge($data->config_data, $_datafile->config_data);
+		$_datafile->get_schema_struct($data->schema_data);
 
 		// Break after our version
-		if (version_compare($version, $phpbb_version, '>'))
+		if (version_compare($version, $phpbb_version, 'eq'))
 		{
 			break;
 		}

@@ -93,11 +93,40 @@ class database_cleaner
 				));
 			break;
 
+			// Validate database tables
+			case 1 :
+				// The confirm message for step 0
+				$template->assign_var('SUCCESS_MESSAGE', $user->lang('BOARD_DISABLE_SUCCESS'));
+
+				$found_tables	= get_phpbb_tables();
+				$req_tables		= $this->data->get_tables();
+				$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
+				sort($tables);
+
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang('DATABASE_TABLES'),
+					'TITLE'		=> $user->lang('DATABASE_TABLES'),
+				));
+
+				foreach ($tables as $table)
+				{
+					// Table was added or removed
+					if (!isset($req_tables[$table]) && in_array($table, $found_tables) || isset($req_tables[$table]) && !in_array($table, $found_tables))
+					{
+						$template->assign_block_vars('section.items', array(
+							'NAME'			=> $table,
+							'FIELD_NAME'	=> $table,
+							'MISSING'		=> isset($req_tables[$table]) ? true : false,
+						));
+					}
+				}
+			break;
+
 			// Display fix config options.
 			// @todo will become step 3 once db integerty checks are included
-			case 1 :
+			case 2 :
 				// The confirm message for step 1
-				$template->assign_var('SUCCESS_MESSAGE', $user->lang['BOARD_DISABLE_SUCCESS']);
+				$template->assign_var('SUCCESS_MESSAGE', $user->lang('DATABASE_TABLES_SUCCESS'));
 
 				// display extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
@@ -121,10 +150,6 @@ class database_cleaner
 						'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
 					));
 				}
-			break;
-
-			case 2 :
-
 			break;
 		}
 
@@ -164,6 +189,7 @@ class database_cleaner
 		// Do the thing
 		switch ($this->step)
 		{
+			// Start the cleaner
 			case 0 :
 				// Redirect if they selected quit
 				if (isset($_POST['quit']))
@@ -175,7 +201,37 @@ class database_cleaner
 				set_config('board_disable', 1);
 			break;
 
+			// Fix tables
 			case 1 :
+				$found_tables	= get_phpbb_tables();
+				$req_tables		= $this->data->get_tables();
+				$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
+				sort($tables);
+
+				// Loop through selected and fix them
+				foreach (array_keys($selected) as $table)
+				{
+					if (isset($req_tables[$table]) && !in_array($table, $found_tables))
+					{
+						$result = $umil->table_add($table, $req_tables[$table]);
+						if (stripos($result, 'SQL ERROR'))
+						{
+							$error[] = $result;
+						}
+					}
+					else if (!isset($req_tables[$table]) && in_array($table, $found_tables))
+					{
+						$result = $umil->table_remove($table);
+						if (stripos($result, 'SQL ERROR'))
+						{
+							$error[] = $result;
+						}
+					}
+				}
+			break;
+
+			// Fix config
+			case 2 :
 				$config_rows = $existing_config = array();
 				get_config_rows($this->data->config_data, $config_rows, $existing_config);
 				foreach ($config_rows as $name)
