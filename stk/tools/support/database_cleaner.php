@@ -44,7 +44,7 @@ class database_cleaner
 		$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
 
 		// Unstable version can only be used when debugging
-		if (!defined('DEBUG') && preg_match('#A|B|RC$#i'))
+		if (!defined('DEBUG') && preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
 		{
 			return false;
 		}
@@ -54,7 +54,7 @@ class database_cleaner
 			return 'DATAFILE_NOT_FOUND';
 		}
 
-		// As this method is always called we can use a small hackish way to setup the dbcleaner when needed
+		// As this method is always called we can use a small hackish way to ensure the database cleaner is always setup when needed
 		if (request_var('t', '') == 'database_cleaner' && !class_exists('database_cleaner_data'))
 		{
 			$this->step = request_var('step', 0);
@@ -99,7 +99,7 @@ class database_cleaner
 				$template->assign_var('SUCCESS_MESSAGE', $user->lang('BOARD_DISABLE_SUCCESS'));
 
 				$found_tables	= get_phpbb_tables();
-				$req_tables		= $this->data->get_tables();
+				$req_tables		= $this->data->tables;
 				$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
 				sort($tables);
 
@@ -204,7 +204,7 @@ class database_cleaner
 			// Fix tables
 			case 1 :
 				$found_tables	= get_phpbb_tables();
-				$req_tables		= $this->data->get_tables();
+				$req_tables		= $this->data->tables;
 				$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
 				sort($tables);
 

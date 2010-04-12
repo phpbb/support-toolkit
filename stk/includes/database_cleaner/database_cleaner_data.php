@@ -32,25 +32,29 @@ class database_cleaner_data
 	var $schema_data = array();
 
 	/**
-	* Only get the phpBB tables
+	* @var Array An array containing all tables that are included in a vanilla phpBB install of this version
 	*/
-	function get_tables()
+	var $tables = array();
+
+	/**
+	* Setup extract some information that is needed later
+	*/
+	function init()
 	{
+		// Extract tables
 		global $table_prefix;
 
-		$tables = $this->schema_data;
+		$this->tables = array_keys($this->schema_data);
 
 		// Get the right table prefix!
 		if ($table_prefix != 'phpbb_')
 		{
-			foreach ($tables as $table_name => $table_data)
+			foreach ($this->tables as $table_name => $table_data)
 			{
-				$tables[str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $table_name))] = $table_data;
+				$this->tables[str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $table_name))] = $table_data;
 
-				unset($tables[$table_name]);
+				unset($this->tables[$table_name]);
 			}
 		}
-
-		return $tables;
 	}
 }

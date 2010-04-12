@@ -77,6 +77,12 @@ function get_phpbb_tables()
 {
 	global $db, $table_prefix;
 
+	static $_tables = array();
+	if (!empty($_tables))
+	{
+		return $_tables;
+	}
+
 	if (!function_exists('get_tables'))
 	{
 		include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
@@ -86,7 +92,6 @@ function get_phpbb_tables()
 	$all_tables = get_tables($db);
 
 	// Only get tables using the phpBB prefix
-	$_tables = array();
 	foreach ($all_tables as $table)
 	{
 		if (strpos($table, $table_prefix) === 0)
@@ -94,6 +99,7 @@ function get_phpbb_tables()
 			$_tables[] = $table;
 		}
 	}
+	sort($_tables);
 
 	return $_tables;
 }
@@ -110,7 +116,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	{
 		include PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT;
 	}
-	$filelist = array_shift(filelist(STK_ROOT_PATH . 'includes/database_cleaner/data/', '', PHP_EXT));
+	$filelist = array_shift(filelist(STK_ROOT_PATH . 'includes/database_cleaner/', 'data/', PHP_EXT));
 
 	// Add the data
 	foreach ($filelist as $file)
@@ -134,21 +140,10 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		}
 	}
 
-	// Some things need to be changed later
-	switch ($version)
-	{
-		case '3_0_8_dev' :
-		case '3_0_7_pl1' :
-		case '3_0_7' :
-		case '3_0_6' :
-		case '3_0_5' :
-		case '3_0_4' :
-		case '3_0_3' :
-		case '3_0_2' :
-		case '3_0_1' :
-		case '3_0_0' :
-			$data->config_data['version'] = $phpbb_version;
-		break;
-	}
+	// Perform some actions that only have to be done on given versions or on all
+	$data->config_data['version'] = $phpbb_version;		// We always need to set the version afterwards
+
+	// Call init
+	$data->init();
 }
 ?>
