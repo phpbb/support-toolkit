@@ -22,9 +22,29 @@ if (!defined('IN_PHPBB'))
 class database_cleaner_data
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array();
+
+	/**
 	* @var Array The config array for this version
 	*/
 	var $config_data = array();
+
+	/**
+	* @var Array The permissions array for this version
+	*/
+	var $permissions = array();
+
+	/**
+	* @var Array The modules array for this version
+	*/
+	var $modules = array();
+
+	/**
+	* @var Array The groups array for this version
+	*/
+	var $groups = array();
 
 	/**
 	* @var Array The schema struct
@@ -44,7 +64,7 @@ class database_cleaner_data
 		// Extract tables
 		global $table_prefix;
 
-		$this->tables = array_keys($this->schema_data);
+		$this->tables = array_flip(array_keys($this->schema_data));
 
 		// Get the right table prefix!
 		if ($table_prefix != 'phpbb_')
