@@ -22,6 +22,13 @@ if (!defined('IN_PHPBB'))
 class datafile_3_0_3
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		// No bot changes 3.0.2 -> 3.0.3
+	);
+
+	/**
 	* @var Array 3.0.3 config data
 	*/
 	var $config_data = array(
@@ -29,6 +36,28 @@ class datafile_3_0_3
 		'queue_trigger_posts'	=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'pm_max_recipients'		=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'dbms_version'			=> array('config_value' => '', 'is_dynamic' => '0'),
+	);
+
+	/**
+	* @var Array All default permission settings
+	*/
+	var $permissions = array(
+		// Added permission
+		'u_masspm_group'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
+	);
+
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
+	var $modules = array(
+		// No Module changes 3.0.2 -> 3.0.3
+	);
+
+	/**
+	* @var Arra All default groups
+	*/
+	var $groups = array(
+		// No Group changes 3.0.2 -> 3.0.3
 	);
 
 	/**

@@ -22,12 +22,40 @@ if (!defined('IN_PHPBB'))
 class datafile_3_0_2
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		// No bot changes 3.0.1 -> 3.0.2
+	);
+
+	/**
 	* @var Array 3.0.2 config data
 	*/
 	var $config_data = array(
 		'referer_validation'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'check_attachment_content'	=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'mime_triggers'				=> array('config_value' => 'body|head|html|img|plaintext|a href|pre|script|table|title', 'is_dynamic' => '0'),
+	);
+
+	/**
+	* @var Array All default permission settings
+	*/
+	var $permissions = array(
+		// No permission changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
+	var $modules = array(
+		// No Module changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* @var Arra All default groups
+	*/
+	var $groups = array(
+		// No Group changes 3.0.1 -> 3.0.2
 	);
 
 	/**

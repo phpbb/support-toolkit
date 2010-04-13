@@ -22,10 +22,38 @@ if (!defined('IN_PHPBB'))
 class datafile_3_0_1
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		// No bot changes 3.0.0 -> 3.0.1
+	);
+
+	/**
 	* @var Array 3.0.1 config data
 	*/
 	var $config_data = array(
 		// No config changes 3.0.0 -> 3.0.1
+	);
+
+	/**
+	* @var Array All default permission settings
+	*/
+	var $permissions = array(
+		// No permission changes 3.0.0 -> 3.0.1
+	);
+
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
+	var $modules = array(
+		// No Module changes 3.0.0 -> 3.0.1
+	);
+
+	/**
+	* @var Arra All default groups
+	*/
+	var $groups = array(
+		// No Group changes 3.0.0 -> 3.0.1
 	);
 
 	/**

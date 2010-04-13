@@ -22,6 +22,13 @@ if (!defined('IN_PHPBB'))
 class datafile_3_0_5
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		// No bot changes 3.0.4 -> 3.0.5
+	);
+
+	/**
 	* @var Array 3.0.5 config data
 	*/
 	var $config_data = array(
@@ -30,6 +37,27 @@ class datafile_3_0_5
 		'captcha_gd_fonts'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'confirm_refresh'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'max_mun_search_keywords'	=> array('config_value' => '10', 'is_dynamic' => '0'),
+	);
+
+	/**
+	* @var Array All default permission settings
+	*/
+	var $permissions = array(
+		// No permission changes 3.0.4 -> 3.0.5
+	);
+
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
+	var $modules = array(
+		// No Module changes 3.0.4 -> 3.0.5
+	);
+
+	/**
+	* @var Arra All default groups
+	*/
+	var $groups = array(
+		// No Group changes 3.0.4 -> 3.0.5
 	);
 
 	/**

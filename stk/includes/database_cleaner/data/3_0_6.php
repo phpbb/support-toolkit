@@ -22,6 +22,13 @@ if (!defined('IN_PHPBB'))
 class datafile_3_0_6
 {
 	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		// No bot changes 3.0.5 -> 3.0.6
+	);
+
+	/**
 	* @var Array 3.0.6 config data
 	*/
 	var $config_data = array(
@@ -44,6 +51,36 @@ class datafile_3_0_6
 		'min_post_chars'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'allow_quick_reply'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'delete_time'					=> array('config_value' => '0', 'is_dynamic' => '0'),
+	);
+
+	/**
+	* @var Array All default permission settings
+	*/
+	var $permissions = array(
+		// No permission changes 3.0.5 -> 3.0.6
+	);
+
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
+	var $modules = array(
+		array('module_id' => '190', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'board', 'module_class' => 'acp', 'parent_id' => '3', 'left_id' => '39', 'right_id' => '40', 'module_langname' => 'ACP_FEED_SETTINGS', 'module_mode' => 'feed', 'module_auth' => 'acl_a_board'),
+	);
+
+	/**
+	* @var Arra All default groups
+	*/
+	var $groups = array(
+		'NEWLY_REGISTERED'	=> array(
+			'group_type'			=> 3,
+			'group_founder_manage'	=> 0,
+			'group_colour'			=> '',
+			'group_legend'			=> 0,
+			'group_avatar'			=> '',
+			'group_desc'			=> '',
+			'group_desc_uid'		=> '',
+			'group_max_recipients'	=> 5,
+		),
 	);
 
 	/**
@@ -99,5 +136,57 @@ class datafile_3_0_6
 		$schema_data['phpbb_posts']['KEYS']['post_username']				= array('INDEX', 'post_username');
 		$schema_data['phpbb_reports']['KEYS']['post_id']					= array('INDEX', 'post_id');
 		$schema_data['phpbb_reports']['KEYS']['pm_id']						= array('INDEX', 'pm_id');
+
+		// QA captcha tables
+		// Only if required
+		if (file_exists(PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT))
+		{
+			global $umil;
+
+			include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+
+			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE) || $umil->table_exists(CAPTCHA_ANSWERS_TABLE) || $umil->table_exists(CAPTCHA_QA_CONFIRM_TABLE))
+			{
+				$schema_data['phpbb_captcha_answers'] = array(
+					'COLUMNS' => array(
+						'question_id'	=> array('UINT', 0),
+						'answer_text'	=> array('STEXT_UNI', ''),
+					),
+					'KEYS'				=> array(
+						'question_id'			=> array('INDEX', 'question_id'),
+					),
+				);
+
+				$schema_data['phpbb_captcha_questions'] = array(
+					'COLUMNS' => array(
+						'question_id'	=> array('UINT', Null, 'auto_increment'),
+						'strict'		=> array('BOOL', 0),
+						'lang_id'		=> array('UINT', 0),
+						'lang_iso'		=> array('VCHAR:30', ''),
+						'question_text'	=> array('TEXT_UNI', ''),
+					),
+					'PRIMARY_KEY'		=> 'question_id',
+					'KEYS'				=> array(
+						'lang_iso'			=> array('INDEX', 'lang_iso'),
+					),
+				);
+
+				$schema_data['phpbb_qa_confirm'] = array(
+					'COLUMNS' => array(
+						'session_id'	=> array('CHAR:32', ''),
+						'confirm_id'	=> array('CHAR:32', ''),
+						'lang_iso'		=> array('VCHAR:30', ''),
+						'question_id'	=> array('UINT', 0),
+						'attempts'		=> array('UINT', 0),
+						'confirm_type'	=> array('USINT', 0),
+					),
+					'KEYS'				=> array(
+						'session_id'			=> array('INDEX', 'session_id'),
+						'lookup'				=> array('INDEX', array('confirm_id', 'session_id', 'lang_iso')),
+					),
+					'PRIMARY_KEY'		=> 'confirm_id',
+				);
+			}
+		}
 	}
 }
