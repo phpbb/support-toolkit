@@ -53,6 +53,9 @@ function get_permission_rows(&$cleaner, &$permission_rows, &$existing_permission
 	sort($permission_rows);
 }
 
+/**
+* Get all the phpBB system groups
+*/
 function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
 {
 	global $db;
@@ -130,7 +133,11 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$_datafile = new $class();
 
 		// Set the data
-		$data->config_data = array_merge($data->config_data, $_datafile->config_data);
+		$data->bots			= array_merge($data->bots, $_datafile->bots);
+		$data->config_data	= array_merge($data->config_data, $_datafile->config_data);
+		$data->permissions	= array_merge($data->permissions, $_datafile->permissions);
+		$data->modules		= array_merge($data->modules, $_datafile->modules);
+		$data->groups		= array_merge($data->groups, $_datafile->groups);
 		$_datafile->get_schema_struct($data->schema_data);
 
 		// Break after our version
