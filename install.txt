@@ -31,6 +31,7 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 == Changes since 1.0.0 ==
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Fix] Remove unused language strings. (Bug #58265)
+* [Fix] Sql query tool doesn't decode htmlspecialchars when running a query. (Bug #59755)
 * [Fix] Redirect to the correct page after logging in.
 * [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
 * [Fix] Properly insert poll expiration times when reparsing BBCode (Bug #60275)

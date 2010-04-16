@@ -51,6 +51,7 @@ class sql_query
 		}
 
 		$sql_query = utf8_normalize_nfc(request_var('sql_query', '', true));
+		$sql_query = htmlspecialchars_decode($sql_query);	// Need special chars like < and > see bug #59755
 
 		// Replace phpbb_ with the correct table prefix.  Do the double replace otherwise you can have issues with prefixes like phpbb_3
 		$sql_query = str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $sql_query));
