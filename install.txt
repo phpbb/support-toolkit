@@ -33,6 +33,7 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 * [Fix] Remove unused language strings. (Bug #58265)
 * [Fix] Redirect to the correct page after logging in.
 * [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
+* [Fix] Properly insert poll expiration times when reparsing BBCode (Bug #60275)
 
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)

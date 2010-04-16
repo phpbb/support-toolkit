@@ -246,7 +246,7 @@ class reparse_bbcode
 		// Fill the poll array
 		$this->poll = array(
 			'poll_title'		=> $poll_title,
-			'poll_length'		=> $this->post['poll_length'],
+			'poll_length'		=> $this->post['poll_length'] / 86400,
 			'poll_max_options'	=> $this->post['poll_max_options'],
 			'poll_option_text'	=> implode("\n", $poll_options),
 			'poll_start'		=> $this->post['poll_start'],
