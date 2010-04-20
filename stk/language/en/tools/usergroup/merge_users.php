@@ -44,6 +44,9 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_MERGED'		=> 'Users successfully merged.',
 
+	'MERGE_USERS_REMOVE_SOURCE'			=> 'Remove source user',
+	'MERGE_USERS_REMOVE_SOURCE_EXPLAIN'	=> 'If checked this tool will delete the source user from the board.',
+
 	'MERGE_USERS_SAME_USERS'	=> 'The source and target users must differ.',
 
 	'MERGE_USERS_USER_SOURCE'			=> 'Source user',
@@ -51,3 +54,5 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_USER_TARGET'	=> 'Target user',
 ));
+
+?>

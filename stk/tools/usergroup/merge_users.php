@@ -5,7 +5,7 @@
 * @version $Id$
 * @author Chris Smith <toonarmy@phpbb.com> (http://www.cs278.org/)
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-license.php GNU License
 *
 */
 
@@ -24,11 +24,9 @@ class merge_users
 	*
 	* Output the options available
 	*/
-	public function display_options()
+	function display_options()
 	{
 		global $user;
-
-		//$user->add_lang('ucp');
 
 		return array(
 			'title'		=> 'MERGE_USERS',
@@ -37,6 +35,7 @@ class merge_users
 				'legend1'	=> 'MERGE_USERS',
 				'source'	=> array('lang' => 'MERGE_USERS_USER_SOURCE', 'type' => 'text:40:255', 'explain' => true, 'select_user' => true),
 				'target'	=> array('lang' => 'MERGE_USERS_USER_TARGET', 'type' => 'text:40:255', 'explain' => false, 'select_user' => true),
+				'delete'	=> array('lang' => 'MERGE_USERS_REMOVE_SOURCE', 'type' => 'checkbox', 'explain' => true, 'default' => true),
 			),
 		);
 	}
@@ -46,7 +45,7 @@ class merge_users
 	*
 	* Does the actual stuff we want the tool to do after submission
 	*/
-	public function run_tool(&$error)
+	function run_tool(&$error)
 	{
 		global $config, $user, $db, $cache;
 
@@ -120,8 +119,7 @@ class merge_users
 		$target = (int) $target['user_id'];
 
 		// Needed for the merge
-		global $phpbb_root_path, $phpEx;
-		include "${phpbb_root_path}includes/functions_user.$phpEx";
+		include PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
 
 		$result = self::merge($source, $target);
 
@@ -135,7 +133,6 @@ class merge_users
 
 		foreach ($result as $sql)
 		{
-			//echo "<p><pre>", htmlspecialchars($sql), "</pre></p>";
 			$db->sql_query($sql);
 		}
 
@@ -144,7 +141,7 @@ class merge_users
 		// Delete source user
 		if ($delete)
 		{
-			//user_delete($mode, $user_id, $post_username = false)
+			user_delete('remove', $source, $post_username = false);
 		}
 
 		$sql = 'SELECT DISTINCT group_id
@@ -165,7 +162,7 @@ class merge_users
 		trigger_error('MERGE_USERS_MERGED');
 	}
 
-	protected static function merge($source, $target)
+	static function merge($source, $target)
 	{
 		global $db;
 
@@ -187,11 +184,6 @@ class merge_users
 		{
 			if (isset($groups[$group['id']]))
 			{
-/*
-				$sql[] = 'DELETE FROM ' . USER_GROUP_TABLE . "
-					WHERE user_id = {$source['user_id']}
-						AND group_id = {$group['id']}";
-*/
 				if ($groups[$group['id']]['leader'] != $group['leader'] || $groups[$group['id']]['pending'] != $group['pending'])
 				{
 					$sql[] = 'UPDATE ' . USER_GROUP_TABLE . '
@@ -205,12 +197,6 @@ class merge_users
 			}
 			else
 			{
-/*
-				$sql[] = 'UPDATE ' . USER_GROUP_TABLE . "
-					SET user_id	= {$target['user_id']}
-					WHERE user_id = {$source['user_id']}
-						AND group_id = {$group['id']}";
-*/
 				$sql[] = 'INSERT INTO ' . USER_GROUP_TABLE . ' ' . $db->sql_build_array('INSERT', array(
 					'group_id'		=> $group['id'],
 					'user_id'		=> $target['user_id'],
@@ -491,8 +477,6 @@ class merge_users
 		{
 			// Updating lastvisit, update other last stuff
 			$update['target']['user_lastpage'] = $source['user_lastpage'];
-			// This is used for a random seed iirc so lets not update it
-			//$update['target']['user_last_confirm_key'] = $source['user_last_confirm_key'];
 		}
 
 		foreach (array('posts', 'warnings', 'login_attempts', 'new_privmsg', 'unread_privmsg') as $var)
@@ -574,20 +558,29 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_acl_users(array $source, array $target)
+	static function merge_acl_users($source, $target)
 	{
 		global $db;
 
 		$acls['source'] = $acls['target'] = $acls = array();
 
-		$sql = 'SELECT au.*, ard.auth_setting AS role_setting
-			FROM ' . ACL_USERS_TABLE . ' au
-			LEFT JOIN ' . ACL_ROLES_DATA_TABLE . " ard
-				ON (
-					au.auth_role_id = ard.role_id
-					AND au.auth_option_id = ard.auth_option_id
-				)
-			WHERE user_id IN ({$source['user_id']}, {$target['user_id']})";
+		$sql_ary = array(
+			'SELECT'	=> 'au.*, ard.auth_setting AS role_setting',
+			'FROM'		=> array(
+				ACL_USERS_TABLE => 'au',
+			),
+			'LEFT_JOIN'	=> array(
+				array(
+					'FROM'	=> array(
+						ACL_ROLES_DATA_TABLE => 'ard',
+					),
+					'ON'	=> 'au.auth_role_id = ard.role_id
+								AND au.auth_option_id = ard.auth_option_id',
+				),
+			),
+			'WHERE'		=> $db->sql_in_set('user_id', array($source['user_id'], $target['user_id'])),
+		);
+		$sql = $db->sql_build_query('SELECT', $sql_ary);
 
 		$result = $db->sql_query($sql);
 
@@ -732,7 +725,7 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_bookmarks(array $source, array $target)
+	static function merge_bookmarks($source, $target)
 	{
 		global $db;
 
@@ -769,17 +762,17 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_forums_track(array $source, array $target)
+	static function merge_forums_track($source, $target)
 	{
 		return self::merge_track_tables('forum', $source, $target);
 	}
 
-	protected static function merge_forums_watch(array $source, array $target)
+	static function merge_forums_watch($source, $target)
 	{
 		return self::merge_watch_tables('forum', $source, $target);
 	}
 
-	protected static function merge_privmsgs(array $source, array $target)
+	static function merge_privmsgs($source, $target)
 	{
 		global $db;
 
@@ -803,7 +796,7 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_profile_fields_data(array $source, array $target)
+	static function merge_profile_fields_data($source, $target)
 	{
 		global $db;
 
@@ -853,7 +846,7 @@ class merge_users
 		);
 	}
 
-	protected static function merge_topics_posted($source, $target)
+	static function merge_topics_posted($source, $target)
 	{
 		global $db;
 
@@ -894,17 +887,17 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_topics_track($source, $target)
+	static function merge_topics_track($source, $target)
 	{
 		return self::merge_track_tables('topic', $source, $target);
 	}
 
-	protected static function merge_topics_watch($source, $target)
+	static function merge_topics_watch($source, $target)
 	{
 		return self::merge_watch_tables('topic', $source, $target);
 	}
 
-	protected static function merge_zebra(array $source, array $target)
+	static function merge_zebra($source, $target)
 	{
 		global $db;
 
@@ -949,7 +942,7 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_watch_tables($mode, $source, $target)
+	static function merge_watch_tables($mode, $source, $target)
 	{
 		global $db;
 
@@ -1000,7 +993,7 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function merge_track_tables($mode, $source, $target)
+	static function merge_track_tables($mode, $source, $target)
 	{
 		global $db;
 
@@ -1058,7 +1051,7 @@ class merge_users
 		return $sql;
 	}
 
-	protected static function table_name($table)
+	static function table_name($table)
 	{
 		$table = strtoupper($table) . '_TABLE';
 
@@ -1069,7 +1062,7 @@ class merge_users
 		return constant($table);
 	}
 
-	protected static function get_user_data($user)
+	static function get_user_data($user)
 	{
 		global $db;
 
@@ -1087,11 +1080,12 @@ class merge_users
 		));
 	}
 
-	protected static function get_group_memberships($user)
+	static function get_group_memberships($user)
 	{
-		$groups = array();
+		$groups		= array();
+		$group_set	= group_memberships(false, (int) $user);
 
-		foreach (group_memberships(false, (int) $user) as $group)
+		foreach ($group_set as $group)
 		{
 			$groups[(int) $group['group_id']] = array(
 				'id'		=> (int) $group['group_id'],
@@ -1102,3 +1096,5 @@ class merge_users
 		return $groups;
 	}
 }
+
+?>
