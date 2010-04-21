@@ -40,7 +40,15 @@ if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
-require(STK_ROOT_PATH . 'includes/umil.' . PHP_EXT);
+// We test for UMIL twice. First look whether this user already has an UMIL installation in its default location.
+if (file_exists(PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT))
+{
+	require PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT;
+}
+else
+{
+	require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
+}
 
 // Overwrite the phpBB error handler
 set_error_handler('stk_msg_handler');
