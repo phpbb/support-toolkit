@@ -125,6 +125,8 @@ class database_cleaner
 
 			// Validate db columns
 			case 2 :
+				$success_msg = $user->lang('DATABASE_TABLES_SUCCESS');
+
 				// Time to start going through the database and listing any extra/missing fields
 				$last_output_table = '';
 				foreach ($this->data->tables as $table_name => $data)
@@ -173,8 +175,8 @@ class database_cleaner
 
 			// Display fix config options.
 			case 3 :
-				// The confirm message for step 1
-				$success_msg = $user->lang('DATABASE_TABLES_SUCCESS');
+				// The confirm message for step 2
+				$success_msg = $user->lang('DATABASE_COLUMNS_SUCCESS');
 
 				// display extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
@@ -198,6 +200,85 @@ class database_cleaner
 						'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
 					));
 				}
+			break;
+
+			// Go through the permissions
+			case 4 :
+				$success_msg = $user->lang('CONFIG_UPDATE_SUCCESS');
+
+				$permission_rows = $existing_permissions = array();
+				get_permission_rows($this->data->permissions, $permission_rows, $existing_permissions);
+				foreach ($permission_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+					{
+						continue;
+					}
+
+					$template->assign_block_vars('section.items', array(
+						'NAME'			=> $name,
+						'FIELD_NAME'	=> $name,
+						'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
+					));
+				}
+			break;
+
+			// Check the system groups
+			case 5 :
+				$success_msg = $user->lang('PERMISSION_UPDATE_SUCCESS');
+
+				// Display the system groups that are missing or aren't from a vanilla installation
+				$template->assign_block_vars('section', array(
+					'NAME'		=> $user->lang['ACP_GROUPS_MANAGEMENT'],
+					'TITLE'		=> $user->lang['ROWS'],
+				));
+
+				$group_rows = $existing_groups = array();
+				get_group_rows($this->data->groups, $group_rows, $existing_groups);
+				foreach ($group_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+					{
+						continue;
+					}
+
+					$template->assign_block_vars('section.items', array(
+						'NAME'			=> $name,
+						'FIELD_NAME'	=> $name,
+						'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
+					));
+				}
+			break;
+
+			// Does the user wants to reset the modules?
+			case 6 :
+				$success_msg = $user->lang('SYSTEM_GROUP_UPDATE_SUCCESS');
+
+				$template->assign_vars(array(
+					'S_MODULE_OPTIONS'		=> true,
+					'S_NO_INSTRUCTIONS'		=> true,
+				));
+			break;
+
+			// Does the user wants to reset the bots?
+			case 7 :
+				// Only success message when the modules have been reset
+				$success_msg = (isset($_REQUEST['mod_reset'])) ? $user->lang('RESET_MODULE_SUCCESS') : $user->lang('RESET_MODULES_SKIP');
+
+				$template->assign_vars(array(
+					'S_BOT_OPTIONS'		=> true,
+					'S_NO_INSTRUCTIONS'	=> true,
+				));
+			break;
+
+			// Go to the final step
+			case 8 :
+				$success_msg = $user->lang('RESET_BOT_SUCCESS');
+
+				// Misc things will be done next
+				$template->assign_var('S_NO_INSTRUCTIONS', true);
 			break;
 		}
 
@@ -224,7 +305,7 @@ class database_cleaner
 	*/
 	function run_tool()
 	{
-		global $db, $umil;
+		global $config, $db, $umil;
 
 		$continue = (isset($_POST['continue'])) ? true : false;
 		$selected = request_var('items', array('' => ''));
@@ -234,6 +315,9 @@ class database_cleaner
 			// Kick them if bad form key
 			check_form_key('database_cleaner', false, append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner')), true);
 		}
+
+		// Var to allow steps to add something to the redirect uri
+		$uri_misc = array();
 
 		// Do the thing
 		switch ($this->step)
@@ -367,9 +451,177 @@ class database_cleaner
 					}
 				}
 
-			// Last step *never* has a break
+			break;
 
-			case 'final' :
+			// Fix permissions
+			case 4 :
+				$permission_rows = $existing_permissions = array();
+				get_permission_rows($data, $permission_rows, $existing_permissions);
+				foreach ($permission_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+					{
+						continue;
+					}
+
+					if (isset($selected[$name]))
+					{
+						if (isset($this->data->permissions[$name]) && !in_array($name, $existing_permissions))
+						{
+							// Add it with the default settings we've got...
+							$umil->permission_add($name, (($this->data->permissions[$name]['is_global']) ? true : false));
+						}
+						else if (!isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+						{
+							// Remove it
+							$umil->permission_remove($name, true);
+							$umil->permission_remove($name, false);
+						}
+					}
+				}
+			break;
+
+			// Fix the system groups
+			case 5 :
+				$group_rows = $existing_groups = array();
+				get_group_rows($data, $group_rows, $existing_groups);
+				foreach ($group_rows as $name)
+				{
+					// Skip ones that are in the default install and are in the existing permissions
+					if (isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+					{
+						continue;
+					}
+
+					if (isset($selected[$name]))
+					{
+						if (isset($this->data->groups[$name]) && !in_array($name, $existing_groups))
+						{
+							// Add it with the default settings we've got...
+							$group_id = false;
+							group_create($group_id, $this->data->groups[$name]['group_type'], $name, $this->data->groups[$name]['group_desc'], array('group_colour' => $this->data->groups[$name]['group_colour'], 'group_legend' => $this->data->groups[$name]['group_legend'], 'group_avatar' => $this->data->groups[$name]['group_avatar'], 'group_max_recipients' => $this->data->groups[$name]['group_max_recipients']));
+						}
+						else if (!isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+						{
+							if (!function_exists('group_delete'))
+							{
+								include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+							}
+							// Remove it
+							$db->sql_query('SELECT group_id FROM ' . GROUPS_TABLE . ' WHERE group_name = \'' . $name . '\'');
+							$group_id = $db->sql_fetchfield('group_id');
+							group_delete($group_id, $name);
+						}
+					}
+				}
+			break;
+
+			// Reset modules if required
+			case 6 :
+				if (isset($_POST['yes']))
+				{
+					// Remove existing modules
+					$db->sql_query('DELETE FROM ' . MODULES_TABLE);
+
+					// Add the modules
+					$db->sql_multi_insert(MODULES_TABLE, $this->data->modules);
+
+					// We reset the modules
+					$uri_misc = array('mod_reset' => true);
+				}
+			break;
+
+			// Reset bots
+			case 7 :
+				if (isset($_POST['yes']))
+				{
+					$sql = 'SELECT group_id, group_colour
+						FROM ' . GROUPS_TABLE . "
+						WHERE group_name = 'BOTS'";
+					$result = $db->sql_query($sql);
+					$group_id		= (int) $db->sql_fetchfield('group_id', false, $result);
+					$group_colour	= $db->sql_fetchfield('group_colour', 0, $result);
+					$db->sql_freeresult($result);
+
+					if (!$group_id)
+					{
+						// If we reach this point then something has gone very wrong
+						$template->assign_var('ERROR_MESSAGE', $user->lang['NO_BOT_GROUP']);
+					}
+					else
+					{
+						if (!function_exists('user_add'))
+						{
+							include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
+						}
+
+						// Remove existing bots
+						$uids = array();
+						$sql = 'SELECT user_id FROM ' . BOTS_TABLE;
+						$result = $db->sql_query($sql);
+						while ($row = $db->sql_fetchrow($result))
+						{
+							$uids[] = $row['user_id'];
+						}
+						$db->sql_freeresult($result);
+						if (!empty($uids))
+						{
+							$db->sql_query('DELETE FROM ' . USERS_TABLE . ' WHERE ' . $db->sql_in_set('user_id', $uids));
+							$db->sql_query('DELETE FROM ' . BOTS_TABLE);
+						}
+
+						// Add the bots
+						foreach ($this->data->bots as $bot_name => $bot_ary)
+						{
+							/* Clean the users table of any bots matching this...
+							* this is an issue if a default bot was removed from the bots group. */
+							$username_clean = utf8_clean_string($bot_name);
+
+							if (empty($username_clean))
+							{
+								// This shouldn't happen but we should handle it anyway...
+								continue;
+							}
+
+							$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $username_clean . '\'';
+							$db->sql_query($sql);
+
+							$user_row = array(
+								'user_type'				=> USER_IGNORE,
+								'group_id'				=> $group_id,
+								'username'				=> $bot_name,
+								'user_regdate'			=> time(),
+								'user_password'			=> '',
+								'user_colour'			=> $group_colour,
+								'user_email'			=> '',
+								'user_lang'				=> $config['default_lang'],
+								'user_style'			=> 1,
+								'user_timezone'			=> 0,
+								'user_dateformat'		=> $config['default_dateformat'],
+								'user_allow_massemail'	=> 0,
+							);
+
+							$user_id = user_add($user_row);
+
+							if ($user_id)
+							{
+								$sql = 'INSERT INTO ' . BOTS_TABLE . ' ' . $db->sql_build_array('INSERT', array(
+									'bot_active'	=> 1,
+									'bot_name'		=> (string) $bot_name,
+									'user_id'		=> (int) $user_id,
+									'bot_agent'		=> (string) $bot_ary[0],
+									'bot_ip'		=> (string) $bot_ary[1],
+								));
+
+								$result = $db->sql_query($sql);
+							}
+						}
+					}
+				}
+			break;
+
+			case 8 :
 				// Enable and purge cache
 				$umil->cache_purge();
 				$umil->cache_purge('auth');
@@ -381,6 +633,6 @@ class database_cleaner
 		}
 
 		// Redirect to the next step
-		redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1)));
+		redirect(append_sid(STK_INDEX, array_merge(array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1)), $uri_misc));
 	}
 }

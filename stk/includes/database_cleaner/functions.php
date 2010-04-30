@@ -36,7 +36,7 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 	sort($config_rows);
 }
 
-function get_permission_rows(&$cleaner, &$permission_rows, &$existing_permissions)
+function get_permission_rows(&$permission_data, &$permission_rows, &$existing_permissions)
 {
 	global $db;
 
@@ -49,14 +49,14 @@ function get_permission_rows(&$cleaner, &$permission_rows, &$existing_permission
 	}
 	$db->sql_freeresult($result);
 
-	$permission_rows = array_unique(array_merge(array_keys($cleaner->permissions), $existing_permissions));
+	$permission_rows = array_unique(array_merge(array_keys($permission_data), $existing_permissions));
 	sort($permission_rows);
 }
 
 /**
 * Get all the phpBB system groups
 */
-function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
+function get_group_rows(&$group_data, &$group_rows, &$existing_groups)
 {
 	global $db;
 
@@ -69,7 +69,7 @@ function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
 	}
 	$db->sql_freeresult($result);
 
-	$group_rows = array_unique(array_merge(array_keys($cleaner->groups), $existing_groups));
+	$group_rows = array_unique(array_merge(array_keys($group_data), $existing_groups));
 	sort($group_rows);
 }
 

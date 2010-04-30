@@ -78,10 +78,12 @@ $lang = array_merge($lang, array(
 	'RESET_BOT_SUCCESS'				=> 'The bots have been reset successfully!',
 	'RESET_MODULES'					=> 'Reset Modules',
 	'RESET_MODULES_EXPLAIN'			=> 'Would you like to reset the modules to the default phpBB3 modules?  All existing modules will be removed and be replaced with the default ones.',
+	'RESET_MODULES_SKIP'			=> 'Modules haven\'t been reset',
 	'RESET_MODULE_SUCCESS'			=> 'The modules have been reset successfully!',
 	'ROWS'							=> 'Rows',
 
 	'SUCCESS'						=> 'Success',
+	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
 
 	'TYPE'							=> 'Type',
 ));
