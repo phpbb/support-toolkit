@@ -83,6 +83,8 @@ $lang = array_merge($lang, array(
 	'RESET_MODULE_SUCCESS'			=> 'The modules have been reset successfully!',
 	'ROWS'							=> 'Rows',
 
+	'SECTION_CORRECT'				=> 'Section correct',
+	'SECTION_CORRECT_EXPLAIN'		=> 'No changes are found in this part of phpBB.',
 	'SUCCESS'						=> 'Success',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
 

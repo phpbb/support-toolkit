@@ -18,36 +18,45 @@
 	</div>
 <!-- ENDIF -->
 
-<!-- IF not S_NO_INSTRUCTIONS -->
+<!-- IF .section.items -->
+	<!-- IF not S_NO_INSTRUCTIONS-->
+		<fieldset>
+			<legend>{L_INSTRUCTIONS}</legend>
+			<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
+			<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
+		</fieldset>
+	<!-- ENDIF -->
+
+	<!-- BEGIN section -->
+		<fieldset>
+			<legend>{section.NAME}</legend>
+
+			<table cellspacing="1">
+				<tr>
+					<th>{section.TITLE}</th>
+					<th width="150px">{L_TYPE}</th>
+					<th width="75px">{L_ACTION}</th>
+					<th width="75px"></th>
+				</tr>
+				<!-- BEGIN items -->
+					<tr class="<!-- IF items.MISSING -->missing<!-- ELSE --><!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF --><!-- ENDIF -->">
+						<td style="font-weight: bold;">{items.NAME}</td>
+						<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
+						<td><!-- IF items.MISSING -->{L_ADD}<!-- ELSE -->{L_REMOVE}<!-- ENDIF --></td>
+						<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
+					</tr>
+				<!-- END items -->
+			</table>
+		</fieldset>
+	<!-- END section -->
+<!-- ELSEIF STEP > 0 and not L_OPTION_TITLE -->
 	<fieldset>
-		<legend>{L_INSTRUCTIONS}</legend>
-		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
-		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
+		<legend>{L_SECTION_CORRECT}</legend>
+		<p>
+			{L_SECTION_CORRECT_EXPLAIN}
+		</p>
 	</fieldset>
 <!-- ENDIF -->
-
-<!-- BEGIN section -->
-	<fieldset>
-		<legend>{section.NAME}</legend>
-
-		<table cellspacing="1">
-			<tr>
-				<th>{section.TITLE}</th>
-				<th width="150px">{L_TYPE}</th>
-				<th width="75px">{L_ACTION}</th>
-				<th width="75px"></th>
-			</tr>
-			<!-- BEGIN items -->
-				<tr class="<!-- IF items.MISSING -->missing<!-- ELSE --><!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF --><!-- ENDIF -->">
-					<td style="font-weight: bold;">{items.NAME}</td>
-					<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
-					<td><!-- IF items.MISSING -->{L_ADD}<!-- ELSE -->{L_REMOVE}<!-- ENDIF --></td>
-					<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
-				</tr>
-			<!-- END items -->
-		</table>
-	</fieldset>
-<!-- END section -->
 
 <!-- IF .section -->
 	<div class="rightside pagination"><a href="#" onclick="marklist('database_cleaner', 'items', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('database_cleaner', 'items', false); return false;">{L_UNMARK_ALL}</a></div>
@@ -57,17 +66,9 @@
 	{S_HIDDEN_FIELDS}
 	{S_FORM_TOKEN}
 
-	<!-- IF S_MODULE_OPTIONS -->
-		<legend>{L_RESET_MODULES}</legend>
-		<p style="padding: 5px 10px;">{L_RESET_MODULES_EXPLAIN}</p>
-
-		<div style="text-align: center;">
-			<input type="submit" name="yes" value="{L_YES}" class="button1" />
-			&nbsp; <input type="submit" name="no" value="{L_NO}" class="button2" />
-		</div>
-	<!-- ELSEIF S_BOT_OPTIONS -->
-		<legend>{L_RESET_BOTS}</legend>
-		<p style="padding: 5px 10px;">{L_RESET_BOTS_EXPLAIN}</p>
+	<!-- IF L_OPTION_TITLE -->
+		<legend>{L_OPTION_TITLE}</legend>
+		<p style="padding: 5px 10px;">{L_OPTION_EXPLAIN}</p>
 
 		<div style="text-align: center;">
 			<input type="submit" name="yes" value="{L_YES}" class="button1" />

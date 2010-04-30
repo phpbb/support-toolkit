@@ -39,8 +39,8 @@ class database_cleaner_views
 		global $template;
 
 		$template->assign_vars(array(
-			'S_BOT_OPTIONS'		=> true,
-			'S_NO_INSTRUCTIONS'	=> true,
+			'L_OPTION_TITLE'	=> $user->lang('RESET_BOTS'),
+			'L_OPTION_EXPLAIN'	=> $user->lang('RESET_BOTS_EXPLAIN'),
 		));
 
 		// Only success message when the modules have been reset
@@ -206,11 +206,11 @@ class database_cleaner_views
 	*/
 	function modules()
 	{
-		global $template;
+		global $template, $user;
 
 		$template->assign_vars(array(
-			'S_MODULE_OPTIONS'		=> true,
-			'S_NO_INSTRUCTIONS'		=> true,
+			'L_OPTION_TITLE'	=> $user->lang('RESET_MODULES'),
+			'L_OPTION_EXPLAIN'	=> $user->lang('RESET_MODULES_EXPLAIN'),
 		));
 
 		return 'SYSTEM_GROUP_UPDATE_SUCCESS';
