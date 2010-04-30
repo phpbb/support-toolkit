@@ -75,10 +75,11 @@ $lang = array_merge($lang, array(
 
 	'RESET_BOTS'					=> 'Reset Bots',
 	'RESET_BOTS_EXPLAIN'			=> 'Would you like to reset the bots list to the default phpBB3 bot list?  All existing bots will be removed and be replaced with the default set.',
+	'RESET_BOTS_SKIP'				=> 'The bot reset has been skipped',
 	'RESET_BOT_SUCCESS'				=> 'The bots have been reset successfully!',
 	'RESET_MODULES'					=> 'Reset Modules',
 	'RESET_MODULES_EXPLAIN'			=> 'Would you like to reset the modules to the default phpBB3 modules?  All existing modules will be removed and be replaced with the default ones.',
-	'RESET_MODULES_SKIP'			=> 'Modules haven\'t been reset',
+	'RESET_MODULES_SKIP'			=> 'The module reset has been skipped',
 	'RESET_MODULE_SUCCESS'			=> 'The modules have been reset successfully!',
 	'ROWS'							=> 'Rows',
 
