@@ -177,9 +177,12 @@ class reparse_bbcode
 			$this->message_parser = new parse_message($this->post['post_text']);
 			unset($this->post['post_text']);
 
-			// Reparse the actual pst
+			// Reparse the actual post
 			$post_data = array();
 			$this->_reparse_post($post_data);
+
+			// Adjust topic_time_limit
+			$post_data['topic_time_limit'] = $post_data['topic_time_limit']/86400;
 
 			// Now its time to submit the post
 			submit_post('edit', $this->post['post_subject'], $this->post['username'], $this->post['topic_type'], $this->poll, $post_data, true, true);
