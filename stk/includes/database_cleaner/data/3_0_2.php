@@ -96,7 +96,7 @@ class datafile_3_0_2
 		$schema_data['phpbb_drafts']['COLUMNS']['draft_subject']			= array('STEXT_UNI', '');
 		$schema_data['phpbb_forums']['COLUMNS']['forum_last_post_subject']	= array('STEXT_UNI', '');
 		$schema_data['phpbb_posts']['COLUMNS']['post_subject']				= array('STEXT_UNI', '');
-		$schema_data['phpbb_posts']['COLUMNS']['message_subject']			= array('STEXT_UNI', '');
+		$schema_data['phpbb_privmsgs']['COLUMNS']['message_subject']		= array('STEXT_UNI', '');
 		$schema_data['phpbb_topics']['COLUMNS']['topic_title']				= array('STEXT_UNI', '');
 		$schema_data['phpbb_topics']['COLUMNS']['topic_last_post_subject']	= array('STEXT_UNI', '');
 

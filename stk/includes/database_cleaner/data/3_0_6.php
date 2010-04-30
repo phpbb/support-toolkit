@@ -120,7 +120,7 @@ class datafile_3_0_6
 		// Add column
 		$schema_data['phpbb_confirm']['COLUMNS']['attempts']				= array('UINT', 0);
 		$schema_data['phpbb_forums']['COLUMNS']['forum_options']			= array('UINT:20', 0);
-		$schema_data['phpbb_groups']['COLUMNS']['phpbb_skip_auth']			= array('BOOL', 0);
+		$schema_data['phpbb_groups']['COLUMNS']['group_skip_auth']			= array('BOOL', 0);
 		$schema_data['phpbb_privmsgs']['COLUMNS']['message_reported']		= array('BOOL', 0);
 		$schema_data['phpbb_profile_fields']['COLUMNS']['field_show_on_vt']	= array('BOOL', 0);
 		$schema_data['phpbb_reports']['COLUMNS']['pm_id']					= array('UINT', 0);
