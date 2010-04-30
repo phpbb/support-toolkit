@@ -74,6 +74,128 @@ function get_group_rows(&$cleaner, &$group_rows, &$existing_groups)
 }
 
 /**
+* Get the columns of a given database table
+* @param String $table The name of the table
+*/
+function get_columns($table)
+{
+	global $db;
+
+	static $db_tools = null;
+	if ($db_tools == null)
+	{
+		if (!class_exists('phpbb_db_tools'))
+		{
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
+		}
+		$db_tools = new phpbb_db_tools($db);
+	}
+
+	// Set the query and column for each dbms
+	static $sql = '';
+	static $column_name = '';
+	if (empty($sql))
+	{
+		switch ($db_tools->sql_layer)
+		{
+			// MySQL
+			case 'mysql_40'	:
+			case 'mysql_41'	:
+				$sql = "SHOW COLUMNS FROM %s";
+				$column_name = 'Field';
+			break;
+
+			// PostgreSQL
+			case 'postgres'	:
+				$sql = "SELECT a.attname
+					FROM pg_class AS c, pg_attribute AS a
+					WHERE c.relname = '%s'
+						AND a.attnum > 0
+						AND a.attrelid = c.oid";
+				$column_name = 'attname';
+			break;
+
+			// MsSQL
+			case 'mssql'	:
+				$sql = "SELECT c.name
+					FROM syscolumns c
+					LEFT JOIN (sysobjects o)
+					ON (c.id = o.id)
+					WHERE o.name = '%s'";
+				$column_name = 'name';
+			break;
+
+			// Oracle
+			case 'oracle'	:
+				$sql = "SELECT column_name
+					FROM user_tab_columns
+					WHERE table_name = '%s'";
+				$column_name = 'column_name';
+			break;
+
+			// Firebird
+			case 'firebird'	:
+				$sql = "SELECT RDB\$FIELD_NAME as FNAME
+					FROM RDB\$RELATION_FIELDS
+					WHERE RDB\$RELATION_NAME = '%s'";
+				$column_name = 'fname';
+			break;
+
+			// SQLite
+			case 'sqlite'	:
+				$sql = "SELECT sql
+					FROM sqlite_master
+					WHERE type = 'table'
+						AND name = '%s'";
+				$column_name = 'sql';
+			break;
+		}
+	}
+
+	// Run the query
+	$result = $db->sql_query(sprintf($sql, $table));
+
+	// Get the columns
+	$columns = array();
+
+	if ($db_tools->sql_layer != 'sqlite')
+	{
+		while ($row = $db->sql_fetchrow($result))
+		{
+			array_push($columns, $row[$column_name]);
+		}
+	}
+	else
+	{
+		// Unfortunately SQLite doen't play as nice as the others
+		$col_ary = $entities = $matches = array();
+		$cols = $declaration = '';
+
+		while ($row = $db->sql_fetchrow($result))
+		{
+			preg_match('#\((.*)\)#s', $row[$column_name], $matches);
+
+			$cols = trim($matches[1]);
+			$col_ary = preg_split('/,(?![\s\w]+\))/m', $cols);
+
+			foreach ($col_ary as $declaration)
+			{
+				$entities = preg_split('#\s+#', trim($declaration));
+				if ($entities[0] == 'PRIMARY')
+				{
+					continue;
+				}
+
+				array_push($columns, $entities[0]);
+			}
+		}
+	}
+
+	$db->sql_freeresult($result);
+	return $columns;
+}
+
+/**
 * Get all tables used by phpBB
 */
 function get_phpbb_tables()

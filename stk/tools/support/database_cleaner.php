@@ -80,6 +80,7 @@ class database_cleaner
 
 		// Display the correct options screen
 		$user->add_lang('acp/common');
+		$success_msg = '';
 		switch ($this->step)
 		{
 			// Display a quick intro here and make sure they know what they are doing...
@@ -96,7 +97,7 @@ class database_cleaner
 			// Validate database tables
 			case 1 :
 				// The confirm message for step 0
-				$template->assign_var('SUCCESS_MESSAGE', $user->lang('BOARD_DISABLE_SUCCESS'));
+				$success_msg = $user->lang('BOARD_DISABLE_SUCCESS');
 
 				$found_tables	= get_phpbb_tables();
 				$req_tables		= $this->data->tables;
@@ -122,11 +123,58 @@ class database_cleaner
 				}
 			break;
 
-			// Display fix config options.
-			// @todo will become step 3 once db integerty checks are included
+			// Validate db columns
 			case 2 :
+				// Time to start going through the database and listing any extra/missing fields
+				$last_output_table = '';
+				foreach ($this->data->tables as $table_name => $data)
+				{
+					// We shouldn't mess with profile fields here.  Users probably will not know what this table does or what would happen if they remove fields added to it.
+					if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+					{
+						continue;
+					}
+
+					$existing_columns = get_columns($table_name);
+
+					if ($existing_columns === false)
+					{
+						// Table doesn't exist, don't handle here.
+						continue;
+					}
+
+					$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+					sort($columns);
+
+					foreach ($columns as $column)
+					{
+						if ((!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns)) || (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns)))
+						{
+							// Output the table block if it's not been done yet
+							if ($last_output_table != $table_name)
+							{
+								$last_output_table = $table_name;
+
+								$template->assign_block_vars('section', array(
+									'NAME'		=> $table_name,
+									'TITLE'		=> $user->lang['ROWS'],
+								));
+							}
+
+							$template->assign_block_vars('section.items', array(
+								'NAME'			=> $column,
+								'FIELD_NAME'	=> $table_name . '_' . $column,
+								'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
+							));
+						}
+					}
+				}
+			break;
+
+			// Display fix config options.
+			case 3 :
 				// The confirm message for step 1
-				$template->assign_var('SUCCESS_MESSAGE', $user->lang('DATABASE_TABLES_SUCCESS'));
+				$success_msg = $user->lang('DATABASE_TABLES_SUCCESS');
 
 				// display extra config variables and let them check/uncheck the ones they want to add/remove
 				$template->assign_block_vars('section', array(
@@ -157,7 +205,8 @@ class database_cleaner
 		page_header($user->lang['DATABASE_CLEANER'], false);
 
 		$template->assign_vars(array(
-			'STEP'			=> $this->step,
+			'STEP'				=> $this->step,
+			'SUCCESS_MESSAGE'	=> $success_msg,
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step, 'submit' => true)),
@@ -230,8 +279,70 @@ class database_cleaner
 				}
 			break;
 
-			// Fix config
+			// Fix columns
 			case 2 :
+				foreach ($this->data->tables as $table_name => $data)
+				{
+					// Don't touch this table
+					if ($table_name == PROFILE_FIELDS_DATA_TABLE)
+					{
+						continue;
+					}
+
+					$existing_columns = get_columns($table_name);
+
+					if ($existing_columns === false)
+					{
+						// Table doesn't exist, don't handle here.
+						continue;
+					}
+
+					$columns = array_unique(array_merge(array_keys($data['COLUMNS']), $existing_columns));
+
+					foreach ($columns as $column)
+					{
+						if (isset($selected[$table_name . '_' . $column]))
+						{
+							if (!isset($data['COLUMNS'][$column]) && in_array($column, $existing_columns))
+							{
+								$result = $umil->table_column_remove($table_name, $column);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+							}
+							else if (isset($data['COLUMNS'][$column]) && !in_array($column, $existing_columns))
+							{
+								// This can return an error under some circumstances, like when trying to add an auto-increment field (hope to hell nobody drops one of those)
+								$result = $umil->table_column_add($table_name, $column, $data['COLUMNS'][$column]);
+								if (stripos($result, 'SQL ERROR'))
+								{
+									$error[] = $result;
+								}
+
+								// We can re-add *some* keys
+								if (isset($data['KEYS']))
+								{
+									if (in_array($column, $data['KEYS']))
+									{
+										if ($data['KEYS'][$column][0] == 'INDEX' && $data['KEYS'][$column][1] == $column)
+										{
+											$result = $umil->table_index_add($table_name, $column, $column);
+											if (stripos($result, 'SQL ERROR'))
+											{
+												$error[] = $result;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			break;
+
+			// Fix config
+			case 3 :
 				$config_rows = $existing_config = array();
 				get_config_rows($this->data->config_data, $config_rows, $existing_config);
 				foreach ($config_rows as $name)

@@ -64,7 +64,7 @@ class database_cleaner_data
 		// Extract tables
 		global $table_prefix;
 
-		$this->tables = array_flip(array_keys($this->schema_data));
+		$this->tables = $this->schema_data;
 
 		// Get the right table prefix!
 		if ($table_prefix != 'phpbb_')
