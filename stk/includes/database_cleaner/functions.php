@@ -157,7 +157,10 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		case '3_0_7' :
 		case '3_0_6' :
 			// If $config['questionnaire_unique_id] exists add it to the config data array
-			$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
+			if (isset($config['questionnaire_unique_id']))
+			{
+				$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
+			}
 
 		// No Break
 
