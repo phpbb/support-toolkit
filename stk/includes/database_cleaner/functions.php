@@ -148,7 +148,26 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	}
 
 	// Perform some actions that only have to be done on given versions or on all
-	$data->config_data['version'] = $phpbb_version;		// We always need to set the version afterwards
+	switch($phpbb_version)
+	{
+		case '3_0_8_dev' :
+		case '3_0_7_pl1' :
+		case '3_0_7' :
+		case '3_0_6' :
+			// If $config['questionnaire_unique_id] exists add it to the config data array
+			$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
+
+		// No Break
+
+		case '3_0_5' :
+		case '3_0_4' :
+		case '3_0_3' :
+		case '3_0_2' :
+		case '3_0_1' :
+		case '3_0_0' :
+			$data->config_data['version'] = $phpbb_version;		// We always need to set the version afterwards
+		break;
+	}
 
 	// Call init
 	$data->init();
