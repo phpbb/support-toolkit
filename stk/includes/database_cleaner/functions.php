@@ -114,6 +114,8 @@ function get_phpbb_tables()
 */
 function fetch_cleaner_data(&$data, $phpbb_version)
 {
+	global $config;
+
 	// Fetch all the files
 	if (!function_exists('filelist'))
 	{
