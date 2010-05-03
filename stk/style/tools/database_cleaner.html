@@ -1,18 +1,18 @@
 <!-- INCLUDE overall_header.html -->
 
+<!-- IF ERROR_MESSAGE -->
+	<div class="errorbox">
+		<h3><!-- IF ERROR_TITLE -->{ERROR_TITLE}<!-- ELSE -->{L_ERROR}<!-- ENDIF --></h3>
+		<p><strong>{ERROR_MESSAGE}</strong></p>
+	</div>
+<!-- ENDIF -->
+
 <!-- IF SUCCESS_MESSAGE -->
 	<div class="successbox">
 		<h3><!-- IF SUCCESS_TITLE -->{SUCCESS_TITLE}<!-- ELSE -->{L_SUCCESS}<!-- ENDIF --></h3>
 		<p>
 			{SUCCESS_MESSAGE}
 		</p>
-	</div>
-<!-- ENDIF -->
-
-<!-- IF ERROR_MESSAGE -->
-	<div class="errorbox">
-		<h3><!-- IF ERROR_TITLE -->{ERROR_TITLE}<!-- ELSE -->{L_ERROR}<!-- ENDIF --></h3>
-		<p><strong>{ERROR_MESSAGE}</strong></p>
 	</div>
 <!-- ENDIF -->
 

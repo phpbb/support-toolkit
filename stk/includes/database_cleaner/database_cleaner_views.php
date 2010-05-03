@@ -60,7 +60,18 @@ class database_cleaner_views
 	*/
 	function display()
 	{
-		global $template, $user;
+		global $error, $template, $user;
+
+		// Error?
+		if (!empty($error))
+		{
+			$error_msg = '';
+			foreach ($error as $e)
+			{
+				$error_msg .= $user->lang($e) . '<br />';
+			}
+			$template->assign_var('ERROR_MESSAGE', $error_msg);
+		}
 
 		// This page has a "confirm box"
 		if (!empty($this->_confirm_box))

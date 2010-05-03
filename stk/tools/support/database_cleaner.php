@@ -63,7 +63,7 @@ class database_cleaner
 		// Correctly format the version number. Only RC releases are in uppercase
 		$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
 
-		// Unstable version can only be used when debugging
+		// Unstable versions can only be used when debugging
 		if (!defined('DEBUG') && preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
 		{
 			return false;
@@ -88,8 +88,6 @@ class database_cleaner
 	*/
 	function _setup()
 	{
-		global $submit;
-
 		// Get the step.
 		// If the step is outside the $this->step_to_action range set it to 0
 		$this->step = request_var('step', 0);
@@ -99,24 +97,19 @@ class database_cleaner
 		}
 
 		// include the required file for this version
-		include(STK_ROOT_PATH . 'includes/database_cleaner/functions.' . PHP_EXT);
-		include(STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT);
+		if (!function_exists('fetch_cleaner_data'))
+		{
+			include STK_ROOT_PATH . 'includes/database_cleaner/functions_database_cleaner.' . PHP_EXT;
+		}
+
+		if (!class_exists('database_cleaner_data'))
+		{
+			include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
+		}
 
 		// Load all data for this version
 		$this->data = new database_cleaner_data();
 		fetch_cleaner_data($this->data, $this->phpbb_version);
-
-		// Load the correct object
-		if (!$submit)
-		{
-			include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_views.' . PHP_EXT;
-			$this->object = new database_cleaner_views($this);
-		}
-		else
-		{
-			include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_controller.' . PHP_EXT;
-			$this->object = new database_cleaner_controller($this);
-		}
 	}
 
 	/**
@@ -129,6 +122,13 @@ class database_cleaner
 		// Setup
 		$user->add_lang('acp/common');
 
+		// Setup $this->object
+		if (!class_exists('database_cleaner_views'))
+		{
+			include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_views.' . PHP_EXT;
+		}
+		$this->object = new database_cleaner_views($this);
+
 		// Call the correct view method
 		call_user_func(array($this->object, $this->step_to_action[$this->step]));
 
@@ -138,19 +138,35 @@ class database_cleaner
 
 	/**
 	* Perform the right actions
+	* @param Array $error An array that will be filled with error messages that might occure
+	* @return void
 	*/
-	function run_tool()
+	function run_tool(&$error)
 	{
 		$selected = request_var('items', array('' => ''));
 
-		if ($this->step > 0)
+		if ($this->step > 0 && !check_form_key('database_cleaner'))
 		{
 			// Kick them if bad form key
-			check_form_key('database_cleaner', false, append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner')), true);
+			$error[] = 'FORM_INVALID';
+			return;
 		}
 
+		// Setup $this->object
+		if (!class_exists('database_cleaner_controller'))
+		{
+			include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_controller.' . PHP_EXT;
+		}
+		$this->object = new database_cleaner_controller($this);
+
 		// Call the correct method
-		call_user_func(array($this->object, $this->step_to_action[$this->step]), $selected);
+		call_user_func(array($this->object, $this->step_to_action[$this->step]), &$error, $selected);
+
+		// Error?
+		if (!empty($error))
+		{
+			return;
+		}
 
 		// Step 6 & 7 can trigger two messages
 		$did_run = true;

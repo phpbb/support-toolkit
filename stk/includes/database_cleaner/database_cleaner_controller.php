@@ -34,9 +34,9 @@ class database_cleaner_controller
 	/**
 	* Reset all bots
 	*/
-	function bots()
+	function bots(&$error)
 	{
-		global $config, $db, $template;
+		global $config, $db;
 
 		if (isset($_POST['yes']))
 		{
@@ -51,7 +51,8 @@ class database_cleaner_controller
 			if (!$group_id)
 			{
 				// If we reach this point then something has gone very wrong
-				$template->assign_var('ERROR_MESSAGE', $user->lang['NO_BOT_GROUP']);
+				$error[] = 'NO_BOT_GROUP';
+				return;
 			}
 			else
 			{
@@ -131,7 +132,7 @@ class database_cleaner_controller
 	* - Add removed columns
 	* - Remove added columns
 	*/
-	function columns($selected)
+	function columns(&$error, $selected)
 	{
 		global $umil;
 
@@ -201,7 +202,7 @@ class database_cleaner_controller
 	* - Add removed entries
 	* - Remove added entries
 	*/
-	function config($selected)
+	function config(&$error, $selected)
 	{
 		global $db;
 
@@ -251,7 +252,7 @@ class database_cleaner_controller
 	/**
 	* Correct the system groups
 	*/
-	function groups($selected)
+	function groups(&$error, $selected)
 	{
 		global $db;
 
@@ -309,7 +310,7 @@ class database_cleaner_controller
 	* This will remove all added modules and will re-add and re-enable all vanilla
 	* modules
 	*/
-	function modules()
+	function modules(&$error)
 	{
 		global $db;
 
@@ -326,7 +327,7 @@ class database_cleaner_controller
 	/**
 	* Fix permissions
 	*/
-	function permissions($selected)
+	function permissions(&$error, $selected)
 	{
 		global $umil;
 
@@ -364,7 +365,7 @@ class database_cleaner_controller
 	* - Add removed tables
 	* - Removed added tables
 	*/
-	function tables($selected)
+	function tables(&$error, $selected)
 	{
 		global $umil;
 
