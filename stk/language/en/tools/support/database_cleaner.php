@@ -38,6 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOARD_DISABLE_REASON'			=> 'This board is due to some database maintenance currently not available.',
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
 	'COLUMNS'						=> 'Columns',

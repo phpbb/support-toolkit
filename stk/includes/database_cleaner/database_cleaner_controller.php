@@ -294,6 +294,8 @@ class database_cleaner_controller
 	*/
 	function introduction()
 	{
+		global $user;
+
 		// Redirect if they selected quit
 		if (isset($_POST['quit']))
 		{
@@ -302,6 +304,7 @@ class database_cleaner_controller
 
 		// Start by disabling the board
 		set_config('board_disable', 1);
+		set_config('board_disable_msg', $user->lang('BOARD_DISABLE_REASON'));
 	}
 
 	/**
