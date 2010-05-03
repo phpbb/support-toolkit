@@ -83,8 +83,22 @@ $lang = array_merge($lang, array(
 	'RESET_MODULE_SUCCESS'			=> 'The modules have been reset successfully!',
 	'ROWS'							=> 'Rows',
 
-	'SECTION_CORRECT'				=> 'Section correct',
-	'SECTION_CORRECT_EXPLAIN'		=> 'No changes are found in this part of phpBB.',
+	'SECTION_NOT_CHANGED_TITLE'		=> array(
+		1	=> 'Tables not changed',
+		2	=> 'Columns not changed',
+		3	=> 'Config not changed',
+		4	=> 'Permissions not changed',
+		5	=> 'Groups not changed',
+		8	=> 'Final step',
+	),
+	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
+		1	=> 'The database tables haven\'t been changed',
+		2	=> 'The columns in the database haven\'t been changed',
+		3	=> 'The configuration table doesn\'t have any new/missing values',
+		4	=> 'There where no changes in the permission tables',
+		5	=> 'There where no changes in the phpBB system groups',
+		8	=> 'This last step will clear the cache and re-enable the board.',
+	),
 	'SUCCESS'						=> 'Success',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
 

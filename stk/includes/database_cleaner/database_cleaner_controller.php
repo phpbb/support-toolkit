@@ -24,11 +24,11 @@ class database_cleaner_controller
 	/**
 	* @var database_cleaner_data The database cleaner data object
 	*/
-	var $data = array();
+	var $db_cleaner = array();
 
 	function database_cleaner_controller($db_cleaner)
 	{
-		$this->data = $db_cleaner->data;
+		$this->db_cleaner = $db_cleaner;
 	}
 
 	/**
@@ -76,7 +76,7 @@ class database_cleaner_controller
 				}
 
 				// Add the bots
-				foreach ($this->data->bots as $bot_name => $bot_ary)
+				foreach ($this->db_cleaner->data->bots as $bot_name => $bot_ary)
 				{
 					/* Clean the users table of any bots matching this...
 					* this is an issue if a default bot was removed from the bots group. */
@@ -131,11 +131,11 @@ class database_cleaner_controller
 	* - Add removed columns
 	* - Remove added columns
 	*/
-	function columns()
+	function columns($selected)
 	{
 		global $umil;
 
-		foreach ($this->data->tables as $table_name => $data)
+		foreach ($this->db_cleaner->data->tables as $table_name => $data)
 		{
 			// Don't touch this table
 			if ($table_name == PROFILE_FIELDS_DATA_TABLE)
@@ -201,27 +201,27 @@ class database_cleaner_controller
 	* - Add removed entries
 	* - Remove added entries
 	*/
-	function config()
+	function config($selected)
 	{
 		global $db;
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
-			if (isset($this->data->config_data[$name]) && in_array($name, $existing_config))
+			if (isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->data->config_data[$name]) && !in_array($name, $existing_config))
+				if (isset($this->db_cleaner->data->config_data[$name]) && !in_array($name, $existing_config))
 				{
 					// Add it with the default settings we've got...
-					set_config($name, $this->data->config_data[$name]['config_value'], $this->data->config_data[$name]['is_dynamic']);
+					set_config($name, $this->db_cleaner->data->config_data[$name]['config_value'], $this->db_cleaner->data->config_data[$name]['is_dynamic']);
 				}
-				else if (!isset($this->data->config_data[$name]) && in_array($name, $existing_config))
+				else if (!isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
 				{
 					// Remove it
 					$db->sql_query('DELETE FROM ' . CONFIG_TABLE . " WHERE config_name = '" . $db->sql_escape($name) . "'");
@@ -251,7 +251,7 @@ class database_cleaner_controller
 	/**
 	* Correct the system groups
 	*/
-	function groups()
+	function groups($selected)
 	{
 		global $db;
 
@@ -260,20 +260,20 @@ class database_cleaner_controller
 		foreach ($group_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+			if (isset($this->db_cleaner->data->groups[$name]) && in_array($name, $existing_groups))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->data->groups[$name]) && !in_array($name, $existing_groups))
+				if (isset($this->db_cleaner->data->groups[$name]) && !in_array($name, $existing_groups))
 				{
 					// Add it with the default settings we've got...
 					$group_id = false;
-					group_create($group_id, $this->data->groups[$name]['group_type'], $name, $this->data->groups[$name]['group_desc'], array('group_colour' => $this->data->groups[$name]['group_colour'], 'group_legend' => $this->data->groups[$name]['group_legend'], 'group_avatar' => $this->data->groups[$name]['group_avatar'], 'group_max_recipients' => $this->data->groups[$name]['group_max_recipients']));
+					group_create($group_id, $this->db_cleaner->data->groups[$name]['group_type'], $name, $this->db_cleaner->data->groups[$name]['group_desc'], array('group_colour' => $this->db_cleaner->data->groups[$name]['group_colour'], 'group_legend' => $this->db_cleaner->data->groups[$name]['group_legend'], 'group_avatar' => $this->db_cleaner->data->groups[$name]['group_avatar'], 'group_max_recipients' => $this->db_cleaner->data->groups[$name]['group_max_recipients']));
 				}
-				else if (!isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+				else if (!isset($this->db_cleaner->data->groups[$name]) && in_array($name, $existing_groups))
 				{
 					if (!function_exists('group_delete'))
 					{
@@ -319,14 +319,14 @@ class database_cleaner_controller
 			$db->sql_query('DELETE FROM ' . MODULES_TABLE);
 
 			// Add the modules
-			$db->sql_multi_insert(MODULES_TABLE, $this->data->modules);
+			$db->sql_multi_insert(MODULES_TABLE, $this->db_cleaner->data->modules);
 		}
 	}
 
 	/**
 	* Fix permissions
 	*/
-	function permissions()
+	function permissions($selected)
 	{
 		global $umil;
 
@@ -335,19 +335,19 @@ class database_cleaner_controller
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->data->permissions[$name]) && !in_array($name, $existing_permissions))
+				if (isset($this->db_cleaner->data->permissions[$name]) && !in_array($name, $existing_permissions))
 				{
 					// Add it with the default settings we've got...
-					$umil->permission_add($name, (($this->data->permissions[$name]['is_global']) ? true : false));
+					$umil->permission_add($name, (($this->db_cleaner->data->permissions[$name]['is_global']) ? true : false));
 				}
-				else if (!isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+				else if (!isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
 				{
 					// Remove it
 					$umil->permission_remove($name, true);
@@ -364,12 +364,12 @@ class database_cleaner_controller
 	* - Add removed tables
 	* - Removed added tables
 	*/
-	function tables()
+	function tables($selected)
 	{
 		global $umil;
 
 		$found_tables	= get_phpbb_tables();
-		$req_tables		= $this->data->tables;
+		$req_tables		= $this->db_cleaner->data->tables;
 		$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
 		sort($tables);
 

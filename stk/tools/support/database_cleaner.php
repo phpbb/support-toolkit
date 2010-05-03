@@ -130,24 +130,10 @@ class database_cleaner
 		$user->add_lang('acp/common');
 
 		// Call the correct view method
-		$success_msg = call_user_func(array($this->object, $this->step_to_action[$this->step]));
+		call_user_func(array($this->object, $this->step_to_action[$this->step]));
 
 		// Output the page
-		page_header($user->lang['DATABASE_CLEANER'], false);
-
-		$template->assign_vars(array(
-			'STEP'				=> $this->step,
-			'SUCCESS_MESSAGE'	=> $user->lang($success_msg),
-
-			// Create submit link, always set "submit" so we'll continue in the run_tool method
-			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step, 'submit' => true)),
-		));
-
-		$template->set_filenames(array(
-			'body' => 'tools/database_cleaner.html',
-		));
-
-		page_footer();
+		$this->object->display();
 	}
 
 	/**
@@ -155,9 +141,6 @@ class database_cleaner
 	*/
 	function run_tool()
 	{
-		global $config, $db, $umil;
-
-		$continue = (isset($_POST['continue'])) ? true : false;
 		$selected = request_var('items', array('' => ''));
 
 		if ($this->step > 0)
@@ -167,7 +150,7 @@ class database_cleaner
 		}
 
 		// Call the correct method
-		call_user_func(array($this->object, $this->step_to_action[$this->step]));
+		call_user_func(array($this->object, $this->step_to_action[$this->step]), $selected);
 
 		// Step 6 & 7 can trigger two messages
 		$did_run = true;

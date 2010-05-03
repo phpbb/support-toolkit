@@ -22,13 +22,112 @@ if (!defined('IN_PHPBB'))
 class database_cleaner_views
 {
 	/**
+	* @var Array This step needs a confirmbox, this array contains all the data
+	*
+	* $_confirm_box = array(
+	*	'title'		=> 'The title',
+	*	'message	=> 'The message',
+	* );
+	*/
+	var $_confirm_box = array();
+
+	/**
+	* @var Array Array that is used to build lists of found changes
+	*/
+	var $_section_data = array();
+
+	/**
 	* @var database_cleaner_data The database cleaner data object
 	*/
-	var $data = array();
+	var $db_cleaner = array();
 
+	/**
+	* @var String The message that is displayed once a step is done successfully
+	*/
+	var $success_message = '';
+
+	/**
+	* Constructor
+	* @param database_cleaner $db_cleaner Object of the current database cleaner class
+	*/
 	function database_cleaner_views($db_cleaner)
 	{
-		$this->data = $db_cleaner->data;
+		$this->db_cleaner = $db_cleaner;
+	}
+
+	/**
+	* Output the page
+	*/
+	function display()
+	{
+		global $template, $user;
+
+		// This page has a "confirm box"
+		if (!empty($this->_confirm_box))
+		{
+			$template->assign_vars(array(
+				'L_CONFIRM_TITLE'	=> $user->lang($this->_confirm_box['title']),
+				'L_CONFIRM_EXPLAIN'	=> $user->lang($this->_confirm_box['message']),
+				'S_CONFIRM_BOX'		=> true,
+			));
+		}
+		// This step found some changes
+		elseif (!empty($this->_section_data))
+		{
+			// Output the sections
+			foreach($this->_section_data as $section)
+			{
+				// Its possible the section exist but there aren't any items
+				if (empty($section['ITEMS']))
+				{
+					continue;
+				}
+
+				// Create the section
+				$template->assign_block_vars('section', array(
+					'NAME'	=> $user->lang($section['NAME']),
+					'TITLE'	=> $user->lang($section['TITLE']),
+				));
+
+				// Output the items
+				foreach($section['ITEMS'] as $item)
+				{
+					$template->assign_block_vars('section.items', array(
+						'NAME'			=> $user->lang($item['NAME']),
+						'FIELD_NAME'	=> $user->lang($item['FIELD_NAME']),
+						'MISSING'		=> $item['MISSING'],
+					));
+				}
+			}
+		}
+
+		// Assign no changes text
+		if (isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
+		{
+			$template->assign_vars(array(
+				'NO_CHANGES_TEXT'	=> $user->lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
+				'NO_CHANGES_TITLE'	=> $user->lang('SECTION_NOT_CHANGED_TITLE', $this->db_cleaner->step),
+			));
+		}
+
+		// Output some stuff we need always
+		$template->assign_vars(array(
+			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
+			'STEP'				=> $this->db_cleaner->step,
+			'SUCCESS_MESSAGE'	=> $user->lang($this->success_message),
+
+			// Create submit link, always set "submit" so we'll continue in the run_tool method
+			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true)),
+		));
+
+		// Do tha page
+		page_header($user->lang('DATABASE_CLEANER'), false);
+
+		$template->set_filenames(array(
+			'body' => 'tools/database_cleaner.html',
+		));
+
+		page_footer();
 	}
 
 	/**
@@ -36,16 +135,14 @@ class database_cleaner_views
 	*/
 	function bots()
 	{
-		global $template;
-
-		$template->assign_vars(array(
-			'L_OPTION_TITLE'	=> $user->lang('RESET_BOTS'),
-			'L_OPTION_EXPLAIN'	=> $user->lang('RESET_BOTS_EXPLAIN'),
-		));
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_BOTS',
+			'message'	=> 'RESET_BOTS_EXPLAIN',
+		);
 
 		// Only success message when the modules have been reset
 		$did_run = request_var('did_run', false);
-		return ($did_run) ? 'RESET_MODULE_SUCCESS' : 'RESET_MODULES_SKIP';
+		$this->success_message = ($did_run) ? 'RESET_MODULE_SUCCESS' : 'RESET_MODULES_SKIP';
 	}
 
 	/**
@@ -53,11 +150,9 @@ class database_cleaner_views
 	*/
 	function columns()
 	{
-		global $template;
-
 		// Time to start going through the database and listing any extra/missing fields
 		$last_output_table = '';
-		foreach ($this->data->tables as $table_name => $data)
+		foreach ($this->db_cleaner->data->tables as $table_name => $data)
 		{
 			// We shouldn't mess with profile fields here.  Users probably will not know what this table does or what would happen if they remove fields added to it.
 			if ($table_name == PROFILE_FIELDS_DATA_TABLE)
@@ -85,22 +180,23 @@ class database_cleaner_views
 					{
 						$last_output_table = $table_name;
 
-						$template->assign_block_vars('section', array(
-							'NAME'		=> $table_name,
-							'TITLE'		=> $user->lang['ROWS'],
-						));
+						$this->_section_data[$table_name] = array(
+							'NAME'	=> $table_name,
+							'TITLE'	=> 'ROWS',
+						);
 					}
 
-					$template->assign_block_vars('section.items', array(
+					// Add the data
+					$this->_section_data[$table_name]['ITEMS'][] = array(
 						'NAME'			=> $column,
 						'FIELD_NAME'	=> $table_name . '_' . $column,
 						'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
-					));
+					);
 				}
 			}
 		}
 
-		return 'DATABASE_TABLES_SUCCESS';
+		$this->success_message = 'DATABASE_TABLES_SUCCESS';
 	}
 
 	/**
@@ -108,32 +204,30 @@ class database_cleaner_views
 	*/
 	function config()
 	{
-		global $template, $user;
-
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
-		$template->assign_block_vars('section', array(
-			'NAME'		=> $user->lang['CONFIG_SETTINGS'],
-			'TITLE'		=> $user->lang['ROWS'],
-		));
+		$this->_section_data['config'] = array(
+			'NAME'		=> 'CONFIG_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing config
-			if (isset($this->data->config_data[$name]) && in_array($name, $existing_config))
+			if (isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
 			{
 				continue;
 			}
 
-			$template->assign_block_vars('section.items', array(
+			$this->_section_data['config']['ITEMS'][] = array(
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
-			));
+			);
 		}
 
-		return 'DATABASE_COLUMNS_SUCCESS';
+		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
 
 	/**
@@ -143,12 +237,9 @@ class database_cleaner_views
 	{
 		global $template;
 
-		// Misc things will be done next
-		$template->assign_var('S_NO_INSTRUCTIONS', true);
-
 		// Only success message when the bots have been reset
 		$did_run = request_var('did_run', false);
-		return ($did_run) ? 'RESET_BOT_SUCCESS' : 'RESET_BOTS_SKIP';
+		$this->success_message = ($did_run) ? 'RESET_BOT_SUCCESS' : 'RESET_BOTS_SKIP';
 	}
 
 	/**
@@ -159,29 +250,29 @@ class database_cleaner_views
 		global $template, $user;
 
 		// Display the system groups that are missing or aren't from a vanilla installation
-		$template->assign_block_vars('section', array(
-			'NAME'		=> $user->lang['ACP_GROUPS_MANAGEMENT'],
-			'TITLE'		=> $user->lang['ROWS'],
-		));
+		$this->_section_data['groups'] = array(
+			'NAME'		=> 'ACP_GROUPS_MANAGEMENT',
+			'TITLE'		=> 'ROWS',
+		);
 
 		$group_rows = $existing_groups = array();
-		get_group_rows($this->data->groups, $group_rows, $existing_groups);
+		get_group_rows($this->db_cleaner->data->groups, $group_rows, $existing_groups);
 		foreach ($group_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->data->groups[$name]) && in_array($name, $existing_groups))
+			if (isset($this->db_cleaner->data->groups[$name]) && in_array($name, $existing_groups))
 			{
 				continue;
 			}
 
-			$template->assign_block_vars('section.items', array(
+			$this->_section_data['config']['ITEMS'][] = array(
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
-			));
+			);
 		}
 
-		return 'PERMISSION_UPDATE_SUCCESS';
+		$this->success_message = 'PERMISSION_UPDATE_SUCCESS';
 	}
 
 	/**
@@ -192,13 +283,12 @@ class database_cleaner_views
 		global $template, $user;
 
 		$template->assign_vars(array(
-			'S_NO_INSTRUCTIONS'	=> true,
 			'SUCCESS_TITLE'		=> $user->lang['DATABASE_CLEANER'],
 			'ERROR_TITLE'		=> ' ',
 			'ERROR_MESSAGE'		=> $user->lang['DATABASE_CLEANER_WARNING'],
 		));
 
-		return 'DATABASE_CLEANER_WELCOME';
+		$this->success_message = 'DATABASE_CLEANER_WELCOME';
 	}
 
 	/**
@@ -206,14 +296,12 @@ class database_cleaner_views
 	*/
 	function modules()
 	{
-		global $template, $user;
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_MODULES',
+			'message'	=> 'RESET_MODULES_EXPLAIN',
+		);
 
-		$template->assign_vars(array(
-			'L_OPTION_TITLE'	=> $user->lang('RESET_MODULES'),
-			'L_OPTION_EXPLAIN'	=> $user->lang('RESET_MODULES_EXPLAIN'),
-		));
-
-		return 'SYSTEM_GROUP_UPDATE_SUCCESS';
+		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
 	}
 
 	/**
@@ -221,26 +309,29 @@ class database_cleaner_views
 	*/
 	function permissions()
 	{
-		global $template;
+		$this->_section_data['permissions'] = array(
+			'NAME'		=> 'PERMISSION_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
 
 		$permission_rows = $existing_permissions = array();
-		get_permission_rows($this->data->permissions, $permission_rows, $existing_permissions);
+		get_permission_rows($this->db_cleaner->data->permissions, $permission_rows, $existing_permissions);
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}
 
-			$template->assign_block_vars('section.items', array(
+			$this->_section_data['permissions']['ITEMS'][] = array(
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
-			));
+			);
 		}
 
-		return 'CONFIG_UPDATE_SUCCESS';
+		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
 	}
 
 	/**
@@ -248,31 +339,29 @@ class database_cleaner_views
 	*/
 	function tables()
 	{
-		global $template, $user;
-
 		$found_tables	= get_phpbb_tables();
-		$req_tables		= $this->data->tables;
+		$req_tables		= $this->db_cleaner->data->tables;
 		$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
 		sort($tables);
 
-		$template->assign_block_vars('section', array(
-			'NAME'		=> $user->lang('DATABASE_TABLES'),
-			'TITLE'		=> $user->lang('DATABASE_TABLES'),
-		));
+		$this->_section_data['tables'] = array(
+			'NAME'		=> 'DATABASE_TABLES',
+			'TITLE'		=> 'DATABASE_TABLES',
+		);
 
 		foreach ($tables as $table)
 		{
 			// Table was added or removed
 			if (!isset($req_tables[$table]) && in_array($table, $found_tables) || isset($req_tables[$table]) && !in_array($table, $found_tables))
 			{
-				$template->assign_block_vars('section.items', array(
+				$this->_section_data['permissions']['ITEMS'][] = array(
 					'NAME'			=> $table,
 					'FIELD_NAME'	=> $table,
 					'MISSING'		=> isset($req_tables[$table]) ? true : false,
-				));
+				);
 			}
 		}
 
-		return 'BOARD_DISABLE_SUCCESS';
+		$this->success_message = 'BOARD_DISABLE_SUCCESS';
 	}
 }

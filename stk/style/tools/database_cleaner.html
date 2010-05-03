@@ -1,7 +1,5 @@
 <!-- INCLUDE overall_header.html -->
 
-<form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
-
 <!-- IF SUCCESS_MESSAGE -->
 	<div class="successbox">
 		<h3><!-- IF SUCCESS_TITLE -->{SUCCESS_TITLE}<!-- ELSE -->{L_SUCCESS}<!-- ENDIF --></h3>
@@ -18,16 +16,15 @@
 	</div>
 <!-- ENDIF -->
 
-<!-- IF .section.items -->
-	<!-- IF not S_NO_INSTRUCTIONS-->
-		<fieldset>
-			<legend>{L_INSTRUCTIONS}</legend>
-			<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
-			<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
-		</fieldset>
-	<!-- ENDIF -->
+<form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
+	<!-- IF .section -->
+	<fieldset>
+		<legend>{L_INSTRUCTIONS}</legend>
+		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
+		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
+	</fieldset>
 
-	<!-- BEGIN section -->
+		<!-- BEGIN section -->
 		<fieldset>
 			<legend>{section.NAME}</legend>
 
@@ -48,27 +45,20 @@
 				<!-- END items -->
 			</table>
 		</fieldset>
-	<!-- END section -->
-<!-- ELSEIF STEP > 0 and not L_OPTION_TITLE -->
+		<!-- END section -->
+	<!-- ENDIF -->
+
+	<!-- IF NO_CHANGES_TITLE and not .section -->
 	<fieldset>
-		<legend>{L_SECTION_CORRECT}</legend>
-		<p>
-			{L_SECTION_CORRECT_EXPLAIN}
-		</p>
+		<legend>{NO_CHANGES_TITLE}</legend>
+		<p>{NO_CHANGES_TEXT}</p>
 	</fieldset>
-<!-- ENDIF -->
+	<!-- ENDIF -->
 
-<!-- IF .section -->
-	<div class="rightside pagination"><a href="#" onclick="marklist('database_cleaner', 'items', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('database_cleaner', 'items', false); return false;">{L_UNMARK_ALL}</a></div>
-<!-- ENDIF -->
-
-<fieldset>
-	{S_HIDDEN_FIELDS}
-	{S_FORM_TOKEN}
-
-	<!-- IF L_OPTION_TITLE -->
-		<legend>{L_OPTION_TITLE}</legend>
-		<p style="padding: 5px 10px;">{L_OPTION_EXPLAIN}</p>
+	<fieldset>
+	<!-- IF S_CONFIRM_BOX -->
+		<legend>{L_CONFIRM_TITLE}</legend>
+		<p style="padding: 5px 10px;">{L_CONFIRM_EXPLAIN}</p>
 
 		<div style="text-align: center;">
 			<input type="submit" name="yes" value="{L_YES}" class="button1" />
@@ -80,8 +70,10 @@
 			<!-- IF STEP == 0 -->&nbsp; <input type="submit" name="quit" value="{L_QUIT}" class="button2" /><!-- ENDIF -->
 		</div>
 	<!-- ENDIF -->
-</fieldset>
+	</fieldset>
 
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
 </form>
 
 <!-- INCLUDE overall_footer.html -->
