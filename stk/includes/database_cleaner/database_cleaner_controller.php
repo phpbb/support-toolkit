@@ -244,6 +244,7 @@ class database_cleaner_controller
 		$umil->cache_purge();
 		$umil->cache_purge('auth');
 		set_config('board_disable', 0);
+		set_config('board_disable_msg', '');
 
 		// Finished!
 		trigger_error('DATABASE_CLEANER_SUCCESS');
