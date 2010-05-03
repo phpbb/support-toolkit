@@ -26,11 +26,11 @@ The Support Toolkit is also available in multiple languages, to install your own
 == Upgrade to 1.0.1 ==
 To upgrade a previous version of the STK to 1.0.1, remove your previous installation by deleting the stk/ directory, then follow the Installation Instructions above.
 
-
 = Changelog =
 == Changes since 1.0.0 ==
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Add] Tool to recalculate email hashes. (Bug #56425)
+* [Change] Rewrote the database cleaner to be more flexible/easier to maintain.
 * [Fix] Remove unused language strings. (Bug #58265)
 * [Fix] Sql query tool doesn't decode htmlspecialchars when running a query. (Bug #59755)
 * [Fix] Redirect to the correct page after logging in.

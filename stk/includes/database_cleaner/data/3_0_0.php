@@ -17,12 +17,70 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
-* Database Cleaner Data file for phpBB 3.0.5
+* phpBB 3.0.0 data file
 */
-class database_cleaner_data
+class datafile_3_0_0
 {
-	// All default config settings
-	var $config = array(
+	/**
+	* @var Array The bots
+	*/
+	var $bots = array(
+		'AdsBot [Google]'			=> array('AdsBot-Google', ''),
+		'Alexa [Bot]'				=> array('ia_archiver', ''),
+		'Alta Vista [Bot]'			=> array('Scooter/', ''),
+		'Ask Jeeves [Bot]'			=> array('Ask Jeeves', ''),
+		'Baidu [Spider]'			=> array('Baiduspider+(', ''),
+		'Exabot [Bot]'				=> array('Exabot/', ''),
+		'FAST Enterprise [Crawler]'	=> array('FAST Enterprise Crawler', ''),
+		'FAST WebCrawler [Crawler]'	=> array('FAST-WebCrawler/', ''),
+		'Francis [Bot]'				=> array('http://www.neomo.de/', ''),
+		'Gigabot [Bot]'				=> array('Gigabot/', ''),
+		'Google Adsense [Bot]'		=> array('Mediapartners-Google', ''),
+		'Google Desktop'			=> array('Google Desktop', ''),
+		'Google Feedfetcher'		=> array('Feedfetcher-Google', ''),
+		'Google [Bot]'				=> array('Googlebot', ''),
+		'Heise IT-Markt [Crawler]'	=> array('heise-IT-Markt-Crawler', ''),
+		'Heritrix [Crawler]'		=> array('heritrix/1.', ''),
+		'IBM Research [Bot]'		=> array('ibm.com/cs/crawler', ''),
+		'ICCrawler - ICjobs'		=> array('ICCrawler - ICjobs', ''),
+		'ichiro [Crawler]'			=> array('ichiro/2', ''),
+		'Majestic-12 [Bot]'			=> array('MJ12bot/', ''),
+		'Metager [Bot]'				=> array('MetagerBot/', ''),
+		'MSN NewsBlogs'				=> array('msnbot-NewsBlogs/', ''),
+		'MSN [Bot]'					=> array('msnbot/', ''),
+		'MSNbot Media'				=> array('msnbot-media/', ''),
+		'NG-Search [Bot]'			=> array('NG-Search/', ''),
+		'Nutch [Bot]'				=> array('http://lucene.apache.org/nutch/', ''),
+		'Nutch/CVS [Bot]'			=> array('NutchCVS/', ''),
+		'OmniExplorer [Bot]'		=> array('OmniExplorer_Bot/', ''),
+		'Online link [Validator]'	=> array('online link validator', ''),
+		'psbot [Picsearch]'			=> array('psbot/0', ''),
+		'Seekport [Bot]'			=> array('Seekbot/', ''),
+		'Sensis [Crawler]'			=> array('Sensis Web Crawler', ''),
+		'SEO Crawler'				=> array('SEO search Crawler/', ''),
+		'Seoma [Crawler]'			=> array('Seoma [SEO Crawler]', ''),
+		'SEOSearch [Crawler]'		=> array('SEOsearch/', ''),
+		'Snappy [Bot]'				=> array('Snappy/1.1 ( http://www.urltrends.com/ )', ''),
+		'Steeler [Crawler]'			=> array('http://www.tkl.iis.u-tokyo.ac.jp/~crawler/', ''),
+		'Synoo [Bot]'				=> array('SynooBot/', ''),
+		'Telekom [Bot]'				=> array('crawleradmin.t-info@telekom.de', ''),
+		'TurnitinBot [Bot]'			=> array('TurnitinBot/', ''),
+		'Voyager [Bot]'				=> array('voyager/1.0', ''),
+		'W3 [Sitesearch]'			=> array('W3 SiteSearch Crawler', ''),
+		'W3C [Linkcheck]'			=> array('W3C-checklink/', ''),
+		'W3C [Validator]'			=> array('W3C_*Validator', ''),
+		'WiseNut [Bot]'				=> array('http://www.WISEnutbot.com', ''),
+		'YaCy [Bot]'				=> array('yacybot', ''),
+		'Yahoo MMCrawler [Bot]'		=> array('Yahoo-MMCrawler/', ''),
+		'Yahoo Slurp [Bot]'			=> array('Yahoo! DE Slurp', ''),
+		'Yahoo [Bot]'				=> array('Yahoo! Slurp', ''),
+		'YahooSeeker [Bot]'			=> array('YahooSeeker/', ''),
+	);
+
+	/**
+	* @var Array 3.0.0 config data
+	*/
+	var $config_data = array(
 		'active_sessions'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'allow_attachments'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'allow_autologin'				=> array('config_value' => '1', 'is_dynamic' => '0'),
@@ -64,12 +122,12 @@ class database_cleaner_data
 		'avatar_min_height'				=> array('config_value' => '20', 'is_dynamic' => '0'),
 		'avatar_min_width'				=> array('config_value' => '20', 'is_dynamic' => '0'),
 		'avatar_path'					=> array('config_value' => 'images/avatars/upload', 'is_dynamic' => '0'),
-		'avatar_salt'					=> array('config_value' => '', 'is_dynamic' => '0'),
-		'board_contact'					=> array('config_value' => '', 'is_dynamic' => '0'),
+		'avatar_salt'					=> array('config_value' => 'abe7f18da0dd71dc66f5ac84cea7abc5', 'is_dynamic' => '0'),
+		'board_contact'					=> array('config_value' => 'contact@yourdomain.tld', 'is_dynamic' => '0'),
 		'board_disable'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'board_disable_msg'				=> array('config_value' => '', 'is_dynamic' => '0'),
 		'board_dst'						=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'board_email'					=> array('config_value' => '', 'is_dynamic' => '0'),
+		'board_email'					=> array('config_value' => 'address@yourdomain.tld', 'is_dynamic' => '0'),
 		'board_email_form'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'board_email_sig'				=> array('config_value' => 'Thanks, The Management', 'is_dynamic' => '0'),
 		'board_hide_emails'				=> array('config_value' => '1', 'is_dynamic' => '0'),
@@ -79,25 +137,19 @@ class database_cleaner_data
 		'bump_type'						=> array('config_value' => 'd', 'is_dynamic' => '0'),
 		'cache_gc'						=> array('config_value' => '7200', 'is_dynamic' => '0'),
 		'captcha_gd'					=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'captcha_gd_fonts'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'captcha_gd_foreground_noise'	=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'captcha_gd_wave'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'captcha_gd_x_grid'				=> array('config_value' => '25', 'is_dynamic' => '0'),
 		'captcha_gd_y_grid'				=> array('config_value' => '25', 'is_dynamic' => '0'),
-		'captcha_gd_3d_noise'			=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'check_attachment_content'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'check_dnsbl'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'chg_passforce'					=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'confirm_refresh'				=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'cookie_domain'					=> array('config_value' => 'localhost', 'is_dynamic' => '0'),
-		'cookie_name'					=> array('config_value' => 'phpbb3_cookie', 'is_dynamic' => '0'),
+		'cookie_domain'					=> array('config_value' => '', 'is_dynamic' => '0'),
+		'cookie_name'					=> array('config_value' => 'phpbb3_bhra1', 'is_dynamic' => '0'),
 		'cookie_path'					=> array('config_value' => '/', 'is_dynamic' => '0'),
 		'cookie_secure'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'coppa_enable'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'coppa_fax'						=> array('config_value' => '', 'is_dynamic' => '0'),
 		'coppa_mail'					=> array('config_value' => '', 'is_dynamic' => '0'),
-		'database_gc'					=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'dbms_version'					=> array('config_value' => '', 'is_dynamic' => '0'),
+		'database_gc'					=> array('config_value' => '604800', 'is_dynamic' => '0'),
 		'default_dateformat'			=> array('config_value' => 'D M d, Y g:i a', 'is_dynamic' => '0'),
 		'default_style'					=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'display_last_edited'			=> array('config_value' => '1', 'is_dynamic' => '0'),
@@ -110,7 +162,6 @@ class database_cleaner_data
 		'enable_confirm'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'enable_pm_icons'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'enable_post_confirm'			=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'enable_queue_trigger'			=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'flood_interval'				=> array('config_value' => '15', 'is_dynamic' => '0'),
 		'force_server_vars'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'form_token_lifetime'			=> array('config_value' => '7200', 'is_dynamic' => '0'),
@@ -178,7 +229,6 @@ class database_cleaner_data
 		'max_filesize_pm'				=> array('config_value' => '262144', 'is_dynamic' => '0'),
 		'max_login_attempts'			=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'max_name_chars'				=> array('config_value' => '20', 'is_dynamic' => '0'),
-		'max_num_search_keywords'		=> array('config_value' => '10', 'is_dynamic' => '0'),
 		'max_pass_chars'				=> array('config_value' => '30', 'is_dynamic' => '0'),
 		'max_poll_options'				=> array('config_value' => '10', 'is_dynamic' => '0'),
 		'max_post_chars'				=> array('config_value' => '60000', 'is_dynamic' => '0'),
@@ -198,26 +248,22 @@ class database_cleaner_data
 		'min_name_chars'				=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'min_pass_chars'				=> array('config_value' => '6', 'is_dynamic' => '0'),
 		'min_search_author_chars'		=> array('config_value' => '3', 'is_dynamic' => '0'),
-		'min_time_reg'					=> array('config_value' => '0',	'is_dynamic' => '0'),
+		'min_time_reg'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'min_time_terms'				=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'mime_triggers'					=> array('config_value' => 'body|head|html|img|plaintext|a href|pre|script|table|title', 'is_dynamic' => '0'),
 		'override_user_style'			=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'pass_complex'					=> array('config_value' => 'PASS_TYPE_ANY', 'is_dynamic' => '0'),
 		'pm_edit_time'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'pm_max_boxes'					=> array('config_value' => '4', 'is_dynamic' => '0'),
 		'pm_max_msgs'					=> array('config_value' => '50', 'is_dynamic' => '0'),
-		'pm_max_recipients'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'posts_per_page'				=> array('config_value' => '10', 'is_dynamic' => '0'),
 		'print_pm'						=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'queue_interval'				=> array('config_value' => '600', 'is_dynamic' => '0'),
-		'queue_trigger_posts'			=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'ranks_path'					=> array('config_value' => 'images/ranks', 'is_dynamic' => '0'),
 		'require_activation'			=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'referer_validation'			=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'script_path'					=> array('config_value' => '/', 'is_dynamic' => '0'),
+		'script_path'					=> array('config_value' => '', 'is_dynamic' => '0'),
 		'search_block_size'				=> array('config_value' => '250', 'is_dynamic' => '0'),
 		'search_gc'						=> array('config_value' => '7200', 'is_dynamic' => '0'),
-		'search_indexing_state'			=> array('config_value' => '', 'is_dynamic' => '1'),
+		'search_indexing_state'			=> array('config_value' => '', 'is_dynamic' => '0'),
 		'search_interval'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'search_anonymous_interval'		=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'search_type'					=> array('config_value' => 'fulltext_native', 'is_dynamic' => '0'),
@@ -225,7 +271,7 @@ class database_cleaner_data
 		'secure_allow_deny'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'secure_allow_empty_referer'	=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'secure_downloads'				=> array('config_value' => '0', 'is_dynamic' => '0'),
-		'server_name'					=> array('config_value' => 'localhost', 'is_dynamic' => '0'),
+		'server_name'					=> array('config_value' => 'dev.localhost.com', 'is_dynamic' => '0'),
 		'server_port'					=> array('config_value' => '80', 'is_dynamic' => '0'),
 		'server_protocol'				=> array('config_value' => 'http://', 'is_dynamic' => '0'),
 		'session_gc'					=> array('config_value' => '3600', 'is_dynamic' => '0'),
@@ -243,33 +289,35 @@ class database_cleaner_data
 		'tpl_allow_php'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'upload_icons_path'				=> array('config_value' => 'images/upload_icons', 'is_dynamic' => '0'),
 		'upload_path'					=> array('config_value' => 'files', 'is_dynamic' => '0'),
-		'version'						=> array('config_value' => '3.0.5', 'is_dynamic' => '0'),
+		'version'						=> array('config_value' => '3.0.0', 'is_dynamic' => '0'),
 		'warnings_expire_days'			=> array('config_value' => '90', 'is_dynamic' => '0'),
 		'warnings_gc'					=> array('config_value' => '14400', 'is_dynamic' => '0'),
 		'cache_last_gc'					=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'cron_lock'						=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'database_last_gc'				=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'last_queue_run'				=> array('config_value' => '0', 'is_dynamic' => '1'),
-		'newest_user_colour'			=> array('config_value' => '', 'is_dynamic' => '1'),
-		'newest_user_id'				=> array('config_value' => '', 'is_dynamic' => '1'),
+		'newest_user_colour'			=> array('config_value' => 'AA0000', 'is_dynamic' => '1'),
+		'newest_user_id'				=> array('config_value' => '2', 'is_dynamic' => '1'),
 		'newest_username'				=> array('config_value' => '', 'is_dynamic' => '1'),
 		'num_files'						=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'num_posts'						=> array('config_value' => '1', 'is_dynamic' => '1'),
 		'num_topics'					=> array('config_value' => '1', 'is_dynamic' => '1'),
 		'num_users'						=> array('config_value' => '1', 'is_dynamic' => '1'),
-		'rand_seed'						=> array('config_value' => '', 'is_dynamic' => '1'),
-		'rand_seed_last_update'			=> array('config_value' => '', 'is_dynamic' => '1'),
-		'record_online_date'			=> array('config_value' => '0', 'is_dynamic' => '1'),
-		'record_online_users'			=> array('config_value' => '0', 'is_dynamic' => '1'),
+		'rand_seed'						=> array('config_value' => '64666a229f4a29b4593b8de060adb805', 'is_dynamic' => '1'),
+		'rand_seed_last_update'			=> array('config_value' => '1267911894', 'is_dynamic' => '1'),
+		'record_online_date'			=> array('config_value' => '1267911901', 'is_dynamic' => '1'),
+		'record_online_users'			=> array('config_value' => '2', 'is_dynamic' => '1'),
 		'search_last_gc'				=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'session_last_gc'				=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'upload_dir_size'				=> array('config_value' => '0', 'is_dynamic' => '1'),
 		'warnings_last_gc'				=> array('config_value' => '0', 'is_dynamic' => '1'),
-		'board_startdate'				=> array('config_value' => '0', 'is_dynamic' => '0'),
+		'board_startdate'				=> array('config_value' => '1267911892', 'is_dynamic' => '0'),
 		'default_lang'					=> array('config_value' => 'en', 'is_dynamic' => '0'),
 	);
 
-	// All default permission settings
+	/**
+	* @var Array All default permission settings
+	*/
 	var $permissions = array(
 		'f_'				=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
 		'f_announce'		=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
@@ -367,7 +415,6 @@ class database_cleaner_data
 		'u_hideonline'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_ignoreflood'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_masspm'			=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
-		'u_masspm_group'	=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_pm_attach'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_pm_bbcode'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_pm_delete'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
@@ -390,7 +437,9 @@ class database_cleaner_data
 		'u_viewprofile'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 	);
 
-	// All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	/**
+	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
+	*/
 	var $modules = array(
 		array('module_id' => '1', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => '', 'module_class' => 'acp', 'parent_id' => '0', 'left_id' => '1', 'right_id' => '60', 'module_langname' => 'ACP_CAT_GENERAL', 'module_mode' => '', 'module_auth' => ''),
 		array('module_id' => '2', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => '', 'module_class' => 'acp', 'parent_id' => '1', 'left_id' => '4', 'right_id' => '17', 'module_langname' => 'ACP_QUICK_ACCESS', 'module_mode' => '', 'module_auth' => ''),
@@ -583,7 +632,9 @@ class database_cleaner_data
 		array('module_id' => '189', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'zebra', 'module_class' => 'ucp', 'parent_id' => '168', 'left_id' => '52', 'right_id' => '53', 'module_langname' => 'UCP_ZEBRA_FOES', 'module_mode' => 'foes', 'module_auth' => ''),
 	);
 
-	// All default groups
+	/**
+	* @var Arra All default groups
+	*/
 	var $groups = array(
 		'GUESTS'			=> array(
 			'group_type'			=> 3,
@@ -647,32 +698,40 @@ class database_cleaner_data
 		),
 	);
 
-	// All default tables (copy from create_schema_files for this version)
-	var $tables = array();
-
-	function database_cleaner_data()
+	/**
+	* Define the basic structure
+	* The format:
+	*		array('{TABLE_NAME}' => {TABLE_DATA})
+	*		{TABLE_DATA}:
+	*			COLUMNS = array({column_name} = array({column_type}, {default}, {auto_increment}))
+	*			PRIMARY_KEY = {column_name(s)}
+	*			KEYS = array({key_name} = array({key_type}, {column_name(s)})),
+	*
+	*	Column Types:
+	*	INT:x		=> SIGNED int(x)
+	*	BINT		=> BIGINT
+	*	UINT		=> mediumint(8) UNSIGNED
+	*	UINT:x		=> int(x) UNSIGNED
+	*	TINT:x		=> tinyint(x)
+	*	USINT		=> smallint(4) UNSIGNED (for _order columns)
+	*	BOOL		=> tinyint(1) UNSIGNED
+	*	VCHAR		=> varchar(255)
+	*	CHAR:x		=> char(x)
+	*	XSTEXT_UNI	=> text for storing 100 characters (topic_title for example)
+	*	STEXT_UNI	=> text for storing 255 characters (normal input field with a max of 255 single-byte chars) - same as VCHAR_UNI
+	*	TEXT_UNI	=> text for storing 3000 characters (short text, descriptions, comments, etc.)
+	*	MTEXT_UNI	=> mediumtext (post text, large text)
+	*	VCHAR:x		=> varchar(x)
+	*	TIMESTAMP	=> int(11) UNSIGNED
+	*	DECIMAL		=> decimal number (5,2)
+	*	DECIMAL:	=> decimal number (x,2)
+	*	PDECIMAL	=> precision decimal number (6,3)
+	*	PDECIMAL:	=> precision decimal number (x,3)
+	*	VCHAR_UNI	=> varchar(255) BINARY
+	*	VCHAR_CI	=> varchar_ci for postgresql, others VCHAR
+	*/
+	function get_schema_struct(&$schema_data)
 	{
-		global $table_prefix;
-
-		// This makes it easier, just copy & paste the get_schema_struct function from the develop/create_schema_files.php file
-		$this->tables = $this->get_schema_struct();
-
-		// Get the right table prefix!
-		if ($table_prefix != 'phpbb_')
-		{
-			foreach ($this->tables as $table_name => $table_data)
-			{
-				$this->tables[str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $table_name))] = $table_data;
-
-				unset($this->tables[$table_name]);
-			}
-		}
-	}
-
-	function get_schema_struct()
-	{
-		$schema_data = array();
-
 		$schema_data['phpbb_attachments'] = array(
 			'COLUMNS'		=> array(
 				'attach_id'			=> array('UINT', NULL, 'auto_increment'),
@@ -876,7 +935,7 @@ class database_cleaner_data
 				'topic_id'			=> array('UINT', 0),
 				'forum_id'			=> array('UINT', 0),
 				'save_time'			=> array('TIMESTAMP', 0),
-				'draft_subject'		=> array('STEXT_UNI', ''),
+				'draft_subject'		=> array('XSTEXT_UNI', ''),
 				'draft_message'		=> array('MTEXT_UNI', ''),
 			),
 			'PRIMARY_KEY'	=> 'draft_id',
@@ -923,7 +982,7 @@ class database_cleaner_data
 				'forum_desc_uid'		=> array('VCHAR:8', ''),
 				'forum_link'			=> array('VCHAR_UNI', ''),
 				'forum_password'		=> array('VCHAR_UNI:40', ''),
-				'forum_style'			=> array('UINT', 0),
+				'forum_style'			=> array('USINT', 0),
 				'forum_image'			=> array('VCHAR', ''),
 				'forum_rules'			=> array('TEXT_UNI', ''),
 				'forum_rules_link'		=> array('VCHAR_UNI', ''),
@@ -938,12 +997,11 @@ class database_cleaner_data
 				'forum_topics_real'		=> array('UINT', 0),
 				'forum_last_post_id'	=> array('UINT', 0),
 				'forum_last_poster_id'	=> array('UINT', 0),
-				'forum_last_post_subject' => array('STEXT_UNI', ''),
+				'forum_last_post_subject' => array('XSTEXT_UNI', ''),
 				'forum_last_post_time'	=> array('TIMESTAMP', 0),
 				'forum_last_poster_name'=> array('VCHAR_UNI', ''),
 				'forum_last_poster_colour'=> array('VCHAR:6', ''),
 				'forum_flags'			=> array('TINT:4', 32),
-				'display_subforum_list'	=> array('BOOL', 1),
 				'display_on_index'		=> array('BOOL', 1),
 				'enable_indexing'		=> array('BOOL', 1),
 				'enable_icons'			=> array('BOOL', 1),
@@ -1011,12 +1069,11 @@ class database_cleaner_data
 				'group_sig_chars'		=> array('UINT', 0),
 				'group_receive_pm'		=> array('BOOL', 0),
 				'group_message_limit'	=> array('UINT', 0),
-				'group_max_recipients'	=> array('UINT', 0),
 				'group_legend'			=> array('BOOL', 1),
 			),
 			'PRIMARY_KEY'	=> 'group_id',
 			'KEYS'			=> array(
-				'group_legend_name'		=> array('INDEX', array('group_legend', 'group_name')),
+				'group_legend'			=> array('INDEX', 'group_legend'),
 			),
 		);
 
@@ -1153,7 +1210,7 @@ class database_cleaner_data
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
 				'post_username'			=> array('VCHAR_UNI:255', ''),
-				'post_subject'			=> array('STEXT_UNI', '', 'true_sort'),
+				'post_subject'			=> array('XSTEXT_UNI', '', 'true_sort'),
 				'post_text'				=> array('MTEXT_UNI', ''),
 				'post_checksum'			=> array('VCHAR:32', ''),
 				'post_attachment'		=> array('BOOL', 0),
@@ -1189,7 +1246,7 @@ class database_cleaner_data
 				'enable_smilies'		=> array('BOOL', 1),
 				'enable_magic_url'		=> array('BOOL', 1),
 				'enable_sig'			=> array('BOOL', 1),
-				'message_subject'		=> array('STEXT_UNI', ''),
+				'message_subject'		=> array('XSTEXT_UNI', ''),
 				'message_text'			=> array('MTEXT_UNI', ''),
 				'message_edit_reason'	=> array('STEXT_UNI', ''),
 				'message_edit_user'		=> array('UINT', 0),
@@ -1275,7 +1332,6 @@ class database_cleaner_data
 				'field_validation'		=> array('VCHAR_UNI:20', ''),
 				'field_required'		=> array('BOOL', 0),
 				'field_show_on_reg'		=> array('BOOL', 0),
-				'field_show_profile'	=> array('BOOL', 0),
 				'field_hide'			=> array('BOOL', 0),
 				'field_no_view'			=> array('BOOL', 0),
 				'field_active'			=> array('BOOL', 0),
@@ -1393,7 +1449,6 @@ class database_cleaner_data
 			'COLUMNS'		=> array(
 				'session_id'			=> array('CHAR:32', ''),
 				'session_user_id'		=> array('UINT', 0),
-				'session_forum_id'		=> array('UINT', 0),
 				'session_last_visit'	=> array('TIMESTAMP', 0),
 				'session_start'			=> array('TIMESTAMP', 0),
 				'session_time'			=> array('TIMESTAMP', 0),
@@ -1409,7 +1464,6 @@ class database_cleaner_data
 			'KEYS'			=> array(
 				'session_time'		=> array('INDEX', 'session_time'),
 				'session_user_id'	=> array('INDEX', 'session_user_id'),
-				'session_fid'		=> array('INDEX', 'session_forum_id'),
 			),
 		);
 
@@ -1456,13 +1510,13 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles'] = array(
 			'COLUMNS'		=> array(
-				'style_id'				=> array('UINT', NULL, 'auto_increment'),
+				'style_id'				=> array('USINT', NULL, 'auto_increment'),
 				'style_name'			=> array('VCHAR_UNI:255', ''),
 				'style_copyright'		=> array('VCHAR_UNI', ''),
 				'style_active'			=> array('BOOL', 1),
-				'template_id'			=> array('UINT', 0),
-				'theme_id'				=> array('UINT', 0),
-				'imageset_id'			=> array('UINT', 0),
+				'template_id'			=> array('USINT', 0),
+				'theme_id'				=> array('USINT', 0),
+				'imageset_id'			=> array('USINT', 0),
 			),
 			'PRIMARY_KEY'	=> 'style_id',
 			'KEYS'			=> array(
@@ -1475,14 +1529,12 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles_template'] = array(
 			'COLUMNS'		=> array(
-				'template_id'			=> array('UINT', NULL, 'auto_increment'),
+				'template_id'			=> array('USINT', NULL, 'auto_increment'),
 				'template_name'			=> array('VCHAR_UNI:255', ''),
 				'template_copyright'	=> array('VCHAR_UNI', ''),
 				'template_path'			=> array('VCHAR:100', ''),
 				'bbcode_bitfield'		=> array('VCHAR:255', 'kNg='),
 				'template_storedb'		=> array('BOOL', 0),
-				'template_inherits_id'		=> array('UINT:4', 0),
-				'template_inherit_path'		=> array('VCHAR', ''),
 			),
 			'PRIMARY_KEY'	=> 'template_id',
 			'KEYS'			=> array(
@@ -1492,7 +1544,7 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles_template_data'] = array(
 			'COLUMNS'		=> array(
-				'template_id'			=> array('UINT', 0),
+				'template_id'			=> array('USINT', 0),
 				'template_filename'		=> array('VCHAR:100', ''),
 				'template_included'		=> array('TEXT', ''),
 				'template_mtime'		=> array('TIMESTAMP', 0),
@@ -1506,7 +1558,7 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles_theme'] = array(
 			'COLUMNS'		=> array(
-				'theme_id'				=> array('UINT', NULL, 'auto_increment'),
+				'theme_id'				=> array('USINT', NULL, 'auto_increment'),
 				'theme_name'			=> array('VCHAR_UNI:255', ''),
 				'theme_copyright'		=> array('VCHAR_UNI', ''),
 				'theme_path'			=> array('VCHAR:100', ''),
@@ -1522,7 +1574,7 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles_imageset'] = array(
 			'COLUMNS'		=> array(
-				'imageset_id'				=> array('UINT', NULL, 'auto_increment'),
+				'imageset_id'				=> array('USINT', NULL, 'auto_increment'),
 				'imageset_name'				=> array('VCHAR_UNI:255', ''),
 				'imageset_copyright'		=> array('VCHAR_UNI', ''),
 				'imageset_path'				=> array('VCHAR:100', ''),
@@ -1535,13 +1587,13 @@ class database_cleaner_data
 
 		$schema_data['phpbb_styles_imageset_data'] = array(
 			'COLUMNS'		=> array(
-				'image_id'				=> array('UINT', NULL, 'auto_increment'),
+				'image_id'				=> array('USINT', NULL, 'auto_increment'),
 				'image_name'			=> array('VCHAR:200', ''),
 				'image_filename'		=> array('VCHAR:200', ''),
 				'image_lang'			=> array('VCHAR:30', ''),
 				'image_height'			=> array('USINT', 0),
 				'image_width'			=> array('USINT', 0),
-				'imageset_id'			=> array('UINT', 0),
+				'imageset_id'			=> array('USINT', 0),
 			),
 			'PRIMARY_KEY'		=> 'image_id',
 			'KEYS'				=> array(
@@ -1557,7 +1609,7 @@ class database_cleaner_data
 				'topic_attachment'			=> array('BOOL', 0),
 				'topic_approved'			=> array('BOOL', 1),
 				'topic_reported'			=> array('BOOL', 0),
-				'topic_title'				=> array('STEXT_UNI', '', 'true_sort'),
+				'topic_title'				=> array('XSTEXT_UNI', '', 'true_sort'),
 				'topic_poster'				=> array('UINT', 0),
 				'topic_time'				=> array('TIMESTAMP', 0),
 				'topic_time_limit'			=> array('TIMESTAMP', 0),
@@ -1573,7 +1625,7 @@ class database_cleaner_data
 				'topic_last_poster_id'		=> array('UINT', 0),
 				'topic_last_poster_name'	=> array('VCHAR_UNI', ''),
 				'topic_last_poster_colour'	=> array('VCHAR:6', ''),
-				'topic_last_post_subject'	=> array('STEXT_UNI', ''),
+				'topic_last_post_subject'	=> array('XSTEXT_UNI', ''),
 				'topic_last_post_time'		=> array('TIMESTAMP', 0),
 				'topic_last_view_time'		=> array('TIMESTAMP', 0),
 				'topic_moved_id'			=> array('UINT', 0),
@@ -1679,7 +1731,7 @@ class database_cleaner_data
 				'user_timezone'				=> array('DECIMAL', 0),
 				'user_dst'					=> array('BOOL', 0),
 				'user_dateformat'			=> array('VCHAR_UNI:30', 'd M Y H:i'),
-				'user_style'				=> array('UINT', 0),
+				'user_style'				=> array('USINT', 0),
 				'user_rank'					=> array('UINT', 0),
 				'user_colour'				=> array('VCHAR:6', ''),
 				'user_new_privmsg'			=> array('INT:4', 0),
@@ -1761,8 +1813,5 @@ class database_cleaner_data
 			),
 			'PRIMARY_KEY'	=> array('user_id', 'zebra_id'),
 		);
-
-		return $schema_data;
 	}
 }
-?>
