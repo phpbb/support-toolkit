@@ -365,7 +365,7 @@ class database_cleaner_views
 			// Table was added or removed
 			if (!isset($req_tables[$table]) && in_array($table, $found_tables) || isset($req_tables[$table]) && !in_array($table, $found_tables))
 			{
-				$this->_section_data['permissions']['ITEMS'][] = array(
+				$this->_section_data['tables']['ITEMS'][] = array(
 					'NAME'			=> $table,
 					'FIELD_NAME'	=> $table,
 					'MISSING'		=> isset($req_tables[$table]) ? true : false,
