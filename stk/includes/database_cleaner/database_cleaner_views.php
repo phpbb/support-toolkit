@@ -182,7 +182,7 @@ class database_cleaner_views
 
 						$this->_section_data[$table_name] = array(
 							'NAME'	=> $table_name,
-							'TITLE'	=> 'ROWS',
+							'TITLE'	=> 'COLUMNS',
 						);
 					}
 

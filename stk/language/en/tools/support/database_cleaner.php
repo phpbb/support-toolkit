@@ -40,6 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
+	'COLUMNS'						=> 'Columns',
 	'CONFIG_SETTINGS'				=> 'Configuration Settings',
 	'CONFIG_UPDATE_SUCCESS'			=> 'The configuration settings have been updated successfully!',
 	'CONTINUE'						=> 'Continue',
