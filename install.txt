@@ -1,5 +1,8 @@
 = The Support Toolkit =
-The Support Toolkit (STK) was developed by the phpBB.com Support Team in cooperation with EXreaction. The STK provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software.
+The Support Toolkit (STK) was developed by the phpBB.com Support Team in
+cooperation with EXreaction. The STK provides a second "Administration Control
+Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
+installation or to solve commonly encountered problems with the software.
 
 == Version ==
 Support Toolkit 1.0.1
@@ -15,16 +18,30 @@ Marshalrusty	(Yuriy Rusko)
 stevemaury	(Steve Atkinson)
 Tom		(Tom Catullo)
 
+
 = Installation Instructions =
-To install the Support Toolkit, upload the complete "stk" directory into your forum's root directory on your server (the one containing a file named "config.php"). Once you have uploaded the directory into the correct place, point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
-In the "contrib" folder you will find some additional installation instructions (in the MODX format) which will allow you to better integrate the STK with your phpBB installation.
+To install the Support Toolkit, upload the complete "stk" directory into your
+forum's root directory on your server (the one containing a file named
+"config.php"). Once you have uploaded the directory into the correct place,
+point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
+In the "contrib" folder you will find some additional installation instructions
+(in the MODX format) which will allow you to better integrate the STK with your
+phpBB installation.
+
 
 = Translations =
-The Support Toolkit is also available in multiple languages, to install your own language pack first download the appropriate package from the STK page on phpbb.com (http://www.phpbb.com/support/stk/). After that simply upload the language folder to "stk/language/"
+The Support Toolkit is also available in multiple languages, to install your own
+language pack first download the appropriate package from the STK page on
+phpbb.com (http://www.phpbb.com/support/stk/). After that simply upload the
+language folder to "stk/language/"
+
 
 = Upgrade Instructions=
 == Upgrade to 1.0.1 ==
-To upgrade a previous version of the STK to 1.0.1, remove your previous installation by deleting the stk/ directory, then follow the Installation Instructions above.
+To upgrade a previous version of the STK to 1.0.1, remove your previous
+installation by deleting the stk/ directory, then follow the Installation
+instructions above.
+
 
 = Changelog =
 == Changes since 1.0.0 ==
@@ -37,6 +54,7 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 * [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
 * [Fix] Properly insert poll expiration times when reparsing BBCode. (Bug #60275)
 * [Fix] Properly insert topic time length when reparsing BBCode. (Bug #61155, patch by D¡cky)
+* [Fix] Also reparse the BBCodes in posts and signatures when reparsing BBCodes. (Bug #60645)
 
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
@@ -68,7 +86,6 @@ To upgrade a previous version of the STK to 1.0.1, remove your previous installa
 * [Fix] Set the correct language packs for phpBB <= 3.0.2. (Bug #51535)
 * [Fix] Display correct messages when fields are filled out incorrectly in the add user tool. (Bug #52385)
 * [Fix] Updates of UMIL break the Support Toolkit. (Bug #53375)
-
 
 == Changes since RC1 ==
 * [Fix] Remove the hardcoded location of the toolkit. (Bug #47375)
