@@ -45,6 +45,10 @@ $lang = array_merge($lang, array(
 	'REPARSE_BBCODE_COMPLETE'	=> 'BBCodes have been reparsed.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Are you sure you want to reparse all BBCodes? Please note that this tool has the potential to damage your database beyond repair; therefore, <strong>be sure to backup your database before proceeding</strong>. Moreover, note that this tool may take some time to complete.',
 	'REPARSE_BBCODE_PROGRESS'	=> 'Step %1$d completed. Moving on to step %2$d in a moment...',
+	'REPARSE_BBCODE_SWITCH_MODE'	=> array(
+		1	=> 'Finished reparsing the posts, moving on to private messages.',
+		2	=> 'Finished reparsing private messages, moving on to signatures.',
+	),
 ));
 
 ?>
