@@ -478,6 +478,9 @@ class reparse_bbcode
 			'filename_data'		=> $this->message_parser->filename_data,
 		));
 
+		// Need to adjust topic_time_limit here. Per bug #61155
+		$post_data['topic_time_limit'] = $post_data['topic_time_limit']/86400;
+
 		// Make sure this data is set
 		foreach ($uninit as $var_name => $default_value)
 		{
