@@ -43,12 +43,9 @@ $lang = array_merge($lang, array(
 
 	'QUERY_RESULT'					=> 'Query results',
 
-	'RUN_SQL_QUERY_EXPLAIN'			=> 'You may run an SQL query here. This tool does not backup your database and may permanently damage your forum if used incorrectly. Use at your own risk.',
-	'RUN_SQL_QUERY_TOOL_EXPLAIN'	=> 'This tool can be used to run an SQL query on your database. The result of the query, if any, will also be shown.',
-
 	'SHOW_RESULTS'					=> 'Show Results',
 	'SQL_QUERY'						=> 'Run SQL Query',
-	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query you wish to run. The tool will substitute "phpbb_" with your table prefix.',
+	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query you wish to run. The tool will substitute "phpbb_" with your table prefix.<br />If the "Show Results" checkbox is checked the tool will display the result <em>(if any)</em> of the query.',
 
 	'SQL_QUERY_LEGEND'				=> 'SQL Query',
 	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
