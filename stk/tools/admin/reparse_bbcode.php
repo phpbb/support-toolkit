@@ -164,7 +164,7 @@ class reparse_bbcode
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> "p.bbcode_bitfield != '' AND t.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id",
+					'WHERE'		=> "t.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id",
 				);
 			break;
 
@@ -175,7 +175,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> "pm.bbcode_bitfield != '' AND u.user_id = pm.author_id",
+					'WHERE'		=> "u.user_id = pm.author_id",
 				);
 			break;
 
@@ -185,7 +185,6 @@ class reparse_bbcode
 					'FROM'		=> array(
 						USERS_TABLE	=> 'u',
 					),
-					'WHERE'		=> "u.user_sig_bbcode_bitfield != ''",
 				);
 			break;
 		}

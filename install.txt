@@ -47,7 +47,9 @@ instructions above.
 == Changes since 1.0.0 ==
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Add] Tool to recalculate email hashes. (Bug #56425)
+* [Change] If there is a UMIL installation available in phpBB use that one over the included version.
 * [Change] Rewrote the database cleaner to be more flexible/easier to maintain.
+* [Change] The BBCode reparser now no longer reparses only posts with the bbcode_bitfield set.
 * [Fix] Remove unused language strings. (Bug #58265)
 * [Fix] Corrected some language related issues. (Bug #58625, #58635)
 * [Fix] Sql query tool doesn't decode htmlspecialchars when running a query. (Bug #59755)
