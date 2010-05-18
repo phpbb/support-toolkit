@@ -106,6 +106,10 @@ class reparse_bbcode
 	*/
 	function display_options()
 	{
+		// Little hack to display a checkbox
+		global $template;
+		$template->assign_var('S_DISPLAY_REPARSE_BBCODE_OPTION', true);
+
 		return 'REPARSE_BBCODE';
 	}
 
@@ -153,6 +157,8 @@ class reparse_bbcode
 //		}
 
 		// Greb our batch
+		$bitfield = (isset($_POST['reparseall'])) ? true : false;
+
 		switch ($mode)
 		{
 			case BBCODE_REPARSE_POSTS :
@@ -164,7 +170,7 @@ class reparse_bbcode
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> "t.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id",
+					'WHERE'		=> ($bitfield) ? "p.bbcode_bitfield != '' AND " : '' . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id',
 				);
 			break;
 
@@ -175,7 +181,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> "u.user_id = pm.author_id",
+					'WHERE'		=> ($bitfield) ? "pm.bbcode_bitfield != '' AND" : '' . 'u.user_id = pm.author_id',
 				);
 			break;
 
@@ -185,6 +191,7 @@ class reparse_bbcode
 					'FROM'		=> array(
 						USERS_TABLE	=> 'u',
 					),
+					'WHERE'		=> ($bitfield) ? "u.user_sig_bbcode_bitfield != ''" : '',
 				);
 			break;
 		}
