@@ -73,7 +73,7 @@ class reparse_bbcode
 	/**
 	* Number of posts to be parsed per run
 	*/
-	var $step_size = 500;
+	var $step_size = 150;
 
 	/**
 	* The name of the table that we use to backup posts before running
