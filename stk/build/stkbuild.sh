@@ -4,34 +4,38 @@
 # $Id$
 #
 # Settings
-revision="379"
-version="1.0.0-pl2"
+revision=
+version=""
 
-# vars
+# Some aditional vars. These can be changed.
+destdir=~/Desktop/
+packagename="Support Toolkit-$version"
 repo="trunk"
-file="Support Toolkit-$version"
-destfile="~/Desktop/Support Toolkit-$version.zip"
+tmpdir=/tmp/
 
 # Move to tmp
-cd /tmp/
+cd $tmpdir
 
 # Checkout
 echo "This script will build the STK $version packages from revision $revision."
 echo "Checking out revision"
-svn export -qr "$revision" http://code.phpbb.com/svn/support-toolkit/"$repo"/ "$file"
+svn export -qr "$revision" http://code.phpbb.com/svn/support-toolkit/$repo/ "$packagename"
+
+# Set the location of the exclude.lst file
+exclude="$tmpdir$packagename/stk/build/exclude.lst"
 
 # Zip
-echo "Creating $file.zip"
-zip -qr "$file".zip "$file" --exclude @/tmp/"$file"/stk/build/exclude.lst
+echo "Creating $packagename.zip"
+zip -qr "$packagename".zip "$packagename" --exclude @"$exclude"
 
 # tar.bz2
-echo "Creating $file.tar.bz2"
-tar -cvjf "$file".tar.bz2 "$file" -X /tmp/"$file"/stk/build/exclude.lst 1> /dev/null 2>&1
+echo "Creating $packagename.tar.bz2"
+tar -cvjf "$packagename".tar.bz2 "$packagename" -X "$exclude" 1> /dev/null 2>&1
 
 echo "Moving files to the Desktop"
-mv "$file".* ~/Desktop
+mv "$packagename".* $destdir
 
 # Delete the export
-rm -rf /tmp/"$file"
+rm -rf $tmpdir"$packagename"
 
 echo "Done!";
