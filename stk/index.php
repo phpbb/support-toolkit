@@ -28,14 +28,13 @@ if (!defined('STK_INDEX')) { define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_
 $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
 
-// Check to make sure the config file exists.  If not we will attempt critical repair.
-if (!file_exists(PHPBB_ROOT_PATH . 'config.' . PHP_EXT))
-{
-	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
-	critical_config_repair();
-	header('Location: ' . STK_INDEX);
-	exit;
-}
+// Init our critical repair class
+include(STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT);
+$critical_repair = new critical_repair;
+
+// We run this tool manually to ensure it is called first
+$critical_repair->run_tool('bom_sniffer');
+$critical_repair->run_tool('config_repair');
 
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
@@ -60,36 +59,8 @@ $auth->acl($user->data);
 // Make sure that umil is always usable
 $umil = new umil(true);
 
-// A basic check to make sure we will be able to get into the STK, not that the styles are messed up.
-$config['default_style'] = (!isset($config['default_style']) || !$config['default_style']) ? 1 : $config['default_style'];
-$sql = 'SELECT s.style_id, t.template_path
-	FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
-	WHERE s.style_id = {$config['default_style']}
-		AND t.template_id = s.template_id
-		AND c.theme_id = s.theme_id
-		AND i.imageset_id = s.imageset_id";
-$result = $db->sql_query($sql);
-// No styles in the database
-$data = $db->sql_fetchrow($result);
-if (empty($data))
-{
-	// Styles appear to be broken.  Attempt automatic repair
-	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
-	critical_style_repair();
-	header('Location: ' . STK_INDEX);
-	exit;
-}
-$db->sql_freeresult($result);
-
-// Style directory doesn't exist
-if (!is_dir(PHPBB_ROOT_PATH . 'styles/' . $data['template_path']))
-{
-	// The style directory of the active style doesn't exist anymore
-	include(STK_ROOT_PATH . 'includes/functions_critical_repair.' . PHP_EXT);
-	critical_style_dir_repair();
-	header('Location: ' . STK_INDEX);
-	exit;
-}
+// We'll run the rest of the critical repair tools automatically now
+$critical_repair->autorun_tools();
 
 // Setup the user
 $user->setup('acp/common', $config['default_style']);
