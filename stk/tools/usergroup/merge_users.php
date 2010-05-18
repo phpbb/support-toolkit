@@ -222,6 +222,18 @@ class merge_users
 
 			'drafts'	=> 'user_id',
 
+			'forums'		=> array(
+				array(
+					'forum_last_poster_id'		=> 'id',
+					'forum_last_poster_name'	=> 'name',
+					'forum_last_poster_colour'	=> 'colour',
+				),
+				array(
+					'forum_last_poster_id',
+					array('forum_last_poster_id', 'forum_last_poster_name', 'forum_last_poster_colour'),
+				),
+			),
+
 			'forums_track'	=> null,
 			'forums_watch'	=> null,
 
@@ -979,7 +991,7 @@ class merge_users
 				$sql[] = "INSERT INTO $table " . $db->sql_build_array('INSERT', array(
 					'user_id'		=> $target['user_id'],
 					"{$mode}_id"	=> $id,
-					'nofiy_status'	=> 0,	// So emails are sent
+					'notify_status'	=> 0,	// So emails are sent
 				));
 			}
 		}
