@@ -77,10 +77,14 @@ class stk_bom_sniffer
 			die("The BOM sniffer requires the <c>store</c> directory to exist and to be writable!");
 		}
 
-		// Make sure the BOM sniffer dir is empty and exists
+		// Make sure the BOM sniffer dir store dir doesn't exist
 		if (file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
 		{
-			die('Please remove the [' . PHPBB_ROOT_PATH . 'store/bom_sniffer] directory from your server. The BOM sniffer can\'t operate when this directory is in place');
+			// Try to remove the directory
+			if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
+			{
+				die('Please remove the [' . PHPBB_ROOT_PATH . 'store/bom_sniffer] directory from your server. The BOM sniffer can\'t operate when this directory is in place');
+			}
 		}
 
 		// Init the internal cache
@@ -237,14 +241,58 @@ class stk_bom_sniffer
 		{
 			$this->display_finish_message();
 		}
-/*		else
+	}
+
+	/**
+	* Recursively remove a given directory and all its contents
+	*/
+	function recursively_remove_dir($rootdir, $dir = '')
+	{
+		// Remove initial / if present
+		$rootdir = (substr($rootdir, 0, 1) == '/') ? substr($rootdir, 1) : $rootdir;
+		// Add closing / if not present
+		$rootdir = ($rootdir && substr($rootdir, -1) != '/') ? $rootdir . '/' : $rootdir;
+
+		// Remove initial / if present
+		$dir = (substr($dir, 0, 1) == '/') ? substr($dir, 1) : $dir;
+		// Add closing / if not present
+		$dir = ($dir && substr($dir, -1) != '/') ? $dir . '/' : $dir;
+
+		if (!is_dir($rootdir . $dir))
 		{
-
-
-			header('Location: ' . STK_INDEX);
-			exit;
+			return true;
 		}
-*/
+
+		// Read the directory
+		$dh = @opendir($rootdir . $dir);
+		if (!$dh)
+		{
+			return false;
+		}
+
+		// Run through the directory
+		while (($fname = readdir($dh)) !== false)
+		{
+			// File? Unlink
+			if (is_file($rootdir . $dir . $fname))
+			{
+				if (@unlink($rootdir . $dir . $fname) === false)
+				{
+					return false;
+				}
+			}
+			// Step into the next directory
+			else if($fname[0] != '.' && is_dir($rootdir . $dir . $fname))
+			{
+				$this->recursively_remove_dir($rootdir . $dir . $fname);
+			}
+		}
+
+		// Remove this directory
+		if (@rmdir($rootdir . $dir) === false)
+		{
+			return false;
+		}
 	}
 
 	/**
