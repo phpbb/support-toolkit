@@ -157,9 +157,86 @@ function use_lang(&$lang_key)
 {
 	global $user;
 
-	if (isset($user->lang[$lang_key]))
+	$lang_key = user_lang($lang_key);
+}
+
+/**
+* A wrapper function for the phpBB $user->lang() call. This method was introduced
+* in phpBB 3.0.3. In all versions ≥ 3.0.3 this function will simply call the method
+* for the other versions this method will imitate the method as seen in 3.0.3.
+*
+* More advanced language substitution
+* Function to mimic sprintf() with the possibility of using phpBB's language system to substitute nullar/singular/plural forms.
+* Params are the language key and the parameters to be substituted.
+* This function/functionality is inspired by SHS` and Ashe.
+*
+* Example call: <samp>$user->lang('NUM_POSTS_IN_QUEUE', 1);</samp>
+*/
+function user_lang()
+{
+	global $user;
+
+	$args = func_get_args();
+
+	if (!method_exists($user, 'lang'))
 	{
-		$lang_key = $user->lang[$lang_key];
+		return $user->lang($args);
+	}
+	else
+	{
+		$key = $args[0];
+
+		// Return if language string does not exist
+		if (!isset($user->lang[$key]) || (!is_string($user->lang[$key]) && !is_array($user->lang[$key])))
+		{
+			return $key;
+		}
+
+		// If the language entry is a string, we simply mimic sprintf() behaviour
+		if (is_string($user->lang[$key]))
+		{
+			if (sizeof($args) == 1)
+			{
+				return $user->lang[$key];
+			}
+
+			// Replace key with language entry and simply pass along...
+			$args[0] = $user->lang[$key];
+			return call_user_func_array('sprintf', $args);
+		}
+
+		// It is an array... now handle different nullar/singular/plural forms
+		$key_found = false;
+
+		// We now get the first number passed and will select the key based upon this number
+		for ($i = 1, $num_args = sizeof($args); $i < $num_args; $i++)
+		{
+			if (is_int($args[$i]))
+			{
+				$numbers = array_keys($user->lang[$key]);
+
+				foreach ($numbers as $num)
+				{
+					if ($num > $args[$i])
+					{
+						break;
+					}
+
+					$key_found = $num;
+				}
+			}
+		}
+
+		// Ok, let's check if the key was found, else use the last entry (because it is mostly the plural form)
+		if ($key_found === false)
+		{
+			$numbers = array_keys($user->lang[$key]);
+			$key_found = end($numbers);
+		}
+
+		// Use the language string we determined and pass it to sprintf()
+		$args[0] = $user->lang[$key][$key_found];
+		return call_user_func_array('sprintf', $args);
 	}
 }
 

@@ -317,11 +317,11 @@ class reparse_bbcode
 
 		if ($next_mode === false)
 		{
-			trigger_error($user->lang('REPARSE_BBCODE_PROGRESS', ($step - 1), $step));
+			trigger_error(user_lang('REPARSE_BBCODE_PROGRESS', ($step - 1), $step));
 		}
 		else
 		{
-			trigger_error($user->lang('REPARSE_BBCODE_SWITCH_MODE', $mode));
+			trigger_error(user_lang('REPARSE_BBCODE_SWITCH_MODE', $mode));
 		}
 	}
 

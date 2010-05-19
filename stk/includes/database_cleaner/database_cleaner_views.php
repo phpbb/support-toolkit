@@ -68,7 +68,7 @@ class database_cleaner_views
 			$error_msg = '';
 			foreach ($error as $e)
 			{
-				$error_msg .= $user->lang($e) . '<br />';
+				$error_msg .= user_lang($e) . '<br />';
 			}
 			$template->assign_var('ERROR_MESSAGE', $error_msg);
 		}
@@ -77,8 +77,8 @@ class database_cleaner_views
 		if (!empty($this->_confirm_box))
 		{
 			$template->assign_vars(array(
-				'L_CONFIRM_TITLE'	=> $user->lang($this->_confirm_box['title']),
-				'L_CONFIRM_EXPLAIN'	=> $user->lang($this->_confirm_box['message']),
+				'L_CONFIRM_TITLE'	=> user_lang($this->_confirm_box['title']),
+				'L_CONFIRM_EXPLAIN'	=> user_lang($this->_confirm_box['message']),
 				'S_CONFIRM_BOX'		=> true,
 			));
 		}
@@ -96,16 +96,16 @@ class database_cleaner_views
 
 				// Create the section
 				$template->assign_block_vars('section', array(
-					'NAME'	=> $user->lang($section['NAME']),
-					'TITLE'	=> $user->lang($section['TITLE']),
+					'NAME'	=> user_lang($section['NAME']),
+					'TITLE'	=> user_lang($section['TITLE']),
 				));
 
 				// Output the items
 				foreach($section['ITEMS'] as $item)
 				{
 					$template->assign_block_vars('section.items', array(
-						'NAME'			=> $user->lang($item['NAME']),
-						'FIELD_NAME'	=> $user->lang($item['FIELD_NAME']),
+						'NAME'			=> user_lang($item['NAME']),
+						'FIELD_NAME'	=> user_lang($item['FIELD_NAME']),
 						'MISSING'		=> $item['MISSING'],
 					));
 				}
@@ -116,8 +116,8 @@ class database_cleaner_views
 		if (isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
 		{
 			$template->assign_vars(array(
-				'NO_CHANGES_TEXT'	=> $user->lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
-				'NO_CHANGES_TITLE'	=> $user->lang('SECTION_NOT_CHANGED_TITLE', $this->db_cleaner->step),
+				'NO_CHANGES_TEXT'	=> user_lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
+				'NO_CHANGES_TITLE'	=> user_lang('SECTION_NOT_CHANGED_TITLE', $this->db_cleaner->step),
 			));
 		}
 
@@ -125,14 +125,14 @@ class database_cleaner_views
 		$template->assign_vars(array(
 			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
 			'STEP'				=> $this->db_cleaner->step,
-			'SUCCESS_MESSAGE'	=> $user->lang($this->success_message),
+			'SUCCESS_MESSAGE'	=> user_lang($this->success_message),
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true)),
 		));
 
 		// Do tha page
-		page_header($user->lang('DATABASE_CLEANER'), false);
+		page_header(user_lang('DATABASE_CLEANER'), false);
 
 		$template->set_filenames(array(
 			'body' => 'tools/database_cleaner.html',

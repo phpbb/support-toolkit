@@ -59,6 +59,7 @@ instructions above.
 * [Fix] Properly insert poll expiration times when reparsing BBCode. (Bug #60275)
 * [Fix] Properly insert topic time length when reparsing BBCode. (Bug #61155, patch by D¡cky)
 * [Fix] Also reparse the BBCodes in posts and signatures when reparsing BBCodes. (Bug #60645)
+* [Fix] Removed some phpBB version dependant code.
 
 == Changes since RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
