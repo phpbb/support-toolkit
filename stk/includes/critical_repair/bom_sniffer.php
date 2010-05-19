@@ -48,6 +48,20 @@ class stk_bom_sniffer
 	var $file_changed = false;
 
 	/**
+	* @var Array An array with directories that will not be checked by this tool
+	* @access private
+	*/
+	var $ignored_dirs = array(
+		'cache/',
+		'develop/',
+		'files/',
+		'install/',
+		'store/',
+		'stk/includes/critical_repair/',
+		'stk/includes/critical_repair/autorun/',
+	);
+
+	/**
 	* @var string The php close string
 	* @access private
 	*/
@@ -105,7 +119,7 @@ class stk_bom_sniffer
 		foreach ($filelist as $directory => $files)
 		{
 			// Skip some dirs
-			if ($directory == 'cache/' || $directory == 'develop/' || $directory == 'files/' || $directory == 'install/' || $directory == 'store/' || $directory == 'stk/includes/critical_repair/' || $directory == 'stk/includes/critical_repair/autorun/')
+			if (in_array($directory, $this->ignored_dirs))
 			{
 				continue;
 			}
@@ -145,7 +159,7 @@ class stk_bom_sniffer
 
 								// Cut the line so it begins with the open tag and add it to the buffer
 								$buffer	= substr($buffer, $pos);
-								$this->add_to_buffer($buffer);
+								$this->add_to_write_buffer($buffer);
 								$php_open = true;
 								continue;
 							}
@@ -156,7 +170,7 @@ class stk_bom_sniffer
 								// Everything between the tags is added without further checking
 								if (($pos = strpos($buffer, $this->php_close)) === false)
 								{
-									$this->add_to_buffer($buffer);
+									$this->add_to_write_buffer($buffer);
 									continue;
 								}
 
@@ -164,7 +178,7 @@ class stk_bom_sniffer
 								// Work around those nasty ones
 								if ($this->ifItLooksLikeADuckWalksLikeADuckAndSoundsLikeADuckItIsntADuck($buffer, $directory, $file))
 								{
-									$this->add_to_buffer($buffer);
+									$this->add_to_write_buffer($buffer);
 									continue;
 								}
 
@@ -176,7 +190,7 @@ class stk_bom_sniffer
 
 								// Trash everything after the closing tag
 								$buffer	= substr($buffer, 0, ($pos + strlen($this->php_close)));
-								$this->add_to_buffer($buffer);
+								$this->add_to_write_buffer($buffer);
 								$php_close = true;
 								continue;
 							}
@@ -300,7 +314,7 @@ class stk_bom_sniffer
 	* manipulate the string at the last moment
 	* @param string $string The string that will be added to the buffer
 	*/
-	function add_to_buffer($string)
+	function add_to_write_buffer($string)
 	{
 		// Remove the trailing "\n" in the current line
 		$string = str_replace("\n", '', $string);
