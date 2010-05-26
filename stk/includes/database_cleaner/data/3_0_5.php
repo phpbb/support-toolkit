@@ -36,7 +36,7 @@ class datafile_3_0_5
 		'captcha_gd_3d_noise'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'captcha_gd_fonts'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'confirm_refresh'			=> array('config_value' => '1', 'is_dynamic' => '0'),
-		'max_mun_search_keywords'	=> array('config_value' => '10', 'is_dynamic' => '0'),
+		'max_num_search_keywords'	=> array('config_value' => '10', 'is_dynamic' => '0'),
 	);
 
 	/**
