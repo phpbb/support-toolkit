@@ -28,18 +28,19 @@ class restore_deleted_users
 		global $db;
 
 		// Find all guest posters
-		$sql = 'SELECT DISTINCT post_username
+		$sql = 'SELECT post_id, post_username
 			FROM ' . POSTS_TABLE . '
-			WHERE poster_id = ' . ANONYMOUS;
+			WHERE poster_id = ' . ANONYMOUS . '
+				GROUP BY post_username';
 		$result	= $db->sql_query($sql);
 		$users	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
 		// Build the output
 		$user_vars = array();
-		foreach ($users as $cnt => $user)
+		foreach ($users as $user)
 		{
-			$user_vars["user[{$user['post_username']}]"] = array('lang' => $user['post_username'], 'explain' => false, 'type' => 'checkbox');
+			$user_vars["post[{$user['post_id']}]"] = array('lang' => $user['post_username'], 'explain' => false, 'type' => 'checkbox');
 		}
 
 		// Return usable data
@@ -67,12 +68,24 @@ class restore_deleted_users
 		}
 
 		// Get the selected users
-		$selected = array_keys(request_var('user', array('' => '')));
-		if (empty($selected))
+		$posts = request_var('post', array(0 => ''));
+		if (empty($posts))
 		{
 			$error[] = 'NO_USER_SELECTED';
 			return;
 		}
+
+		// Get all the selected usernames
+		$selected = '';
+		$sql = 'SELECT post_username
+			FROM ' . POSTS_TABLE . '
+			WHERE ' . $db->sql_in_set('post_id', array_keys($posts));
+		$result		= $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$selected[] = $row['post_username'];
+		}
+		$db->sql_freeresult($result);
 
 		// Conflicted names are users that already exist
 		$selected_clean = $selected;
