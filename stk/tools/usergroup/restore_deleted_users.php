@@ -87,7 +87,7 @@ class restore_deleted_users
 		if (isset($_REQUEST['post']))
 		{
 			// Get the selected users
-			$posts = request_var('post', array(0 => ''));
+			$posts = array_keys(request_var('post', array(0 => ''), true));
 			if (empty($posts))
 			{
 				$error[] = 'NO_USER_SELECTED';
@@ -95,36 +95,21 @@ class restore_deleted_users
 			}
 
 			// Get all the selected usernames
-			$selected = '';
+			$selected = array();
 			$sql = 'SELECT post_id, post_username
 				FROM ' . POSTS_TABLE . '
 				WHERE ' . $db->sql_in_set('post_id', array_keys($posts));
-			$result		= $db->sql_query($sql);
+			$result = $db->sql_query($sql);
 			while ($row = $db->sql_fetchrow($result))
 			{
 				$selected[$row['post_id']] = $row['post_username'];
 			}
 			$db->sql_freeresult($result);
 
-			// Conflicted names are users that already exist
+			// Get conflicted users
 			$selected_clean = $selected;
-			foreach ($selected_clean as $i => $s)
-			{
-				$selected_clean[$i] = utf8_clean_string($s);
-			}
-
-			$sql = 'SELECT username
-				FROM ' . USERS_TABLE . '
-				WHERE ' . $db->sql_in_set('username_clean', $selected_clean);
-			$result = $db->sql_query($sql);
-			while ($row = $db->sql_fetchrow($result))
-			{
-				$conflicted[] = $row['username'];
-			}
-			$db->sql_query($result);
-
-			// Go through the non-users and add them
-			$non_conflicted = array_diff($selected, $conflicted);
+			array_walk($selected_clean, 'utf8_clean_string');
+			$non_conflicted = $this->_conflicted($selected_clean);
 
 			foreach ($non_conflicted as $user)
 			{
@@ -134,17 +119,7 @@ class restore_deleted_users
 			// If there are conflicted names kick the user back to step 1
 			if (!empty($conflicted))
 			{
-				$selected = array_flip($selected);
-				$conflicted_params = array();
-
-				foreach ($conflicted as $conflict)
-				{
-					$conflicted_params[] = $selected[$conflict];
-				}
-				$conflicted_params = implode('&amp;conflicted%5B%5D', $conflicted_params);
-
-				redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'c=usergroup&amp;t=restore_deleted_users&amp;conflicted%5B%5D=' . $conflicted_params));
-				exit;
+				$this->_redirect_conflicted($users, $conflicted);
 			}
 		}
 		else
@@ -164,29 +139,23 @@ class restore_deleted_users
 			$db->sql_freeresult($result);
 
 			// Test for any conflicts
-			$conflicted_clean = array();
-			foreach ($conflicted as $i => $s)
-			{
-				$conflicted_clean[$i] = utf8_clean_string($s);
-			}
-			$still_conflicted = array();
-			$sql = 'SELECT username
-				FROM ' . USERS_TABLE . '
-				WHERE ' . $db->sql_in_set('username_clean', $conflicted_clean);
-			$result = $db->sql_query($sql);
-			while ($row = $db->sql_fetchrow($result))
-			{
-				$still_conflicted[] = $row['username'];
-			}
-			$db->sql_query($result);
+			$conflicted_clean = $conflicted;
+			array_walk($conflicted_clean, 'utf8_clean_string');
+			$conflicted_names = $this->_conflicted($conflicted_clean);
 
 			// Go through the non-users and add them
-			$non_conflicted = array_diff($conflicted, $still_conflicted);
+			$non_conflicted = array_diff($conflicted, $conflicted_names);
 
 			// Fix all non conflicted
 			foreach ($non_conflicted as $post_id => $newname)
 			{
 				$this->_add_user_and_update_data($original[$post_id], $newname);
+			}
+
+			// Still conflicts?
+			if (sizeof($conflicted_names))
+			{
+				$this->_redirect_conflicted($conflicted, $conflicted_names);
 			}
 		}
 
@@ -200,10 +169,35 @@ class restore_deleted_users
 	}
 
 	/**
+	* Test whether the requested usernames already exist in phpBB
+	* @param	array $users Array containing the "cleaned" usernames
+	* @return	array Array containing the conflicted users
+	* @access	private
+	*/
+	function _conflicted($users)
+	{
+		global $db;
+
+		$conflicted = array();
+		$sql = 'SELECT username
+			FROM ' . USERS_TABLE . '
+			WHERE ' . $db->sql_in_set('username_clean', $users);
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$conflicted[] = $row['username'];
+		}
+		$db->sql_query($result);
+
+		return array_diff($users, $conflicted);
+	}
+
+	/**
 	* Add a user with the name $user to phpBB and update all entries in the database to reflect this
-	* @param string $oldname The name that was used when making the guest posts
-	* @param string $newname The name that will be used for the new user
-	* @return void
+	* @param	string $oldname The name that was used when making the guest posts
+	* @param	string $newname The name that will be used for the new user
+	* @return	void
+	* @access	private
 	*/
 	function _add_user_and_update_data($oldname, $newname)
 	{
@@ -269,6 +263,28 @@ class restore_deleted_users
 
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_posts = ' . $post_cnt . ' WHERE user_id = ' . $user_id;
 		$db->sql_query($sql);
+	}
+
+	/**
+	* Redirect to the main page once there are conflicts
+	* @param	Array $selected		The initial data
+	* @param	Array $conflicted	Array containing the conflicting users
+	* @return	void
+	* @access	private
+	*/
+	function _redirect_conflicted($selected, $conflicted)
+	{
+		$selected = array_flip($selected);
+		$conflicted_params = array();
+
+		foreach ($conflicted as $conflict)
+		{
+			$conflicted_params[] = $selected[$conflict];
+		}
+		$conflicted_params = implode('&amp;conflicted%5B%5D', $conflicted_params);
+
+		redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'c=usergroup&amp;t=restore_deleted_users&amp;conflicted%5B%5D=' . $conflicted_params));
+		exit;
 	}
 }
 ?>
