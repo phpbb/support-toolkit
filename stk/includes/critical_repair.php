@@ -24,15 +24,26 @@ if (!function_exists('filelist'))
 
 class critical_repair
 {
-	// Tools that are autoran
+	/**
+	* @var Array Tools that are autoran
+	*/
 	var $autorun_tools = array();
 
-	// Tools that are manually invoked
+	/**
+	* @var Array Tools that are manually invoked
+	*/
 	var $manual_tools = array();
 
-	// Location for the tools
+	/**
+	* @var string Location for the tools
+	*/
 	var $tool_path;
 
+	/**
+	* Construct critical reapair.
+	* This method loads all critical repair tools
+	* @return void
+	*/
 	function critical_repair()
 	{
 		$this->tool_path = STK_ROOT_PATH . 'includes/critical_repair/';
@@ -64,6 +75,11 @@ class critical_repair
 		return true;
 	}
 
+	/**
+	* Run a manual critical repair tol
+	* @param	String	$tool The name (file/class) of the tool
+	* @return	mixed	The result of the tool
+	*/
 	function run_tool($tool)
 	{
 		if (!(in_array($tool, $this->manual_tools)))
@@ -78,6 +94,10 @@ class critical_repair
 		return $run_tool->run();
 	}
 
+	/**
+	* Run all the automatic critical repair tools
+	* @return void
+	*/
 	function autorun_tools()
 	{
 		foreach ($this->autorun_tools as $tool)

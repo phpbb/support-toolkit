@@ -178,7 +178,7 @@ function user_lang()
 
 	$args = func_get_args();
 
-	if (!method_exists($user, 'lang'))
+	if (method_exists($user, 'lang'))
 	{
 		return $user->lang($args);
 	}
