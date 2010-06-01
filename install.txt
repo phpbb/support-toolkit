@@ -48,6 +48,7 @@ instructions above.
 * [Add] Critical repair tool that validates all phpBB files for any code outside the php tags. (Bug #47435)
 * [Add] Merge users tool. (Tool by toonarmy)
 * [Add] Tool to recalculate email hashes. (Bug #56425)
+* [Add] Tool to re-add deleted users and link them to the new profile. (Bug #56465)
 * [Change] If there is a UMIL installation available in phpBB use that one over the included version.
 * [Change] Rewrote the database cleaner to be more flexible/easier to maintain.
 * [Change] The BBCode reparser now no longer reparses only posts with the bbcode_bitfield set.
