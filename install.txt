@@ -41,6 +41,8 @@ language folder to "stk/language/"
 To upgrade a previous version of the STK to 1.0.1, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
+If you had any translations installed you'll have to reinstall these after the
+update!
 
 
 = Changelog =
