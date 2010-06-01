@@ -66,7 +66,7 @@ class database_cleaner
 		// Unstable versions can only be used when debugging
 		if (!defined('DEBUG') && preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
 		{
-			return false;
+			return 'UNSTABLE_DEBUG_ONLY';
 		}
 
 		if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/data/' . $this->phpbb_version . '.' . PHP_EXT) === false)
