@@ -87,7 +87,7 @@ class restore_deleted_users
 		if (isset($_REQUEST['post']))
 		{
 			// Get the selected users
-			$posts = array_keys(request_var('post', array(0 => ''), true));
+			$posts = array_keys(request_var('post', array(0 => 0)));
 			if (empty($posts))
 			{
 				$error[] = 'NO_USER_SELECTED';
@@ -98,7 +98,7 @@ class restore_deleted_users
 			$selected = array();
 			$sql = 'SELECT post_id, post_username
 				FROM ' . POSTS_TABLE . '
-				WHERE ' . $db->sql_in_set('post_id', array_keys($posts));
+				WHERE ' . $db->sql_in_set('post_id', $posts);
 			$result = $db->sql_query($sql);
 			while ($row = $db->sql_fetchrow($result))
 			{
