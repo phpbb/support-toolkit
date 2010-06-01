@@ -114,7 +114,7 @@ class stk_bom_sniffer
 	function run()
 	{
 		// Get all the files
-		$filelist = filelist(PHPBB_ROOT_PATH, '', 'php');
+		$filelist = filelist(PHPBB_ROOT_PATH, '', PHP_EXT);
 
 		foreach ($filelist as $directory => $files)
 		{
