@@ -473,11 +473,9 @@ class stk_bom_sniffer
 					$match = '\?>";';
 				}
 			break;
-		}
 
-		if (empty($match))
-		{
-			return false;
+			default :
+				return false;
 		}
 
 		return (preg_match('~' . $match . '~ise', $buffer)) ? true : false;
