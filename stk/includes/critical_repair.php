@@ -40,7 +40,7 @@ class critical_repair
 	var $tool_path;
 
 	/**
-	* Construct critical reapair.
+	* Construct critical repair.
 	* This method loads all critical repair tools
 	* @return void
 	*/
@@ -106,6 +106,7 @@ class critical_repair
 
 			$tool_name = 'stk_' . $tool;
 			$run_tool = new $tool_name;
+			$run_tool->run();
 			unset($run_tool);
 		}
 
