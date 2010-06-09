@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'BOARD_DISABLE_REASON'			=> 'This board is due to some database maintenance currently not available.',
+	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenace. Please check back soon!',
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
 	'COLUMNS'						=> 'Columns',
@@ -55,7 +55,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
-	'DATAFILE_NOT_FOUND'			=> 'The support toolkit couldn’t find the required datafile for your phpBB version!',
+	'DATAFILE_NOT_FOUND'			=> 'The Support Toolkit couldn’t find the required data-file for your phpBB version!',
 
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
@@ -71,7 +71,7 @@ $lang = array_merge($lang, array(
 
 	'PERMISSION_SETTINGS'			=> 'Permission Options',
 	'PERMISSION_UPDATE_SUCCESS'		=> 'The permission settings have been updated successfully!',
-	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Toolkit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time between a new version of phpBB3 being released and this tool being updated to support the newest version.',
+	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Your version of phpBB3 is not supported (or some files from the Support Toolkit are missing).<br />phpBB 3.0.0+ should be supported, but it may take some time for this tool to be updated following the release of a new version of phpBB 3.0.',
 
 	'QUIT'							=> 'Quit',
 

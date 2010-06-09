@@ -52,7 +52,7 @@ $lang = array_merge($lang, array(
 
 	'REDIRECT_NEXT_STEP'				=> 'You are being redirected to the next step.',
 
-	'SANITISE_ANONYMOUS_USER'			=> 'Sanitise Anonymous user',
+	'SANITISE_ANONYMOUS_USER'			=> 'Sanitise Anonymous User',
 ));
 
 ?>

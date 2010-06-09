@@ -41,7 +41,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'DUPLICATES_FOUND'						=> 'The tool has found and removed the duplicate permissions.',
+	'DUPLICATES_FOUND'						=> 'The tool has found and removed all duplicate permissions.',
 
 	'NO_DUPLICATES_FOUND'					=> 'The tool has finished checking for duplicate permissions and has found none.',
 

@@ -65,7 +65,7 @@ $lang = array_merge($lang, array(
 
    'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
    'INCORRECT_PASSWORD'					=> 'Password is incorrect',
-   'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn’t compatible with this tool. Your phpBB installation must be version %1$s or later in order to run this tool',
+   'INCORRECT_PHPBB_VERSION'			=> 'Your version of phpBB isn’t compatible with this tool. Your phpBB installation must be version %1$s or later in order to run this tool.',
 
    'LOGIN_STK_SUCCESS'					=> 'You have successfully authenticated and will now be redirected to the Support Toolkit.',
 
@@ -77,9 +77,9 @@ $lang = array_merge($lang, array(
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn’t compatible with the version of phpBB that you are running',
    'PROCEED_TO_STK'						=> '%sProceed to the Support Toolkit%s',
 
-   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit!',
+   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit.',
    'STK_LOGIN'							=> 'Support Toolkit Login',
-   'STK_LOGIN_WAIT'						=> 'You can only attempt one login every 3 seconds, please try again.',
+   'STK_LOGIN_WAIT'						=> 'You must wait three seconds before re-attempting login. Please try again.',
    'STK_LOGOUT'							=> 'STK Logout',
    'STK_LOGOUT_SUCCESS'					=> 'You have successfully logged out from the Support Toolkit.',
    'STK_NON_LOGIN'						=> 'Login to access the STK.',
@@ -89,11 +89,11 @@ $lang = array_merge($lang, array(
    'SUPPORT_TOOL_KIT_PASSWORD'			=> 'Password',
    'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Since you are not logged in to phpBB3 you must verify that you are the board owner by entering the Support Toolkit Password.<br /><br /><strong>Cookies MUST be allowed by your browser or you will not be able to stay logged in.</strong>',
 
-   'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is trying to load a file that does not exist: %1$s',
+   'TOOL_INCLUTION_NOT_FOUND'			=> 'This tool is attempting to load a file (%1$s) that does not exist.',
    'TOOL_NAME'							=> 'Tool Name',
-   'TOOL_NOT_AVAILABLE'					=> 'The requested tool isn’t available!',
+   'TOOL_NOT_AVAILABLE'					=> 'The requested tool is not available.',
 
-   'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to <strong>only</strong> use this method when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
+   'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to use this method <strong>only</strong> when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
 ));
 
 ?>
