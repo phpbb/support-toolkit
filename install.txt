@@ -55,13 +55,13 @@ update!
 * [Change] Rewrote the database cleaner to be more flexible/easier to maintain.
 * [Change] The BBCode reparser now no longer reparses only posts with the bbcode_bitfield set.
 * [Change] Rewrote critical repair tools system to be pluggable. (Bug #59725)
+* [Change] The reparse BBCode tool now reparses BBCodes in PMs and signatures (Bug #60645)
 * [Fix] Corrected some language related issues. (Bug #58625, #58635)
 * [Fix] Sql query tool doesn't decode htmlspecialchars when running a query. (Bug #59755)
 * [Fix] Redirect to the correct page after logging in if phpBB > 3.0.6.
 * [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
 * [Fix] Properly insert poll expiration times when reparsing BBCode. (Bug #60275)
 * [Fix] Properly insert topic time length when reparsing BBCode. (Bug #61155, patch by D¡cky)
-* [Fix] Also reparse the BBCodes in posts and signatures when reparsing BBCodes. (Bug #60645)
 * [Fix] Removed some phpBB version dependant code.
 
 == Changes since RC3 ==
