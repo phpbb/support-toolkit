@@ -13,42 +13,42 @@
 	<title lang="en">Support Toolkit ACP link</title>
 	<description lang="en">Adds a link in the ACP to the Support Toolkit</description>
 
-<author-group>
-	<author>
-		<username>EXreaction</username>
-		<realname>Nathan Guse</realname>
-		<homepage>http://www.lithiumstudios.org/</homepage>
-		<email>exreaction@lithiumstudios.org</email>
-		<contributions-group>
-			<contributions status="current" from="2009-01-21" position="Developer" />
-		</contributions-group>
-	</author>
-	<author>
-		<username>Erik Frèrerejean</username>
-		<realname>Erik Frèrerejean</realname>
-		<homepage>http://www.erikfrerejean.nl</homepage>
-		<email>erikfrerejean@phpbb.com</email>
-		<contributions-group>
-			<contributions status="current" from="2009-01-21" position="Developer" />
-		</contributions-group>
-	</author>
-	<author>
-		<username>iWisdom</username>
-		<realname>Phil Crumm</realname>
-		<homepage>http://p3net.net</homepage>
-		<email>iwisdom@phpbb.com</email>
-		<contributions-group>
-			<contributions status="current" from="2010-01-19" position="Developer" />
-		</contributions-group>
-	</author>
-</author-group>
+	<author-group>
+		<author>
+			<username>EXreaction</username>
+			<realname>Nathan Guse</realname>
+			<homepage>http://www.lithiumstudios.org/</homepage>
+			<email>exreaction@lithiumstudios.org</email>
+			<contributions-group>
+				<contributions status="current" from="2009-01-21" position="Developer" />
+			</contributions-group>
+		</author>
+		<author>
+			<username>Erik Frèrerejean</username>
+			<realname>Erik Frèrerejean</realname>
+			<homepage>http://www.erikfrerejean.nl</homepage>
+			<email>erikfrerejean@phpbb.com</email>
+			<contributions-group>
+				<contributions status="current" from="2009-01-21" position="Developer" />
+			</contributions-group>
+		</author>
+		<author>
+			<username>iWisdom</username>
+			<realname>Phil Crumm</realname>
+			<homepage>http://p3net.net</homepage>
+			<email>iwisdom@phpbb.com</email>
+			<contributions-group>
+				<contributions status="current" from="2010-01-19" position="Developer" />
+			</contributions-group>
+		</author>
+	</author-group>
 
 	<mod-version>1.0.1-RC1</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.7</target-version>
+		<target-version>3.0.7-PL1</target-version>
 	</installation>
 </header>
 
