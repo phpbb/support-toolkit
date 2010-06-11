@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.1-RC1
+Support Toolkit 1.0.1-RC2
 Supported phpBB versions 3.0.0 - 3.0.7-pl1
 
 == Authors ==
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.1-RC1 ==
-To upgrade a previous version of the STK to 1.0.1-RC1, remove your previous
+== Upgrade to 1.0.1-RC2 ==
+To upgrade a previous version of the STK to 1.0.1-RC2, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.1-RC1 ==
+* [Fix] Let the BOM sniffer correctly handle the install/ directory when re-named. (Bug #62142)
+
 == Changes since 1.0.0 ==
 * [Add] Critical repair tool that validates all phpBB files for any content outside the php tags. (Bug #47435)
 * [Add] Merge users tool. (Tool by toonarmy)
@@ -64,7 +67,7 @@ update!
 * [Fix] Properly insert topic time length when reparsing BBCode. (Bug #61155, patch by D¡cky)
 * [Fix] Removed some phpBB version dependant code.
 
-== Changes since RC3 ==
+== Changes since 1.0.0-RC3 ==
 * [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
 * [Fix] Corrected some language related issues. (Bug #53725, #53835, #53845, #56865, #57815)
 * [Fix] Display the correct "old" version number when triggering the outdated message after a STK update due to cached information.
@@ -87,7 +90,7 @@ update!
 * [Fix] BBCode sets all topic first posters to "Guest".
 * [Remove] URL List tool deferred until post-1.0.0 due to necessary refactoring. (Bug #50255)
 
-== Changes since RC2 ==
+== Changes since 1.0.0-RC2 ==
 * [Add] Add the ability to "mass demote" founders through the list founders tool. (Bug #51435)
 * [Add] "Resync users with newly registered users group" tool. (Bug #52405)
 * [Fix] "Recreate Module Management modules" tool now also re-enables the modules if required.
@@ -95,7 +98,7 @@ update!
 * [Fix] Display correct messages when fields are filled out incorrectly in the add user tool. (Bug #52385)
 * [Fix] Updates of UMIL break the Support Toolkit. (Bug #53375)
 
-== Changes since RC1 ==
+== Changes since 1.0.0-RC1 ==
 * [Fix] Remove the hardcoded location of the toolkit. (Bug #47375)
 * [Fix] Make sure the menu is sorted correctly when using a translated version.
 * [Fix] Changed the message displayed when the Sanitise user tool doesn't do anything. (Bug #47405)
