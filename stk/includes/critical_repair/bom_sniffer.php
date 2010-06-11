@@ -132,7 +132,7 @@ class stk_bom_sniffer
 			{
 				// It is, skip it
 				continue;
-			}echo'<pre>';var_dump($directory, $files);echo'</pre><hr />';
+			}
 
 			// Step into the files
 			if (is_array($files))
