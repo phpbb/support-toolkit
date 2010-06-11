@@ -43,3 +43,4 @@ $lang = array_merge($lang, array(
 	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'All email hashes have been updated successfully!',
 	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Updating email hashes in progress.',
 ));
+?>
