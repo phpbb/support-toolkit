@@ -55,7 +55,6 @@ class stk_bom_sniffer
 		'cache/',
 		'develop/',
 		'files/',
-		'install/',
 		'store/',
 		'stk/includes/critical_repair/',
 		'stk/includes/critical_repair/autorun/',
@@ -119,10 +118,21 @@ class stk_bom_sniffer
 		foreach ($filelist as $directory => $files)
 		{
 			// Skip some dirs
+			if (empty($files))
+			{
+				continue;
+			}
 			if (in_array($directory, $this->ignored_dirs))
 			{
 				continue;
 			}
+			// As the install dir can be renamed, we need to check here whether this
+			// is an install directory
+			else if(in_array('convert_phpbb20.' . PHP_EXT, $files) || in_array('new_normalizer.' . PHP_EXT, $files) || in_array('database_update.' . PHP_EXT, $files))
+			{
+				// It is, skip it
+				continue;
+			}echo'<pre>';var_dump($directory, $files);echo'</pre><hr />';
 
 			// Step into the files
 			if (is_array($files))
@@ -351,7 +361,7 @@ class stk_bom_sniffer
 								<div id="content">
 									<h1>BOM sniffer</h1>
 									<p>
-										As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found. 
+										As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found.
 									</p>
 									<p>
 										Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
