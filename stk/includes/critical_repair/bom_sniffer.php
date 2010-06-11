@@ -351,13 +351,7 @@ class stk_bom_sniffer
 								<div id="content">
 									<h1>BOM sniffer</h1>
 									<p>
-										As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB
-										files and determined that some of the files contain invalid content that potentially could
-										stop the board from operating. The support Toolkit has tried to fix those issues and created
-										a package with the updated files in the "store" directory of your board.<br />
-										Please move the files from this package to their correct location and load the Support Toolkit
-										again. The toolkit will check these files again and will redirect you to the STK if no flows are
-										found.
+										As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found. 
 									</p>
 									<p>
 										Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
