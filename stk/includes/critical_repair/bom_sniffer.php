@@ -96,7 +96,7 @@ class stk_bom_sniffer
 			// Try to remove the directory
 			if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
 			{
-				die('Please remove the [' . PHPBB_ROOT_PATH . 'store/bom_sniffer] directory from your server. The BOM sniffer can\'t operate when this directory is in place');
+				$this->display_remove_store_dir_message();
 			}
 		}
 
@@ -362,6 +362,51 @@ class stk_bom_sniffer
 									<h1>BOM sniffer</h1>
 									<p>
 										As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found.
+									</p>
+									<p>
+										Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
+									</p>
+								</div>
+							<span class="corners-bottom"><span></span></span>
+						</div>
+					</div>
+				</div>
+				<div id="page-footer">
+					Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
+				</div>
+			</div>
+		</body>
+	</html>
+		<?php
+		exit;
+	}
+
+	function display_remove_store_dir_message()
+	{
+		header('Content-type: text/html; charset=UTF-8');
+		?>
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+		<head>
+			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+			<meta http-equiv="content-style-type" content="text/css" />
+			<meta http-equiv="imagetoolbar" content="no" />
+			<title>BOM sniffer - Support Toolkit</title>
+			<link href="<?php echo STK_ROOT_PATH; ?>/style/style.css" rel="stylesheet" type="text/css" media="screen" />
+		</head>
+		<body id="errorpage">
+			<div id="wrap">
+				<div id="page-header">
+
+				</div>
+				<div id="page-body">
+					<div id="acp">
+						<div class="panel">
+							<span class="corners-top"><span></span></span>
+								<div id="content">
+									<h1>BOM sniffer</h1>
+									<p>
+										The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c><?php echo PHPBB_ROOT_PATH ?>store/bom_sniffer/</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.
 									</p>
 									<p>
 										Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
