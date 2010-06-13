@@ -65,8 +65,9 @@ class stk_bom_sniffer
 	* @access private
 	*/
 	var $messages = array(
-		'remove_dir'	=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'issue_found'	=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found.',
+		'remove_dir'	=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
+		'store_write'	=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
 	);
 
 	/**
@@ -89,14 +90,13 @@ class stk_bom_sniffer
 
 	/**
 	* Constructor. Prep the tool
-	* Uses die to not display to much useless information to the user (as trigger_error does)
 	*/
 	function stk_bom_sniffer()
 	{
 		// "Store" must be writable
 		if (@is_writable(PHPBB_ROOT_PATH . 'store') !== true)
 		{
-			die("The BOM sniffer requires the <c>store</c> directory to exist and to be writable!");
+			$this->trigger_message($this->messages['store_write']);
 		}
 
 		// Make sure the BOM sniffer dir store dir doesn't exist
