@@ -65,6 +65,7 @@ class stk_bom_sniffer
 	* @access private
 	*/
 	var $messages = array(
+		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
 		'issue_found'	=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found.',
 		'remove_dir'	=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'	=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
@@ -680,7 +681,7 @@ class _stk_bom_sniffer_cache
 		// Dir exists and is writable
 		if (@is_writable($this->_cache_path) !== true)
 		{
-			trigger_error("The BOM sniffer requires $this->_cache_path to exist and to be writable!");
+			$this->bom_sniffer->trigger_message(sprintf($this->bom_sniffer->messages['bom_sniffer_writable']), $this->_cache_path);
 		}
 
 		// If we've got data cached for this load it.
