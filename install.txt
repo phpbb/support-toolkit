@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.1-RC2 ==
-To upgrade a previous version of the STK to 1.0.1-RC2, remove your previous
+== Upgrade to 1.0.2-dev ==
+To upgrade a previous version of the STK to 1.0.2-dev, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.1 ==
+* [Change] STK emergency passwords no longer contain 'O' and '0' characters.
+
 == Changes since 1.0.1-RC1 ==
 * [Fix] Let the BOM sniffer correctly handle the install/ directory when re-named. (Bug #62142)
 * [Fix] Provide a more usefull message when the BOM sniffer couldn't remove the store/bom_sniffer directory. (Bug #62143)
