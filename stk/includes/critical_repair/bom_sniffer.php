@@ -66,7 +66,7 @@ class stk_bom_sniffer
 	*/
 	var $messages = array(
 		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
-		'issue_found'	=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a directory with the updated files. This is the "bom_sniffer" directory in the "store" directory of your board.<br /> Please move the files from that directory to their correct location(s) and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flows are found.',
+		'issue_found'	=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a package with the updated files in the "store" directory of your board.<br /> Please <strong>move</strong> the files from the “store” directory to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.',
 		'remove_dir'	=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'	=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
 	);
@@ -103,10 +103,14 @@ class stk_bom_sniffer
 		// Make sure the BOM sniffer dir store dir doesn't exist
 		if (file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
 		{
-			// Try to remove the directory
-			if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
+			// Empty dir is okay
+			if (array("" => array()) !== filelist(PHPBB_ROOT_PATH . 'store/bom_sniffer', '', PHP_EXT))	// Rather nasty, but don't know a better php 4 way atm
 			{
-				$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . 'store/bom_sniffer/'));
+				// Not empty try to remove the store dir
+				if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
+				{
+					$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . 'store/bom_sniffer/'));
+				}
 			}
 		}
 
