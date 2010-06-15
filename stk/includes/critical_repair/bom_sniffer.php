@@ -57,7 +57,6 @@ class stk_bom_sniffer
 		'files/',
 		'store/',
 		'stk/includes/critical_repair/',
-		'stk/includes/critical_repair/autorun/',
 	);
 
 	/**
@@ -126,6 +125,9 @@ class stk_bom_sniffer
 	*/
 	function run()
 	{
+		// Ignore pattern
+		$ignorepattern = '#' . implode('|', $this->ignored_dirs) . '#ise';
+
 		// Get all the files
 		$filelist = filelist(PHPBB_ROOT_PATH, '', PHP_EXT);
 
@@ -136,7 +138,7 @@ class stk_bom_sniffer
 			{
 				continue;
 			}
-			if (in_array($directory, $this->ignored_dirs))
+			if (preg_match($ignorepattern, $directory))
 			{
 				continue;
 			}
