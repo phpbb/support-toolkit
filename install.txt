@@ -52,6 +52,7 @@ update!
 == Changes since 1.0.1-RC1 ==
 * [Fix] Let the BOM sniffer correctly handle the install/ directory when re-named. (Bug #62142)
 * [Fix] Provide a more usefull message when the BOM sniffer couldn't remove the store/bom_sniffer directory. (Bug #62143)
+* [Fix] Correctly handle directories that shouldn't be checked by the BOM sniffer. (Bug #62145)
 
 == Changes since 1.0.0 ==
 * [Add] Critical repair tool that validates all phpBB files for any content outside the php tags. (Bug #47435)
