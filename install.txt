@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.1-PL1
+Support Toolkit 1.0.2-dev
 Supported phpBB versions 3.0.0 - 3.0.7-pl1
 
 == Authors ==
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.1-PL1 ==
-To upgrade a previous version of the STK to 1.0.1-PL1, remove your previous
+== Upgrade to 1.0.2-dev ==
+To upgrade a previous version of the STK to 1.0.2-dev, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.1-PL1 ==
+* [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
+
 == Changes since 1.0.1 ==
 * [Fix] Database cleaner displays only "array" instead of appropriate options (Bug #62177)
 * [Change] STK emergency passwords no longer contain 'O' and '0' characters.
