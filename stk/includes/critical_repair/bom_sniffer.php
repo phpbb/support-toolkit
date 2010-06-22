@@ -48,18 +48,6 @@ class stk_bom_sniffer
 	var $file_changed = false;
 
 	/**
-	* @var Array An array with directories that will not be checked by this tool
-	* @access private
-	*/
-	var $ignored_dirs = array(
-		'cache/',
-		'develop/',
-		'files/',
-		'store/',
-		'stk/includes/critical_repair/',
-	);
-
-	/**
 	* @var Array Messages that will be triggered by this tool
 	* @access private
 	*/
@@ -87,6 +75,405 @@ class stk_bom_sniffer
 	* @access private
 	*/
 	var $write_buffer = array();
+
+	/**
+	* @var Array The sniffer will only check files that come with a vanilla install. This list contains all files that *will* be sniffed
+	* @access private
+	*/
+	var $whitelist = array(
+		'' => array(
+			0	=> 'common.php',
+			1	=> 'config.php',
+			2	=> 'cron.php',
+			3	=> 'faq.php',
+			4	=> 'feed.php',
+			5	=> 'index.php',
+			6	=> 'mcp.php',
+			7	=> 'memberlist.php',
+			8	=> 'posting.php',
+			9	=> 'report.php',
+			10	=> 'search.php',
+			11	=> 'style.php',
+			12	=> 'ucp.php',
+			13	=> 'viewforum.php',
+			14	=> 'viewonline.php',
+			15	=> 'viewtopic.php',
+		),
+		'adm/' => array(
+			0	=> 'index.php',
+			1	=> 'swatch.php',
+		),
+		'download/' => array(
+			0	=> 'file.php',
+		),
+		'includes/acm/' => array(
+			0	=> 'acm_apc.php',
+			1	=> 'acm_eaccelerator.php',
+			2	=> 'acm_file.php',
+			3	=> 'acm_memcache.php',
+			4	=> 'acm_memory.php',
+			5	=> 'acm_null.php',
+			6	=> 'acm_xcache.php',
+		),
+		'includes/acp/' => array(
+			0	=> 'acp_attachments.php',
+			1	=> 'acp_ban.php',
+			2	=> 'acp_bbcodes.php',
+			3	=> 'acp_board.php',
+			4	=> 'acp_bots.php',
+			5	=> 'acp_captcha.php',
+			6	=> 'acp_database.php',
+			7	=> 'acp_disallow.php',
+			8	=> 'acp_email.php',
+			9	=> 'acp_forums.php',
+			10	=> 'acp_groups.php',
+			11	=> 'acp_icons.php',
+			12	=> 'acp_inactive.php',
+			13	=> 'acp_jabber.php',
+			14	=> 'acp_language.php',
+			15	=> 'acp_logs.php',
+			16	=> 'acp_main.php',
+			17	=> 'acp_modules.php',
+			18	=> 'acp_permission_roles.php',
+			19	=> 'acp_permissions.php',
+			20	=> 'acp_php_info.php',
+			21	=> 'acp_profile.php',
+			22	=> 'acp_prune.php',
+			23	=> 'acp_ranks.php',
+			24	=> 'acp_reasons.php',
+			25	=> 'acp_search.php',
+			26	=> 'acp_send_statistics.php',
+			27	=> 'acp_styles.php',
+			28	=> 'acp_update.php',
+			29	=> 'acp_users.php',
+			30	=> 'acp_words.php',
+			31	=> 'auth.php',
+		),
+		'includes/acp/info/' => array(
+			0	=> 'acp_attachments.php',
+			1	=> 'acp_ban.php',
+			2	=> 'acp_bbcodes.php',
+			3	=> 'acp_board.php',
+			4	=> 'acp_bots.php',
+			5	=> 'acp_captcha.php',
+			6	=> 'acp_database.php',
+			7	=> 'acp_disallow.php',
+			8	=> 'acp_email.php',
+			9	=> 'acp_forums.php',
+			10	=> 'acp_groups.php',
+			11	=> 'acp_icons.php',
+			12	=> 'acp_inactive.php',
+			13	=> 'acp_jabber.php',
+			14	=> 'acp_language.php',
+			15	=> 'acp_logs.php',
+			16	=> 'acp_main.php',
+			17	=> 'acp_modules.php',
+			18	=> 'acp_permission_roles.php',
+			19	=> 'acp_permissions.php',
+			20	=> 'acp_php_info.php',
+			21	=> 'acp_profile.php',
+			22	=> 'acp_prune.php',
+			23	=> 'acp_ranks.php',
+			24	=> 'acp_reasons.php',
+			25	=> 'acp_search.php',
+			26	=> 'acp_send_statistics.php',
+			27	=> 'acp_styles.php',
+			28	=> 'acp_update.php',
+			29	=> 'acp_users.php',
+			30	=> 'acp_words.php',
+		),
+		'includes/auth/' => array(
+			0	=> 'auth_apache.php',
+			1	=> 'auth_db.php',
+			2	=> 'auth_ldap.php',
+		),
+		'includes/' => array(
+			0	=> 'auth.php',
+			1	=> 'bbcode.php',
+			2	=> 'cache.php',
+			3	=> 'constants.php',
+			4	=> 'functions.php',
+			5	=> 'functions_admin.php',
+			6	=> 'functions_compress.php',
+			7	=> 'functions_content.php',
+			8	=> 'functions_convert.php',
+			9	=> 'functions_display.php',
+			10	=> 'functions_install.php',
+			11	=> 'functions_jabber.php',
+			12	=> 'functions_messenger.php',
+			13	=> 'functions_module.php',
+			14	=> 'functions_posting.php',
+			15	=> 'functions_privmsgs.php',
+			16	=> 'functions_profile_fields.php',
+			17	=> 'functions_template.php',
+			18	=> 'functions_transfer.php',
+			19	=> 'functions_upload.php',
+			20	=> 'functions_user.php',
+			21	=> 'message_parser.php',
+			22	=> 'session.php',
+			23	=> 'template.php',
+		),
+		'includes/captcha/' => array(
+			0	=> 'captcha_factory.php',
+			1	=> 'captcha_gd.php',
+			2	=> 'captcha_gd_wave.php',
+			3	=> 'captcha_non_gd.php',
+		),
+		'includes/captcha/plugins/' => array(
+			0	=> 'captcha_abstract.php',
+			1	=> 'phpbb_captcha_gd_plugin.php',
+			2	=> 'phpbb_captcha_gd_wave_plugin.php',
+			3	=> 'phpbb_captcha_nogd_plugin.php',
+			4	=> 'phpbb_captcha_qa_plugin.php',
+			5	=> 'phpbb_recaptcha_plugin.php',
+		),
+		'includes/db/' => array(
+			0	=> 'db_tools.php',
+			1	=> 'dbal.php',
+			2	=> 'firebird.php',
+			3	=> 'mssql.php',
+			4	=> 'mssql_odbc.php',
+			5	=> 'mssqlnative.php',
+			6	=> 'mysql.php',
+			7	=> 'mysqli.php',
+			8	=> 'oracle.php',
+			9	=> 'postgres.php',
+			10	=> 'sqlite.php',
+		),
+		'includes/diff/' => array(
+			0	=> 'diff.php',
+			1	=> 'engine.php',
+			2	=> 'renderer.php',
+		),
+		'includes/hooks/' => array(
+			0	=> 'index.php',
+		),
+		'includes/mcp/info/' => array(
+			0	=> 'mcp_ban.php',
+			1	=> 'mcp_logs.php',
+			2	=> 'mcp_main.php',
+			3	=> 'mcp_notes.php',
+			4	=> 'mcp_pm_reports.php',
+			5	=> 'mcp_queue.php',
+			6	=> 'mcp_reports.php',
+			7	=> 'mcp_warn.php',
+		),
+		'includes/mcp/' => array(
+			0	=> 'mcp_ban.php',
+			1	=> 'mcp_forum.php',
+			2	=> 'mcp_front.php',
+			3	=> 'mcp_logs.php',
+			4	=> 'mcp_main.php',
+			5	=> 'mcp_notes.php',
+			6	=> 'mcp_pm_reports.php',
+			7	=> 'mcp_post.php',
+			8	=> 'mcp_queue.php',
+			9	=> 'mcp_reports.php',
+			10	=> 'mcp_topic.php',
+			11	=> 'mcp_warn.php',
+		),
+		'includes/questionnaire/' => array(
+			0	=> 'questionnaire.php',
+		),
+		'includes/search/' => array(
+			0	=> 'fulltext_mysql.php',
+			1	=> 'fulltext_native.php',
+			2	=> 'search.php',
+		),
+		'includes/ucp/info/' => array(
+			0	=> 'ucp_attachments.php',
+			1	=> 'ucp_groups.php',
+			2	=> 'ucp_main.php',
+			3	=> 'ucp_pm.php',
+			4	=> 'ucp_prefs.php',
+			5	=> 'ucp_profile.php',
+			6	=> 'ucp_zebra.php',
+		),
+		'includes/ucp/' => array(
+			0	=> 'ucp_activate.php',
+			1	=> 'ucp_attachments.php',
+			2	=> 'ucp_confirm.php',
+			3	=> 'ucp_groups.php',
+			4	=> 'ucp_main.php',
+			5	=> 'ucp_pm.php',
+			6	=> 'ucp_pm_compose.php',
+			7	=> 'ucp_pm_options.php',
+			8	=> 'ucp_pm_viewfolder.php',
+			9	=> 'ucp_pm_viewmessage.php',
+			10	=> 'ucp_prefs.php',
+			11	=> 'ucp_profile.php',
+			12	=> 'ucp_register.php',
+			13	=> 'ucp_remind.php',
+			14	=> 'ucp_resend.php',
+			15	=> 'ucp_zebra.php',
+		),
+		'includes/utf/data/' => array(
+			0	=> 'case_fold_c.php',
+			1	=> 'case_fold_f.php',
+			2	=> 'case_fold_s.php',
+			3	=> 'confusables.php',
+			4	=> 'recode_basic.php',
+			5	=> 'recode_cjk.php',
+			6	=> 'search_indexer_0.php',
+			7	=> 'search_indexer_1.php',
+			8	=> 'search_indexer_19.php',
+			9	=> 'search_indexer_2.php',
+			10	=> 'search_indexer_20.php',
+			11	=> 'search_indexer_21.php',
+			12	=> 'search_indexer_26.php',
+			13	=> 'search_indexer_3.php',
+			14	=> 'search_indexer_31.php',
+			15	=> 'search_indexer_32.php',
+			16	=> 'search_indexer_33.php',
+			17	=> 'search_indexer_36.php',
+			18	=> 'search_indexer_4.php',
+			19	=> 'search_indexer_448.php',
+			20	=> 'search_indexer_5.php',
+			21	=> 'search_indexer_58.php',
+			22	=> 'search_indexer_6.php',
+			23	=> 'search_indexer_64.php',
+			24	=> 'search_indexer_84.php',
+			25	=> 'search_indexer_9.php',
+			26	=> 'search_indexer_95.php',
+			27	=> 'utf_canonical_comp.php',
+			28	=> 'utf_canonical_decomp.php',
+			29	=> 'utf_compatibility_decomp.php',
+			30	=> 'utf_nfc_qc.php',
+			31	=> 'utf_nfkc_qc.php',
+			32	=> 'utf_normalizer_common.php',
+		),
+		'includes/utf/' => array(
+			0	=> 'utf_normalizer.php',
+			1	=> 'utf_tools.php',
+		),
+		'language/en/acp/' => array(
+			0	=> 'attachments.php',
+			1	=> 'ban.php',
+			2	=> 'board.php',
+			3	=> 'bots.php',
+			4	=> 'common.php',
+			5	=> 'database.php',
+			6	=> 'email.php',
+			7	=> 'forums.php',
+			8	=> 'groups.php',
+			9	=> 'language.php',
+			10	=> 'modules.php',
+			11	=> 'permissions.php',
+			12	=> 'permissions_phpbb.php',
+			13	=> 'posting.php',
+			14	=> 'profile.php',
+			15	=> 'prune.php',
+			16	=> 'search.php',
+			17	=> 'styles.php',
+			18	=> 'users.php',
+		),
+		'language/en/' => array(
+			0	=> 'captcha_qa.php',
+			1	=> 'captcha_recaptcha.php',
+			2	=> 'common.php',
+			3	=> 'groups.php',
+			4	=> 'help_bbcode.php',
+			5	=> 'help_faq.php',
+			6	=> 'install.php',
+			7	=> 'mcp.php',
+			8	=> 'memberlist.php',
+			9	=> 'posting.php',
+			10	=> 'search.php',
+			11	=> 'search_ignore_words.php',
+			12	=> 'search_synonyms.php',
+			13	=> 'ucp.php',
+			14	=> 'viewforum.php',
+			15	=> 'viewtopic.php',
+		),
+		'stk/includes/' => array(
+			0	=> 'critical_repair.php',
+			1	=> 'functions.php',
+			2	=> 'plugin.php',
+			3	=> 'umil.php',
+		),
+		'stk/includes/database_cleaner/data/' => array(
+			0	=> '3_0_0.php',
+			1	=> '3_0_1.php',
+			2	=> '3_0_2.php',
+			3	=> '3_0_3.php',
+			4	=> '3_0_4.php',
+			5	=> '3_0_5.php',
+			6	=> '3_0_6.php',
+			7	=> '3_0_7.php',
+			8	=> '3_0_7_pl1.php',
+			9	=> '3_0_8_dev.php',
+		),
+		'stk/includes/database_cleaner/' => array(
+			0	=> 'database_cleaner_controller.php',
+			1	=> 'database_cleaner_data.php',
+			2	=> 'database_cleaner_views.php',
+			3	=> 'functions_database_cleaner.php',
+		),
+		'stk/' => array(
+			0	=> 'index.php',
+		),
+		'stk/language/en/' => array(
+			0	=> 'common.php',
+		),
+		'stk/language/en/tools/admin/' => array(
+			0	=> 'profile_list.php',
+			1	=> 'purge_cache.php',
+			2	=> 'reparse_bbcode.php',
+			3	=> 'sql_query.php',
+		),
+		'stk/language/en/tools/support/' => array(
+			0	=> 'auto_cookies.php',
+			1	=> 'database_cleaner.php',
+			2	=> 'fix_left_right_ids.php',
+			3	=> 'readd_module_management.php',
+			4	=> 'recache_moderators.php',
+			5	=> 'reclean_usernames.php',
+			6	=> 'remove_duplicate_permissions.php',
+			7	=> 'reset_styles.php',
+			8	=> 'sanitise_anonymous_user.php',
+			9	=> 'update_email_hashes.php',
+		),
+		'stk/language/en/tools/' => array(
+			0	=> 'tutorial.php',
+		),
+		'stk/language/en/tools/usergroup/' => array(
+			0	=> 'add_user.php',
+			1	=> 'change_password.php',
+			2	=> 'manage_founders.php',
+			3	=> 'merge_users.php',
+			4	=> 'restore_deleted_users.php',
+			5	=> 'resync_newly_registered.php',
+		),
+		'stk/tools/admin/' => array(
+			0	=> 'profile_list.php',
+			1	=> 'purge_cache.php',
+			2	=> 'reparse_bbcode.php',
+			3	=> 'sql_query.php',
+		),
+		'stk/tools/support/' => array(
+			0	=> 'auto_cookies.php',
+			1	=> 'database_cleaner.php',
+			2	=> 'fix_left_right_ids.php',
+			3	=> 'readd_module_management.php',
+			4	=> 'recache_moderators.php',
+			5	=> 'reclean_usernames.php',
+			6	=> 'remove_duplicate_permissions.php',
+			7	=> 'reset_styles.php',
+			8	=> 'sanitise_anonymous_user.php',
+			9	=> 'update_email_hashes.php',
+		),
+		'stk/tools/' => array(
+			0	=> 'tutorial.php',
+		),
+		'stk/tools/usergroup/' => array(
+			0	=> 'add_user.php',
+			1	=> 'change_password.php',
+			2	=> 'manage_founders.php',
+			3	=> 'merge_users.php',
+			4	=> 'restore_deleted_users.php',
+			5	=> 'resync_newly_registered.php',
+		),
+	);
 
 	/**
 	* Constructor. Prep the tool
@@ -125,20 +512,13 @@ class stk_bom_sniffer
 	*/
 	function run()
 	{
-		// Ignore pattern
-		$ignorepattern = '#' . implode('|', $this->ignored_dirs) . '#ise';
-
 		// Get all the files
 		$filelist = filelist(PHPBB_ROOT_PATH, '', PHP_EXT);
 
 		foreach ($filelist as $directory => $files)
 		{
-			// Skip some dirs
-			if (empty($files))
-			{
-				continue;
-			}
-			if (preg_match($ignorepattern, $directory))
+			// Directory can be checked?
+			if (!array_key_exists($directory, $this->whitelist))
 			{
 				continue;
 			}
@@ -155,8 +535,13 @@ class stk_bom_sniffer
 			{
 				foreach ($files as $file)
 				{
+					// Test this file against the whitelist
+					if (!in_array($file, $this->whitelist[$directory]))
+					{
+						continue;
+					}
 					// File never checked or was changed after the last run
-					if (!isset($this->cache->cache_data[$directory. $file]) || filectime(PHPBB_ROOT_PATH . $directory . $file) != $this->cache->cache_data[$directory . $file])
+					else if (!isset($this->cache->cache_data[$directory. $file]) || filectime(PHPBB_ROOT_PATH . $directory . $file) != $this->cache->cache_data[$directory . $file])
 					{
 						// Read the file
 						$content = fopen(PHPBB_ROOT_PATH . $directory . $file, 'r');
