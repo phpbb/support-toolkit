@@ -9,7 +9,7 @@ Support Toolkit 1.0.1-PL1
 Supported phpBB versions 3.0.0 - 3.0.7-pl1
 
 == Authors ==
-Erik Frèrejean	(Erik Fr�rejean)
+Erik Frèrejean	(Erik Frèrejean)
 EXreaction	(Nathan Guse)
 iWisdom		(Phil Crumm)
 
