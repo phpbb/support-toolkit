@@ -9,7 +9,7 @@
 */
 
 // What version are we using?
-define('STK_VERSION', '1.0.2-dev');
+define('STK_VERSION', '1.0.1-PL1');
 define('STK_QA', true);
 
 define('IN_PHPBB', true);
