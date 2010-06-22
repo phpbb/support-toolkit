@@ -463,7 +463,7 @@ function stk_version_check()
 		}
 
 		// Lets collect the latest version data. We can use UMIL for this
-		$info = $umil->version_check('www.phpbb.com', '/updatecheck', ((defined('STK_QA')) ? 'stk_qa.txt' : 'stk.txt'));
+		$info = $umil->version_check('www.phpbb.com', '/updatecheck', ((defined('STK_QA') && STK_QA) ? 'stk_qa.txt' : 'stk.txt'));
 
 		// Compare it and cache the info
 		$version_check = array();
