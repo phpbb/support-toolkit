@@ -10,7 +10,7 @@
 
 // What version are we using?
 define('STK_VERSION', '1.0.1-pl1');
-define('STK_QA', false);
+//define('STK_QA', false);
 
 define('IN_PHPBB', true);
 define('ADMIN_START', true);
