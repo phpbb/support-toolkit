@@ -3,7 +3,7 @@
 *
 * @package Support Toolkit
 * @version $Id$
-* @copyright (c) 2009 phpBB Group
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -552,7 +552,7 @@ class stk_bom_sniffer
 						continue;
 					}
 					// File never checked or was changed after the last run
-					else if (!isset($this->cache->cache_data[$directory. $file]) || filectime(PHPBB_ROOT_PATH . $directory . $file) != $this->cache->cache_data[$directory . $file])
+					else if (!isset($this->cache->cache_data[$directory. $file]) || filectime(PHPBB_ROOT_PATH . $directory . $file) != $this->cache->cache_data[$directory . $file] || !$stk_config['bom_sniffer_force_full_scan'])
 					{
 						$this->sniff($directory, $file);
 					}
