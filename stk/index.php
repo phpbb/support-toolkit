@@ -27,6 +27,7 @@ if (!defined('STK_INDEX')) { define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_
 // Make that phpBB itself understands out paths
 $phpbb_root_path = PHPBB_ROOT_PATH;
 $phpEx = PHP_EXT;
+$stk_config = array();
 
 // Init our critical repair class
 include(STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT);

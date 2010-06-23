@@ -479,6 +479,8 @@ class stk_bom_sniffer
 	*/
 	function stk_bom_sniffer()
 	{
+		global $stk_config;
+
 		// "Store" must be writable
 		if (@is_writable(PHPBB_ROOT_PATH . 'store') !== true)
 		{
@@ -501,6 +503,14 @@ class stk_bom_sniffer
 
 		// Init the internal cache
 		$this->cache = new _stk_bom_sniffer_cache($this);
+
+		// Here we test the stk config.php, when no issues found we'll include it
+		$this->sniff('stk/', 'config.' . PHP_EXT);
+		$stk_config['bom_sniffer_force_full_scan'] = true;
+		if (!file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer/stk/config.' . PHP_EXT))
+		{
+			include STK_ROOT_PATH . 'config.' . PHP_EXT;
+		}
 	}
 
 	/**
@@ -511,13 +521,15 @@ class stk_bom_sniffer
 	*/
 	function run()
 	{
+		global $stk_config;
+
 		// Get all the files
 		$filelist = filelist(PHPBB_ROOT_PATH, '', PHP_EXT);
 
 		foreach ($filelist as $directory => $files)
 		{
 			// Directory can be checked?
-			if (!array_key_exists($directory, $this->whitelist))
+			if (!$stk_config['bom_sniffer_force_full_scan'] && !array_key_exists($directory, $this->whitelist))
 			{
 				continue;
 			}
@@ -535,124 +547,14 @@ class stk_bom_sniffer
 				foreach ($files as $file)
 				{
 					// Test this file against the whitelist
-					if (!in_array($file, $this->whitelist[$directory]))
+					if (!$stk_config['bom_sniffer_force_full_scan'] && !in_array($file, $this->whitelist[$directory]))
 					{
 						continue;
 					}
 					// File never checked or was changed after the last run
 					else if (!isset($this->cache->cache_data[$directory. $file]) || filectime(PHPBB_ROOT_PATH . $directory . $file) != $this->cache->cache_data[$directory . $file])
 					{
-						// Read the file
-						$content = fopen(PHPBB_ROOT_PATH . $directory . $file, 'r');
-
-						// Loop through it
-						$php_open = $php_close = false;
-
-						while (($buffer = fgets($content)) !== false)
-						{
-							// No open tag yet
-							if (!$php_open)
-							{
-								// Look for the php open tag.
-								if (($pos = strpos($buffer, $this->php_open)) === false)
-								{
-									// White lines before the open tag, ignore it
-									$this->file_changed = true;
-									continue;
-								}
-
-								// There is something before the tag tell the sniffer to rebuild the file
-								if (substr($buffer, 0, strlen($this->php_open)) != $this->php_open)
-								{
-									$this->file_changed = true;
-								}
-
-								// Cut the line so it begins with the open tag and add it to the buffer
-								$buffer	= substr($buffer, $pos);
-								$this->add_to_write_buffer($buffer);
-								$php_open = true;
-								continue;
-							}
-
-							// Between open and closing tag
-							if (!$php_close)
-							{
-								// Everything between the tags is added without further checking
-								if (($pos = strpos($buffer, $this->php_close)) === false)
-								{
-									$this->add_to_write_buffer($buffer);
-									continue;
-								}
-
-								// Some files contain a closing tag while it isn't an actual tag.
-								// Work around those nasty ones
-								if ($this->ifItLooksLikeADuckWalksLikeADuckAndSoundsLikeADuckItIsntADuck($buffer, $directory, $file))
-								{
-									$this->add_to_write_buffer($buffer);
-									continue;
-								}
-
-								// If the line is longer than the closing tag its been changed
-								if (strlen($buffer) > strlen($this->php_close))
-								{
-									$this->file_changed = "Closing tag same line";
-								}
-
-								// Trash everything after the closing tag
-								$buffer	= substr($buffer, 0, ($pos + strlen($this->php_close)));
-								$this->add_to_write_buffer($buffer);
-								$php_close = true;
-								continue;
-							}
-
-							// Everything after the closing tag is junk
-							if ($php_close)
-							{
-								// Ignore
-								$this->file_changed = true;
-								continue;
-							}
-						}
-
-						// The file has been changed, write a new version to the store directory
-						if ($this->file_changed === true)
-						{
-							// The main dir exists?
-							if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
-							{
-								mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer');
-								$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer', CHMOD_ALL);
-							}
-
-							// Dir in the package?
-							if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory))
-							{
-								mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory, 0777, true);
-								$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer' . $directory, CHMOD_ALL);
-							}
-
-							$writefile = fopen(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory. $file, 'wb');
-							foreach ($this->write_buffer as $buffer)
-							{
-								// When not the last line add a new line to the buffer
-								if ($buffer != $this->php_close)
-								{
-									$buffer .= "\n";
-								}
-
-								// Write the line
-								fwrite($writefile, $buffer);
-							}
-						}
-						// else set the file as unchanged
-						else
-						{
-							$this->cache->cache_data[$directory. $file] = filectime(PHPBB_ROOT_PATH . $directory . $file);
-						}
-
-						// Reset the sniffer
-						$this->file_changed = false;
-						$this->write_buffer = array();
+						$this->sniff($directory, $file);
 					}
 				}
 			}
@@ -665,6 +567,124 @@ class stk_bom_sniffer
 		{
 			$this->trigger_message($this->messages['issue_found']);
 		}
+	}
+
+	/**
+	* Sniff the requested file
+	*/
+	function sniff($directory, $file)
+	{
+		// Read the file
+		$content = fopen(PHPBB_ROOT_PATH . $directory . $file, 'r');
+
+		// Loop through it
+		$php_open = $php_close = false;
+
+		while (($buffer = fgets($content)) !== false)
+		{
+			// No open tag yet
+			if (!$php_open)
+			{
+				// Look for the php open tag.
+				if (($pos = strpos($buffer, $this->php_open)) === false)
+				{
+					// White lines before the open tag, ignore it
+					$this->file_changed = true;
+					continue;
+				}
+
+				// There is something before the tag tell the sniffer to rebuild the file
+				if (substr($buffer, 0, strlen($this->php_open)) != $this->php_open)
+				{
+					$this->file_changed = true;
+				}
+
+				// Cut the line so it begins with the open tag and add it to the buffer
+				$buffer	= substr($buffer, $pos);
+				$this->add_to_write_buffer($buffer);
+				$php_open = true;
+				continue;
+			}
+
+			// Between open and closing tag
+			if (!$php_close)
+			{
+				// Everything between the tags is added without further checking
+				if (($pos = strpos($buffer, $this->php_close)) === false)
+				{
+					$this->add_to_write_buffer($buffer);
+					continue;
+				}
+
+				// Some files contain a closing tag while it isn't an actual tag.
+				// Work around those nasty ones
+				if ($this->ifItLooksLikeADuckWalksLikeADuckAndSoundsLikeADuckItIsntADuck($buffer, $directory, $file))
+				{
+					$this->add_to_write_buffer($buffer);
+					continue;
+				}
+
+				// If the line is longer than the closing tag its been changed
+				if (strlen($buffer) > strlen($this->php_close))
+				{
+					$this->file_changed = "Closing tag same line";
+				}
+
+				// Trash everything after the closing tag
+				$buffer	= substr($buffer, 0, ($pos + strlen($this->php_close)));
+				$this->add_to_write_buffer($buffer);
+				$php_close = true;
+				continue;
+			}
+
+			// Everything after the closing tag is junk
+			if ($php_close)
+			{
+				// Ignore
+				$this->file_changed = true;
+				continue;
+			}
+		}
+
+		// The file has been changed, write a new version to the store directory
+		if ($this->file_changed === true)
+		{
+			// The main dir exists?
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
+			{
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer');
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer', CHMOD_ALL);
+			}
+
+			// Dir in the package?
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory))
+			{
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory, 0777, true);
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer' . $directory, CHMOD_ALL);
+			}
+
+			$writefile = fopen(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory. $file, 'wb');
+			foreach ($this->write_buffer as $buffer)
+			{
+				// When not the last line add a new line to the buffer
+				if ($buffer != $this->php_close)
+				{
+					$buffer .= "\n";
+				}
+
+				// Write the line
+				fwrite($writefile, $buffer);
+			}
+		}
+		// else set the file as unchanged
+		else
+		{
+			$this->cache->cache_data[$directory. $file] = filectime(PHPBB_ROOT_PATH . $directory . $file);
+		}
+
+		// Reset the sniffer
+		$this->file_changed = false;
+		$this->write_buffer = array();
 	}
 
 	/**
