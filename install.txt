@@ -47,7 +47,11 @@ update!
 
 = Changelog =
 == Changes since 1.0.1-PL1 ==
+* [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
 * [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
+* [Change] The BOM sniffer will create a backup the files in which it found issues.
+* [Fix] Correctly handle the restore deleted users tool when there are no deleted users. (Bug #62181)
+* [Fix] Removed some php ≥ 5.0.0 code.
 
 == Changes since 1.0.1 ==
 * [Fix] Database cleaner displays only "array" instead of appropriate options (Bug #62177)
