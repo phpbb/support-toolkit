@@ -23,5 +23,10 @@ $stk_config = array(
 	* files within the phpBB folder checked.
 	*/
 	'bom_sniffer_force_full_scan' => false,
+
+	/**
+	* Disable the BOM sniffers backup utility.
+	*/
+	'bom_sniffer_disable_backup' => false,
 );
 ?>

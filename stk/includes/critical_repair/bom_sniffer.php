@@ -596,6 +596,8 @@ class stk_bom_sniffer
 	*/
 	function sniff($directory, $file)
 	{
+		global $stk_config;
+
 		// Read the file
 		$directory = ($directory && substr($directory, -1) != '/') ? $directory . '/' : $directory;
 		$content = fopen(PHPBB_ROOT_PATH . $directory . $file, 'r');
@@ -699,23 +701,26 @@ class stk_bom_sniffer
 				fwrite($writefile, $buffer);
 			}
 
-			// Also create a backup of the original file
-			// The backup dir exists?
-			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime))
+			if (!$stk_config['bom_sniffer_disable_backup'])
 			{
-				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime);
-				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime, CHMOD_ALL);
-			}
+				// Also create a backup of the original file
+				// The backup dir exists?
+				if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime))
+				{
+					mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime);
+					$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime, CHMOD_ALL);
+				}
 
-			// Dest dir
-			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory))
-			{
-				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory, 0777, true);
-				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/_' . $this->backuptime . '/' . $directory, CHMOD_ALL);
-			}
+				// Dest dir
+				if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory))
+				{
+					mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory, 0777, true);
+					$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/_' . $this->backuptime . '/' . $directory, CHMOD_ALL);
+				}
 
-			// Copy the file
-			copy(PHPBB_ROOT_PATH . $directory . $file, PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory . $file);
+				// Copy the file
+				copy(PHPBB_ROOT_PATH . $directory . $file, PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory . $file);
+			}
 		}
 		// else set the file as unchanged
 		else
