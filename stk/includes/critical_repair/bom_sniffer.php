@@ -53,7 +53,7 @@ class stk_bom_sniffer
 	*/
 	var $messages = array(
 		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
-		'issue_found'			=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
+		'issue_found'			=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
 		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
 	);
@@ -488,15 +488,18 @@ class stk_bom_sniffer
 		}
 
 		// Make sure the BOM sniffer dir store dir doesn't exist
-		if (file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
+		foreach (array('bom_sniffer, bom_sniffer_backup') as $testdir)
 		{
-			// Empty dir is okay
-			if (array("" => array()) !== filelist(PHPBB_ROOT_PATH . 'store/bom_sniffer', '', PHP_EXT))	// Rather nasty, but don't know a better php 4 way atm
+			if (file_exists(PHPBB_ROOT_PATH . 'store/' . $testdir))
 			{
-				// Not empty try to remove the store dir
-				if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
+				// Empty dir is okay
+				if (array("" => array()) !== filelist(PHPBB_ROOT_PATH . 'store/' . $testdir, '', PHP_EXT))	// Rather nasty, but don't know a better php 4 way atm
 				{
-					$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . 'store/bom_sniffer/'));
+					// Not empty try to remove the store dir
+					if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/' . $testdir) === false)
+					{
+						$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/{$testdir}/"));
+					}
 				}
 			}
 		}
@@ -678,7 +681,7 @@ class stk_bom_sniffer
 				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer' . $directory, CHMOD_ALL);
 			}
 
-			$writefile = fopen(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory. $file, 'wb');
+			$writefile = fopen(PHPBB_ROOT_PATH . 'store/bom_sniffer/' . $directory . $file, 'wb');
 			foreach ($this->write_buffer as $buffer)
 			{
 				// When not the last line add a new line to the buffer
@@ -690,6 +693,24 @@ class stk_bom_sniffer
 				// Write the line
 				fwrite($writefile, $buffer);
 			}
+
+			// Also create a backup of the original file
+			// The backup dir exists?
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup'))
+			{
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup');
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup', CHMOD_ALL);
+			}
+
+			// Dest dir
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory))
+			{
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory, 0777, true);
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory, CHMOD_ALL);
+			}
+
+			// Copy the file
+			copy(PHPBB_ROOT_PATH . $directory . $file, PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory . $file);
 		}
 		// else set the file as unchanged
 		else
