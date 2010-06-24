@@ -3,7 +3,7 @@
 *
 * @package Support Toolkit
 * @version $Id$
-* @copyright (c) 2009 phpBB Group
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */

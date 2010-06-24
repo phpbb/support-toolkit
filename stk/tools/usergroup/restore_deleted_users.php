@@ -53,6 +53,12 @@ class restore_deleted_users
 		$users	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
+		// Nothing to do
+		if (empty($users))
+		{
+			trigger_error('NO_DELETED_USERS');
+		}
+
 		// Build the output
 		$user_vars = array();
 		foreach ($users as $user)

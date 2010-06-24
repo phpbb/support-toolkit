@@ -38,6 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'NO_DELETED_USERS'	=> 'There are no deleted users that can be restored',
 	'NO_USER_SELECTED'	=> 'No users selected!',
 
 	'RESTORE_DELETED_USERS'						=> 'Restore Deleted Users',
