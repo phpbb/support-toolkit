@@ -48,6 +48,18 @@ foreach ($filelist as $dir => $fl)
 	{
 		unset($filelist[$dir]);
 	}
+
+	// Always skip the stk config file. This one is check at a different time
+	if ($dir == 'stk/')
+	{
+		foreach ($fl as $k => $f)
+		{
+			if ($f == 'config.' . $phpEx)
+			{
+				unset($filelist[$dir][$k]);
+			}
+		}
+	}
 }
 
 // Print the array to the screen
@@ -60,7 +72,7 @@ foreach ($filelist as $dir => $fl)
 	foreach ($fl as $key => $file)
 	{
 		$filename = var_export($file, true);
-		echo"\t\t\t$key\t=> $filename,\n";
+		echo"\t\t\t$filename,\n";
 	}
 
 	echo "\t\t),\n";
