@@ -514,7 +514,6 @@ class stk_bom_sniffer
 			}
 		}
 		ksort($this->whitelist);
-		echo'<pre>';print_r($this->whitelist);exit;
 
 		// Init the internal cache
 		$this->cache = new _stk_bom_sniffer_cache($this);
