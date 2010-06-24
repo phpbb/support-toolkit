@@ -592,4 +592,21 @@ function _code2utf8($num)
 
 	return $return;
 }
+
+/**
+* wrapper for pathinfo($file, PATHINFO_FILENAME), as PATHINFO_FILENAME is
+* php > 5.2
+* Function by php [spat] hm2k.org (http://www.php.net/manual/en/function.pathinfo.php#88159)
+ */
+function pathinfo_filename($file) { //file.name.ext, returns file.name
+	if (defined('PATHINFO_FILENAME'))
+	{
+		return pathinfo($file, PATHINFO_FILENAME);
+	}
+
+	if (strstr($file, '.'))
+	{
+		return substr($file, 0, strrpos($file, '.'));
+	}
+}
 ?>
