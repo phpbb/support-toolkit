@@ -53,9 +53,9 @@ class stk_bom_sniffer
 	*/
 	var $messages = array(
 		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
-		'issue_found'	=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The support Toolkit has tried to fix those issues and created a package with the updated files in the "store" directory of your board.<br /> Please <strong>move</strong> the files from the “store” directory to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.',
-		'remove_dir'	=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
-		'store_write'	=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
+		'issue_found'			=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
+		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
+		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
 	);
 
 	/**
@@ -501,11 +501,26 @@ class stk_bom_sniffer
 			}
 		}
 
+		// Correct paths to the stk directory, when the STK isn't located in 'stk/'
+		if (STK_DIR_NAME != 'stk')
+		{
+			foreach ($this->whitelist as $dir => $files)
+			{
+				if (strpos($dir, 'stk') !== false)
+				{
+					$this->whitelist[str_replace('stk', STK_DIR_NAME, $dir)] = $files;
+					unset($this->whitelist[$dir]);
+				}
+			}
+		}
+		ksort($this->whitelist);
+		echo'<pre>';print_r($this->whitelist);exit;
+
 		// Init the internal cache
 		$this->cache = new _stk_bom_sniffer_cache($this);
 
 		// Here we test the stk config.php, when no issues found we'll include it
-		$this->sniff('stk/', 'config.' . PHP_EXT);
+		$this->sniff(STK_DIR_NAME, 'config.' . PHP_EXT);
 		$stk_config['bom_sniffer_force_full_scan'] = true;
 		if (!file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer/stk/config.' . PHP_EXT))
 		{
@@ -575,6 +590,7 @@ class stk_bom_sniffer
 	function sniff($directory, $file)
 	{
 		// Read the file
+		$directory = ($directory && substr($directory, -1) != '/') ? $directory . '/' : $directory;
 		$content = fopen(PHPBB_ROOT_PATH . $directory . $file, 'r');
 
 		// Loop through it
