@@ -475,6 +475,11 @@ class stk_bom_sniffer
 	);
 
 	/**
+	* @var int The current timestamp. This is used to generate an unique backup directory for this tool
+	*/
+	var $backuptime = 0;
+
+	/**
 	* Constructor. Prep the tool
 	*/
 	function stk_bom_sniffer()
@@ -488,21 +493,21 @@ class stk_bom_sniffer
 		}
 
 		// Make sure the BOM sniffer dir store dir doesn't exist
-		foreach (array('bom_sniffer, bom_sniffer_backup') as $testdir)
+		if (file_exists(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
 		{
-			if (file_exists(PHPBB_ROOT_PATH . 'store/' . $testdir))
+			// Empty dir is okay
+			if (array("" => array()) !== filelist(PHPBB_ROOT_PATH . 'store/bom_sniffer', '', PHP_EXT))	// Rather nasty, but don't know a better php 4 way atm
 			{
-				// Empty dir is okay
-				if (array("" => array()) !== filelist(PHPBB_ROOT_PATH . 'store/' . $testdir, '', PHP_EXT))	// Rather nasty, but don't know a better php 4 way atm
+				// Not empty try to remove the store dir
+				if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
 				{
-					// Not empty try to remove the store dir
-					if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/' . $testdir) === false)
-					{
-						$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/{$testdir}/"));
-					}
+					$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/bom_sniffer/"));
 				}
 			}
 		}
+
+		// Set the timestamp
+		$this->backuptime = time();
 
 		// Correct paths to the stk directory, when the STK isn't located in 'stk/'
 		if (STK_DIR_NAME != 'stk')
@@ -696,21 +701,21 @@ class stk_bom_sniffer
 
 			// Also create a backup of the original file
 			// The backup dir exists?
-			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup'))
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime))
 			{
-				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup');
-				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup', CHMOD_ALL);
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime);
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime, CHMOD_ALL);
 			}
 
 			// Dest dir
-			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory))
+			if (!is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory))
 			{
-				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory, 0777, true);
-				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory, CHMOD_ALL);
+				mkdir(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory, 0777, true);
+				$this->phpbb_chmod(PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/_' . $this->backuptime . '/' . $directory, CHMOD_ALL);
 			}
 
 			// Copy the file
-			copy(PHPBB_ROOT_PATH . $directory . $file, PHPBB_ROOT_PATH . 'store/bom_sniffer_backup/' . $directory . $file);
+			copy(PHPBB_ROOT_PATH . $directory . $file, PHPBB_ROOT_PATH . 'store/bom_sniffer_backup_' . $this->backuptime . '/' . $directory . $file);
 		}
 		// else set the file as unchanged
 		else
