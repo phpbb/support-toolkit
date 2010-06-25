@@ -50,6 +50,8 @@ update!
 * [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
 * [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
 * [Change] The BOM sniffer will create a backup the files in which it found issues.
+* [Fix] In some environments the database cleaner breaks when no changes are found. (Bug #62180, Patch by VSE)
+* [Fix] Force sorting when loading database cleaner data files. (Bug #62180, Patch by Noxwizard)
 * [Fix] Correctly handle the restore deleted users tool when there are no deleted users. (Bug #62181)
 * [Fix] Removed some php ≥ 5.0.0 code.
 
