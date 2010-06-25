@@ -257,7 +257,7 @@ class database_cleaner_controller
 	{
 		global $db;
 
-		$group_rows = $existing_groups = array();
+		$data = $group_rows = $existing_groups = array();
 		get_group_rows($data, $group_rows, $existing_groups);
 		foreach ($group_rows as $name)
 		{
@@ -335,7 +335,7 @@ class database_cleaner_controller
 	{
 		global $umil;
 
-		$permission_rows = $existing_permissions = array();
+		$data = $permission_rows = $existing_permissions = array();
 		get_permission_rows($data, $permission_rows, $existing_permissions);
 		foreach ($permission_rows as $name)
 		{
