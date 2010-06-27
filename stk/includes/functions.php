@@ -180,7 +180,7 @@ function user_lang()
 
 	if (method_exists($user, 'lang'))
 	{
-		return $user->lang($args[0]);
+		return call_user_func_array(array($user, 'lang'), $args);
 	}
 	else
 	{
