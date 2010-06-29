@@ -21,14 +21,14 @@ class stk_style_repair
 	function run()
 	{
 		global $config, $db;
-		
+
 		$config['default_style'] = (!isset($config['default_style']) || !$config['default_style']) ? 1 : $config['default_style'];
-	$sql = 'SELECT s.style_id, t.template_path
-		FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
-		WHERE s.style_id = {$config['default_style']}
-			AND t.template_id = s.template_id
-			AND c.theme_id = s.theme_id
-			AND i.imageset_id = s.imageset_id";
+		$sql = 'SELECT s.style_id, t.template_path
+			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
+			WHERE s.style_id = {$config['default_style']}
+				AND t.template_id = s.template_id
+				AND c.theme_id = s.theme_id
+				AND i.imageset_id = s.imageset_id";
 		$result = $db->sql_query($sql);
 		// No styles in the database
 		$data = $db->sql_fetchrow($result);
@@ -42,6 +42,7 @@ class stk_style_repair
 		$db->sql_freeresult($result);
 		return true;
 	}
+
 	function repair()
 	{
 		global $cache, $db, $table_prefix, $umil;
@@ -66,7 +67,7 @@ class stk_style_repair
 			{
 				$var = $mode . '_id';
 				$subpath = ($mode != 'style') ? "$mode/" : '';
-	
+
 				$result = $db->sql_query('SELECT * FROM ' . $table_prefix . 'styles_' . $mode);
 				$row = $db->sql_fetchrow($result);
 				$db->sql_freeresult($result);
@@ -74,15 +75,15 @@ class stk_style_repair
 				{
 					// There already is one of this item in the database, so no need to add it.
 					$$var = $row[$var];
-	
+
 					if ($mode == 'template')
 					{
 						$style_name = $row['template_name'];
 					}
-	
+
 					continue;
 				}
-	
+
 				$dp = @opendir(PHPBB_ROOT_PATH . 'styles');
 				if ($dp)
 				{
@@ -94,27 +95,27 @@ class stk_style_repair
 							{
 								$items = parse_cfg_file('', $cfg);
 								$name = (isset($items['name'])) ? trim($items['name']) : false;
-	
+
 								$sql_ary = array(
 									$mode . '_name'			=> $name,
 									$mode . '_copyright'	=> $items['copyright'],
 									$mode . '_path'			=> $file,
 								);
-	
+
 								if ($mode == 'theme')
 								{
 									$sql_ary['theme_data'] = '';
 								}
-	
+
 								$db->sql_query('INSERT INTO ' . $table_prefix . 'styles_' . $mode . ' ' . $db->sql_build_array('INSERT', $sql_ary));
-	
+
 								$$var = $db->sql_nextid();
-	
+
 								if ($mode == 'template')
 								{
 									$style_name = $name;
 								}
-	
+
 								break;
 							}
 						}
@@ -122,7 +123,7 @@ class stk_style_repair
 					closedir($dp);
 				}
 			}
-	
+
 			if ($template_id && $theme_id && $imageset_id)
 			{
 				// We've got one of each, so we can add a new style and repair this.
@@ -136,11 +137,11 @@ class stk_style_repair
 				);
 				$db->sql_query('INSERT INTO ' . STYLES_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary));
 				$style_id = $db->sql_nextid();
-	
+
 				// That should be everything, only reset the board style and purge the cache yet
 				set_config('default_style', $style_id);
 				$cache->purge();
-	
+
 				$umil->cache_purge(array('template', 'theme', 'imageset'));
 			}
 			else
@@ -151,6 +152,7 @@ class stk_style_repair
 				exit_handler();
 			}
 		}
+
 		$db->sql_freeresult($result2);
 	}
 }

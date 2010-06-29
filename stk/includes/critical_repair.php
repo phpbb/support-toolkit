@@ -51,7 +51,7 @@ class critical_repair
 
 		foreach ($filelist as $directory => $tools)
 		{
-			if ($directory != 'autorun')
+			if ($directory != 'autorun/')
 			{
 				if (sizeof($tools))
 				{
@@ -72,6 +72,7 @@ class critical_repair
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -105,7 +106,7 @@ class critical_repair
 			include($this->tool_path . $tool . '.' . PHP_EXT);
 
 			$tool_name = 'stk_' . $tool;
-			$run_tool = new $tool_name;
+			$run_tool = new $tool_name();
 			$run_tool->run();
 			unset($run_tool);
 		}
