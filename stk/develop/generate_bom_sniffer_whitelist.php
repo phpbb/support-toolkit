@@ -44,17 +44,22 @@ foreach ($filelist as $dir => $fl)
 	}
 
 	// Remove ignored dirs
-	if (preg_match("#cache/|develop/|files/|install/|store/|stk/includes/critical_repair/#ise", $dir))
+	if (preg_match("#cache/|develop/|files/|install/|store/|stk/|stk/includes/critical_repair/#ise", $dir))
 	{
 		unset($filelist[$dir]);
 	}
 
-	// Always skip the stk config file. This one is check at a different time
+	// Skip some files always.
 	if ($dir == 'stk/')
 	{
 		foreach ($fl as $k => $f)
 		{
 			if ($f == 'config.' . $phpEx)
+			{
+				unset($filelist[$dir][$k]);
+			}
+
+			if ($f == 'erk.' . $phpEx)
 			{
 				unset($filelist[$dir][$k]);
 			}

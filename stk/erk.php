@@ -51,7 +51,7 @@ header('Content-type: text/html; charset=UTF-8');
 							<div id="content">
 								<h1>Emergency Repair Kit</h1>
 								<p>
-									The Emergency Repair Kit hasn't found any critical issues within your phpBB ins
+									The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.
 								</p>
 								<p>
 									Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
