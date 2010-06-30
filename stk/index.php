@@ -8,63 +8,14 @@
 *
 */
 
-// What version are we using?
-define('STK_VERSION', '1.0.2-dev');
-define('STK_QA', true);
-
-define('IN_PHPBB', true);
-define('ADMIN_START', true);
-
-// This seems like a rather nasty thing to do, but the only places this IN_LOGIN is checked is in session.php when creating a session
-// Reason for having it is that it allows us in the STK if we can not login and the board is disabled.
-define('IN_LOGIN', true);
-
-if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
-if (!defined('PHP_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
-if (!defined('STK_DIR_NAME')) { define('STK_DIR_NAME', substr(strrchr(dirname(__FILE__), DIRECTORY_SEPARATOR), 1)); }	// Get the name of the stk directory
 if (!defined('STK_ROOT_PATH')) { define('STK_ROOT_PATH', './'); }
-if (!defined('STK_INDEX')) { define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_EXT); }
+if (!defined('PHP_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
 
-// Make that phpBB itself understands out paths
-$phpbb_root_path = PHPBB_ROOT_PATH;
-$phpEx = PHP_EXT;
-$stk_config = array();
-
-// Init our critical repair class
-include(STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT);
-$critical_repair = new critical_repair;
-
-// We run this tool manually to ensure it is called first
-$critical_repair->run_tool('bom_sniffer');
-$critical_repair->run_tool('config_repair');
-
-require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
-require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
-require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
-// We test for UMIL twice. First look whether this user already has an UMIL installation in its default location.
-if (file_exists(PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT))
-{
-	require PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT;
-}
-else
-{
-	require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
-}
-
-// Overwrite the phpBB error handler
-set_error_handler('stk_msg_handler');
+require STK_ROOT_PATH . 'common.' . PHP_EXT;
 
 // Start session management
 $user->session_begin();
 $auth->acl($user->data);
-
-// Make sure that umil is always usable
-$umil = new umil(true);
-
-// We'll run the rest of the critical repair tools automatically now
-$critical_repair->autorun_tools();
-
-// Setup the user
 $user->setup('acp/common', $config['default_style']);
 
 // Language path.  We are using a custom language path to keep all the files within the stk/ folder.  First check if the $user->data['user_lang'] path exists, if not, check if the default lang path exists, and if still not use english.
