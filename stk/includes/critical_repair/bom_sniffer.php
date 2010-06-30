@@ -33,7 +33,7 @@ if (!defined('IN_PHPBB'))
 *
 * @todo At the moment this runs every page load. Should get something to limit this.
 */
-class stk_bom_sniffer
+class erk_bom_sniffer
 {
 	/**
 	* @var _stk_bom_sniffer_cache Object of the cache class of this tool
@@ -53,7 +53,7 @@ class stk_bom_sniffer
 	*/
 	var $messages = array(
 		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
-		'issue_found'			=> 'As part of the critical repair toolset of the Support Toolkit the STK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the STK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
+		'issue_found'			=> 'As part of the “Emergency Repair Kit” of the Support Toolkit the ERK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the ERK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
 		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
 	);
@@ -482,7 +482,7 @@ class stk_bom_sniffer
 	/**
 	* Constructor. Prep the tool
 	*/
-	function stk_bom_sniffer()
+	function erk_bom_sniffer()
 	{
 		global $stk_config;
 
@@ -524,7 +524,7 @@ class stk_bom_sniffer
 		ksort($this->whitelist);
 
 		// Init the internal cache
-		$this->cache = new _stk_bom_sniffer_cache($this);
+		$this->cache = new _erk_bom_sniffer_cache($this);
 
 		// Here we test the stk config.php, when no issues found we'll include it
 		$this->sniff(STK_DIR_NAME, 'config.' . PHP_EXT);
@@ -833,7 +833,7 @@ class stk_bom_sniffer
 										<?php echo $message ?>
 									</p>
 									<p>
-										Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
+										Click <a href="<?php echo STK_ROOT_PATH . 'erk.' . PHP_EXT; ?>">here</a> to reload the Emergency Repair Kit.
 									</p>
 								</div>
 							<span class="corners-bottom"><span></span></span>
@@ -1105,7 +1105,7 @@ class stk_bom_sniffer
 * We can't rely on the phpBB cache at this moment. So we'll implement our own
 * very simplyfied version of it for this tool.
 */
-class _stk_bom_sniffer_cache
+class _erk_bom_sniffer_cache
 {
 	/**
 	* @var bom_sniffer The BOM sniffer object

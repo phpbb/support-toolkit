@@ -90,7 +90,7 @@ class critical_repair
 
 		include($this->tool_path . $tool . '.' . PHP_EXT);
 
-		$tool_name = 'stk_' . $tool;
+		$tool_name = 'erk_' . $tool;
 		$run_tool = new $tool_name();
 		return $run_tool->run();
 	}
@@ -105,7 +105,7 @@ class critical_repair
 		{
 			include($this->tool_path . 'autorun/' . $tool . '.' . PHP_EXT);
 
-			$tool_name = 'stk_' . $tool;
+			$tool_name = 'erk_' . $tool;
 			$run_tool = new $tool_name();
 			$run_tool->run();
 			unset($run_tool);

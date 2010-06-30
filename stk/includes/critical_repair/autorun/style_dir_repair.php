@@ -16,7 +16,7 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-class stk_style_dir_repair
+class erk_style_dir_repair
 {
 	function run()
 	{

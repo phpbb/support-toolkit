@@ -16,7 +16,7 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-class stk_config_repair
+class erk_config_repair
 {
 	function run()
 	{
