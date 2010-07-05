@@ -181,7 +181,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND" : '') . 'u.user_id = pm.author_id',
+					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND " : '') . 'u.user_id = pm.author_id',
 				);
 			break;
 
