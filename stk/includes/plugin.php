@@ -40,7 +40,9 @@ class plugin
 	 * @access private
 	 */
 	var $plugin_list = array(
-		'main' 		=> array(),
+		'main' 		=> array(
+			'erk',
+		),
 		'support'	=> array(),
 	);
 
@@ -163,8 +165,11 @@ class plugin
 		// Construct the class
 		$tools_loaded[$tool_name] = new $tool_name();
 
-		// Add the language file
-		stk_add_lang('tools/' . $tool_cat . '/' . $tool_name);
+		// Add the language file (not needed for 'erk' ;))
+		if ($tool_name != 'erk')
+		{
+			stk_add_lang('tools/' . $tool_cat . '/' . $tool_name);
+		}
 
 		// Return
 		return ($return) ? $tools_loaded[$tool_name] : true;
@@ -232,8 +237,8 @@ class plugin
 		$cats = array_keys($this->plugin_list);
 		foreach ($cats as $cat)
 		{
-			// Ignore all categories that are empty (excluding "main")
-			if (empty($this->plugin_list[$cat]) && $cat != 'main')
+			// Ignore all categories that are empty (excluding "main" and erk)
+			if (empty($this->plugin_list[$cat]) && !in_array($cat, array('main', 'erk')))
 			{
 				continue;
 			}
