@@ -37,8 +37,6 @@ class erk_style_dir_repair
 		{
 			// The style directory of the active style doesn't exist anymore
 			$this->repair();
-			header('Location: ' . STK_INDEX);
-			exit;
 		}
 
 		return true;

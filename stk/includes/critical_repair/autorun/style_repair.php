@@ -36,8 +36,6 @@ class erk_style_repair
 		{
 			// Styles appear to be broken.  Attempt automatic repair
 			$this->repair();
-			header('Location: ' . STK_INDEX);
-			exit;
 		}
 		$db->sql_freeresult($result);
 		return true;
