@@ -1,5 +1,12 @@
 <!-- INCLUDE overall_header.html -->
 
+<!-- IF S_NO_VERSION_FILE && CAT == 'main' -->
+<div class="errorbox">
+	<h3>{L_NOTICE}</h3>
+	<p>{L_NO_VERSION_FILE}</p>
+</div>
+<!-- ENDIF -->
+
 <h1>{L_TITLE}</h1>
 <p>
 	{L_TITLE_EXPLAIN}

@@ -373,6 +373,7 @@ else
 	$template->assign_vars(array(
 		'L_TITLE'			=> $user->lang['CAT_' . strtoupper($plugin->get_part('c'))],
 		'L_TITLE_EXPLAIN'	=> isset($user->lang['CAT_' . strtoupper($plugin->get_part('c')) . '_EXPLAIN']) ? $user->lang['CAT_' . strtoupper($plugin->get_part('c')) . '_EXPLAIN'] : '',
+		'CAT'				=> $plugin->get_part('c'),
 	));
 
 	$template->set_filenames(array(
