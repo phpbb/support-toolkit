@@ -170,7 +170,7 @@ class reparse_bbcode
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> ($bitfield) ? "p.bbcode_bitfield != '' AND " : '' . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id',
+					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield != '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id',
 				);
 			break;
 
@@ -181,7 +181,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> ($bitfield) ? "pm.bbcode_bitfield != '' AND" : '' . 'u.user_id = pm.author_id',
+					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND" : '') . 'u.user_id = pm.author_id',
 				);
 			break;
 
