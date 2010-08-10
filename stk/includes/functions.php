@@ -512,6 +512,13 @@ function stk_version_check()
 */
 function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
+	// Sometimes phpBB call this after finishing a certain task, this breaks the ERK!
+	// We completely skip this when in the ERK and have the repair tools handle this
+	if (defined('IN_ERK'))
+	{
+		return;
+	}
+
 	// This is nasty :(
 	if ($errno == E_USER_ERROR)
 	{
@@ -542,6 +549,18 @@ if (!function_exists('array_fill_keys'))
 		}
 
 		return $array;
+	}
+}
+
+if (!function_exists('adm_back_link'))
+{
+	/**
+	* Generate back link for acp pages
+	*/
+	function adm_back_link($u_action)
+	{
+		global $user;
+		return '<br /><br /><a href="' . $u_action . '">&laquo; ' . $user->lang['BACK_TO_PREV'] . '</a>';
 	}
 }
 

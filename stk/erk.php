@@ -9,6 +9,7 @@
 */
 
 define('IN_PHPBB', true);
+define('IN_ERK', true);
 
 if (!defined('PHPBB_ROOT_PATH')) { define('PHPBB_ROOT_PATH', './../'); }
 if (!defined('PHP_EXT')) { define('PHP_EXT', substr(strrchr(__FILE__, '.'), 1)); }
@@ -23,6 +24,9 @@ $critical_repair->run_tool('bom_sniffer');
 $critical_repair->run_tool('config_repair');
 
 require STK_ROOT_PATH . 'common.' . PHP_EXT;
+
+// Include common language file
+$user->add_lang('common');
 
 // We'll run the rest of the critical repair tools automatically now
 $critical_repair->autorun_tools();
