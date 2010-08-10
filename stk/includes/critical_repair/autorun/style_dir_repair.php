@@ -125,7 +125,7 @@ class erk_style_dir_repair
 			return;
 		}
 
-		echo 'The support toolkit couldn\'t find an available style. Please seek further assistance in the support forums on <a href="http://www.phpbb.com/community/viewforum.php?f=46" title="phpBB.com Support forum>phpbb.com</a>';
+		echo 'The support toolkit couldn\'t find an available style. Please seek further assistance in the support forums on <a href="http://www.phpbb.com/community/viewforum.php?f=46" title="phpBB.com Support forum">phpbb.com</a>';
 		garbage_collection();
 		exit_handler();
 	}
