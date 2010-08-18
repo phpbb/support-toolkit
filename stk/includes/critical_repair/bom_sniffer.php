@@ -817,7 +817,8 @@ class erk_bom_sniffer
 			<meta http-equiv="content-style-type" content="text/css" />
 			<meta http-equiv="imagetoolbar" content="no" />
 			<title>BOM sniffer - Support Toolkit</title>
-			<link href="<?php echo STK_ROOT_PATH; ?>/style/style.css" rel="stylesheet" type="text/css" media="screen" />
+			<link href="<?php echo STK_ROOT_PATH; ?>style/style.css" rel="stylesheet" type="text/css" media="screen" />
+			<link href="<?php echo STK_ROOT_PATH; ?>style/erk_style.css" rel="stylesheet" type="text/css" media="screen" />
 		</head>
 		<body id="errorpage">
 			<div id="wrap">
