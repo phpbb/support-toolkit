@@ -513,10 +513,11 @@ function stk_version_check()
 function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
 	// Sometimes phpBB call this after finishing a certain task, this breaks the ERK!
-	// We completely skip this when in the ERK and have the repair tools handle this
+	// A little bit of fallback here, call the critical repair kit error handler
 	if (defined('IN_ERK'))
 	{
-		return;
+		global $critical_repair;
+		$critical_repair->trigger_error($msg_text);
 	}
 
 	// If the STK triggers a fatal error before IN_STK is defined we'll show a page
