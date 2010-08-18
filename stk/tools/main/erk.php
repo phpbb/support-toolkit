@@ -35,7 +35,6 @@ class erk
 		$template->assign_vars(array(
 			'L_TITLE'			=> $user->lang['CAT_ERK'],
 			'L_TITLE_EXPLAIN'	=> user_lang('CAT_ERK_EXPLAIN', append_sid(STK_ROOT_PATH . 'erk.' . PHP_EXT)),
-			'U_PAGE_LOGO'		=> append_sid(STK_ROOT_PATH . 'images/erk_logo.png'),
 		));
 
 		$template->set_filenames(array(
