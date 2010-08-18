@@ -32,47 +32,6 @@ $user->add_lang('common');
 $critical_repair->autorun_tools();
 
 // Let's tell the user all is okay :)
-header('Content-type: text/html; charset=UTF-8');
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta http-equiv="content-style-type" content="text/css" />
-		<meta http-equiv="imagetoolbar" content="no" />
-		<title>Support Toolkit :: Emergency Repair Kit</title>
-		<link href="<?php echo STK_ROOT_PATH; ?>style/style.css" rel="stylesheet" type="text/css" media="screen" />
-		<link href="<?php echo STK_ROOT_PATH; ?>style/erk_style.css" rel="stylesheet" type="text/css" media="screen" />
-	</head>
-	<body id="errorpage">
-		<div id="wrap">
-			<div id="page-header">
-				<p><a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a></p>
-			</div>
-			<div id="page-body">
-				<div id="acp">
-					<div class="panel">
-						<span class="corners-top"><span></span></span>
-							<div id="content">
-								<h1>Emergency Repair Kit</h1>
-								<p>
-									The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.
-								</p>
-								<p>
-									Click <a href="<?php echo STK_ROOT_PATH; ?>">here</a> to reload the STK.
-								</p>
-							</div>
-						<span class="corners-bottom"><span></span></span>
-					</div>
-				</div>
-			</div>
-			<div id="page-footer">
-				Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
-			</div>
-		</div>
-	</body>
-</html>
-<?php
-exit;
+$critical_repair->trigger_error("The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.", true);
 
 ?>

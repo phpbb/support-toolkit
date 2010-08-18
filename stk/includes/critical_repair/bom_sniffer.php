@@ -485,12 +485,12 @@ class erk_bom_sniffer
 	*/
 	function erk_bom_sniffer()
 	{
-		global $stk_config;
+		global $critical_repair, $stk_config;
 
 		// "Store" must be writable
 		if (@is_writable(PHPBB_ROOT_PATH . 'store') !== true)
 		{
-			$this->trigger_message($this->messages['store_write']);
+			$critical_repair->trigger_error($this->messages['store_write']);
 		}
 
 		// Make sure the BOM sniffer dir store dir doesn't exist
@@ -502,7 +502,7 @@ class erk_bom_sniffer
 				// Not empty try to remove the store dir
 				if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
 				{
-					$this->trigger_message(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/bom_sniffer/"));
+					$critical_repair->trigger_error(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/bom_sniffer/"));
 				}
 			}
 		}
@@ -588,7 +588,7 @@ class erk_bom_sniffer
 		// Inform the user what to do if we've created files
 		if (is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
 		{
-			$this->trigger_message($this->messages['issue_found']);
+			$critical_repair->trigger_error($this->messages['issue_found']);
 		}
 	}
 
@@ -798,58 +798,6 @@ class erk_bom_sniffer
 
 		// Add
 		$this->write_buffer[] = $string;
-	}
-
-	/**
-	* Create a HTML page to display a given message. This is used when the BOM
-	* sniffer triggers a notice.
-	* @param String $messaage The message to display
-	* @return void
-	*/
-	function trigger_message($message)
-	{
-		header('Content-type: text/html; charset=UTF-8');
-		?>
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
-		<head>
-			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-			<meta http-equiv="content-style-type" content="text/css" />
-			<meta http-equiv="imagetoolbar" content="no" />
-			<title>BOM sniffer - Support Toolkit</title>
-			<link href="<?php echo STK_ROOT_PATH; ?>style/style.css" rel="stylesheet" type="text/css" media="screen" />
-			<link href="<?php echo STK_ROOT_PATH; ?>style/erk_style.css" rel="stylesheet" type="text/css" media="screen" />
-		</head>
-		<body id="errorpage">
-			<div id="wrap">
-				<div id="page-header">
-
-				</div>
-				<div id="page-body">
-					<div id="acp">
-						<div class="panel">
-							<span class="corners-top"><span></span></span>
-								<div id="content">
-									<h1>BOM sniffer</h1>
-									<p>
-										<?php echo $message ?>
-									</p>
-									<p>
-										Click <a href="<?php echo STK_ROOT_PATH . 'erk.' . PHP_EXT; ?>">here</a> to reload the Emergency Repair Kit.
-									</p>
-								</div>
-							<span class="corners-bottom"><span></span></span>
-						</div>
-					</div>
-				</div>
-				<div id="page-footer">
-					Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
-				</div>
-			</div>
-		</body>
-	</html>
-		<?php
-		exit;
 	}
 
 	/**

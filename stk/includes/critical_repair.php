@@ -113,5 +113,71 @@ class critical_repair
 
 		return true;
 	}
+
+	/**
+	 * Trigger an error message, this method *must* be called when an ERK tool
+	 * encounters an error. You can not rely on msg_handler!
+	 * @param	String	$msg			The error message
+	 * @param	Boolean	$redirect_stk	Show a backlink to the STK, otherwise to the ERK
+	 * @return	void
+	 */
+	function trigger_error($msg, $redirect_stk = false)
+	{
+		// Send header
+		header('Content-type: text/html; charset=UTF-8');
+
+		// Build the page
+		?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="content-style-type" content="text/css" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<title>Support Toolkit :: Emergency Repair Kit</title>
+		<link href="<?php echo STK_ROOT_PATH; ?>style/style.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="<?php echo STK_ROOT_PATH; ?>style/erk_style.css" rel="stylesheet" type="text/css" media="screen" />
+	</head>
+	<body id="errorpage">
+		<div id="wrap">
+			<div id="page-header">
+				<p><a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a></p>
+			</div>
+			<div id="page-body">
+				<div id="acp">
+					<div class="panel">
+						<span class="corners-top"><span></span></span>
+							<div id="content">
+								<h1>Emergency Repair Kit</h1>
+								<p>
+									<?php echo $msg; ?>
+								</p>
+								<p>
+									<?php
+									if ($redirect_stk)
+									{
+										echo 'Click <a href="' . STK_ROOT_PATH . '">here</a> to reload the STK';
+									}
+									else
+									{
+										echo 'Click <a href="' . STK_ROOT_PATH . 'erk.php">here</a> to reload the ERK';
+									}
+									?>
+								</p>
+							</div>
+						<span class="corners-bottom"><span></span></span>
+					</div>
+				</div>
+			</div>
+			<div id="page-footer">
+				Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
+			</div>
+		</div>
+	</body>
+</html>
+<?php
+		// Make sure we exit, can't use any phpBB stuff here
+		exit;
+	}
 }
 ?>
