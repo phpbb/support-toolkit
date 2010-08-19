@@ -527,49 +527,20 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		// Do not send 200 OK, but service unavailable on errors
 		header('HTTP/1.1 503 Service Unavailable');
 
-		// The page gets hardcoded as we Don't know whether all required stuff is
-		// actually here at this point.
-		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-		echo '<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">';
-		echo '<head>';
-		echo '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
-		echo '<title>Support Toolkit fatal error</title>';
-		echo '<style type="text/css">' . "\n" . '/* <![CDATA[ */' . "\n";
-		echo '* { margin: 0; padding: 0; } html { font-size: 100%; height: 100%; margin-bottom: 1px; background-color: #E4EDF0; } body { font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif; color: #536482; background: #E4EDF0; font-size: 62.5%; margin: 0; } ';
-		echo 'a:link, a:active, a:visited { color: #006699; text-decoration: none; } a:hover { color: #DD6900; text-decoration: underline; } ';
-		echo '#wrap { padding: 0 20px 15px 20px; min-width: 615px; } #page-header { text-align: right; height: 40px; } #page-footer { clear: both; font-size: 1em; text-align: center; } ';
-		echo '.panel { margin: 4px 0; background-color: #FFFFFF; border: solid 1px  #A9B8C2; } ';
-		echo '#errorpage #page-header a { font-weight: bold; line-height: 6em; } #errorpage #content { padding: 10px; } #errorpage #content h1 { line-height: 1.2em; margin-bottom: 0; color: #DF075C; } ';
-		echo '#errorpage #content div { margin-top: 20px; margin-bottom: 5px; border-bottom: 1px solid #CCCCCC; padding-bottom: 5px; color: #333333; font: bold 1.2em "Lucida Grande", Arial, Helvetica, sans-serif; text-decoration: none; line-height: 120%; text-align: left; } ';
-		echo "\n" . '/* ]]> */' . "\n";
-		echo '</style>';
-		echo '</head>';
-		echo '<body id="errorpage">';
-		echo '<div id="wrap">';
-		echo '	<div id="page-header">';
-		echo '	</div>';
-		echo '	<div id="acp">';
-		echo '	<div class="panel">';
-		echo '		<div id="content">';
-		echo '			<h1>Support Toolkit encountered a fatal error</h1>';
+		// Trigger error through the critical repair class
+		if (!class_exists('critical_repair'))
+		{
+			include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
+		}
+		$cr = new critical_repair();
 
-		echo '			<div>';
-		echo '				<p>The Support Toolkit encountered a fatal error.</p>';
-		echo '				<p>As part of the package the Support Toolkit includes an Emergancy Repair Kit, this kit is designed to resolve certain errors that can prevent phpBB and the STK from working correctly. Its adviced to run the ERK so it can attempt to recover the found error.<br />To run the erk click <a href="' . STK_ROOT_PATH . 'erk.php">here</a></p>';
-		echo '			</div>';
+		$lines = array(
+			'The Support Toolkit encountered a fatal error.',
+			'As part of the package the Support Toolkit includes an Emergancy Repair Kit, this kit is designed to resolve certain errors that can prevent phpBB and the STK from working correctly. Its adviced to run the ERK so it can attempt to recover the found error.<br />To run the erk click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>',
+		);
 
-		echo '		</div>';
-		echo '	</div>';
-		echo '	</div>';
-		echo '	<div id="page-footer">';
-		echo '		Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>';
-		echo '	</div>';
-		echo '</div>';
-		echo '</body>';
-		echo '</html>';
-
-		// Its fatal thus exit
-		exit;
+		// Trigger
+		$cr->trigger_error($lines);
 	}
 
 	// This is nasty :(

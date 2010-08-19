@@ -117,12 +117,17 @@ class critical_repair
 	/**
 	 * Trigger an error message, this method *must* be called when an ERK tool
 	 * encounters an error. You can not rely on msg_handler!
-	 * @param	String	$msg			The error message
-	 * @param	Boolean	$redirect_stk	Show a backlink to the STK, otherwise to the ERK
+	 * @param	String|Array	$msg			The error message or an string array containing multiple lines
+	 * @param	Boolean			$redirect_stk	Show a backlink to the STK, otherwise to the ERK
 	 * @return	void
 	 */
 	function trigger_error($msg, $redirect_stk = false)
 	{
+		if (!is_array($msg))
+		{
+			$msg = array($msg);
+		}
+
 		// Send header
 		header('Content-type: text/html; charset=UTF-8');
 
@@ -149,9 +154,12 @@ class critical_repair
 						<span class="corners-top"><span></span></span>
 							<div id="content">
 								<h1>Emergency Repair Kit</h1>
-								<p>
-									<?php echo $msg; ?>
-								</p>
+								<?php
+								foreach ($msg as $m)
+								{
+									echo "<p>{$m}</p>";
+								}
+								?>
 								<p>
 									<?php
 									if ($redirect_stk)
