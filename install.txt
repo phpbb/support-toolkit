@@ -48,12 +48,18 @@ update!
 = Changelog =
 == Changes since 1.0.1-PL1 ==
 * [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
+* [Add] Added Emergency Repair Kit. (Bug #62202)
 * [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
 * [Change] The BOM sniffer will create a backup the files in which it found issues.
+* [Fix] The style dir critical repair tool doesn't recognise non-installed styles. (Bug #62130)
 * [Fix] In some environments the database cleaner breaks when no changes are found. (Bug #62180, Patch by VSE)
 * [Fix] Force sorting when loading database cleaner data files. (Bug #62180, Patch by Noxwizard)
 * [Fix] Correctly handle the restore deleted users tool when there are no deleted users. (Bug #62181)
 * [Fix] Removed some php ≥ 5.0.0 code.
+* [Fix] Automatic critical repair tools wheren't ran. (Bug #62194)
+* [Fix] Reparse all BBCodes fail. (Bug #62203)
+* [Fix] Private message senders get changed after merge users tool has merged PMs. (Bug #62247, Patch by ToonArmy)
+* [Fix] A couple of language related issues.
 
 == Changes since 1.0.1 ==
 * [Fix] Database cleaner displays only "array" instead of appropriate options (Bug #62177)
