@@ -128,7 +128,8 @@ class critical_repair
 			$msg = array($msg);
 		}
 
-		// Send header
+		// Send headers
+		header('HTTP/1.1 503 Service Unavailable');
 		header('Content-type: text/html; charset=UTF-8');
 
 		// Build the page

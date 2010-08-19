@@ -524,9 +524,6 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 	// informing the user that the ERK *might* resolve this issue.
 	if (!defined('IN_STK') && in_array($errno, array(E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE)))
 	{
-		// Do not send 200 OK, but service unavailable on errors
-		header('HTTP/1.1 503 Service Unavailable');
-
 		// Trigger error through the critical repair class
 		if (!class_exists('critical_repair'))
 		{
