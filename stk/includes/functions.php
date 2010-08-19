@@ -522,7 +522,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 
 	// If the STK triggers a fatal error before IN_STK is defined we'll show a page
 	// informing the user that the ERK *might* resolve this issue.
-	if (!defined('IN_STK') && $errno == E_USER_ERROR)
+	if (!defined('IN_STK') && in_array($errno, array(E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE)))
 	{
 		// Do not send 200 OK, but service unavailable on errors
 		header('HTTP/1.1 503 Service Unavailable');
@@ -534,13 +534,22 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		}
 		$cr = new critical_repair();
 
-		$lines = array(
-			'The Support Toolkit encountered a fatal error.',
-			'As part of the package the Support Toolkit includes an Emergancy Repair Kit, this kit is designed to resolve certain errors that can prevent phpBB and the STK from working correctly. Its adviced to run the ERK so it can attempt to recover the found error.<br />To run the erk click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>',
-		);
+		if ($errno == E_USER_ERROR)
+		{
+			$lines = array(
+				'The Support Toolkit encountered a fatal error.',
+				'As part of the package the Support Toolkit includes an Emergancy Repair Kit, this kit is designed to resolve certain errors that can prevent phpBB and the STK from working correctly. Its adviced to run the ERK so it can attempt to recover the found error.<br />To run the erk click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>',
+			);
+			$redirect_stk = false;
+		}
+		else
+		{
+			$lines = array($msg_text);
+			$redirect_stk = true;
+		}
 
 		// Trigger
-		$cr->trigger_error($lines);
+		$cr->trigger_error($lines, $redirect_stk);
 	}
 
 	// This is nasty :(
