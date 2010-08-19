@@ -456,8 +456,8 @@ function stk_version_check()
 	$version_check = $cache->get('_stk_version_check');
 	if (!$version_check || $version_check['last_check_session'] != $user->session_id || isset($_GET['force_check']))
 	{
-		// If we have a cache file trash it
-		if ($version_check)
+		// Make sure that the cache file is distroyed if we got one
+		if ($version_check || isset($_GET['force_check']))
 		{
 			$cache->destroy('_stk_version_check');
 		}
