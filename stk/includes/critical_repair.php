@@ -147,7 +147,19 @@ class critical_repair
 	<body id="errorpage">
 		<div id="wrap">
 			<div id="page-header">
-				<p><a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a></p>
+				<p>
+					<?php
+					if ($redirect_stk)
+					{
+						echo '<a href="' . STK_ROOT_PATH . '">Support Toolkit index</a> &bull; ';
+					}
+					else
+					{
+						echo '<a href="' . STK_ROOT_PATH . 'erk.php">Emergancy Repair Toolkit index</a> &bull; ';
+					}
+					?>
+					<a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a>
+				</p>
 			</div>
 			<div id="page-body">
 				<div id="acp">
