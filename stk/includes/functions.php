@@ -346,6 +346,7 @@ function perform_unauthed_quick_tasks($action)
 		// If the user wants to destroy their STK login cookie
 		case 'stklogout' :
 			setcookie('stk_token', '', (time() - 31536000));
+			$user->unset_admin();
 			meta_refresh(3, append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT));
 			trigger_error('STK_LOGOUT_SUCCESS');
 		break;

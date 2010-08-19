@@ -218,7 +218,6 @@ $plugin = new plugin();
 $template->assign_vars(array(
 	'U_ACTION'		=> append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id),
 	'U_ADM_INDEX'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, false, true, $user->session_id),
-	'U_ADM_LOGOUT'	=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'action=admlogout', true, $user->session_id),
 	'U_STK_INDEX'	=> append_sid(STK_INDEX, false, true, $user->session_id),
 	'U_STK_LOGOUT'	=> append_sid(STK_INDEX, 'action=stklogout', true, $user->session_id),
 	'U_BACK_TOOL'	=> ($plugin->get_part('t')) ? append_sid(STK_INDEX, $plugin->url_arg(), true, $user->session_id) : false,
