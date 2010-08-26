@@ -47,6 +47,11 @@ class database_cleaner_views
 	var $success_message = '';
 
 	/**
+	 * @var Boolean Has changes.
+	 */
+	var $_has_changes = false;
+
+	/**
 	* Constructor
 	* @param database_cleaner $db_cleaner Object of the current database cleaner class
 	*/
@@ -121,6 +126,16 @@ class database_cleaner_views
 			));
 		}
 
+		// Determine the link for the next step
+		if ($this->_has_changes || !empty($this->_confirm_box))
+		{
+			$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true));
+		}
+		else
+		{
+			$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => ($this->db_cleaner->step + 1)));
+		}
+
 		// Output some stuff we need always
 		$template->assign_vars(array(
 			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
@@ -128,7 +143,7 @@ class database_cleaner_views
 			'SUCCESS_MESSAGE'	=> user_lang($this->success_message),
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
-			'U_NEXT_STEP'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true)),
+			'U_NEXT_STEP'	=> $_u_next_step,
 		));
 
 		// Do tha page
@@ -203,6 +218,11 @@ class database_cleaner_views
 						'FIELD_NAME'	=> $table_name . '_' . $column,
 						'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
 					);
+
+					if ($this->_has_changes === false)
+					{
+						$this->_has_changes = true;
+					}
 				}
 			}
 		}
@@ -236,6 +256,11 @@ class database_cleaner_views
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
 			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
 		}
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
@@ -251,6 +276,8 @@ class database_cleaner_views
 		// Only success message when the bots have been reset
 		$did_run = request_var('did_run', false);
 		$this->success_message = ($did_run) ? 'RESET_BOT_SUCCESS' : 'RESET_BOTS_SKIP';
+
+		$this->_has_changes = true;
 	}
 
 	/**
@@ -281,6 +308,11 @@ class database_cleaner_views
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
 			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
 		}
 
 		$this->success_message = 'PERMISSION_UPDATE_SUCCESS';
@@ -340,6 +372,11 @@ class database_cleaner_views
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
 			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
 		}
 
 		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
@@ -370,6 +407,11 @@ class database_cleaner_views
 					'FIELD_NAME'	=> $table,
 					'MISSING'		=> isset($req_tables[$table]) ? true : false,
 				);
+
+				if ($this->_has_changes === false)
+				{
+					$this->_has_changes = true;
+				}
 			}
 		}
 
