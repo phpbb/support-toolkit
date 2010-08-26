@@ -51,6 +51,7 @@ update!
 * [Add] Added Emergency Repair Kit. (Bug #62202)
 * [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
 * [Change] The BOM sniffer will create a backup the files in which it found issues.
+* [Change] Database won't run the same check twice when no changes where detected for a given step.
 * [Fix] The style dir critical repair tool doesn't recognise non-installed styles. (Bug #62130)
 * [Fix] In some environments the database cleaner breaks when no changes are found. (Bug #62180, Patch by VSE)
 * [Fix] Force sorting when loading database cleaner data files. (Bug #62180, Patch by Noxwizard)
