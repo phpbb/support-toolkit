@@ -62,6 +62,7 @@ update!
 * [Fix] Private message senders get changed after merge users tool has merged PMs. (Bug #62247, Patch by ToonArmy)
 * [Fix] A couple of language related issues.
 * [Fix] Log the user out when using the STK logout method and using the phpBB buildin login method.
+* [Fix] Fixed an issue that broke backward compatibility with phpBB versions prior to 3.0.3.
 
 == Changes since 1.0.1 ==
 * [Fix] Database cleaner displays only "array" instead of appropriate options (Bug #62177)
