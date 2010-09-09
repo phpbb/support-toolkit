@@ -26,6 +26,13 @@ $user->setup('acp/common', $config['default_style']);
 // Set a constant so we know when the STK got to a point where it savely loaded all absolutely required stuff
 define('IN_STK', true);
 
+// The PHPBB_VERSION constant was introduced in phpBB 3.0.3, some tools rely on this constant
+// if it isn't set here fill it with $config['version'] for backward compatibility
+if (!defined('PHPBB_VERSION'))
+{
+	define('PHPBB_VERSION', $config['version']);
+}
+
 // Language path.  We are using a custom language path to keep all the files within the stk/ folder.  First check if the $user->data['user_lang'] path exists, if not, check if the default lang path exists, and if still not use english.
 stk_add_lang('common');
 
