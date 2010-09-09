@@ -37,7 +37,8 @@ class resync_newly_registered
 	*/
 	function tool_active()
 	{
-		if (version_compare(PHPBB_VERSION, '3.0.5', '<='))
+		// PHPBB_VERSION was introduced in phpBB 3.0.3
+		if (!defined('PHPBB_VERSION') || version_compare(PHPBB_VERSION, '3.0.5', '<='))
 		{
 			return 'PLUGIN_INCOMPATIBLE_PHPBB_VERSION';
 		}

@@ -28,7 +28,8 @@ class update_email_hashes
 	*/
 	function tool_active()
 	{
-		if (version_compare(PHPBB_VERSION, '3.0.7', '<'))
+		// PHPBB_VERSION was introduced in phpBB 3.0.3
+		if (!defined('PHPBB_VERSION') || version_compare(PHPBB_VERSION, '3.0.7', '<'))
 		{
 			return true;
 		}
