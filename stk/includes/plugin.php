@@ -34,7 +34,8 @@ class plugin
 
 	/**
 	 * List containing all available tools and in which category they belong.
-	 * On default it contains the "main" category
+	 * Categories and tools kan de defined here to force their order on the
+	 * page listing.
 	 *
 	 * @var array
 	 * @access private
