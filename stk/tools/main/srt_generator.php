@@ -480,6 +480,8 @@ class srt_generator
 
 		if(file_exists(PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT))	// Not the most beatyfull way but it works
 		{
+			include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT;
+
 			$sql = 'SELECT mod_name, mod_version
 				FROM ' . MODS_TABLE . '
 				ORDER BY mod_name ASC';
@@ -604,6 +606,8 @@ class srt_generator
 				// If AutoMOD is installed prefill all MODs installed through it
 				if(file_exists(PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT))	// Not the most beatyfull way but it works
 				{
+					include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT;
+
 					$sql = 'SELECT mod_name, mod_version
 						FROM ' . MODS_TABLE . '
 						ORDER BY mod_name ASC';
