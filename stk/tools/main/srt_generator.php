@@ -103,7 +103,7 @@ class srt_generator
 				$this->_data = array(
 					array(
 						'name'		=> 'board_url',
-						'type'		=> 'text',
+						'type'		=> array('text', 'generate_board_url', false),
 						'default'	=> '',
 					),
 					array(
@@ -247,7 +247,6 @@ class srt_generator
 		foreach ($this->_data as $row)
 		{
 			// If "type" is an array the second element is a callback
-			// currently only used to fill dropdown lists
 			if (is_array($row['type']))
 			{
 				// Call it
@@ -264,7 +263,7 @@ class srt_generator
 				'DEFAULT'	=> (isset($row['default'])) ? $row['default'] : false,
 
 				'S_OPTIONS'	=> ($row['type'] == 'dropdown' && isset($_callback_result)) ? $_callback_result : false,
-				'S_PREFILL'	=> ($row['type'] == 'textarea' && isset($_callback_result)) ? $_callback_result : false,
+				'S_PREFILL'	=> ($row['type'] != 'dropdown' && isset($_callback_result)) ? $_callback_result : false,
 				'S_TYPE'	=> $row['type'],
 			));
 

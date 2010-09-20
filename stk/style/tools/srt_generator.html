@@ -15,7 +15,7 @@
 						<!-- ELSEIF questionrow.S_TYPE == 'dropdown' -->
 						<select name="{questionrow.NAME}" id="{questionrow.NAME}">{questionrow.S_OPTIONS}</select>
 						<!-- ELSEIF questionrow.S_TYPE == 'text' -->
-						<input type="text" name="{questionrow.NAME}" id="{questionrow.NAME}" />
+						<input type="text" name="{questionrow.NAME}" id="{questionrow.NAME}" size="40" maxlength="255" value="<!-- IF questionrow.S_PREFILL -->{questionrow.S_PREFILL}<!-- ELSE -->{questionrow.DEFAULT}<!-- ENDIF -->" />
 						<!-- ELSEIF questionrow.S_TYPE == 'textarea' -->
 						<textarea rows="6" class="inputbox" style="width: 94%;" name="{questionrow.NAME}"><!-- IF questionrow.S_PREFILL -->{questionrow.S_PREFILL}<!-- ELSE -->{questionrow.DEFAULT}<!-- ENDIF --></textarea>
 						<!-- ENDIF -->
