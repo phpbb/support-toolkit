@@ -49,6 +49,7 @@ update!
 == Changes since 1.0.1-PL1 ==
 * [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
 * [Add] Added Emergency Repair Kit. (Bug #62202)
+* [Add] Added a SRT generator, which tries to pre-fill some important pieces of information. (Bug #62280)
 * [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
 * [Change] The BOM sniffer will create a backup the files in which it found issues.
 * [Change] Database won't run the same check twice when no changes where detected for a given step.
