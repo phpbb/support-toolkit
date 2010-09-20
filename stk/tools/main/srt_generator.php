@@ -121,7 +121,7 @@ class srt_generator
 					),
 					array(
 						'name'		=> 'mod_related',
-						'type'		=> 'boolean',
+						'type'		=> array('boolean', array($this, '_has_mods_installed')),
 						'default'	=> 'no',
 					),
 					array(
@@ -465,6 +465,34 @@ class srt_generator
 
 		// return something usefull
 		return implode('', $options);
+	}
+
+	/**
+	 * Try to correctly set the "mod_related" field.
+	 * If AutoMOD is installed we see whether MODs are
+	 * in the AutoMOD table and set the checkbox accordingly.
+	 */
+	function _has_mods_installed()
+	{
+		global $db;
+
+		$has_mods = 'no';
+
+		if(file_exists(PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT))	// Not the most beatyfull way but it works
+		{
+			$sql = 'SELECT mod_name, mod_version
+				FROM ' . MODS_TABLE . '
+				ORDER BY mod_name ASC';
+			$result	= $db->sql_query_limit($sql, 1);
+			if ($db->sql_fetchrow($result))
+			{
+				$has_mods = 'yes';
+			}
+			$db->sql_freeresult($result);
+
+		}
+
+		return $has_mods;
 	}
 
 	/**

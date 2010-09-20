@@ -10,8 +10,8 @@
 					<dt><label for="{questionrow.NAME}">{questionrow.QUESTION}</label><!-- IF questionrow.HELP_LINE --><br /><span>{questionrow.HELP_LINE}</span><!-- ENDIF --></dt>
 					<dd>
 						<!-- IF questionrow.S_TYPE == 'boolean' -->
-						<label for="{questionrow.NAME}1"><input type="radio" id="{questionrow.NAME}1" name="{questionrow.NAME}" value="yes"<!-- IF questionrow.DEFAULT == 'yes' --> checked="checked"<!-- ENDIF --> />{L_YES}</label> &nbsp;
-						<label for="{questionrow.NAME}2"><input type="radio" id="{questionrow.NAME}2" name="{questionrow.NAME}" value="no"<!-- IF questionrow.DEFAULT == 'no' --> checked="checked"<!-- ENDIF --> />{L_NO}</label>
+						<label for="{questionrow.NAME}1"><input type="radio" id="{questionrow.NAME}1" name="{questionrow.NAME}" value="yes"<!-- IF questionrow.S_PREFILL == 'yes' || questionrow.DEFAULT == 'yes' --> checked="checked"<!-- ENDIF --> />{L_YES}</label> &nbsp;
+						<label for="{questionrow.NAME}2"><input type="radio" id="{questionrow.NAME}2" name="{questionrow.NAME}" value="no"<!-- IF questionrow.S_PREFILL == 'no' || questionrow.DEFAULT == 'no' --> checked="checked"<!-- ENDIF --> />{L_NO}</label>
 						<!-- ELSEIF questionrow.S_TYPE == 'dropdown' -->
 						<select name="{questionrow.NAME}" id="{questionrow.NAME}">{questionrow.S_OPTIONS}</select>
 						<!-- ELSEIF questionrow.S_TYPE == 'text' -->
