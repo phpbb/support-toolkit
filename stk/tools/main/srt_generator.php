@@ -16,6 +16,11 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
+if (!function_exists('get_available_dbms'))
+{
+	include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
+}
+
 class srt_generator
 {
 	/**
@@ -25,27 +30,17 @@ class srt_generator
 	var $step = 0;
 
 	/**
-	 * @var		String	Latest phpBB version fallback
-	 *					for the version lists the latest version is read from
-	 *					the phpBB server. If the tool can't fetch data from
-	 *					there for whatever reason use this version number
+	 * @var		Array	The data that is used to generate the questions in the template
+	 *					The array is prefilled with the main data which is filtered later
 	 * @access	private
-	 */
-	var $_version_fallback = '3.0.7-pl1';
-
-	/**
-	 * @var		Array	An array containing all data for this step
-	 * @access	private
-	 * @notice	when handeling the step (after submit)
-	 *			there is less information stored in here!
 	 */
 	var $_data = array();
 
 	/**
-	 * @var		String	The template
+	 * @var		Array	The prefilled data
 	 * @access	private
 	 */
-	var $_template = '';
+	var $_prefill = array();
 
 	/**
 	 * This method is always called, so we "abuse"
@@ -54,165 +49,111 @@ class srt_generator
 	 */
 	function tool_active()
 	{
-		global $acm_type, $template, $user;
+		global $config;
 
-		// I don't think this will ever happen, but if a user has
-		// caching turned off he can't use this tool. We store data
-		// from previous steps in the cache.
-		if ($acm_type == 'null')
+		// Set the step
+		$this->step = request_var('step', 0);
+		if ($this->step < 0 || $this->step > 4 || !empty($_POST['reset']))
 		{
-			return 'SRT_NO_CACHING';
+			$this->step = 0;
 		}
 
-		// Get the step
-		$this->step = request_var('step', $this->step);
-
-		// Set the data that is always needed
-		switch ($this->step)
+		// Step one is something different, don't need any more
+		if ($this->step == 0)
 		{
-			case 0	:
-				// Teh 0 is a special number
-				return true;
-			break;
-
-			case 1	:
-				$this->_data = array(
-					array(
-						'name'		=> 'phpbb_version',
-						'type'		=> array('dropdown', array($this, '_gen_phpbb_versions')),
-					),
-					array(
-						'name'		=> 'mod_related',
-						'type'		=> 'boolean',
-						'default'	=> 'no',
-					),
-					array(
-						'name'		=> 'convert_status',
-						'type'		=> 'boolean',
-						'default'	=> 'no',
-					),
-					array(
-						'name'		=> 'hacked',
-						'type'		=> 'boolean',
-						'default'	=> 'no',
-					),
-				);
-			break;
-
-			case 2	:
-				$this->_data = array(
-					array(
-						'name'		=> 'board_url',
-						'type'		=> array('text', 'generate_board_url', false),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'host',
-						'type'		=> 'text',
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'install_type',
-						'type'		=> array('dropdown', array($this, '_gen_options'), array('myself', 'third', 'someone_else', 'automated')),
-					),
-					array(
-						'name'		=> 'conversion',
-						'type'		=> array('dropdown', array($this, '_gen_options'), array('fresh', 'phpbb_update', 'convert_phpbb2', 'convert_other')),
-					),
-					array(
-						'name'		=> 'mod_related',
-						'type'		=> array('boolean', array($this, '_has_mods_installed')),
-						'default'	=> 'no',
-					),
-					array(
-						'name'		=> 'reg_required',
-						'type'		=> 'boolean',
-						'default'	=> 'no',
-					),
-				);
-			break;
-
-			case 3	:
-				$this->_data = array(
-					array(
-						'name'		=> 'conversion_software',
-						'type'		=> 'text',
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'update_version',
-						'type'		=> array('dropdown', array($this, '_gen_phpbb_versions'), false),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'mods_installed',
-						'type'		=> array('textarea', array($this, '_prefill_customise_data'), 'mods'),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'styles',
-						'type'		=> array('textarea', array($this, '_prefill_customise_data'), 'styles'),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'languages',
-						'type'		=> array('textarea', array($this, '_prefill_customise_data'), 'languages'),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'database',
-						'type'		=> array('dropdown', array($this, '_gen_database_list')),
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'experience',
-						'type'		=> array('dropdown', array($this, '_gen_options'), array('new_both', 'new_phpbb', 'new_php', 'comfort', 'experienced')),
-					),
-					array(
-						'name'		=> 'test_user',
-						'type'		=> 'text',
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'test_pass',
-						'type'		=> 'text',
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'begin',
-						'type'		=> 'textarea',
-						'default'	=> '',
-					),
-					array(
-						'name'		=> 'problem',
-						'type'		=> 'textarea',
-						'default'	=> '',
-					)
-				);
-			break;
-
-			case 4	:
-				// Just return this is the generation stage
-				return true;
-			break;
-
-			default	:
-				trigger_error('NO_MODE');
-			break;
+			return true;
 		}
 
-		// When viewing the language entries are needed
-		if (!isset($_REQUEST['submit']))
-		{
-			foreach ($this->_data as $key => $row)
-			{
-				$this->_data[$key]['help_line']	= (isset($user->lang['SRT_HELP_LINES']["step{$this->step}"][$row['name']])) ? $user->lang['SRT_HELP_LINES']["step{$this->step}"][$row['name']] : '';
-				$this->_data[$key]['notice']	= (isset($user->lang['SRT_NOTICES']["step{$this->step}"][$row['name']])) ? $user->lang['SRT_NOTICES']["step{$this->step}"][$row['name']] : '';
-				$this->_data[$key]['question']	= $user->lang['SRT_QUESTIONS']["step{$this->step}"][$row['name']];
-			}
-		}
+		// Fill the data array
+		$this->_data = array(
+			'step2'	=> array(
+				array(
+					'name'			=> 'phpbb_version',
+					'type'			=> 'dropdown',
+					'options'		=> array(
+						$config['version']	=> 'phpBB ' . $config['version'],
+						PHPBB_VERSION		=> 'phpBB ' . PHPBB_VERSION,
+					),
+					'p_callback'	=> array($this, '_prefill_phpbb_version'),
+				),
+				array(
+					'name'			=> 'board_url',
+					'type'			=> 'text',
+					'p_callback'	=> 'generate_board_url',
+				),
+				array(
+					'name'			=> 'host_name',
+					'type'			=> 'text',
+				),
+				array(
+					'name'			=> 'install_type',
+					'type'			=> 'dropdown',
+				),
+				array(
+					'name'			=> 'inst_converse',
+					'type'			=> 'dropdown',
+				),
+				array(
+					'name'			=> 'mods_installed',
+					'type'			=> 'boolean',
+					'p_callback'	=> array($this, '_prefill_has_mods_installed'),
+					'hide'			=> true,
+				),
+				array(
+					'name'			=> 'registration_req',
+					'type'			=> 'boolean',
+					'hide'			=> true,
+				),
+			),
+			'step3'	=> array(
+				array(
+					'name'			=> 'installed_mods',
+					'type'			=> 'textarea',
+					'depends'		=> 'mods_installed',
+					'p_callback'	=> array($this, '_prefill_installed_mods'),
+				),
+				array(
+					'name'			=> 'installed_styles',
+					'type'			=> 'textarea',
+					'p_callback'	=> array($this, '_prefill_installed_styles'),
+				),
+				array(
+					'name'			=> 'installed_languages',
+					'type'			=> 'textarea',
+					'p_callback'	=> array($this, '_prefill_installed_languages'),
+				),
+				array(
+					'name'			=> 'dbms',
+					'type'			=> 'dropdown',
+					'options'		=> get_available_dbms(false, true),
+					'p_callback'	=> array($this, '_prefill_dbms'),
+				),
+				array(
+					'name'			=> 'xp_level',
+					'type'			=> 'dropdown',
+				),
+				array(
+					'name'			=> 'test_username',
+					'type'			=> 'text',
+					'depends'		=> 'registration_req',
+				),
+				array(
+					'name'			=> 'test_password',
+					'type'			=> 'text',
+					'depends'		=> 'registration_req',
+				),
+				array(
+					'name'			=> 'problem_started',
+					'type'			=> 'textarea',
+				),
+				array(
+					'name'			=> 'problem_description',
+					'type'			=> 'textarea',
+				),
+			),
+		);
 
-		// Return true to not break this ^^
+		// Have to return here otherwise shit breaks
 		return true;
 	}
 
@@ -221,65 +162,88 @@ class srt_generator
 	 */
 	function display_options()
 	{
-		global $template;
+		global $cache, $template, $user;
 
-		// Validate the step
-		if ($this->step < 0 || $this->step > 4)
-		{
-			// Reset everything
-			$this->step = 0;
-		}
-
-		// Step 0 is special
+		// Step 0 is easy
 		if ($this->step == 0)
 		{
 			return 'SRT_GENERATOR_LANDING';
 		}
 
-		// Step 4 outputs the SRT
-		if ($this->step == 4)
+		// Step 1 only needs a single template var set
+		if ($this->step == 1)
+		{
+			$template->assign_var('S_STEP1', true);
+		}
+		// Step 4 builds the result
+		elseif ($this->step == 4)
 		{
 			$this->_build_srt();
-			$template->assign_var('COMPILED_TEMPLATE', $this->_template);
 		}
-
-		// Send everyting to the template
-		foreach ($this->_data as $row)
+		// Got to do a bit more
+		else
 		{
-			// If "type" is an array the second element is a callback
-			if (is_array($row['type']))
+			// Fetch the cached results, might need it here
+			$_previous_data = $cache->get('_stk_srt_generator');
+
+			// Run through the questions
+			$_prefilled = array();
+			foreach ($this->_data["step{$this->step}"] as $question)
 			{
-				// Call it
-				$_callback_params	= (!empty($row['type'][2])) ? $row['type'][2] : array();
-				$_callback_result	= call_user_func($row['type'][1], $_callback_params);
-				$row['type']		= $row['type'][0];	// Fix var for later usage
+				// Some questions are only asked when certain answers are given earlier
+				if (isset($question['depends']))
+				{
+					// Only support booleans atm
+					if (empty($_previous_data[$question['depends']]))
+					{
+						continue;
+					}
+				}
+
+				// First call the prefill if there is one
+				$_p_callback_result = false;
+				if (isset($question['p_callback']) && is_callable($question['p_callback']))
+				{
+					$_p_callback_result = call_user_func($question['p_callback']);
+				}
+
+				// If there is a prefill result use that as answer
+				// Handle MODs a bit different (ugly :/)
+				if ($_p_callback_result !== false && $question['name'] != 'installed_mods')
+				{
+					$_prefilled[$question['name']] = $_p_callback_result;
+				}
+				// Show the question in the template
+				else
+				{
+					// If this is a dropdown generate the options.
+					if ($question['type'] == 'dropdown')
+					{
+						// Options can be passed ether by an array in the data list or are generated from the language file
+						$options = (!empty($question['options'])) ? $question['options'] : array();
+						$this->_format_options($options, $question['name']);
+					}
+
+					$template->assign_block_vars('questionrow', array(
+						'EXPLAIN'	=> (!empty($user->lang['SRT_QUESTIONS_EXPLAIN']["step{$this->step}"][$question['name']])) ? $user->lang['SRT_QUESTIONS_EXPLAIN']["step{$this->step}"][$question['name']] : '',
+						'NAME'		=> $question['name'],
+						'OPTIONS'	=> ($question['type'] == 'dropdown') ? $options : '',
+						'PREFILL'	=> $_p_callback_result,
+						'QUESTION'	=> $user->lang['SRT_QUESTIONS']["step{$this->step}"][$question['name']],
+						'TYPE'		=> $question['type'],
+					));
+				}
 			}
-
-			// Assign all
-			$template->assign_block_vars('questionrow', array(
-				'NAME'		=> $row['name'],
-				'QUESTION'	=> $row['question'],
-				'HELP_LINE'	=> $row['help_line'],
-				'DEFAULT'	=> (isset($row['default'])) ? $row['default'] : false,
-
-				'S_OPTIONS'	=> ($row['type'] == 'dropdown' && isset($_callback_result)) ? $_callback_result : false,
-				'S_PREFILL'	=> ($row['type'] != 'dropdown' && isset($_callback_result)) ? $_callback_result : false,
-				'S_TYPE'	=> $row['type'],
-			));
-
-			// Empty $_callback_data to prevent unwanted cases
-			unset($_callback_result);
 		}
 
-		// Some common stuff
 		$template->assign_vars(array(
-			'STEP'		=> $this->step,
+			'S_PREFILL'	=> (!empty($_prefilled)) ? htmlspecialchars(serialize($_prefilled)) : '',
 			'U_ACTION'	=> append_sid(STK_INDEX, array('c' => 'main', 't' => 'srt_generator', 'step' => $this->step)),
 		));
 
-		// Output this
+		// Spit out teh page
 		page_header(user_lang('SRT_GENERATOR'));
-
+		
 		$template->set_filenames(array(
 			'body' => 'tools/srt_generator.html',
 		));
@@ -292,7 +256,7 @@ class srt_generator
 	 */
 	function run_tool()
 	{
-		global $cache;
+		global $cache, $user;
 
 		// Step 0 is a special place to be, only available for special people
 		// this user isn't special so kick him to the user spot
@@ -300,360 +264,336 @@ class srt_generator
 		{
 			// Distory the previous data
 			$cache->destroy('_stk_srt_generator');
-			redirect(append_sid(STK_INDEX, array('c' => 'main', 't' => 'srt_generator', 'step' => 1)));
 		}
-
-		$previous_data = $cache->get('_stk_srt_generator');
-		if ($previous_data === false)
+		// In the first step only have to trigger errors
+		else if ($this->step == 1)
 		{
-			// acm::get() returns fals when nothing is found. We need
-			// an empty array
-			$previous_data = array();
-		}
+			global $template;
 
-		if (!isset($previous_data["step{$this->step}"]))
-		{
-			$previous_data["step{$this->step}"] = array();
-		}
+			// Disable the back link
+			$template->assign_var('U_BACK_TOOL', false);
 
-		// Fetch all the fields and merge with the old data
-		foreach ($this->_data as $row)
-		{
-			if (!isset($_REQUEST[$row['name']]))
+			if (!empty($_POST['srt']['mod_related']) && $_POST['srt']['mod_related'] == '1')
 			{
-				$previous_data["step{$this->step}"][$row['name']] = $row['default'];
+				trigger_error('STEP1_MOD_ERROR');
 			}
-			else
+
+			if (!empty($_POST['srt']['hacked']) && $_POST['srt']['hacked'] == '1')
 			{
-				$previous_data["step{$this->step}"][$row['name']] = request_var($row['name'], '');
+				trigger_error('STEP1_HACKED_ERROR');
 			}
 		}
 
-		// cache for the next step
-		$cache->put('_stk_srt_generator', $previous_data);
+		// Handle the submitted stuf
+		else
+		{
+			$_cached_data	= $cache->get('stk_srt_generator');
+			$_prefilled		= unserialize(htmlspecialchars_decode(request_var('prefill', '')));
 
-		// Send to the next step
+			// $_cached_data can be "false"
+			if ($_cached_data === false)
+			{
+				$_cached_data = array();
+			}
+
+			// Run through the questions and fetch the answers
+			$_answers = array();
+			foreach ($this->_data["step{$this->step}"] as $question)
+			{
+				// From the prefill?
+				if (isset($_prefilled[$question['name']]))
+				{
+					$_answers[$question['name']] = $_prefilled[$question['name']];
+				}
+				else
+				{
+					$_answers[$question['name']] = request_var($question['name'], '');
+				}
+
+				// For some types some aditional stuff is needed here
+				switch ($question['type'])
+				{
+					case 'boolean'	:
+						// When fetched from the form these are "yes" or "no",
+						// convert to booleans
+						if (in_array($_answers[$question['name']], array('yes', 'no')))
+						{
+							$_answers[$question['name']] = ($_answers[$question['name']] == 'yes') ? true : false;
+						}
+					break;
+
+					case 'dropdown'	:
+						// The correct one
+						if (!empty($question['options']))
+						{
+							$_answers[$question['name']] = $question['options'][$_answers[$question['name']]];
+						}
+						else
+						{
+							$_answers[$question['name']] = $user->lang['SRT_DROPDOWN_OPTIONS']["step{$this->step}"][$question['name']][$_answers[$question['name']]];
+						}
+					break;
+				}
+			}
+
+			// Place back in the cache
+			$_cached_data = array_merge($_cached_data, $_answers);
+			$cache->put('_stk_srt_generator', $_cached_data);
+		}
+
+		// Next one pleaze
 		redirect(append_sid(STK_INDEX, array('c' => 'main', 't' => 'srt_generator', 'step' => ++$this->step)));
 	}
 
 	/**
-	 * Generic method to build options for select boxes. This method will
-	 * take the options as specified in the parameter and will assign the
-	 * correct language strings to each option.
-	 * @param	Array	$options	The options used in this dropdown box
-	 * @return	String	A string containing all the options
-	 * @access	private
-	 */
-	function _gen_options($options = array())
-	{
-		global $user;
-
-		// No array, shouldn't happen but just in case
-		if (!is_array($options))
-		{
-			return '';
-		}
-
-		// Create the list
-		$_list = array();
-		foreach ($options as $option)
-		{
-			if (!isset($user->lang['SRT_DROPDOWN_OPTIONS']["step{$this->step}"][$option]))
-			{
-				// No, next
-				continue;
-			}
-
-			$_list[] = "<option value='{$option}'>" . $user->lang['SRT_DROPDOWN_OPTIONS']["step{$this->step}"][$option] . '</option>';
-		}
-
-		return implode('', $_list);
-	}
-
-	/**
-	 * Generate an option list with all phpBB versions.
-	 * Show everything here as a user *could* use this
-	 * generator to build an SRT for a different board,
-	 * we do however set the version of this board as
-	 * default.
-	 * @param	Boolean	$own_default	Set the users phpBB version as default
-	 * @access	private
-	 */
-	function _gen_phpbb_versions($own_default = true)
-	{
-		global $config, $umil;
-
-		// Contains a list with "special" versions that can't
-		// be generated automatically
-		$_special_versions = array(
-			'3.0.7-pl1',
-		);
-
-		// Some non-stable releases that should show up
-		$_non_stable = array(
-			'3.0-rc8',
-			'3.0-rc7',
-			'3.0-rc6',
-			'3.0-rc5',
-			'3.0-rc4',
-			'3.0-rc3',
-			'3.0-rc2',
-			'3.0-rc1',
-			'3.0-b5',
-			'3.0-b4',
-			'3.0-b3',
-			'3.0-b2',
-			'3.0-b1',
-			'2.0.0 - 2.0.23',
-		);
-
-		// Try to read the latest version number from the phpBB server.
-		$vcheck = $umil->version_check('www.phpbb.com', '/updatecheck', '30x_qa.txt');
-		$latest_version = '';
-		if (!is_array($vcheck) || !isset($vcheck[0]) || isset($vcheck[1]))
-		{
-			// The received data isn't correct fallback
-			$latest_version = $this->_version_fallback;
-		}
-		else
-		{
-			// Yay!
-			$latest_version = $vcheck[0];
-		}
-
-		// The latest version can be a "-PL" release, in that case strip
-		// the PL thing. PL release are handled seperate
-		if (($dashpos = strpos($latest_version, '-')) !== false)
-		{
-			$latest_version = substr($latest_version, 0, $dashpos);
-		}
-
-		// Make a list 3.0.0/$latest_version
-		$versions	= array();
-		$min_rev	= substr(strrchr($latest_version, '.'), 1);
-
-		while ($min_rev >= 0)
-		{
-			$versions[] = '3.0.' . $min_rev--;
-		}
-
-		// Merge all the static arrays into here
-		$versions = array_merge($versions, $_special_versions, $_non_stable);
-
-		// Sort them
-		usort($versions, 'version_compare');
-
-		// Now build the options
-		$options = array();
-		foreach ($versions as $version)
-		{
-			// This version our version?
-			$selected = '';
-			if ($own_default === true && version_compare(strtolower($version), strtolower($config['version']), 'eq'))	// use strtolower as php seems to think that x.x.x-PL1 != x.x.x-pl1
-			{
-				$selected = ' selected=\'selected\'';
-			}
-
-			$option_value = str_replace(array('.', ' '), array('_', '-'), $version);
-
-			// Use array_unshift to get the versions sorted correctly
-			array_unshift($options, "<option value='{$option_value}'{$selected}>phpBB $version</option>");
-		}
-
-		// Manually add the "I don't know"
-		array_unshift($options, '<option value=\'-1\'>' . user_lang('I_DONT_KNOW') . '</option>');
-
-		// return something usefull
-		return implode('', $options);
-	}
-
-	/**
-	 * Try to correctly set the "mod_related" field.
-	 * If AutoMOD is installed we see whether MODs are
-	 * in the AutoMOD table and set the checkbox accordingly.
-	 */
-	function _has_mods_installed()
-	{
-		global $db;
-
-		$has_mods = 'no';
-
-		if(file_exists(PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT))	// Not the most beatyfull way but it works
-		{
-			include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT;
-
-			$sql = 'SELECT mod_name, mod_version
-				FROM ' . MODS_TABLE . '
-				ORDER BY mod_name ASC';
-			$result	= $db->sql_query_limit($sql, 1);
-			if ($db->sql_fetchrow($result))
-			{
-				$has_mods = 'yes';
-			}
-			$db->sql_freeresult($result);
-
-		}
-
-		return $has_mods;
-	}
-
-	/**
-	 * Generate the SRT based upon the user input
-	 * @access	private
+	 * Build the SRT and output the result
+	 *
 	 * @return	void
+	 * @access	private
 	 */
 	function _build_srt()
 	{
-		global $cache, $user;
+		global $cache, $template, $user;
+
+		$_template = array();
 
 		// Get the submitted data
 		$_answers = $cache->get('_stk_srt_generator');
 		if ($_answers === false)
 		{
-			// Something went wrong :/
+			// Shouldn't happening in normal operation
 			trigger_error('COULDNT_LOAD_SRT_ANSWERS');
 		}
 
 		// Header
-		$this->_template[] = '[size=115][color=#368AD2][b]Support Request Template[/b][/color][/size]<br />';
+		$_template[] = '[size=115][color=#368AD2][b]Support Request Template[/b][/color][/size]<br />';
 
-		// Run through all the steps
-		foreach ($user->lang['SRT_QUESTIONS'] as $_step => $_step_questions)
+		// Walk through the data
+		foreach ($this->_data as $step => $questions)
 		{
-			// Run through all the questions
-			foreach ($_step_questions as $_field => $_question)
+			// Do teh questions
+			foreach ($questions as $question)
 			{
-				// No anwser provided move on.
-				if (empty($_answers[$_step][$_field]))
+				// Hidden?
+				if (!empty($question['hide']))
 				{
-					$this->_template[] = "[color=#cc6600][b]{$_question}[/b][/color]: [i]No answer given[/i]";
 					continue;
 				}
 
-				// Some hardcore formatting
-				if (in_array($_field, array('phpbb_version', 'update_version')))
+				$question_string = $user->lang['SRT_QUESTIONS'][$step][$question['name']];
+
+				// No answer, easy :)
+				if (empty($_answers[$question['name']]))
 				{
-					if ($_answers[$_step][$_field] == '-1')
-					{
-						$_answers[$_step][$_field] = $user->lang['I_DONT_KNOW'];
-					}
-					else
-					{
-						$_answers[$_step][$_field] = str_replace(array('_', '-'), array('.', ' '), $_answers[$_step][$_field]);
-					}
-				}
-				elseif (in_array($_field, array('install_type', 'conversion', 'experience')))
-				{
-					$_answers[$_step][$_field] = $user->lang['SRT_DROPDOWN_OPTIONS'][$_step][$_answers[$_step][$_field]];
+					$_template[] = "[color=#cc6600][b]{$question_string}[/b][/color]: [i]No answer given[/i]";
+					continue;
 				}
 
-				// Add to the template
-				$this->_template[] = "[color=#cc6600][b]{$_question}[/b][/color]: {$_answers[$_step][$_field]}";
+				$_template[] = "[color=#cc6600][b]{$question_string}[/b][/color]: {$_answers[$question['name']]}";
 			}
 		}
 		
 		// Footer
 		$this->_template[] = '[size=60]Generated by Support Toolkit SRT Generator.[/size]';
 
-		// Set the correct format
-		$this->_template = implode('<br />', $this->_template);
+		// Output
+		$template->assign_var('COMPILED_TEMPLATE', implode('<br />', $_template));
 	}
 
 	/**
-	 * Create a list of the supported DBMS, and select the DBMS
-	 * used by this user.
-	 */
-	function _gen_database_list()
-	{
-		global $dbms;
-
-		if (!function_exists('get_available_dbms'))
-		{
-			include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
-		}
-
-		// Fetch all DBMS
-		$_dbms = get_available_dbms(false, true);
-
-		// Build the options
-		$_options = array();
-		foreach ($_dbms as $_driver => $_db)
-		{
-			$selected	= ($_driver == $dbms) ? " selected='selected'" : '';
-			$_options[]	= "<option value='{$_driver}'{$selected}>{$_db['LABEL']}</option>";
-		}
-
-		return implode('', $_options);
-	}
-
-	/**
-	 * Try to prefill some textarea's with data that can be
-	 * retrieved from the database.
-	 * @param	String	$mode	The data that will be retrieved. Is one of
-	 *							mods|styles|languages
-	 * @return	The data that will be prefilled in the textarea
+	 * This method build the options for dropdown boxes, if the $options paramater
+	 * contains a non-empty array the data within this array will be used for the
+	 * options. If the array is empty the options will be fetched from the language
+	 * files.
+	 *
+	 * @param	Array	$options	The array that will be used/filled with the
+	 *								options for the dropdown box
+	 * @param	String	$name		The name of the question, this is used to
+	 *								lookup the correct strings in the language
+	 *								files.
+	 * @return	void
 	 * @access	private
 	 */
-	function _prefill_customise_data($mode = '')
+	function _format_options(&$options, $name = '')
+	{
+		global $user;
+
+		$_option_list = array();
+
+		if (!empty($options))
+		{
+			foreach ($options as $_key => $_value)
+			{
+				$_option_list[] = "<option value='{$_key}'>{$_value}</option>";
+			}
+		}
+		else
+		{
+			// If there is no language entry for this list return an empty array
+			if (!empty($user->lang['SRT_DROPDOWN_OPTIONS']["step{$this->step}"][$name]))
+			{
+				foreach ($user->lang['SRT_DROPDOWN_OPTIONS']["step{$this->step}"][$name] as $_key => $_value)
+				{
+					$_option_list[] = "<option value='{$_key}'>{$_value}</option>";
+				}
+			}
+		}
+
+		// Set the return
+		$options = implode('', $_option_list);
+	}
+
+	/**
+	 * Some prefill methods
+	 * @Note, due to strict checking if a prefill should return "false" you'll
+	 * have to return the *string*, not the boolean!
+	 */
+
+	/**
+	 * Just a wrapper to get the DBAL layer
+	 */
+	function _prefill_dbms()
 	{
 		global $db;
 
-		$_prefill = array();
+		$db->sql_layer;
+	}
 
-		switch ($mode)
+	/**
+	 * Try to determine whether the user has MODs installed. This can be prefilled
+	 * if the user has AutoMOD installed *AND* he has installed at least one MOD
+	 * with it
+	 *
+	 * @return	Boolean		True _only_ when the user has installed at least one
+	 *						MOD through AutoMOD, otherwise false.
+	 */
+	function _prefill_has_mods_installed()
+	{
+		if (@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT !== false)
 		{
-			case 'mods' :
-				// If AutoMOD is installed prefill all MODs installed through it
-				if(file_exists(PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT))	// Not the most beatyfull way but it works
-				{
-					include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT;
+			// See whether there is something installed
+			global $db;
 
-					$sql = 'SELECT mod_name, mod_version
-						FROM ' . MODS_TABLE . '
-						ORDER BY mod_name ASC';
-					$mods_result = $db->sql_query($sql);
+			$sql = 'SELECT mod_name
+				FROM ' . MODS_TABLE;
+			$result	= $db->sql_query_limit($sql, 1);
+			$mod	= $db->sql_fetchfield('mod_name', false, $result);
+			$db->sql_freeresult($result);
 
-					while ($row = $db->sql_fetchrow($mods_result))
-					{
-						$_prefill[] = $row['mod_name'] . '(' . $row['mod_version'] . ')';
-					}
-					$db->sql_freeresult($mods_result);
-				}
-			break;
-
-			case 'styles' :
-				// Display all styles known by the board. non-active styles will be marked
-				$sql = 'SELECT style_name, style_active
-					FROM ' . STYLES_TABLE;
-				$result = $db->sql_query($sql);
-
-				while ($row = $db->sql_fetchrow($result))
-				{
-					$_prefill[] = $row['style_name'] . (($row['style_active'] == 0) ? ' [i](not active)[/i]' : '');
-				}
-
-				$db->sql_freeresult($result);
-			break;
-
-			case 'languages' :
-				// Display all languages known by the board. non-active packs will be marked
-				$sql = 'SELECT lang_english_name
-					FROM ' . LANG_TABLE . '
-					ORDER BY lang_english_name';
-				$result = $db->sql_query($sql);
-
-				while ($row = $db->sql_fetchrow($result))
-				{
-					$_prefill[] = $row['lang_english_name'];
-				}
-				$db->sql_freeresult($result);
-			break;
-
-			default :
-				return '';
+			if ($mod !== false)
+			{
+				return true;
+			}
 		}
 
-		return implode(', ', $_prefill);
+		return false;
+	}
+
+	/**
+	 * Fetch all the installed languages from the database
+	 *
+	 * @return	String			All the languages installed on this board
+	 * @access	private
+	 */
+	function _prefill_installed_languages()
+	{
+		global $db;
+
+		$_languages = array();
+
+		$sql = 'SELECT lang_english_name
+			FROM ' . LANG_TABLE . '
+			ORDER BY lang_english_name';
+		$result = $db->sql_query($sql);
+
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$_languages[] = $row['lang_english_name'];
+		}
+
+		$db->sql_freeresult($result);
+
+		return implode(',', $_languages);
+	}
+
+	/**
+	 * If the user has AutoMOD installed prefill the "Mods installed" field
+	 * with all MODs know by AutoMOD.
+	 *
+	 * @return	BooleanString	False if no AutoMOD was found or when no
+	 *							MODs where installed with it. Otherwise all the
+	 *							MODs that where found in the db
+	 * @access	private
+	 */
+	function _prefill_installed_mods()
+	{
+		global $db;
+
+		if (@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT !== false)
+		{
+			$_mods = array();
+
+			$sql = 'SELECT mod_name, mod_version
+				FROM ' . MODS_TABLE;
+			$result	= $db->sql_query($sql);
+			while ($mod = $db->sql_fetchrow($result))
+			{
+				$_mods[] = "{$row['mod_name']} ({$row['mod_version']})";
+			}
+			$db->sql_freeresult($result);
+
+			if (!empty($_mods))
+			{
+				return implode(',', $_mods);
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Fetch all the installed styles from the database
+	 *
+	 * @return	Boolean|String	False if for some reason no styles could be
+	 *							red from the database. Otherwise the data
+	 * @access	private
+	 */
+	function _prefill_installed_styles()
+	{
+		global $db;
+
+		$_styles = array();
+
+		$sql = 'SELECT style_name, style_active
+			FROM ' . STYLES_TABLE;
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$_styles[] = $row['style_name'] . (($row['style_active'] == 0) ? ' [i](not active)[/i]' : '');
+		}
+		$db->sql_freeresult($result);
+
+		return implode(',', $_styles);
+	}
+
+	/**
+	 * Test whether we can rely on the board to give us the version number
+	 * This test fails if $config['version'] and PHPBB_VERSION differ.
+	 *
+	 * @return	Boolean|String	False if the version isn't relyable, otherwise
+	 *							the version number.
+	 * @access	private
+	 */
+	function _prefill_phpbb_version()
+	{
+		global $config;
+
+		if (version_compare(strtolower($config['version']), strtolower(PHPBB_VERSION), 'eq'))	// use strtolower as my local php installation seems to think that x.y.z-PL1 != x.y.z-pl1
+		{
+			return $config['version'];
+		}
+
+		return false;
 	}
 }
 ?>
