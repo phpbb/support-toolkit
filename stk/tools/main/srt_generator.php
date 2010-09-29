@@ -16,11 +16,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-if (!function_exists('get_available_dbms'))
-{
-	include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
-}
-
 class srt_generator
 {
 	/**
@@ -125,7 +120,6 @@ class srt_generator
 				array(
 					'name'			=> 'dbms',
 					'type'			=> 'dropdown',
-					'options'		=> get_available_dbms(false, true),
 					'p_callback'	=> array($this, '_prefill_dbms'),
 				),
 				array(
