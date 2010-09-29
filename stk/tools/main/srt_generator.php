@@ -25,6 +25,28 @@ class srt_generator
 	var $step = 0;
 
 	/**
+	 * The data array contains all data required to build the SRT questions,
+	 * for each question the following keys can be used
+	 * <code>
+	 *		'name'			=>	Required, the identifier that is used for everything
+	 *							(field names/langauge entries/etc)
+	 *		'type'			=>	Required, the type of the input field. (dropdown ||
+	 *							text || texteara || boolean)
+	 *		'options'		=>	Only used when 'type' = dropdown. If set these
+	 *							values are used as options for the dropdown box, if
+	 *							not set the options will be red from the language files.
+	 *		'p_callback'	=>	php callback. This function/method is called before
+	 *							the question is added to the template. If the function
+	 *							returns everything else than the boolean `false`
+	 *							that value will be used as answer. If it returns
+	 *							false (strict check) the question shall be displayed.
+	 *		'hide'			=>	This question is only asked but will not be used
+	 *							when compiling the SRT.
+	 *		'depends'		=>	This question is only asked/handled if the given question
+	 *							was answered with "true", this currently only supports
+	 *							a boolean check.
+	 * </code>
+	 *
 	 * @var		Array	The data that is used to generate the questions in the template
 	 *					The array is prefilled with the main data which is filtered later
 	 * @access	private
