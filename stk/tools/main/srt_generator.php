@@ -98,6 +98,11 @@ class srt_generator
 					'p_callback'	=> array($this, '_prefill_dbms'),
 				),
 				array(
+					'name'			=> 'php',
+					'type'			=> 'text',
+					'p_callback'	=> PHP_VERSION,
+				),
+				array(
 					'name'			=> 'host_name',
 					'type'			=> 'text',
 				),
@@ -215,6 +220,10 @@ class srt_generator
 				if (isset($question['p_callback']) && is_callable($question['p_callback']))
 				{
 					$_p_callback_result = call_user_func($question['p_callback']);
+				}
+				elseif (!empty($question['p_callback']))
+				{
+					$_p_callback_result = $question['p_callback'];
 				}
 
 				// If there is a prefill result use that as answer
