@@ -93,6 +93,11 @@ class srt_generator
 					'p_callback'	=> 'generate_board_url',
 				),
 				array(
+					'name'			=> 'dbms',
+					'type'			=> 'dropdown',
+					'p_callback'	=> array($this, '_prefill_dbms'),
+				),
+				array(
 					'name'			=> 'host_name',
 					'type'			=> 'text',
 				),
@@ -132,11 +137,6 @@ class srt_generator
 					'name'			=> 'installed_languages',
 					'type'			=> 'textarea',
 					'p_callback'	=> array($this, '_prefill_installed_languages'),
-				),
-				array(
-					'name'			=> 'dbms',
-					'type'			=> 'dropdown',
-					'p_callback'	=> array($this, '_prefill_dbms'),
 				),
 				array(
 					'name'			=> 'xp_level',
@@ -467,7 +467,7 @@ class srt_generator
 	{
 		global $db;
 
-		$db->sql_layer;
+		return $db->sql_server_info();
 	}
 
 	/**
