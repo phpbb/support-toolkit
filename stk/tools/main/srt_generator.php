@@ -94,7 +94,7 @@ class srt_generator
 				),
 				array(
 					'name'			=> 'dbms',
-					'type'			=> 'dropdown',
+					'type'			=> 'text',
 					'p_callback'	=> array($this, '_prefill_dbms'),
 				),
 				array(
