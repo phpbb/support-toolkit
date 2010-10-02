@@ -489,7 +489,7 @@ class srt_generator
 	 */
 	function _prefill_has_mods_installed()
 	{
-		if (@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT !== false)
+		if ((@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT) !== false)
 		{
 			// See whether there is something installed
 			global $db;
@@ -549,14 +549,14 @@ class srt_generator
 	{
 		global $db;
 
-		if (@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT !== false)
+		if ((@include PHPBB_ROOT_PATH . 'includes/functions_mods.' . PHP_EXT) !== false)
 		{
 			$_mods = array();
 
 			$sql = 'SELECT mod_name, mod_version
 				FROM ' . MODS_TABLE;
 			$result	= $db->sql_query($sql);
-			while ($mod = $db->sql_fetchrow($result))
+			while ($row = $db->sql_fetchrow($result))
 			{
 				$_mods[] = "{$row['mod_name']} ({$row['mod_version']})";
 			}

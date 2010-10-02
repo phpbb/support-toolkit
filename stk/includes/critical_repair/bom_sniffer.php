@@ -1078,7 +1078,7 @@ class _erk_bom_sniffer_cache
 	/**
 	* Construct the sniffer cache
 	*/
-	function _stk_bom_sniffer_cache($bom_sniffer)
+	function _erk_bom_sniffer_cache($bom_sniffer)
 	{
 		$this->bom_sniffer = $bom_sniffer;
 
