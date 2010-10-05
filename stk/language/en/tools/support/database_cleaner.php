@@ -94,9 +94,9 @@ $lang = array_merge($lang, array(
 		8	=> 'Final step',
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
-		1	=> 'The database tables haven\'t been changed',
-		2	=> 'The columns in the database haven\'t been changed',
-		3	=> 'The configuration table doesn\'t have any new/missing values',
+		1	=> 'The database tables haven’t been changed',
+		2	=> 'The columns in the database haven’t been changed',
+		3	=> 'The configuration table doesn’t have any new/missing values',
 		4	=> 'There where no changes in the permission tables',
 		5	=> 'There where no changes in the phpBB system groups',
 		8	=> 'This last step will clear the cache and re-enable the board.',
