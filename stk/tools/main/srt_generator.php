@@ -62,6 +62,14 @@ class srt_generator
 	{
 		global $config;
 
+		// This tool relies on the cache, if the user has the `NULL`
+		// cache enabled he can't use this!
+		global $acm_type;
+		if ($acm_type == 'null')
+		{
+			return 'SRT_NO_CACHE';
+		}
+
 		// Set the step
 		$this->step = request_var('step', 0);
 		if ($this->step < 0 || $this->step > 4 || !empty($_POST['reset']))

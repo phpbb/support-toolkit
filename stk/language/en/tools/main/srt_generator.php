@@ -43,6 +43,7 @@ $lang = array_merge($lang, array(
 	'SRT_GENERATOR'					=> 'Support Request Template Generator',
 	'SRT_GENERATOR_LANDING'			=> 'Support Request Template Generator',
 	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Welcome to the Support Team\'s Support Request Template Generator. This is the quickest and most efficient way to complete our Support Request Template. The generator will ask you a series of eight to ten questions that are useful for diagnosing most issues. It will then compile your answers into a list that may be copied and pasted into your support topic.<br />This STK tool does the same thing as the <a href="http://www.phpbb.com/support/stk/">SRT Generator on www.phpbb.com</a> but attempts to pre-fill certain questions.<br /><br />Do you wish run the SRT Generator?',
+	'SRT_NO_CACHE'					=> 'The Support Request Template generator uses the phpBB cache system to store information while going through all the steps. You’re using the phpBB null cache which isn’t compatible with this tool. Please switch to one of the other caching backends to use this tool or use the <a href="http://www.phpbb.com/support/srt/">online SRT Generator</a>',
 	'START_OVER'					=> 'Start over',
 ));
 
@@ -140,3 +141,4 @@ $lang = array_merge($lang, array(
 		),
 	),
 ));
+?>
