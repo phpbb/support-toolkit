@@ -610,7 +610,8 @@ class srt_generator
 
 		if (version_compare(strtolower($config['version']), strtolower(PHPBB_VERSION), 'eq'))	// use strtolower as my local php installation seems to think that x.y.z-PL1 != x.y.z-pl1
 		{
-			return $config['version'];
+			// Always point to the first option!
+			return 0;
 		}
 
 		return false;
