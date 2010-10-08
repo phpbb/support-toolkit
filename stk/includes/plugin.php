@@ -169,7 +169,9 @@ class plugin
 		// Add the language file (not needed for 'erk' ;))
 		if ($tool_name != 'erk')
 		{
-			stk_add_lang('tools/' . $tool_cat . '/' . $tool_name);
+			// SRT Generator gets handled a bit different
+			$force_lang = ($tool_name == 'srt_generator') ? 'en' : false;
+			stk_add_lang('tools/' . $tool_cat . '/' . $tool_name, $force_lang);
 		}
 
 		// Return

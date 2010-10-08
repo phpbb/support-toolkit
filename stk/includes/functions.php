@@ -249,8 +249,11 @@ function user_lang()
 * take the boards default language, if that also fails it will fall back to English
 *
 * @param	String	$lang_file	the name of the language file
+* @param	mixed	$force_lang	If this parameter contains an ISO code this language
+*								is used for the file. If set to "false" the users default
+*								langauge will be used
 */
-function stk_add_lang($lang_file)
+function stk_add_lang($lang_file, $fore_lang = false)
 {
 	global $config, $user;
 
@@ -305,6 +308,12 @@ function stk_add_lang($lang_file)
 	// Test all languages
 	foreach ($lang_dirs as $dir)
 	{
+		// When forced skip all others
+		if ($fore_lang !== false && $dir != $fore_lang)
+		{
+			continue;
+		}
+
 		if (file_exists($user->lang_path . $dir . "/{$lang_file}." . PHP_EXT))
 		{
 			$user->lang_name = $dir;
