@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.2-RC1 ==
+* [Fix] Correct a few language issues in the new STK tool (Bug #62407, #62409)
+
 == Changes since 1.0.1-PL1 ==
 * [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
 * [Add] Added Emergency Repair Kit. (Bug #62202)
