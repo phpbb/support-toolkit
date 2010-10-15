@@ -11,7 +11,7 @@ Supported phpBB versions 3.0.0 - 3.0.7-pl1
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
 EXreaction	(Nathan Guse)
-iWisdom		(Phil Crumm)
+Phil		(Phil Crumm)
 
 == Contributors ==
 Marshalrusty	(Yuriy Rusko)
