@@ -544,7 +544,7 @@ class erk_bom_sniffer
 	*/
 	function run()
 	{
-		global $stk_config;
+		global $critical_repair, $stk_config;
 
 		// Get all the files
 		$filelist = filelist(PHPBB_ROOT_PATH, '', PHP_EXT);
