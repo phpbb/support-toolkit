@@ -72,7 +72,13 @@ class database_cleaner_controller
 				$db->sql_freeresult($result);
 				if (!empty($uids))
 				{
-					$db->sql_query('DELETE FROM ' . USERS_TABLE . ' WHERE ' . $db->sql_in_set('user_id', $uids));
+					// Remove all the bots
+					foreach ($uids as $uid)
+					{
+						user_delete('remove', $uid);
+					}
+
+					// Clear out the bots table
 					$db->sql_query('DELETE FROM ' . BOTS_TABLE);
 				}
 
