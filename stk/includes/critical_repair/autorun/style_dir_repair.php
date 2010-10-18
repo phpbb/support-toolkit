@@ -44,10 +44,7 @@ class erk_style_dir_repair
 
 	function repair()
 	{
-		global $cache, $db, $umil, $user;
-
-		// Need this later
-		$user->add_lang('acp/styles');
+		global $db;
 
 		$stylelist = filelist(PHPBB_ROOT_PATH . 'styles/', '', 'cfg');
 		ksort($stylelist);
@@ -114,13 +111,6 @@ class erk_style_dir_repair
 			// Set this style as the active style
 			set_config('default_style', $sid);
 			set_config('override_user_style', 1);	// Overriding the style should enable the board for everyone
-
-			$umil->cache_purge(array(
-				'data',
-				'template',
-				'theme',
-				'imageset',
-			));
 
 			return;
 		}

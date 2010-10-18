@@ -47,8 +47,16 @@ else
 // Overwrite the phpBB error handler
 set_error_handler('stk_msg_handler');
 
-// Make sure that umil is always usable
-$umil = new umil(true);
+// When not in the ERK we setup the user at this point
+// and load UML.
+if (!defined('IN_ERK'))
+{
+	$user->session_begin();
+	$auth->acl($user->data);
+	$user->setup('acp/common', $config['default_style']);
+
+	$umil = new umil(true);
+}
 
 // Load STK config when not in the erk
 if (!isset($stk_config))

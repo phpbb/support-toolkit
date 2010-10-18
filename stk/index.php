@@ -18,11 +18,6 @@ if (!defined('STK_INDEX')) { define('STK_INDEX', STK_ROOT_PATH . 'index.' . PHP_
 
 require STK_ROOT_PATH . 'common.' . PHP_EXT;
 
-// Start session management
-$user->session_begin();
-$auth->acl($user->data);
-$user->setup('acp/common', $config['default_style']);
-
 // Set a constant so we know when the STK got to a point where it savely loaded all absolutely required stuff
 define('IN_STK', true);
 

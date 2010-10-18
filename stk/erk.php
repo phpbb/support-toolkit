@@ -25,11 +25,24 @@ $critical_repair->run_tool('config_repair');
 
 require STK_ROOT_PATH . 'common.' . PHP_EXT;
 
-// Include common language file
-$user->add_lang('common');
-
 // We'll run the rest of the critical repair tools automatically now
 $critical_repair->autorun_tools();
+
+// At this point things should be runnable
+// Start session management
+$user->session_begin();
+$auth->acl($user->data);
+$user->setup('acp/common', $config['default_style']);
+
+// Purge teh caches
+$umil = new umil(true);
+$umil->cache_purge(array(
+	'data',
+	'template',
+	'theme',
+	'imageset',
+));
+
 
 // Let's tell the user all is okay :)
 $critical_repair->trigger_error("The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.", true);

@@ -43,7 +43,7 @@ class erk_style_repair
 
 	function repair()
 	{
-		global $cache, $db, $table_prefix, $umil;
+		global $db, $table_prefix;
 
 		$sql = 'SELECT s.style_id
 			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
@@ -138,9 +138,6 @@ class erk_style_repair
 
 				// That should be everything, only reset the board style and purge the cache yet
 				set_config('default_style', $style_id);
-				$cache->purge();
-
-				$umil->cache_purge(array('template', 'theme', 'imageset'));
 			}
 			else
 			{
