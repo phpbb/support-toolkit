@@ -258,11 +258,12 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$_datafile = new $class();
 
 		// Set the data
-		$data->bots			= array_merge($data->bots, $_datafile->bots);
-		$data->config_data	= array_merge($data->config_data, $_datafile->config_data);
-		$data->permissions	= array_merge($data->permissions, $_datafile->permissions);
-		$data->modules		= array_merge($data->modules, $_datafile->modules);
-		$data->groups		= array_merge($data->groups, $_datafile->groups);
+		$data->bots					= array_merge($data->bots, $_datafile->bots);
+		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
+		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
+		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
+		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
+		$data->groups				= array_merge($data->groups, $_datafile->groups);
 		$_datafile->get_schema_struct($data->schema_data);
 
 		// Break after our version
@@ -284,6 +285,10 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			{
 				$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
 			}
+
+			// Need to force do some ordering on $module_extras
+			$extra_add = array('ACP_FORUM_PERMISSIONS_COPY');
+			array_splice($data->module_extras['acp']['ACP_FORUM_BASED_PERMISSIONS'], 1, 0, $extra_add);
 
 		// No Break
 

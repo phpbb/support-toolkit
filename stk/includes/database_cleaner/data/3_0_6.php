@@ -61,10 +61,17 @@ class datafile_3_0_6
 	);
 
 	/**
-	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
-	*/
-	var $modules = array(
-		array('module_id' => '190', 'module_enabled' => '1', 'module_display' => '1', 'module_basename' => 'board', 'module_class' => 'acp', 'parent_id' => '3', 'left_id' => '39', 'right_id' => '40', 'module_langname' => 'ACP_FEED_SETTINGS', 'module_mode' => 'feed', 'module_auth' => 'acl_a_board'),
+	 * Define the module structure so that we can populate the database without
+	 * needing to hard-code module_id values
+	 */
+	var $module_categories = array(
+		// No Module categories changes 3.0.5 -> 3.0.6
+	);
+	var $module_extras = array(
+		// This "extra" is added in the middle of the array,
+		// we do this hardcoded in "fetch_cleaner_data". Doesn't
+		// matter as the data is hardcoded in the first place ;)
+		// 'ACP_FORUM_PERMISSIONS_COPY',
 	);
 
 	/**

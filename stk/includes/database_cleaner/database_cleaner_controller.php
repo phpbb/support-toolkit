@@ -322,15 +322,229 @@ class database_cleaner_controller
 	*/
 	function modules(&$error)
 	{
-		global $db;
+		global $db, $lang;
 
 		if (isset($_POST['yes']))
 		{
 			// Remove existing modules
 			$db->sql_query('DELETE FROM ' . MODULES_TABLE);
 
-			// Add the modules
-			$db->sql_multi_insert(MODULES_TABLE, $this->db_cleaner->data->modules);
+			// Re-add the modules
+			if (!class_exists('acp_modules'))
+			{
+				include PHPBB_ROOT_PATH . 'includes/acp/acp_modules.' . PHP_EXT;
+			}
+
+			$_module = &new acp_modules();
+			$module_classes = array('acp', 'mcp', 'ucp');
+
+			// Add categories
+			foreach ($module_classes as $module_class)
+			{
+				$categories = array();
+
+				// Set the module class
+				$_module->module_class = $module_class;
+
+				foreach ($this->db_cleaner->data->module_categories[$module_class] as $cat_name => $subs)
+				{
+					$module_data = array(
+						'module_basename'	=> '',
+						'module_enabled'	=> 1,
+						'module_display'	=> 1,
+						'parent_id'			=> 0,
+						'module_class'		=> $module_class,
+						'module_langname'	=> $cat_name,
+						'module_mode'		=> '',
+						'module_auth'		=> '',
+					);
+
+					// Add category
+					$_module->update_module_data($module_data, true);
+
+					// Check for last sql error happened
+					if ($db->sql_error_triggered)
+					{
+						$error = $db->sql_error($db->sql_error_sql);
+						trigger_error($error);
+					}
+
+					$categories[$cat_name]['id'] = (int) $module_data['module_id'];
+					$categories[$cat_name]['parent_id'] = 0;
+
+					// Create sub-categories...
+					if (is_array($subs))
+					{
+						foreach ($subs as $level2_name)
+						{
+							$module_data = array(
+								'module_basename'	=> '',
+								'module_enabled'	=> 1,
+								'module_display'	=> 1,
+								'parent_id'			=> (int) $categories[$cat_name]['id'],
+								'module_class'		=> $module_class,
+								'module_langname'	=> $level2_name,
+								'module_mode'		=> '',
+								'module_auth'		=> '',
+							);
+
+							$_module->update_module_data($module_data, true);
+
+							// Check for last sql error happened
+							if ($db->sql_error_triggered)
+							{
+								$error = $db->sql_error($db->sql_error_sql);
+								trigger_error($error);
+							}
+
+							$categories[$level2_name]['id'] = (int) $module_data['module_id'];
+							$categories[$level2_name]['parent_id'] = (int) $categories[$cat_name]['id'];
+						}
+					}
+				}
+
+				// Get the modules we want to add... returned sorted by name
+				$module_info = $_module->get_module_infos('', $module_class);
+
+				foreach ($module_info as $module_basename => $fileinfo)
+				{
+					foreach ($fileinfo['modes'] as $module_mode => $row)
+					{
+						foreach ($row['cat'] as $cat_name)
+						{
+							if (!isset($categories[$cat_name]))
+							{
+								continue;
+							}
+
+							$module_data = array(
+								'module_basename'	=> $module_basename,
+								'module_enabled'	=> 1,
+								'module_display'	=> (isset($row['display'])) ? (int) $row['display'] : 1,
+								'parent_id'			=> (int) $categories[$cat_name]['id'],
+								'module_class'		=> $module_class,
+								'module_langname'	=> $row['title'],
+								'module_mode'		=> $module_mode,
+								'module_auth'		=> $row['auth'],
+							);
+
+							$_module->update_module_data($module_data, true);
+
+							// Check for last sql error happened
+							if ($db->sql_error_triggered)
+							{
+								$error = $db->sql_error($db->sql_error_sql);
+								trigger_error($error);
+							}
+						}
+					}
+				}
+
+				// Move some of the modules around since the code above will put them in the wrong place
+				if ($module_class == 'acp')
+				{
+					// Move main module 4 up...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'main'
+							AND module_class = 'acp'
+							AND module_mode = 'main'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_up', 4);
+
+					// Move permissions intro screen module 4 up...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'permissions'
+							AND module_class = 'acp'
+							AND module_mode = 'intro'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_up', 4);
+
+					// Move manage users screen module 5 up...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'users'
+							AND module_class = 'acp'
+							AND module_mode = 'overview'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_up', 5);
+				}
+
+				if ($module_class == 'ucp')
+				{
+					// Move attachment module 4 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'attachments'
+							AND module_class = 'ucp'
+							AND module_mode = 'attachments'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 4);
+				}
+
+				// And now for the special ones
+				// (these are modules which appear in multiple categories and thus get added manually to some for more control)
+				if (isset($this->db_cleaner->data->module_extras[$module_class]))
+				{
+					foreach ($this->db_cleaner->data->module_extras[$module_class] as $cat_name => $mods)
+					{
+						$sql = 'SELECT module_id, left_id, right_id
+							FROM ' . MODULES_TABLE . "
+							WHERE module_langname = '" . $db->sql_escape($cat_name) . "'
+								AND module_class = '" . $db->sql_escape($module_class) . "'";
+						$result = $db->sql_query_limit($sql, 1);
+						$row2 = $db->sql_fetchrow($result);
+						$db->sql_freeresult($result);
+
+						foreach ($mods as $mod_name)
+						{
+							$sql = 'SELECT *
+								FROM ' . MODULES_TABLE . "
+								WHERE module_langname = '" . $db->sql_escape($mod_name) . "'
+									AND module_class = '" . $db->sql_escape($module_class) . "'
+									AND module_basename <> ''";
+							$result = $db->sql_query_limit($sql, 1);
+							$row = $db->sql_fetchrow($result);
+							$db->sql_freeresult($result);
+
+							$module_data = array(
+								'module_basename'	=> $row['module_basename'],
+								'module_enabled'	=> (int) $row['module_enabled'],
+								'module_display'	=> (int) $row['module_display'],
+								'parent_id'			=> (int) $row2['module_id'],
+								'module_class'		=> $row['module_class'],
+								'module_langname'	=> $row['module_langname'],
+								'module_mode'		=> $row['module_mode'],
+								'module_auth'		=> $row['module_auth'],
+							);
+
+							$_module->update_module_data($module_data, true);
+
+							// Check for last sql error happened
+							if ($db->sql_error_triggered)
+							{
+								$error = $db->sql_error($db->sql_error_sql);
+								trigger_error($error);
+							}
+						}
+					}
+				}
+
+				$_module->remove_cache_file();
+			}
 		}
 	}
 

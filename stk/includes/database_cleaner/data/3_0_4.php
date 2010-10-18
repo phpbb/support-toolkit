@@ -43,10 +43,14 @@ class datafile_3_0_4
 	);
 
 	/**
-	* @var Array All default Modules (formatted to work with UMIL Auto Module inserter, it shouldn't be too long)
-	*/
-	var $modules = array(
-		// No Module changes 3.0.3 -> 3.0.4
+	 * Define the module structure so that we can populate the database without
+	 * needing to hard-code module_id values
+	 */
+	var $module_categories = array(
+		// No Module categories changes 3.0.3 -> 3.0.4
+	);
+	var $module_extras = array(
+		// No Module extra changes 3.0.3 -> 3.0.4
 	);
 
 	/**
