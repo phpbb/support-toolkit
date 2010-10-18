@@ -49,6 +49,8 @@ update!
 == Changes since 1.0.2-rc1 ==
 * [Change] Remove the ability to translate the SRT Generator. (Bug #62410)
 * [Fix] Correct a few language issues in the new STK tool (Bug #62407, #62409)
+* [Fix] Correctly re-add all modules when "reset modules" in the database cleaner is ran. (Bug #62429)
+* [Fix] Make sure that the STK is able to run when the user has UMIL < 1.0.3 installed. (Bug #62430)
 * [Fix] Prevent bots from being buplicated in the user groups table when the database cleaner is ran. (Bug #62434)
 
 == Changes since 1.0.1-PL1 ==
