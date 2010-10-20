@@ -198,6 +198,34 @@ else
 * End Login
 */
 
+// Try to override some limits - maybe it helps some...
+@set_time_limit(0);
+$mem_limit = @ini_get('memory_limit');
+if (!empty($mem_limit))
+{
+	$unit = strtolower(substr($mem_limit, -1, 1));
+	$mem_limit = (int) $mem_limit;
+
+	if ($unit == 'k')
+	{
+		$mem_limit = floor($mem_limit / 1024);
+	}
+	else if ($unit == 'g')
+	{
+		$mem_limit *= 1024;
+	}
+	else if (is_numeric($unit))
+	{
+		$mem_limit = floor((int) ($mem_limit . $unit) / 1048576);
+	}
+	$mem_limit = max(128, $mem_limit) . 'M';
+}
+else
+{
+	$mem_limit = '128M';
+}
+@ini_set('memory_limit', $mem_limit);
+
 // Before we continue check whether this is the latest version of the STK, if not. Block access.
 stk_version_check();
 

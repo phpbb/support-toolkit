@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.2-rc1 ==
 * [Change] Remove the ability to translate the SRT Generator. (Bug #62410)
+* [Change] Try to overwrite the PHP time and memory limits, this might prevent some issues.
 * [Fix] Correct a few language issues in the new STK tool (Bug #62407, #62409)
 * [Fix] Correctly re-add all modules when "reset modules" in the database cleaner is ran. (Bug #62429)
 * [Fix] Make sure that the STK is able to run when the user has UMIL < 1.0.3 installed. (Bug #62430)
