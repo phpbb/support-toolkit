@@ -193,7 +193,7 @@ class restore_deleted_users
 		{
 			$conflicted[] = $row['username'];
 		}
-		$db->sql_query($result);
+		$db->sql_freeresult($result);
 
 		return array_diff($users, $conflicted);
 	}
