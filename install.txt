@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.2-rc2 ==
+* [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
+
 == Changes since 1.0.2-rc1 ==
 * [Change] Remove the ability to translate the SRT Generator. (Bug #62410)
 * [Change] Try to overwrite the PHP time and memory limits, this might prevent some issues.

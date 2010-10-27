@@ -216,16 +216,19 @@ class reparse_bbcode
 		// For now disabled. Have to see how to implement this with regards to sigs and pms
 //		$this->_backup($batch);
 
+		// User object used to store a second user object used when parsing signatures. (#62451)
+		$_user2 = new user();
+
 		// Walk through the batch
 		foreach ($batch as $this->data)
 		{
-			// Due to weirdness in the phpBB core we'll have to extract the flags data when
-			// reparsing signatures from the $user->options.
+			// The flags for signatures are hidden inside the user options.
 			if ($mode == BBCODE_REPARSE_SIGS)
 			{
-				$this->data['enable_bbcode']	= $user->optionget('sig_bbcode');
-				$this->data['enable_magic_url']	= $user->optionget('sig_links');
-				$this->data['enable_smilies']	= $user->optionget('sig_smilies');
+				// Set the options
+				$this->data['enable_bbcode']	= $_user2->optionget('sig_bbcode', $this->data['user_options']);
+				$this->data['enable_magic_url']	= $_user2->optionget('sig_links', $this->data['user_options']);
+				$this->data['enable_smilies']	= $_user2->optionget('sig_smilies', $this->data['user_options']);
 			}
 
 			// Update the post flags
@@ -284,6 +287,7 @@ class reparse_bbcode
 			$this->poll_parser		= null;
 			unset($this->poll, $post_data, $pm_data);
 			$this->flags = array_fill_keys(array_keys($this->flags), false);
+			$_user2->keyvalues		= array();
 		}
 
 		// Next step
