@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.2-rc2 ==
 * [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
+* [Fix] Remove PHP 5 only code from the Merge users tool. (Bug #62458)
 
 == Changes since 1.0.2-rc1 ==
 * [Change] Remove the ability to translate the SRT Generator. (Bug #62410)

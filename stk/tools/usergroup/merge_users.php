@@ -121,7 +121,7 @@ class merge_users
 		// Needed for the merge
 		include PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
 
-		$result = self::merge($source, $target);
+		$result = $this->merge($source, $target);
 
 		if (is_string($result))
 		{
@@ -162,14 +162,14 @@ class merge_users
 		trigger_error('MERGE_USERS_MERGED');
 	}
 
-	static function merge($source, $target)
+	function merge($source, $target)
 	{
 		global $db;
 
-		$source = self::get_user_data($source);
-		$target = self::get_user_data($target);
+		$source = $this->get_user_data($source);
+		$target = $this->get_user_data($target);
 
-		$groups = self::get_group_memberships($target['user_id']);
+		$groups = $this->get_group_memberships($target['user_id']);
 
 		$types = array(
 			'id'		=> 'user_id',
@@ -180,7 +180,7 @@ class merge_users
 		$sql = array(
 		);
 
-		foreach (self::get_group_memberships($source['user_id']) as $group)
+		foreach ($this->get_group_memberships($source['user_id']) as $group)
 		{
 			if (isset($groups[$group['id']]))
 			{
@@ -363,7 +363,7 @@ class merge_users
 			if (is_string($data))
 			{
 				// Simple
-				$table = self::table_name($key);
+				$table = $this->table_name($key);
 
 				$sql[] = "UPDATE $table
 					SET $data = {$target['user_id']}
@@ -373,11 +373,11 @@ class merge_users
 			{
 				$method = 'merge_' . $key;
 
-				$sql = array_merge($sql, (array) self::$method($source, $target));
+				$sql = array_merge($sql, (array) $this->$method($source, $target));
 			}
 			else if (is_array($data))
 			{
-				$table = self::table_name($key);
+				$table = $this->table_name($key);
 
 				// Column types
 				$columns = array_shift($data);
@@ -389,7 +389,7 @@ class merge_users
 					{
 						$method = 'merge_' . $key;
 
-						$sql = array_merge($sql, (array) self::$method($source, $target));
+						$sql = array_merge($sql, (array) $this->$method($source, $target));
 
 						continue;
 					}
@@ -570,7 +570,7 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_acl_users($source, $target)
+	function merge_acl_users($source, $target)
 	{
 		global $db;
 
@@ -737,7 +737,7 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_bookmarks($source, $target)
+	function merge_bookmarks($source, $target)
 	{
 		global $db;
 
@@ -774,17 +774,17 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_forums_track($source, $target)
+	function merge_forums_track($source, $target)
 	{
-		return self::merge_track_tables('forum', $source, $target);
+		return $this->merge_track_tables('forum', $source, $target);
 	}
 
-	static function merge_forums_watch($source, $target)
+	function merge_forums_watch($source, $target)
 	{
-		return self::merge_watch_tables('forum', $source, $target);
+		return $this->merge_watch_tables('forum', $source, $target);
 	}
 
-	static function merge_privmsgs($source, $target)
+	function merge_privmsgs($source, $target)
 	{
 		global $db;
 
@@ -809,7 +809,7 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_profile_fields_data($source, $target)
+	function merge_profile_fields_data($source, $target)
 	{
 		global $db;
 
@@ -859,7 +859,7 @@ class merge_users
 		);
 	}
 
-	static function merge_topics_posted($source, $target)
+	function merge_topics_posted($source, $target)
 	{
 		global $db;
 
@@ -900,17 +900,17 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_topics_track($source, $target)
+	function merge_topics_track($source, $target)
 	{
-		return self::merge_track_tables('topic', $source, $target);
+		return $this->merge_track_tables('topic', $source, $target);
 	}
 
-	static function merge_topics_watch($source, $target)
+	function merge_topics_watch($source, $target)
 	{
-		return self::merge_watch_tables('topic', $source, $target);
+		return $this->merge_watch_tables('topic', $source, $target);
 	}
 
-	static function merge_zebra($source, $target)
+	function merge_zebra($source, $target)
 	{
 		global $db;
 
@@ -955,11 +955,11 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_watch_tables($mode, $source, $target)
+	function merge_watch_tables($mode, $source, $target)
 	{
 		global $db;
 
-		$table = self::table_name($mode . 's_watch');
+		$table = $this->table_name($mode . 's_watch');
 		$watches = array();
 
 		$sql = "SELECT {$mode}_id, notify_status
@@ -1006,11 +1006,11 @@ class merge_users
 		return $sql;
 	}
 
-	static function merge_track_tables($mode, $source, $target)
+	function merge_track_tables($mode, $source, $target)
 	{
 		global $db;
 
-		$table = self::table_name($mode . 's_track');
+		$table = $this->table_name($mode . 's_track');
 		$marks = array();
 
 		$sql = "SELECT {$mode}_id, mark_time
@@ -1064,7 +1064,7 @@ class merge_users
 		return $sql;
 	}
 
-	static function table_name($table)
+	function table_name($table)
 	{
 		$table = strtoupper($table) . '_TABLE';
 
@@ -1075,7 +1075,7 @@ class merge_users
 		return constant($table);
 	}
 
-	static function get_user_data($user)
+	function get_user_data($user)
 	{
 		global $db;
 
@@ -1093,7 +1093,7 @@ class merge_users
 		));
 	}
 
-	static function get_group_memberships($user)
+	function get_group_memberships($user)
 	{
 		$groups		= array();
 		$group_set	= group_memberships(false, (int) $user);
