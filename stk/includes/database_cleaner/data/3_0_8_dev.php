@@ -25,14 +25,15 @@ class datafile_3_0_8_dev
 	* @var Array The bots
 	*/
 	var $bots = array(
-		// No bot changes 3.0.7-pl1 -> 3.0.8
+		// Bing bot
+		'Bing [Bot]' => array('bingbot/', ''),
 	);
 
 	/**
 	* @var Array 3.0.8-dev config data
 	*/
 	var $config_data = array(
-		// No config changes 3.0.7-pl1 -> 3.0.8
+		'load_unreads_search' => array('config_value' => '1', 'is_dynamic' => '0'),
 	);
 
 	/**
