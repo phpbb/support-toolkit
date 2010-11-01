@@ -28,9 +28,10 @@ exclude="$tmpdir$packagename/stk/build/exclude.lst"
 echo "Creating $packagename.zip"
 zip -qr "$packagename".zip "$packagename" --exclude @"$exclude"
 
+# Since we use the CDB we don't release *.tar.bz2 archives anymore
 # tar.bz2
-echo "Creating $packagename.tar.bz2"
-tar -cvjf "$packagename".tar.bz2 "$packagename" -X "$exclude" 1> /dev/null 2>&1
+#echo "Creating $packagename.tar.bz2"
+#tar -cvjf "$packagename".tar.bz2 "$packagename" -X "$exclude" 1> /dev/null 2>&1
 
 echo "Moving files to the Desktop"
 mv "$packagename".* $destdir
