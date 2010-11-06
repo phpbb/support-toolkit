@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.2 ==
+* [Fix] Hooks potentially break STK. (Bug #62352)
+
 == Changes since 1.0.2-rc2 ==
 * [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
 * [Fix] Remove PHP 5 only code from the Merge users tool. (Bug #62458)
