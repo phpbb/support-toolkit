@@ -405,6 +405,7 @@ class erk_bom_sniffer
 			'3_0_7.php',
 			'3_0_7_pl1.php',
 			'3_0_8_dev.php',
+			'3_0_9_dev.php',
 		),
 		'stk/includes/database_cleaner/' => array(
 			'database_cleaner_controller.php',
