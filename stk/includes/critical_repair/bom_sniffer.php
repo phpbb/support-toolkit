@@ -384,6 +384,8 @@ class erk_bom_sniffer
 			'viewforum.php',
 			'viewtopic.php',
 		),
+
+		// By default also sniff all the STK files
 		'stk/' => array(
 			'common.php',
 			'index.php',
@@ -404,7 +406,7 @@ class erk_bom_sniffer
 			'3_0_6.php',
 			'3_0_7.php',
 			'3_0_7_pl1.php',
-			'3_0_8_dev.php',
+			'3_0_8_RC1.php',
 		),
 		'stk/includes/database_cleaner/' => array(
 			'database_cleaner_controller.php',

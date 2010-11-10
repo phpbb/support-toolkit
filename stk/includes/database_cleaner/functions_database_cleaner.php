@@ -276,7 +276,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	// Perform some actions that only have to be done on given versions or on all
 	switch($phpbb_version)
 	{
-		case '3_0_8_dev' :
+		case '3_0_8_RC1' :
 		case '3_0_7_pl1' :
 		case '3_0_7' :
 		case '3_0_6' :
