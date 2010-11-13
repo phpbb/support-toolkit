@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* This file is part of French (Formal Honorifics) STK translation.
-* Copyright (C) 2010 phpBB.fr
+* This file is part of French STK translation.
+* Copyright (c) 2010 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 *
 * @package   Support Toolkit - Merge Users
 * @author    ToonArmy <toonarmy@phpbb.com> (Chris Smith) http://www.cs278.org/
-* @author    Maël Soucaze <maelsoucaze@phpbb.fr> (Maël Soucaze) http://www.phpbb.fr/
+* @author    Maël Soucaze <maelsoucaze@gmail.com> http://mael.soucaze.com/
 * @copyright (c) 2009 phpBB Group
 * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License
-* @version   $Id: merge_users.php 489 2010-08-13 07:40:58Z toonarmy $
+* @version   $Id$
 *
 */
 

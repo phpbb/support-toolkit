@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* This file is part of French (Formal Honorifics) STK translation.
-* Copyright (C) 2010 phpBB.fr
+* This file is part of French STK translation.
+* Copyright (c) 2010 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *
 * @package   Support Toolkit - Database Cleaner
-* @author    Maël Soucaze <maelsoucaze@phpbb.fr> (Maël Soucaze) http://www.phpbb.fr/
+* @author    Maël Soucaze <maelsoucaze@gmail.com> http://mael.soucaze.com/
 * @copyright (c) 2009 phpBB Group
 * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License
-* @version   $Id: database_cleaner.php 415 2010-06-09 00:44:26Z iwisdom $
+* @version   $Id$
 *
 */
 
