@@ -136,7 +136,7 @@ class datafile_3_0_6
 		$schema_data['phpbb_users']['COLUMNS']['user_reminded_time']		= array('TIMESTAMP', 0);
 
 		// Change columns
-		$schema_data['phpbb_users']['COLUMNS']['user_options']				= array('UINT:11'. 230271);
+		$schema_data['phpbb_users']['COLUMNS']['user_options']				= array('UINT:11', 230271);
 
 		// Change key
 		$schema_data['phpbb_log']['KEYS']['log_time']						= array('INDEX', 'log_time');
