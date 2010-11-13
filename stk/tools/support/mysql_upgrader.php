@@ -71,10 +71,6 @@ class mysql_upgrader
 		// Setup the database cleaner
 		$this->_db_cleaner->_setup();
 
-		echo'<pre>';
-
-		$newline = PHP_EOL;
-
 		$sql = 'DESCRIBE ' . POSTS_TABLE . ' post_text';
 		$result = $db->sql_query($sql);
 
@@ -94,12 +90,12 @@ class mysql_upgrader
 			$drop_index = true;
 		}
 
-		echo "USE $dbname;$newline$newline";
+		$this->_upgrader = 'USE ' . $dbname . PHP_EOL . PHP_EOL;
 
 		foreach ($this->_db_cleaner->data->schema_data as $table_name => $table_data)
 		{
 			// Write comment about table
-			echo "# Table: '{$table_name}'$newline";
+			$this->_upgrader .= '# Table: ' . $table_name . PHP_EOL;
 
 			// Create Table statement
 			$generator = $textimage = false;
@@ -107,11 +103,13 @@ class mysql_upgrader
 			// Do we need to DROP a fulltext index before we alter the table?
 			if ($table_name == ($table_prefix . 'posts') && $drop_index)
 			{
-				echo "ALTER TABLE {$table_name}{$newline}";
-				echo "DROP INDEX post_text,{$newline}DROP INDEX post_subject,{$newline}DROP INDEX post_content;{$newline}{$newline}";
+				$this->_upgrader .= 'ALTER TABLE ' . $table_name . PHP_EOL;
+				$this->_upgrader .= 'DROP INDEX post_text, ';
+				$this->_upgrader .= 'DROP INDEX post_subject, ';
+				$this->_upgrader .= 'DROP INDEX post_content;' . PHP_EOL . PHP_EOL;
 			}
 
-			$line = "ALTER TABLE {$table_name} $newline";
+			$line = 'ALTER TABLE ' . $table_name . PHP_EOL;
 
 			// Table specific so we don't get overlap
 			$modded_array = array();
@@ -186,7 +184,7 @@ class mysql_upgrader
 					$line .= ' COLLATE utf8_bin';
 				}
 
-				$line .= ",$newline";
+				$line .= ',' . PHP_EOL;
 			}
 
 			// Write Keys
@@ -212,24 +210,27 @@ class mysql_upgrader
 					}
 					if ($repair)
 					{
-						$line .= "\tDROP INDEX " . $key_name . ",$newline";
+						$line .= "\tDROP INDEX " . $key_name . ',' . PHP_EOL;
 						$line .= $temp;
-						$line .= ' ' . $key_name . ' (' . implode(', ', $key_data[1]) . "),$newline";
+						$line .= ' ' . $key_name . ' (' . implode(', ', $key_data[1]) . '),' . PHP_EOL;
 					}
 				}
 			}
 
 			//$line .= "\tCONVERT TO CHARACTER SET `utf8`$newline";
-			$line .= "\tDEFAULT CHARSET=utf8 COLLATE=utf8_bin;$newline$newline";
+			$line .= "\tDEFAULT CHARSET=utf8 COLLATE=utf8_bin;" . PHP_EOL . PHP_EOL;
 
-			echo $line . "$newline";
+			$this->_upgrader .= $line . PHP_EOL;
 
 			// Do we now need to re-add the fulltext index? ;)
 			if ($table_name == ($table_prefix . 'posts') && $drop_index)
 			{
-				echo "ALTER TABLE $table_name ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text){$newline}";
+				$this->_upgrader .= 'ALTER TABLE ' . $table_name . ' ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text)' . PHP_EOL;
 			}
 		}
+
+		echo'<pre>';
+		print($this->_upgrader);
 		exit;
 	}
 }
