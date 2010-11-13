@@ -92,7 +92,7 @@ class mysql_upgrader
 
 		$this->_upgrader = 'USE ' . $dbname . PHP_EOL . PHP_EOL;
 
-		foreach ($this->_db_cleaner->data->schema_data as $table_name => $table_data)
+		foreach ($this->_db_cleaner->data->tables as $table_name => $table_data)
 		{
 			// Write comment about table
 			$this->_upgrader .= '# Table: ' . $table_name . PHP_EOL;
