@@ -18,10 +18,10 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *
 * @package   Support Toolkit - Merge Users
+* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
 * @author    ToonArmy <toonarmy@phpbb.com> (Chris Smith) http://www.cs278.org/
-* @author    Maël Soucaze <maelsoucaze@gmail.com> http://mael.soucaze.com/
 * @copyright (c) 2009 phpBB Group
-* @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License
+* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
 * @version   $Id$
 *
 */
