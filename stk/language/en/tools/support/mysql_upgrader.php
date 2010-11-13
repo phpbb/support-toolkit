@@ -45,6 +45,7 @@ $lang = array_merge($lang, array(
 										<li>Or run via the MySQL console.</li>
 										<li>Or given to the host to run.</li>
 									</ul>',
+	'MYSQL_UPGRADER_DOWNLOAD'	=> 'You can also download the result <a href="%s">here</a>',
 
 	'TOOL_MYSQL_ONLY'	=> 'This tool is only available for users of the MySQL DBMS',
 ));

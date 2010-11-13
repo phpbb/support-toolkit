@@ -58,6 +58,17 @@ class mysql_upgrader
 	 */
 	function display_options()
 	{
+		global $cache;
+
+		// The user requested to download the result?
+		if (($download = request_var('download', false)) !== false)
+		{
+			$this->_download_result();
+		}
+
+		// Distroy the cached file
+		$cache->destroy('_stk_mysql_upgrader_result');
+
 		return 'MYSQL_UPGRADER';
 	}
 
@@ -66,7 +77,7 @@ class mysql_upgrader
 	 */
 	function run_tool()
 	{
-		global $db, $dbname, $table_prefix, $template, $umil;
+		global $cache, $db, $dbname, $table_prefix, $template, $umil;
 
 		// Setup the database cleaner
 		$this->_db_cleaner->_setup();
@@ -229,8 +240,14 @@ class mysql_upgrader
 			}
 		}
 
+		// Write the result also to the cache so it can be downloaded later on
+		$cache->put('_stk_mysql_upgrader_result', $this->_upgrader);
+
 		// Set the template var
-		$template->assign_var('UPGRADER', str_replace("\t", "&nbsp;&nbsp;&nbsp;", nl2br($this->_upgrader)));
+		$template->assign_vars(array(
+			'L_MYSQL_UPGRADER_DOWNLOAD' => user_lang('MYSQL_UPGRADER_DOWNLOAD', append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'download' => true))),
+			'UPGRADER' => str_replace("\t", "&nbsp;&nbsp;&nbsp;", nl2br($this->_upgrader)),
+		));
 
 		// Output the result to the template
 		page_header('MYSQL_UPGRADER_RESULT');
@@ -240,6 +257,31 @@ class mysql_upgrader
 		));
 
 		page_footer();
+	}
+
+	/**
+	 * Download the MySQL Upgrader script
+	 * @access private
+	 * @return void
+	 */
+	function _download_result()
+	{
+		global $cache;
+
+		// Read from the cache
+		$result = $cache->get('_stk_mysql_upgrader_result');
+		if ($result === false)
+		{
+			return;
+		}
+
+		// Write the file
+		header('Content-Type: text/x-delimtext; name="mysql_upgrader.sql"');
+		header('Content-disposition: attachment; filename=mysql_upgrader.sql');
+		print($result);
+
+		// Exit
+		exit_handler();
 	}
 }
 ?>
