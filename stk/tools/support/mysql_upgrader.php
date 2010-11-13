@@ -66,7 +66,7 @@ class mysql_upgrader
 	 */
 	function run_tool()
 	{
-		global $db, $dbname, $table_prefix, $umil;
+		global $db, $dbname, $table_prefix, $template, $umil;
 
 		// Setup the database cleaner
 		$this->_db_cleaner->_setup();
@@ -229,9 +229,17 @@ class mysql_upgrader
 			}
 		}
 
-		echo'<pre>';
-		print($this->_upgrader);
-		exit;
+		// Set the template var
+		$template->assign_var('UPGRADER', str_replace("\t", "&nbsp;&nbsp;&nbsp;", nl2br($this->_upgrader)));
+
+		// Output the result to the template
+		page_header('MYSQL_UPGRADER_RESULT');
+
+		$template->set_filenames(array(
+			'body' => 'tools/mysql_upgrader.html',
+		));
+
+		page_footer();
 	}
 }
 ?>

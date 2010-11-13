@@ -39,6 +39,12 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER'			=> 'MySQL Upgrader',
 	'MYSQL_UPGRADER_CONFIRM'	=> 'Are you sure you want to run the MySQL upgrader?<br />Make sure that you\'ve made a full backup of the database before proceding!',
+	'MYSQL_UPGRADER_RESULT'		=> 'The MySQL Upgrader has successfully generated the query that you can use to correct the database schema of the phpBB installation. This result can be:
+									<ul>
+										<li>Be run all in one go via phpmyadmin <em>(see http://www.phpbb.com/kb/article/executing-sql-queries-in-phpmyadmin/)</em>.</li>
+										<li>Or run via the MySQL console.</li>
+										<li>Or given to the host to run.</li>
+									</ul>',
 
 	'TOOL_MYSQL_ONLY'	=> 'This tool is only available for users of the MySQL DBMS',
 ));
