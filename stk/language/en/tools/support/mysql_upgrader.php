@@ -37,15 +37,14 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'MYSQL_UPGRADER'			=> 'MySQL Upgrader',
-	'MYSQL_UPGRADER_CONFIRM'	=> 'Are you sure you want to run the MySQL upgrader?<br />Make sure that you\'ve made a full backup of the database before proceding!',
-	'MYSQL_UPGRADER_RESULT'		=> 'The MySQL Upgrader has successfully generated the query that you can use to correct the database schema of the phpBB installation. This result can be:
-									<ul>
-										<li>Be run all in one go via phpmyadmin <em>(see http://www.phpbb.com/kb/article/executing-sql-queries-in-phpmyadmin/)</em>.</li>
-										<li>Or run via the MySQL console.</li>
-										<li>Or given to the host to run.</li>
-									</ul>',
-	'MYSQL_UPGRADER_DOWNLOAD'	=> 'You can also download the result <a href="%s">here</a>',
+	'MYSQL_UPGRADER'					=> 'MySQL Upgrader',
+	'MYSQL_UPGRADER_EXPLAIN'			=> 'This tool is designed to resolve certain issues that are caused when the MySQL database used by your phpBB installation is upgraded. This upgrade will cause the database schema to become incompatible with the new version <em>See also the “<a href="http://www.phpbb.com/kb/article/doesnt-have-a-default-value-errors">Doesn\'t have a default value errors</a>” KB article.</em>',
+	'MYSQL_UPGRADER_DOWNLOAD'			=> 'Download',
+	'MYSQL_UPGRADER_DOWNLOAD_EXPLAIN'	=> 'By checking this option the MySQL Upgrader will generate the queries and display the output to you, from there you can download the result file.',
+	'MYSQL_UPGRADER_RESULT'				=> 'Here you\'ll find the queries that must be run to update the database schema to the correct MySQL version. Click <a href="%s">here</a> to download the queries in a .sql file.',
+	'MYSQL_UPGRADER_RUN'				=> 'Run',
+	'MYSQL_UPGRADER_RUN_EXPLAIN'		=> 'By checking this option the MySQL Upgrader will generate the queries and automatically run the result on your database.<br />This might take some time, do <strong>not</strong> interrupt this process until the tool notifies you that its ready.',
+	'MYSQL_UPGRADER_SUCCESSFULL'		=> 'The MySQL Upgrader has been run successfully',
 
 	'TOOL_MYSQL_ONLY'	=> 'This tool is only available for users of the MySQL DBMS',
 ));

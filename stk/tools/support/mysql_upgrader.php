@@ -66,10 +66,16 @@ class mysql_upgrader
 			$this->_download_result();
 		}
 
-		// Distroy the cached file
 		$cache->destroy('_stk_mysql_upgrader_result');
 
-		return 'MYSQL_UPGRADER';
+		return array(
+			'title'	=> 'MYSQL_UPGRADER',
+			'vars'	=> array(
+				'legend1'	=> 'MYSQL_UPGRADER',
+				'download'	=> array('lang'  => 'MYSQL_UPGRADER_DOWNLOAD', 'type' => 'checkbox', 'explain' => 'true'),
+				'run'		=> array('lang'  => 'MYSQL_UPGRADER_RUN', 'type' => 'checkbox', 'explain' => 'true'),
+			),
+		);
 	}
 
 	/**
@@ -81,6 +87,11 @@ class mysql_upgrader
 
 		// Setup the database cleaner
 		$this->_db_cleaner->_setup();
+
+		// See what to do
+		$output	= request_var('output', false);
+		$run	= request_var('run', false);
+		$run_result = ($output === false && $run === true) ? true : false;
 
 		$sql = 'DESCRIBE ' . POSTS_TABLE . ' post_text';
 		$result = $db->sql_query($sql);
@@ -101,12 +112,13 @@ class mysql_upgrader
 			$drop_index = true;
 		}
 
-		$this->_upgrader = 'USE ' . $dbname . PHP_EOL . PHP_EOL;
-
 		foreach ($this->_db_cleaner->data->tables as $table_name => $table_data)
 		{
 			// Write comment about table
-			$this->_upgrader .= '# Table: ' . $table_name . PHP_EOL;
+			if (!$run_result)
+			{
+				$this->_upgrader .= '# Table: ' . $table_name . PHP_EOL;
+			}
 
 			// Create Table statement
 			$generator = $textimage = false;
@@ -240,17 +252,24 @@ class mysql_upgrader
 			}
 		}
 
+		// If the user only checked "run" than we run the result set
+		if ($run_result)
+		{
+			$this->_run_result();
+		}
+
 		// Write the result also to the cache so it can be downloaded later on
 		$cache->put('_stk_mysql_upgrader_result', $this->_upgrader);
 
+
 		// Set the template var
 		$template->assign_vars(array(
-			'L_MYSQL_UPGRADER_DOWNLOAD' => user_lang('MYSQL_UPGRADER_DOWNLOAD', append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'download' => true))),
+			'L_MYSQL_UPGRADER_RESULT' => user_lang('MYSQL_UPGRADER_RESULT', append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'download' => true))),
 			'UPGRADER' => str_replace("\t", "&nbsp;&nbsp;&nbsp;", nl2br($this->_upgrader)),
 		));
 
 		// Output the result to the template
-		page_header('MYSQL_UPGRADER_RESULT');
+		page_header(user_lang('MYSQL_UPGRADER'));
 
 		$template->set_filenames(array(
 			'body' => 'tools/mysql_upgrader.html',
@@ -283,5 +302,20 @@ class mysql_upgrader
 		// Exit
 		exit_handler();
 	}
+
+	function _run_result()
+	{
+		global $umil;
+
+		// Split up in seperate queries
+		$queries = explode(';', $this->_upgrader);
+
+		// Run all the queries
+		foreach ($queries as $query)
+		{
+			$umil->db_tools->db->sql_query(trim($query));
+		}
+
+		trigger_error('MYSQL_UPGRADER_SUCCESSFULL');
+	}
 }
-?>
