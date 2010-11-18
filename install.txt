@@ -47,7 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.2 ==
-* [Feature] Modify Reparse BBCode tool to allow user to specify post IDs to reparse.
+* [Feature] Modify Reparse BBCode tool to allow user to specify post IDs and PM IDs to reparse.
 
 == Changes since 1.0.2-rc2 ==
 * [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
