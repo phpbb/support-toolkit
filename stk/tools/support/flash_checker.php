@@ -74,42 +74,6 @@ class flash_checker
 		trigger_error(user_lang('FLASH_CHECKER_FOUND', append_sid(STK_ROOT, array('c' => 'admin', 't' => 'reparse_bbcode', 'submit' => true))));
 	}
 
-	function get_flash_regex($uid)
-	{
-		return "#\[flash=([0-9]+),([0-9]+):$uid\](.*?)\[/flash:$uid\]#";
-	}
-
-	// extract all valid flash bbcodes
-	// check if the bbcode content is a valid URL for each match
-	function is_valid_flash_bbcode($cleaned_content, $uid)
-	{
-		$regex = $this->get_flash_regex($uid);
-
-		$url_regex = get_preg_expression('url');
-		$www_url_regex = get_preg_expression('www_url');
-
-		if (preg_match_all($regex, $cleaned_content, $matches))
-		{
-			foreach ($matches[3] as $flash_url)
-			{
-				if (!preg_match("#^($url_regex|$www_url_regex)$#i", $flash_url))
-				{
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-
-	// check if a bitfield includes flash
-	// 11 = flash bit
-	function has_flash_enabled($bitfield_data)
-	{
-		$bitfield = new bitfield($bitfield_data);
-		return $bitfield->get(11);
-	}
-
 	function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
 	{
 		$ids = $this->get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $uid_field, $bitfield_field);
@@ -152,5 +116,41 @@ class flash_checker
 		$db->sql_freeresult($result);
 
 		return $ids;
+	}
+
+	function get_flash_regex($uid)
+	{
+		return "#\[flash=([0-9]+),([0-9]+):$uid\](.*?)\[/flash:$uid\]#";
+	}
+
+	// extract all valid flash bbcodes
+	// check if the bbcode content is a valid URL for each match
+	function is_valid_flash_bbcode($cleaned_content, $uid)
+	{
+		$regex = $this->get_flash_regex($uid);
+
+		$url_regex = get_preg_expression('url');
+		$www_url_regex = get_preg_expression('www_url');
+
+		if (preg_match_all($regex, $cleaned_content, $matches))
+		{
+			foreach ($matches[3] as $flash_url)
+			{
+				if (!preg_match("#^($url_regex|$www_url_regex)$#i", $flash_url))
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	// check if a bitfield includes flash
+	// 11 = flash bit
+	function has_flash_enabled($bitfield_data)
+	{
+		$bitfield = new bitfield($bitfield_data);
+		return $bitfield->get(11);
 	}
 }
