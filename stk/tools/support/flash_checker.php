@@ -112,6 +112,16 @@ class flash_checker
 
 	function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
 	{
+		$ids = $this->get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $uid_field, $bitfield_field);
+
+		if (sizeof($ids))
+		{
+			$this->_vulnerable[$table_name] = $ids;
+		}
+	}
+
+	function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
+	{
 		global $db;
 
 		$ids = array();
@@ -141,21 +151,6 @@ class flash_checker
 
 		$db->sql_freeresult($result);
 
-		$size = sizeof($ids);
-		if ($size)
-		{
-			if (!isset($this->_vulnerable[$table_name]))
-			{
-				$this->_vulnerable[$table_name] = array();
-			}
-
-			for ($i = 0; $i < $size; $i++)
-			{
-				if (!in_array($ids[$i], $this->_vulnerable[$table_name]))
-				{
-					$this->_vulnerable[$table_name][] = $ids[$i];
-				}
-			}
-		}
+		return $ids;
 	}
 }
