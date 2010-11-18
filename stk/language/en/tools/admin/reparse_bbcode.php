@@ -51,6 +51,9 @@ $lang = array_merge($lang, array(
 		1	=> 'Finished reparsing the posts, moving on to private messages.',
 		2	=> 'Finished reparsing private messages, moving on to signatures.',
 	),
+	'REPARSE_POST_IDS'				=> 'Reparse Specific Posts',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'To reparse specific posts only, specify post IDs in a comma-separated list. All other options will be ignored.',
+	'REPARSE_IDS_INVALID'			=> 'The post IDs you submitted were not valid; please ensure that post IDs are listed as a comma separated list (e.g. 1,2,19,42).',
 ));
 
 ?>
