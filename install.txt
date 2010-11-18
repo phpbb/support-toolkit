@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.2 ==
+* [Add] Added a tool to find potential dangerous flash BBCodes in posts, PMs and signatures.
 * [Feature] Modify Reparse BBCode tool to allow user to specify post IDs and PM IDs to reparse.
 
 == Changes since 1.0.2-rc2 ==

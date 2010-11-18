@@ -59,7 +59,7 @@ class flash_checker
 		}
 
 		// Here we'll create the cache files the reparse BBCode tool expects so
-		// the tool can be ran straight away
+		// the tool can be run straight away
 		global $cache;
 
 		if (!empty($this->_vulnerable[POSTS_TABLE]))
