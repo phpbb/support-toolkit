@@ -58,7 +58,7 @@ class mysql_upgrader
 	 */
 	function display_options()
 	{
-		global $cache;
+		global $cache, $error;
 
 		// The user requested to download the result?
 		if (($download = request_var('download', false)) !== false)
@@ -67,6 +67,9 @@ class mysql_upgrader
 		}
 
 		$cache->destroy('_stk_mysql_upgrader_result');
+
+		// Won't win a beauty contest, but it works
+		$error[] = user_lang('MYSQL_UPGRADER_BACKUP');
 
 		return array(
 			'title'	=> 'MYSQL_UPGRADER',
