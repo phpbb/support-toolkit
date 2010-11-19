@@ -19,7 +19,7 @@ if (!defined('IN_PHPBB'))
  * A tool that checks the database for vulnerable
  * flash BBCodes.
  * This tool is requested by the dev team to resolve an flash bbcode issue that
- * was fixed in this release.
+ * was fixed in phpBB 3.0.8.
  * @author phpBB development team
  */
 class flash_checker
