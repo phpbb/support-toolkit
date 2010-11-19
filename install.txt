@@ -47,7 +47,9 @@ update!
 
 = Changelog =
 == Changes since 1.0.2 ==
+* [Change] Add support for phpBB 3.0.8.
 * [Feature] Modify Reparse BBCode tool to allow user to specify post IDs and PM IDs to reparse.
+* [Fix] Database cleaner file 3_0_6.php corrupted. (Bug #62484)
 
 == Changes since 1.0.2-rc2 ==
 * [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
