@@ -71,7 +71,7 @@ class flash_checker
 		{
 			$cache->put('_stk_reparse_pms', implode(',', $this->_vulnerable[PRIVMSGS_TABLE]));
 		}
-		trigger_error(user_lang('FLASH_CHECKER_FOUND', append_sid(STK_ROOT, array('c' => 'admin', 't' => 'reparse_bbcode', 'submit' => true))));
+		trigger_error(user_lang('FLASH_CHECKER_FOUND', append_sid(STK_INDEX, array('c' => 'admin', 't' => 'reparse_bbcode', 'submit' => true))));
 	}
 
 	function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
