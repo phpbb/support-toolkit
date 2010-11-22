@@ -404,8 +404,8 @@ class erk_bom_sniffer
 			'3_0_6.' . PHP_EXT,
 			'3_0_7.' . PHP_EXT,
 			'3_0_7_pl1.' . PHP_EXT,
-			'3_0_8_dev.' . PHP_EXT,
-			'3_0_9_dev.' . PHP_EXT,
+			'3_0_8.' . PHP_EXT,
+			'3_0_9.' . PHP_EXT,
 		),
 		'stk/includes/database_cleaner/' => array(
 			'database_cleaner_controller.' . PHP_EXT,

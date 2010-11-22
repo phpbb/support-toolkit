@@ -2,7 +2,6 @@
 /**
 *
 * @package Support Toolkit - Database Cleaner
-* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -17,30 +16,29 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
-* phpBB 3.0.8-dev data file
+* phpBB 3.0.9-dev data file
 */
-class datafile_3_0_8_RC1
+class datafile_3_0_9
 {
 	/**
 	* @var Array The bots
 	*/
 	var $bots = array(
-		// Bing bot
-		'Bing [Bot]' => array('bingbot/', ''),
+		// No bot changes 3.0.8 -> 3.0.9
 	);
 
 	/**
 	* @var Array 3.0.8-dev config data
 	*/
 	var $config_data = array(
-		'load_unreads_search' => array('config_value' => '1', 'is_dynamic' => '0'),
+		// No config changes 3.0.8 -> 3.0.9
 	);
 
 	/**
 	* @var Array All default permission settings
 	*/
 	var $permissions = array(
-		// No permission changes 3.0.7-pl1 -> 3.0.8
+		// No permission changes 3.0.8 -> 3.0.9
 	);
 
 	/**
@@ -48,17 +46,17 @@ class datafile_3_0_8_RC1
 	 * needing to hard-code module_id values
 	 */
 	var $module_categories = array(
-		// No Module categories changes 3.0.7-pl1 -> 3.0.8
+		// No Module categories changes 3.0.8 -> 3.0.9
 	);
 	var $module_extras = array(
-		// No Module extra changes 3.0.7-pl1 -> 3.0.8
+		// No Module extra changes 3.0.8 -> 3.0.9
 	);
 
 	/**
 	* @var Arra All default groups
 	*/
 	var $groups = array(
-		// No Group changes 3.0.7-pl1 -> 3.0.8
+		// No Group changes 3.0.8 -> 3.0.9
 	);
 
 	/**
@@ -95,6 +93,6 @@ class datafile_3_0_8_RC1
 	*/
 	function get_schema_struct(&$schema_data)
 	{
-		// No schema changes 3.0.7-pl1 -> 3.0.8
+		// No schema changes 3.0.8 -> 3.0.9
 	}
 }

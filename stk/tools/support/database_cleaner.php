@@ -63,16 +63,24 @@ class database_cleaner
 		// Correctly format the version number. Only RC releases are in uppercase
 		$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
 
+		// Unstable versions can only be used when debugging
+		if (preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
+		{
+			if (!defined('DEBUG'))
+			{
+				return 'UNSTABLE_DEBUG_ONLY';
+			}
+			else
+			{
+				// Strip down to the magic "5"
+				$this->phpbb_version = substr($this->phpbb_version, 0, 5);
+			}
+		}
+
 		// Data file exists?
 		if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/data/' . $this->phpbb_version . '.' . PHP_EXT) === false)
 		{
 			return 'DATAFILE_NOT_FOUND';
-		}
-
-		// Unstable versions can only be used when debugging
-		if (!defined('DEBUG') && preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
-		{
-			return 'UNSTABLE_DEBUG_ONLY';
 		}
 
 		// As this method is always called we can use a small hackish way to ensure the database cleaner is always setup when needed
