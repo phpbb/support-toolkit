@@ -382,6 +382,8 @@ class erk_bom_sniffer
 			'viewforum.' . PHP_EXT,
 			'viewtopic.' . PHP_EXT,
 		),
+
+		// By default also sniff all the STK files
 		'stk/' => array(
 			'common.' . PHP_EXT,
 			'index.' . PHP_EXT,

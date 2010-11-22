@@ -46,11 +46,17 @@ update!
 
 
 = Changelog =
-== Changes since 1.0.2 ==
+== Changes since 1.0.2.1 ==
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
 * [Fix] Hooks potentially break STK. (Bug #62352)
 * [Fix] BOM Sniffer white list uses hard file extensions. (Bug 62473)
 * [Fix] Hardcoded path to the STK. (Bug #62493)
+
+== Changes since 1.0.2
+* [Add] Added a tool to find potential dangerous flash BBCodes in posts, PMs and signatures.
+* [Change] Add support for phpBB 3.0.8.
+* [Feature] Modify Reparse BBCode tool to allow user to specify post IDs and PM IDs to reparse.
+* [Fix] Database cleaner file 3_0_6.php corrupted. (Bug #62484)
 
 == Changes since 1.0.2-rc2 ==
 * [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)

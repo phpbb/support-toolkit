@@ -106,11 +106,15 @@ class reparse_bbcode
 	*/
 	function display_options()
 	{
-		// Little hack to display a checkbox
-		global $template;
-		$template->assign_var('S_DISPLAY_REPARSE_BBCODE_OPTION', true);
-
-		return 'REPARSE_BBCODE';
+		return array(
+			'title'	=> 'REPARSE_BBCODE',
+			'vars'	=> array(
+				'legend1'			=> 'REPARSE_BBCODE',
+				'reparseids'		=> array('lang'	=> 'REPARSE_POST_IDS', 'type' => 'textarea:3:255', 'explain' => 'true'),
+				'reparsepms'		=> array('lang' => 'REPARSE_PM_IDS', 'type' => 'textarea:3:255', 'explain' => 'true'),
+				'reparseall'		=> array('lang' => 'REPARSE_ALL', 'type' => 'checkbox', 'explain' => true),
+			),
+		);
 	}
 
 	/**
@@ -118,17 +122,66 @@ class reparse_bbcode
 	*/
 	function run_tool()
 	{
-		global $config, $db, $user;
-
+		global $cache, $config, $db, $user;
 		// Prevent some errors from missing language strings.
 		$user->add_lang('posting');
 
 		// Define some vars that we'll need
-		$mode	= request_var('mode', BBCODE_REPARSE_POSTS);
-		$step	= request_var('step', 0);
-		$start	= $step * $this->step_size;
-		$cnt	= 0;
+		$reparse_id 		= request_var('reparseids', '');
+		$reparse_pm_id		= request_var('reparsepms', '');
+		$mode				= request_var('mode', BBCODE_REPARSE_POSTS);
+		$step				= request_var('step', 0);
+		$start				= $step * $this->step_size;
+		$cnt				= 0;
 
+		// If post IDs or PM IDs were specified, we need to make sure the list is valid.
+		$reparse_posts = array();
+		$reparse_pms = array();
+		
+		if (!empty($reparse_id))
+		{
+			$reparse_posts = explode(',', $reparse_id);
+			
+			if (!sizeof($reparse_posts))
+			{
+				trigger_error('REPARSE_IDS_INVALID');
+			}
+			
+			// Make sure there's no extra whitespace
+			array_walk($reparse_posts, array($this, '_trim_post_ids'));
+			
+			$cache->put('_stk_reparse_posts', $reparse_posts);
+		}
+		else if ($mode == BBCODE_REPARSE_POSTS)
+		{
+			if (($result = $cache->get('_stk_reparse_posts')) !== false)
+			{
+				$reparse_posts = $result;
+			}
+		}
+		
+		if (!empty($reparse_pm_id))
+		{
+			$reparse_pms = explode(',', $reparse_pm_id);
+			
+			if (!sizeof($reparse_pms))
+			{
+				trigger_error('REPARSE_IDS_INVALID');
+			}
+			
+			// Again, make sure the format is okay
+			array_walk($reparse_pms, array($this, '_trim_post_ids'));
+			
+			$cache->put('_stk_reparse_pms', $reparse_pms);
+		}
+		else if ($mode == BBCODE_REPARSE_PMS)
+		{
+			if (($result = $cache->get('_stk_reparse_pms')) !== false)
+			{
+				$reparse_pms = $result;
+			}
+		}
+		
 		// The message parser
 		if (!class_exists('parse_message'))
 		{
@@ -170,7 +223,7 @@ class reparse_bbcode
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield != '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id',
+					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield != '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id' . (sizeof($reparse_posts) ? ' AND ' . $db->sql_in_set('p.post_id', $reparse_posts) : ''),
 				);
 			break;
 
@@ -181,7 +234,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND " : '') . 'u.user_id = pm.author_id',
+					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND " : '') . 'u.user_id = pm.author_id' . (sizeof($reparse_pms) ? ' AND ' . $db->sql_in_set('pm.msg_id', $reparse_pms) : ''),
 				);
 			break;
 
@@ -204,6 +257,8 @@ class reparse_bbcode
 		if (!$batch && $mode == BBCODE_REPARSE_SIGS)
 		{
 			// Done!
+			$cache->destroy('_stk_reparse_posts');
+			$cache->destroy('_stk_reparse_pms');
 			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
 		}
 		else if (!$batch)
@@ -595,6 +650,11 @@ class reparse_bbcode
 		}
 
 		$db->sql_multi_insert($this->_backup_table_name, $data);
+	}
+	function _trim_post_ids(&$post_id, $key)
+	{
+		// This is difficult, no?
+		$post_id = (int) trim($post_id);
 	}
 }
 ?>
