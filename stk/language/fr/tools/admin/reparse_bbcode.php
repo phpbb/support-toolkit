@@ -59,7 +59,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Réanalyser tous les BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Si ceci est activé, la réanalyse du BBCode réanalysera tout le contenu sur le forum. Par défaut, l’outil rénalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB.',
+	'REPARSE_ALL_EXPLAIN'		=> 'Si ceci est activé, la réanalyse du BBCode réanalysera tout le contenu sur le forum. Par défaut, l’outil rénalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.',
 	'REPARSE_BBCODE'			=> 'Réanalyser le BBCode',
 	'REPARSE_BBCODE_COMPLETE'	=> 'Les BBCodes ont été réanalysés.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Êtes-vous sûr de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
@@ -68,6 +68,11 @@ $lang = array_merge($lang, array(
 		1	=> 'Réanalyse des messages terminée, début de la réanalyse des messages privés.',
 		2	=> 'Réanalyse des messages privés terminée, début de la réanalyse des signatures.',
 	),
+	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyé ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
+	'REPARSE_POST_IDS'				=> 'Réanalyser les messages spécifiques',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages spécifiques. Chaque ID doit être séparée par une virgule.',
+	'REPARSE_PM_IDS'				=> 'Réanalyser les messages privés spécifiques',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages privés spécifiques. Chaque ID doit être séparée par une virgule (par exemple, 1,2,3,5,8,13).',
 ));
 
 ?>
