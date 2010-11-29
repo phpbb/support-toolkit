@@ -22,13 +22,13 @@
 // once created and should be uploaded to the <c>stk/includes/critical_repair/</c>
 // directory
 //
-//die("Please read the first lines of this script for instructions on how to enable it");
+die("Please read the first lines of this script for instructions on how to enable it");
 
 /**
 * @ignore
 */
 define('IN_PHPBB', true);
-$phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../../../../Sites/phpbb/support-toolkit/phpBB/';
+$phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../../';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
 
@@ -81,6 +81,6 @@ foreach ($fl as $d => $fs)
 }
 
 // Download the generated file
-header("Content-Type: text/x-delimtext; name=\"whitelist.{$phpEx}\"");
-header("Content-disposition: attachment; filename=whitelist.{$phpEx}");
+header("Content-Type: text/x-delimtext; name=\"whitelist.txt\"");
+header("Content-disposition: attachment; filename=whitelist.txt");
 print(implode("\n", $whitelist));
