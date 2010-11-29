@@ -54,6 +54,7 @@ class erk_bom_sniffer
 		'issue_found'			=> 'As part of the “Emergency Repair Kit” of the Support Toolkit the ERK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the ERK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
 		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
+		'no_whitelist'			=> 'The BOM sniffer couldn\'t read the whitelist, and can\'t run the tests. Please seek assistance in the <a href="%s">Support Forums</a>.'
 	);
 
 	/**
@@ -112,6 +113,13 @@ class erk_bom_sniffer
 			}
 		}
 
+		// Read the whitelist
+		if (!file_exists(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt'))
+		{
+			$critical_repair->trigger_error(sprintf($this->messages['no_whitelist'], 'http://www.phpbb.com/community/viewforum.php?f=46'));
+		}
+		$this->whitelist = file(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt', FILE_IGNORE_NEW_LINES);
+
 		// Set the timestamp
 		$this->backuptime = time();
 
@@ -129,6 +137,9 @@ class erk_bom_sniffer
 		}
 		ksort($this->whitelist);
 
+		// Re-append extensions
+		array_walk($this->whitelist, array($this, 'readd_extensions'), PHP_EXT);
+
 		// Init the internal cache
 		$this->cache = new _erk_bom_sniffer_cache($this);
 
@@ -139,6 +150,11 @@ class erk_bom_sniffer
 		{
 			include STK_ROOT_PATH . 'config.' . PHP_EXT;
 		}
+	}
+
+	function readd_extensions(&$file, $key, $phpEx)
+	{
+		$file .= ".{$phpEx}";
 	}
 
 	/**
