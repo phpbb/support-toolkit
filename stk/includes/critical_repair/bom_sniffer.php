@@ -907,7 +907,7 @@ class _erk_bom_sniffer_cache
 	{
 		$file = $this->_cache_path . 'data_stk_bom_sniffer.' . PHP_EXT;
 
-		if (($handle = @fopen($file, 'wb')) !== false)
+		if ($handle = @fopen($file, 'wb'))
 		{
 			@flock($handle, LOCK_EX);
 
