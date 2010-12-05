@@ -49,7 +49,7 @@ $whitelist = array();
 foreach ($fl as $d => $fs)
 {
 	// Compensate for filelist weirdness
-	if (empty($d))
+	if (empty($fl[$d]))
 	{
 		continue;
 	}
