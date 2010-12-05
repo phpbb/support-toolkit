@@ -525,91 +525,125 @@ class erk_bom_sniffer
 		return (preg_match('~' . $match . '~ise', $buffer)) ? true : false;
 	}
 
-	//-- Wrapper
+	//-- Wrappers
+
 	/**
-	* Global function for chmodding directories and files for internal use
-	* This function determines owner and group whom the file belongs to and user and group of PHP and then set safest possible file permissions.
-	* The function determines owner and group from common.php file and sets the same to the provided file. Permissions are mapped to the group, user always has rw(x) permission.
-	* The function uses bit fields to build the permissions.
-	* The function sets the appropiate execute bit on directories.
-	*
-	* Supported constants representing bit fields are:
-	*
-	* CHMOD_ALL - all permissions (7)
-	* CHMOD_READ - read permission (4)
-	* CHMOD_WRITE - write permission (2)
-	* CHMOD_EXECUTE - execute permission (1)
-	*
-	* NOTE: The function uses POSIX extension and fileowner()/filegroup() functions. If any of them is disabled, this function tries to build proper permissions, by calling is_readable() and is_writable() functions.
-	*
-	* @param $filename The file/directory to be chmodded
-	* @param $perms Permissions to set
-	* @return true on success, otherwise false
-	*
-	* @author faw, phpBB Group
-	*/
+	 * Global function for chmodding directories and files for internal use
+	 *
+	 * This function determines owner and group whom the file belongs to and user and group of PHP and then set safest possible file permissions.
+	 * The function determines owner and group from common.php file and sets the same to the provided file.
+	 * The function uses bit fields to build the permissions.
+	 * The function sets the appropiate execute bit on directories.
+	 *
+	 * Supported constants representing bit fields are:
+	 *
+	 * CHMOD_ALL - all permissions (7)
+	 * CHMOD_READ - read permission (4)
+	 * CHMOD_WRITE - write permission (2)
+	 * CHMOD_EXECUTE - execute permission (1)
+	 *
+	 * NOTE: The function uses POSIX extension and fileowner()/filegroup() functions. If any of them is disabled, this function tries to build proper permissions, by calling is_readable() and is_writable() functions.
+	 *
+	 * @param string	$filename	The file/directory to be chmodded
+	 * @param int	$perms		Permissions to set
+	 *
+	 * @return bool	true on success, otherwise false
+	 * @author faw, phpBB Group
+	 */
 	function phpbb_chmod($filename, $perms = CHMOD_READ)
 	{
+		static $_chmod_info;
+
 		// Return if the file no longer exists.
 		if (!file_exists($filename))
 		{
 			return false;
 		}
 
-		if (!function_exists('fileowner') || !function_exists('filegroup'))
+		// Determine some common vars
+		if (empty($_chmod_info))
 		{
-			$file_uid = $file_gid = false;
-			$common_php_owner = $common_php_group = false;
-		}
-		else
-		{
-			// Determine owner/group of common.php file and the filename we want to change here
-			$common_php_owner = fileowner(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
-			$common_php_group = filegroup(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
-
-			$file_uid = fileowner($filename);
-			$file_gid = filegroup($filename);
-
-			// Try to set the owner to the same common.php has
-			if ($common_php_owner !== $file_uid && $common_php_owner !== false && $file_uid !== false)
+			if (!function_exists('fileowner') || !function_exists('filegroup'))
 			{
-				// Will most likely not work
-				if (@chown($filename, $common_php_owner));
+				// No need to further determine owner/group - it is unknown
+				$_chmod_info['process'] = false;
+			}
+			else
+			{
+				global $phpbb_root_path, $phpEx;
+
+				// Determine owner/group of common.php file and the filename we want to change here
+				$common_php_owner = @fileowner($phpbb_root_path . 'common.' . $phpEx);
+				$common_php_group = @filegroup($phpbb_root_path . 'common.' . $phpEx);
+
+				// And the owner and the groups PHP is running under.
+				$php_uid = (function_exists('posix_getuid')) ? @posix_getuid() : false;
+				$php_gids = (function_exists('posix_getgroups')) ? @posix_getgroups() : false;
+
+				// If we are unable to get owner/group, then do not try to set them by guessing
+				if (!$php_uid || empty($php_gids) || !$common_php_owner || !$common_php_group)
 				{
-					clearstatcache();
-					$file_uid = fileowner($filename);
+					$_chmod_info['process'] = false;
+				}
+				else
+				{
+					$_chmod_info = array(
+						'process'		=> true,
+						'common_owner'	=> $common_php_owner,
+						'common_group'	=> $common_php_group,
+						'php_uid'		=> $php_uid,
+						'php_gids'		=> $php_gids,
+					);
 				}
 			}
+		}
 
-			// Try to set the group to the same common.php has
-			if ($common_php_group !== $file_gid && $common_php_group !== false && $file_gid !== false)
+		if ($_chmod_info['process'])
+		{
+			$file_uid = @fileowner($filename);
+			$file_gid = @filegroup($filename);
+
+			// Change owner
+			if (@chown($filename, $_chmod_info['common_owner']))
 			{
-				if (@chgrp($filename, $common_php_group));
-				{
-					clearstatcache();
-					$file_gid = filegroup($filename);
-				}
+				clearstatcache();
+				$file_uid = @fileowner($filename);
+			}
+
+			// Change group
+			if (@chgrp($filename, $_chmod_info['common_group']))
+			{
+				clearstatcache();
+				$file_gid = @filegroup($filename);
+			}
+
+			// If the file_uid/gid now match the one from common.php we can process further, else we are not able to change something
+			if ($file_uid != $_chmod_info['common_owner'] || $file_gid != $_chmod_info['common_group'])
+			{
+				$_chmod_info['process'] = false;
 			}
 		}
 
-		// And the owner and the groups PHP is running under.
-		$php_uid = (function_exists('posix_getuid')) ? @posix_getuid() : false;
-		$php_gids = (function_exists('posix_getgroups')) ? @posix_getgroups() : false;
+		// Still able to process?
+		if ($_chmod_info['process'])
+		{
+			if ($file_uid == $_chmod_info['php_uid'])
+			{
+				$php = 'owner';
+			}
+			else if (in_array($file_gid, $_chmod_info['php_gids']))
+			{
+				$php = 'group';
+			}
+			else
+			{
+				// Since we are setting the everyone bit anyway, no need to do expensive operations
+				$_chmod_info['process'] = false;
+			}
+		}
 
-		// Who is PHP?
-		if ($file_uid === false || $file_gid === false || $php_uid === false || $php_gids === false)
-		{
-			$php = NULL;
-		}
-		else if ($file_uid == $php_uid /* && $common_php_owner !== false && $common_php_owner === $file_uid*/)
-		{
-			$php = 'owner';
-		}
-		else if (in_array($file_gid, $php_gids))
-		{
-			$php = 'group';
-		}
-		else
+		// We are not able to determine or change something
+		if (!$_chmod_info['process'])
 		{
 			$php = 'other';
 		}
@@ -629,26 +663,22 @@ class erk_bom_sniffer
 
 		switch ($php)
 		{
-			case null:
 			case 'owner':
-				/* ATTENTION: if php is owner or NULL we set it to group here. This is the most failsafe combination for the vast majority of server setups.
-
 				$result = @chmod($filename, ($owner << 6) + (0 << 3) + (0 << 0));
 
 				clearstatcache();
 
-				if (!is_null($php) || (is_readable($filename) && is_writable($filename)))
+				if (is_readable($filename) && $this->$this->phpbb_is_writable($filename))
 				{
 					break;
 				}
-			*/
 
 			case 'group':
 				$result = @chmod($filename, ($owner << 6) + ($perms << 3) + (0 << 0));
 
 				clearstatcache();
 
-				if (!is_null($php) || ((!($perms & CHMOD_READ) || is_readable($filename)) && (!($perms & CHMOD_WRITE) || is_writable($filename))))
+				if ((!($perms & CHMOD_READ) || is_readable($filename)) && (!($perms & CHMOD_WRITE) || $this->phpbb_is_writable($filename)))
 				{
 					break;
 				}
@@ -658,7 +688,7 @@ class erk_bom_sniffer
 
 				clearstatcache();
 
-				if (!is_null($php) || ((!($perms & CHMOD_READ) || is_readable($filename)) && (!($perms & CHMOD_WRITE) || is_writable($filename))))
+				if ((!($perms & CHMOD_READ) || is_readable($filename)) && (!($perms & CHMOD_WRITE) || $this->phpbb_is_writable($filename)))
 				{
 					break;
 				}
@@ -669,6 +699,67 @@ class erk_bom_sniffer
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Test if a file/directory is writable
+	 *
+	 * This function calls the native is_writable() when not running under
+	 * Windows and it is not disabled.
+	 *
+	 * @param string $file Path to perform write test on
+	 * @return bool True when the path is writable, otherwise false.
+	 */
+	function phpbb_is_writable($file)
+	{
+		if (strtolower(substr(PHP_OS, 0, 3)) === 'win' || !function_exists('is_writable'))
+		{
+			if (file_exists($file))
+			{
+				// Canonicalise path to absolute path
+				$file = phpbb_realpath($file);
+
+				if (is_dir($file))
+				{
+					// Test directory by creating a file inside the directory
+					$result = @tempnam($file, 'i_w');
+
+					if (is_string($result) && file_exists($result))
+					{
+						unlink($result);
+
+						// Ensure the file is actually in the directory (returned realpathed)
+						return (strpos($result, $file) === 0) ? true : false;
+					}
+				}
+				else
+				{
+					$handle = @fopen($file, 'r+');
+
+					if (is_resource($handle))
+					{
+						fclose($handle);
+						return true;
+					}
+				}
+			}
+			else
+			{
+				// file does not exist test if we can write to the directory
+				$dir = dirname($file);
+
+				if (file_exists($dir) && is_dir($dir) && $this->phpbb_is_writable($dir))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+		else
+		{
+			return is_writable($file);
+		}
 	}
 }
 
