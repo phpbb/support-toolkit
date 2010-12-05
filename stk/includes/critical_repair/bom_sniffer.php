@@ -172,17 +172,15 @@ class erk_bom_sniffer
 
 		foreach ($filelist as $directory => $files)
 		{
-			// Directory can be checked?
-			if (!$stk_config['bom_sniffer_force_full_scan'] && !array_key_exists($directory, $this->whitelist))
-			{
-				continue;
-			}
 			// As the install dir can be renamed, we need to check here whether this
 			// is an install directory
-			else if(in_array('convert_phpbb20.' . PHP_EXT, $files) || in_array('new_normalizer.' . PHP_EXT, $files) || in_array('database_update.' . PHP_EXT, $files))
+			if(in_array('convert_phpbb20.' . PHP_EXT, $files) || in_array('new_normalizer.' . PHP_EXT, $files) || in_array('database_update.' . PHP_EXT, $files))
 			{
-				// It is, skip it
-				continue;
+				// It is and we're not forcing a full scan, skip it
+				if (!$stk_config['bom_sniffer_force_full_scan'])
+				{
+					continue;
+				}
 			}
 
 			// Step into the files
@@ -191,7 +189,7 @@ class erk_bom_sniffer
 				foreach ($files as $file)
 				{
 					// Test this file against the whitelist
-					if (!$stk_config['bom_sniffer_force_full_scan'] && !in_array($file, $this->whitelist[$directory]))
+					if (!$stk_config['bom_sniffer_force_full_scan'] && !in_array($directory . $file, $this->whitelist))
 					{
 						continue;
 					}
