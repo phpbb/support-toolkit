@@ -60,6 +60,12 @@ foreach ($fl as $d => $fs)
 		continue;
 	}
 
+	// Files in `develop/` and `store/` are always ignored
+	if (preg_match('#^(stk/){0,1}(develop|store)/#i', $d))
+	{
+		continue;
+	}
+
 	// Skip non-english
 	if (preg_match('#^(stk/){0,1}language/(?!en)#', $d))
 	{
