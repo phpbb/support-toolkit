@@ -49,13 +49,19 @@ $whitelist = array();
 foreach ($fl as $d => $fs)
 {
 	// Compensate for filelist weirdness
-	if (empty($d))
+	if (empty($fl[$d]))
 	{
 		continue;
 	}
 
 	// Cache files are always ignored
 	if ($d == 'cache/')
+	{
+		continue;
+	}
+
+	// Files in `develop/` and `store/` are always ignored
+	if (preg_match('#^(stk/){0,1}(develop|store)/#i', $d))
 	{
 		continue;
 	}
