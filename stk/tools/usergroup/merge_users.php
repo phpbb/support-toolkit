@@ -797,14 +797,37 @@ class merge_users
 		$sql = array();
 
 		while ($row = $db->sql_fetchrow($result))
-		{
-			$sql[] = 'UPDATE ' . PRIVMSGS_TABLE . '
-				SET ' . $db->sql_build_array('UPDATE', array(
-					'to_address'	=> implode(':', array_unique(explode(':', str_replace('u_' . $source['user_id'], 'u_' . $target['user_id'], $row['to_address'])))),
-					'bcc_address'	=> implode(':', array_unique(explode(':', str_replace('u_' . $source['user_id'], 'u_' . $target['user_id'], $row['bcc_address']))))
-			)) . '
-			WHERE msg_id = ' . (int) $row['msg_id'];
-		}
+ 		{
+			$to_id = explode(':',$row['to_address']);
+			foreach ($to_id as $key => $v1)
+			{
+				$trimmed = (int) ltrim($v1, 'u_');
+				if ($trimmed === $source['user_id'])
+				{
+					$to_id[$key] = 'u_' . $target['user_id'];
+				}
+			}
+			$to_address = implode(':', $to_id);
+
+			$bcc_id = explode(':',$row['bcc_address']);
+			foreach ($bcc_id as $key => $v1)
+			{
+				$trimmed = (int) ltrim($v1, 'u_');
+				if ($trimmed === $source['user_id'])
+				{
+					$bcc_id[$key] = 'u_' . $target['user_id'];
+				}
+			}
+			$bcc_address = implode(':', $bcc_id);
+
+
+ 			$sql[] = 'UPDATE ' . PRIVMSGS_TABLE . '
+ 				SET ' . $db->sql_build_array('UPDATE', array(
+					'to_address'	=> $to_address,
+					'bcc_address'	=> $bcc_address,
+ 			)) . '
+ 			WHERE msg_id = ' . (int) $row['msg_id'];
+ 		}
 
 		return $sql;
 	}
