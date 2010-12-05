@@ -516,6 +516,13 @@ class erk_bom_sniffer
 				}
 			break;
 
+			case 'stk/includes/critical_repair/' :
+				if ($file == 'config_repair.' . PHP_EXT)
+				{
+					$match = '(\s|{)\?>';
+				}
+			break;
+
 			default :
 				return false;
 		}
