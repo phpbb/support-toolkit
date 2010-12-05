@@ -54,6 +54,7 @@ class erk_bom_sniffer
 		'issue_found'			=> 'As part of the “Emergency Repair Kit” of the Support Toolkit the ERK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the ERK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
 		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
 		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
+		'no_whitelist'			=> 'The BOM sniffer couldn\'t read the whitelist, and can\'t run the tests. Please seek assistance in the <a href="%s">Support Forums</a>.'
 	);
 
 	/**
@@ -78,403 +79,7 @@ class erk_bom_sniffer
 	* @var Array The sniffer will only check files that come with a vanilla install. This list contains all files that *will* be sniffed
 	* @access private
 	*/
-	var $whitelist = array(
-		'' => array(
-			'common.' . PHP_EXT,
-			'config.' . PHP_EXT,
-			'cron.' . PHP_EXT,
-			'faq.' . PHP_EXT,
-			'feed.' . PHP_EXT,
-			'index.' . PHP_EXT,
-			'mcp.' . PHP_EXT,
-			'memberlist.' . PHP_EXT,
-			'posting.' . PHP_EXT,
-			'report.' . PHP_EXT,
-			'search.' . PHP_EXT,
-			'style.' . PHP_EXT,
-			'ucp.' . PHP_EXT,
-			'viewforum.' . PHP_EXT,
-			'viewonline.' . PHP_EXT,
-			'viewtopic.' . PHP_EXT,
-		),
-		'adm/' => array(
-			'index.' . PHP_EXT,
-			'swatch.' . PHP_EXT,
-		),
-		'download/' => array(
-			'file.' . PHP_EXT,
-		),
-		'includes/acm/' => array(
-			'acm_apc.' . PHP_EXT,
-			'acm_eaccelerator.' . PHP_EXT,
-			'acm_file.' . PHP_EXT,
-			'acm_memcache.' . PHP_EXT,
-			'acm_memory.' . PHP_EXT,
-			'acm_null.' . PHP_EXT,
-			'acm_xcache.' . PHP_EXT,
-		),
-		'includes/acp/' => array(
-			'acp_attachments.' . PHP_EXT,
-			'acp_ban.' . PHP_EXT,
-			'acp_bbcodes.' . PHP_EXT,
-			'acp_board.' . PHP_EXT,
-			'acp_bots.' . PHP_EXT,
-			'acp_captcha.' . PHP_EXT,
-			'acp_database.' . PHP_EXT,
-			'acp_disallow.' . PHP_EXT,
-			'acp_email.' . PHP_EXT,
-			'acp_forums.' . PHP_EXT,
-			'acp_groups.' . PHP_EXT,
-			'acp_icons.' . PHP_EXT,
-			'acp_inactive.' . PHP_EXT,
-			'acp_jabber.' . PHP_EXT,
-			'acp_language.' . PHP_EXT,
-			'acp_logs.' . PHP_EXT,
-			'acp_main.' . PHP_EXT,
-			'acp_modules.' . PHP_EXT,
-			'acp_permission_roles.' . PHP_EXT,
-			'acp_permissions.' . PHP_EXT,
-			'acp_php_info.' . PHP_EXT,
-			'acp_profile.' . PHP_EXT,
-			'acp_prune.' . PHP_EXT,
-			'acp_ranks.' . PHP_EXT,
-			'acp_reasons.' . PHP_EXT,
-			'acp_search.' . PHP_EXT,
-			'acp_send_statistics.' . PHP_EXT,
-			'acp_styles.' . PHP_EXT,
-			'acp_update.' . PHP_EXT,
-			'acp_users.' . PHP_EXT,
-			'acp_words.' . PHP_EXT,
-			'auth.' . PHP_EXT,
-		),
-		'includes/acp/info/' => array(
-			'acp_attachments.' . PHP_EXT,
-			'acp_ban.' . PHP_EXT,
-			'acp_bbcodes.' . PHP_EXT,
-			'acp_board.' . PHP_EXT,
-			'acp_bots.' . PHP_EXT,
-			'acp_captcha.' . PHP_EXT,
-			'acp_database.' . PHP_EXT,
-			'acp_disallow.' . PHP_EXT,
-			'acp_email.' . PHP_EXT,
-			'acp_forums.' . PHP_EXT,
-			'acp_groups.' . PHP_EXT,
-			'acp_icons.' . PHP_EXT,
-			'acp_inactive.' . PHP_EXT,
-			'acp_jabber.' . PHP_EXT,
-			'acp_language.' . PHP_EXT,
-			'acp_logs.' . PHP_EXT,
-			'acp_main.' . PHP_EXT,
-			'acp_modules.' . PHP_EXT,
-			'acp_permission_roles.' . PHP_EXT,
-			'acp_permissions.' . PHP_EXT,
-			'acp_php_info.' . PHP_EXT,
-			'acp_profile.' . PHP_EXT,
-			'acp_prune.' . PHP_EXT,
-			'acp_ranks.' . PHP_EXT,
-			'acp_reasons.' . PHP_EXT,
-			'acp_search.' . PHP_EXT,
-			'acp_send_statistics.' . PHP_EXT,
-			'acp_styles.' . PHP_EXT,
-			'acp_update.' . PHP_EXT,
-			'acp_users.' . PHP_EXT,
-			'acp_words.' . PHP_EXT,
-		),
-		'includes/auth/' => array(
-			'auth_apache.' . PHP_EXT,
-			'auth_db.' . PHP_EXT,
-			'auth_ldap.' . PHP_EXT,
-		),
-		'includes/' => array(
-			'auth.' . PHP_EXT,
-			'bbcode.' . PHP_EXT,
-			'cache.' . PHP_EXT,
-			'constants.' . PHP_EXT,
-			'functions.' . PHP_EXT,
-			'functions_admin.' . PHP_EXT,
-			'functions_compress.' . PHP_EXT,
-			'functions_content.' . PHP_EXT,
-			'functions_convert.' . PHP_EXT,
-			'functions_display.' . PHP_EXT,
-			'functions_install.' . PHP_EXT,
-			'functions_jabber.' . PHP_EXT,
-			'functions_messenger.' . PHP_EXT,
-			'functions_module.' . PHP_EXT,
-			'functions_posting.' . PHP_EXT,
-			'functions_privmsgs.' . PHP_EXT,
-			'functions_profile_fields.' . PHP_EXT,
-			'functions_template.' . PHP_EXT,
-			'functions_transfer.' . PHP_EXT,
-			'functions_upload.' . PHP_EXT,
-			'functions_user.' . PHP_EXT,
-			'message_parser.' . PHP_EXT,
-			'session.' . PHP_EXT,
-			'template.' . PHP_EXT,
-		),
-		'includes/captcha/' => array(
-			'captcha_factory.' . PHP_EXT,
-			'captcha_gd.' . PHP_EXT,
-			'captcha_gd_wave.' . PHP_EXT,
-			'captcha_non_gd.' . PHP_EXT,
-		),
-		'includes/captcha/plugins/' => array(
-			'captcha_abstract.' . PHP_EXT,
-			'phpbb_captcha_gd_plugin.' . PHP_EXT,
-			'phpbb_captcha_gd_wave_plugin.' . PHP_EXT,
-			'phpbb_captcha_nogd_plugin.' . PHP_EXT,
-			'phpbb_captcha_qa_plugin.' . PHP_EXT,
-			'phpbb_recaptcha_plugin.' . PHP_EXT,
-		),
-		'includes/db/' => array(
-			'db_tools.' . PHP_EXT,
-			'dbal.' . PHP_EXT,
-			'firebird.' . PHP_EXT,
-			'mssql.' . PHP_EXT,
-			'mssql_odbc.' . PHP_EXT,
-			'mysql.' . PHP_EXT,
-			'mysqli.' . PHP_EXT,
-			'oracle.' . PHP_EXT,
-			'postgres.' . PHP_EXT,
-			'sqlite.' . PHP_EXT,
-		),
-		'includes/diff/' => array(
-			'diff.' . PHP_EXT,
-			'engine.' . PHP_EXT,
-			'renderer.' . PHP_EXT,
-		),
-		'includes/hooks/' => array(
-			'index.' . PHP_EXT,
-		),
-		'includes/mcp/info/' => array(
-			'mcp_ban.' . PHP_EXT,
-			'mcp_logs.' . PHP_EXT,
-			'mcp_main.' . PHP_EXT,
-			'mcp_notes.' . PHP_EXT,
-			'mcp_pm_reports.' . PHP_EXT,
-			'mcp_queue.' . PHP_EXT,
-			'mcp_reports.' . PHP_EXT,
-			'mcp_warn.' . PHP_EXT,
-		),
-		'includes/mcp/' => array(
-			'mcp_ban.' . PHP_EXT,
-			'mcp_forum.' . PHP_EXT,
-			'mcp_front.' . PHP_EXT,
-			'mcp_logs.' . PHP_EXT,
-			'mcp_main.' . PHP_EXT,
-			'mcp_notes.' . PHP_EXT,
-			'mcp_pm_reports.' . PHP_EXT,
-			'mcp_post.' . PHP_EXT,
-			'mcp_queue.' . PHP_EXT,
-			'mcp_reports.' . PHP_EXT,
-			'mcp_topic.' . PHP_EXT,
-			'mcp_warn.' . PHP_EXT,
-		),
-		'includes/questionnaire/' => array(
-			'questionnaire.' . PHP_EXT,
-		),
-		'includes/search/' => array(
-			'fulltext_mysql.' . PHP_EXT,
-			'fulltext_native.' . PHP_EXT,
-			'search.' . PHP_EXT,
-		),
-		'includes/ucp/info/' => array(
-			'ucp_attachments.' . PHP_EXT,
-			'ucp_groups.' . PHP_EXT,
-			'ucp_main.' . PHP_EXT,
-			'ucp_pm.' . PHP_EXT,
-			'ucp_prefs.' . PHP_EXT,
-			'ucp_profile.' . PHP_EXT,
-			'ucp_zebra.' . PHP_EXT,
-		),
-		'includes/ucp/' => array(
-			'ucp_activate.' . PHP_EXT,
-			'ucp_attachments.' . PHP_EXT,
-			'ucp_confirm.' . PHP_EXT,
-			'ucp_groups.' . PHP_EXT,
-			'ucp_main.' . PHP_EXT,
-			'ucp_pm.' . PHP_EXT,
-			'ucp_pm_compose.' . PHP_EXT,
-			'ucp_pm_options.' . PHP_EXT,
-			'ucp_pm_viewfolder.' . PHP_EXT,
-			'ucp_pm_viewmessage.' . PHP_EXT,
-			'ucp_prefs.' . PHP_EXT,
-			'ucp_profile.' . PHP_EXT,
-			'ucp_register.' . PHP_EXT,
-			'ucp_remind.' . PHP_EXT,
-			'ucp_resend.' . PHP_EXT,
-			'ucp_zebra.' . PHP_EXT,
-		),
-		'includes/utf/data/' => array(
-			'case_fold_c.' . PHP_EXT,
-			'case_fold_f.' . PHP_EXT,
-			'case_fold_s.' . PHP_EXT,
-			'confusables.' . PHP_EXT,
-			'recode_basic.' . PHP_EXT,
-			'recode_cjk.' . PHP_EXT,
-			'search_indexer_0.' . PHP_EXT,
-			'search_indexer_1.' . PHP_EXT,
-			'search_indexer_19.' . PHP_EXT,
-			'search_indexer_2.' . PHP_EXT,
-			'search_indexer_20.' . PHP_EXT,
-			'search_indexer_21.' . PHP_EXT,
-			'search_indexer_26.' . PHP_EXT,
-			'search_indexer_3.' . PHP_EXT,
-			'search_indexer_31.' . PHP_EXT,
-			'search_indexer_32.' . PHP_EXT,
-			'search_indexer_33.' . PHP_EXT,
-			'search_indexer_36.' . PHP_EXT,
-			'search_indexer_4.' . PHP_EXT,
-			'search_indexer_448.' . PHP_EXT,
-			'search_indexer_5.' . PHP_EXT,
-			'search_indexer_58.' . PHP_EXT,
-			'search_indexer_6.' . PHP_EXT,
-			'search_indexer_64.' . PHP_EXT,
-			'search_indexer_84.' . PHP_EXT,
-			'search_indexer_9.' . PHP_EXT,
-			'search_indexer_95.' . PHP_EXT,
-			'utf_canonical_comp.' . PHP_EXT,
-			'utf_canonical_decomp.' . PHP_EXT,
-			'utf_compatibility_decomp.' . PHP_EXT,
-			'utf_nfc_qc.' . PHP_EXT,
-			'utf_nfkc_qc.' . PHP_EXT,
-			'utf_normalizer_common.' . PHP_EXT,
-		),
-		'includes/utf/' => array(
-			'utf_normalizer.' . PHP_EXT,
-			'utf_tools.' . PHP_EXT,
-		),
-		'language/en/acp/' => array(
-			'attachments.' . PHP_EXT,
-			'ban.' . PHP_EXT,
-			'board.' . PHP_EXT,
-			'bots.' . PHP_EXT,
-			'common.' . PHP_EXT,
-			'database.' . PHP_EXT,
-			'email.' . PHP_EXT,
-			'forums.' . PHP_EXT,
-			'groups.' . PHP_EXT,
-			'language.' . PHP_EXT,
-			'modules.' . PHP_EXT,
-			'permissions.' . PHP_EXT,
-			'permissions_phpbb.' . PHP_EXT,
-			'posting.' . PHP_EXT,
-			'profile.' . PHP_EXT,
-			'prune.' . PHP_EXT,
-			'search.' . PHP_EXT,
-			'styles.' . PHP_EXT,
-			'users.' . PHP_EXT,
-		),
-		'language/en/' => array(
-			'captcha_qa.' . PHP_EXT,
-			'captcha_recaptcha.' . PHP_EXT,
-			'common.' . PHP_EXT,
-			'groups.' . PHP_EXT,
-			'help_bbcode.' . PHP_EXT,
-			'help_faq.' . PHP_EXT,
-			'install.' . PHP_EXT,
-			'mcp.' . PHP_EXT,
-			'memberlist.' . PHP_EXT,
-			'posting.' . PHP_EXT,
-			'search.' . PHP_EXT,
-			'search_ignore_words.' . PHP_EXT,
-			'search_synonyms.' . PHP_EXT,
-			'ucp.' . PHP_EXT,
-			'viewforum.' . PHP_EXT,
-			'viewtopic.' . PHP_EXT,
-		),
-
-		// By default also sniff all the STK files
-		'stk/' => array(
-			'common.' . PHP_EXT,
-			'index.' . PHP_EXT,
-		),
-		'stk/includes/' => array(
-			'critical_repair.' . PHP_EXT,
-			'functions.' . PHP_EXT,
-			'plugin.' . PHP_EXT,
-			'umil.' . PHP_EXT,
-		),
-		'stk/includes/database_cleaner/data/' => array(
-			'3_0_0.' . PHP_EXT,
-			'3_0_1.' . PHP_EXT,
-			'3_0_2.' . PHP_EXT,
-			'3_0_3.' . PHP_EXT,
-			'3_0_4.' . PHP_EXT,
-			'3_0_5.' . PHP_EXT,
-			'3_0_6.' . PHP_EXT,
-			'3_0_7.' . PHP_EXT,
-			'3_0_7_pl1.' . PHP_EXT,
-			'3_0_8.' . PHP_EXT,
-			'3_0_9.' . PHP_EXT,
-		),
-		'stk/includes/database_cleaner/' => array(
-			'database_cleaner_controller.' . PHP_EXT,
-			'database_cleaner_data.' . PHP_EXT,
-			'database_cleaner_views.' . PHP_EXT,
-			'functions_database_cleaner.' . PHP_EXT,
-		),
-		'stk/language/en/' => array(
-			'common.' . PHP_EXT,
-		),
-		'stk/language/en/tools/admin/' => array(
-			'profile_list.' . PHP_EXT,
-			'purge_cache.' . PHP_EXT,
-			'reparse_bbcode.' . PHP_EXT,
-			'sql_query.' . PHP_EXT,
-		),
-		'stk/language/en/tools/support/' => array(
-			'auto_cookies.' . PHP_EXT,
-			'database_cleaner.' . PHP_EXT,
-			'fix_left_right_ids.' . PHP_EXT,
-			'readd_module_management.' . PHP_EXT,
-			'recache_moderators.' . PHP_EXT,
-			'reclean_usernames.' . PHP_EXT,
-			'remove_duplicate_permissions.' . PHP_EXT,
-			'reset_styles.' . PHP_EXT,
-			'sanitise_anonymous_user.' . PHP_EXT,
-			'update_email_hashes.' . PHP_EXT,
-		),
-		'stk/language/en/tools/' => array(
-			'tutorial.' . PHP_EXT,
-		),
-		'stk/language/en/tools/usergroup/' => array(
-			'add_user.' . PHP_EXT,
-			'change_password.' . PHP_EXT,
-			'manage_founders.' . PHP_EXT,
-			'merge_users.' . PHP_EXT,
-			'restore_deleted_users.' . PHP_EXT,
-			'resync_newly_registered.' . PHP_EXT,
-		),
-		'stk/tools/admin/' => array(
-			'profile_list.' . PHP_EXT,
-			'purge_cache.' . PHP_EXT,
-			'reparse_bbcode.' . PHP_EXT,
-			'sql_query.' . PHP_EXT,
-		),
-		'stk/tools/support/' => array(
-			'auto_cookies.' . PHP_EXT,
-			'database_cleaner.' . PHP_EXT,
-			'fix_left_right_ids.' . PHP_EXT,
-			'readd_module_management.' . PHP_EXT,
-			'recache_moderators.' . PHP_EXT,
-			'reclean_usernames.' . PHP_EXT,
-			'remove_duplicate_permissions.' . PHP_EXT,
-			'reset_styles.' . PHP_EXT,
-			'sanitise_anonymous_user.' . PHP_EXT,
-			'update_email_hashes.' . PHP_EXT,
-		),
-		'stk/tools/' => array(
-			'tutorial.' . PHP_EXT,
-		),
-		'stk/tools/usergroup/' => array(
-			'add_user.' . PHP_EXT,
-			'change_password.' . PHP_EXT,
-			'manage_founders.' . PHP_EXT,
-			'merge_users.' . PHP_EXT,
-			'restore_deleted_users.' . PHP_EXT,
-			'resync_newly_registered.' . PHP_EXT,
-		),
-	);
+	var $whitelist = array();
 
 	/**
 	* @var int The current timestamp. This is used to generate an unique backup directory for this tool
@@ -508,6 +113,13 @@ class erk_bom_sniffer
 			}
 		}
 
+		// Read the whitelist
+		if (!file_exists(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt'))
+		{
+			$critical_repair->trigger_error(sprintf($this->messages['no_whitelist'], 'http://www.phpbb.com/community/viewforum.php?f=46'));
+		}
+		$this->whitelist = file(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt', FILE_IGNORE_NEW_LINES);
+
 		// Set the timestamp
 		$this->backuptime = time();
 
@@ -525,6 +137,9 @@ class erk_bom_sniffer
 		}
 		ksort($this->whitelist);
 
+		// Re-append extensions
+		array_walk($this->whitelist, array($this, 'readd_extensions'), PHP_EXT);
+
 		// Init the internal cache
 		$this->cache = new _erk_bom_sniffer_cache($this);
 
@@ -535,6 +150,11 @@ class erk_bom_sniffer
 		{
 			include STK_ROOT_PATH . 'config.' . PHP_EXT;
 		}
+	}
+
+	function readd_extensions(&$file, $key, $phpEx)
+	{
+		$file .= ".{$phpEx}";
 	}
 
 	/**
@@ -1191,7 +811,7 @@ class _erk_bom_sniffer_cache
 	{
 		$file = $this->_cache_path . 'data_stk_bom_sniffer.' . PHP_EXT;
 
-		if ($handle = @fopen($file, 'wb'))
+		if (($handle = @fopen($file, 'wb')) !== false)
 		{
 			@flock($handle, LOCK_EX);
 

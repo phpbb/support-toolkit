@@ -18,6 +18,10 @@
 // Remove or comment the next line (die(".... ) to enable this script.
 // Do NOT FORGET to either remove this script or disable it after you have used it.
 //
+// This generator build the ERK BOM Sniffer whitelist. The white list is downloaded
+// once created and should be uploaded to the <c>stk/includes/critical_repair/</c>
+// directory
+//
 die("Please read the first lines of this script for instructions on how to enable it");
 
 /**
@@ -27,58 +31,56 @@ define('IN_PHPBB', true);
 $phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../../';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
-include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
 
 // Start session management
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 
-$filelist = filelist($phpbb_root_path, '', $phpEx);
-foreach ($filelist as $dir => $fl)
+if (!function_exists('filelist'))
 {
-	// Remove empty stuff
-	if (empty($fl))
+	include $phpbb_root_path . 'includes/functions_admin.' . $phpEx;
+}
+
+$fl = filelist($phpbb_root_path, '', 'php');
+
+$whitelist = array();
+
+foreach ($fl as $d => $fs)
+{
+	// Compensate for filelist weirdness
+	if (empty($d))
 	{
-		unset($filelist[$dir]);
+		continue;
 	}
 
-	// Remove ignored dirs
-	if (preg_match("#cache/|develop/|files/|install/|store/|stk/|stk/includes/critical_repair/#ise", $dir))
+	// Cache files are always ignored
+	if ($d == 'cache/')
 	{
-		unset($filelist[$dir]);
+		continue;
 	}
 
-	// Skip some files always.
-	if ($dir == 'stk/')
+	// Skip non-english
+	if (preg_match('#^(stk/){0,1}language/(?!en)#', $d))
 	{
-		foreach ($fl as $k => $f)
+		continue;
+	}
+
+	foreach ($fs as $f)
+	{
+		// The STK config file is handled separate
+		if ($d == 'stk/' && $f == 'config.' . $phpEx)
 		{
-			if ($f == 'config.' . $phpEx)
-			{
-				unset($filelist[$dir][$k]);
-			}
-
-			if ($f == 'erk.' . $phpEx)
-			{
-				unset($filelist[$dir][$k]);
-			}
+			continue;
 		}
+
+		// Strip the .php
+		$f = substr($f, 0, -(strlen('.' . $phpEx)));
+		$whitelist[] = $d . $f;
 	}
 }
 
-// Print the array to the screen
-echo '<pre>';
-foreach ($filelist as $dir => $fl)
-{
-	$dirname = var_export($dir, true);
-	echo "\t\t$dirname => array(\n";
-
-	foreach ($fl as $key => $file)
-	{
-		$filename = var_export($file, true);
-		echo"\t\t\t$filename,\n";
-	}
-
-	echo "\t\t),\n";
-}
+// Download the generated file
+header("Content-Type: text/x-delimtext; name=\"whitelist.txt\"");
+header("Content-disposition: attachment; filename=whitelist.txt");
+print(implode("\n", $whitelist));
