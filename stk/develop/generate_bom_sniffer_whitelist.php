@@ -80,6 +80,12 @@ foreach ($fl as $d => $fs)
 			continue;
 		}
 
+		// Some other files to ignore
+		if ($d == 'stk/includes/critical_repair/' && $f == 'bom_sniffer.' . $phpEx)
+		{
+			continue;
+		}
+
 		// Strip the .php
 		$f = substr($f, 0, -(strlen('.' . $phpEx)));
 		$whitelist[] = $d . $f;
