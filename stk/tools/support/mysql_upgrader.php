@@ -65,6 +65,10 @@ class mysql_upgrader
 		{
 			$this->_download_result();
 		}
+		else if (($run = request_var('run', false)) !== false)
+		{
+			$this->_run_result();
+		}
 
 		$cache->destroy('_stk_mysql_upgrader_result');
 
@@ -255,14 +259,14 @@ class mysql_upgrader
 			}
 		}
 
+		// Write the result also to the cache so it can be downloaded later on
+		$cache->put('_stk_mysql_upgrader_result', $this->_upgrader);
+		
 		// If the user only checked "run" than we run the result set
 		if ($run_result)
 		{
-			$this->_run_result();
+			redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'run' => true)));
 		}
-
-		// Write the result also to the cache so it can be downloaded later on
-		$cache->put('_stk_mysql_upgrader_result', $this->_upgrader);
 
 		// Set the template var
 		$template->assign_vars(array(
@@ -305,17 +309,33 @@ class mysql_upgrader
 		exit_handler();
 	}
 
+	/**
+	 * Directly run the script
+	 * @access private
+	 * @return void
+	 */	
 	function _run_result()
 	{
-		global $umil;
+		global $cache, $umil;
+		
+		// Read from teh cache
+		$this->_upgrader = $cache->get('_stk_mysql_upgrader_result');
+		if ($this->_upgrader === false)
+		{
+			return;
+		}
 
 		// Split up in seperate queries
 		$queries = explode(';', $this->_upgrader);
 
-		// Run all the queries
-		foreach ($queries as $query)
+		// The right query
+		$step = request_var('step', 0);
+		if (!empty($queries[$step]))
 		{
-			$umil->db_tools->db->sql_query(trim($query));
+			$query = trim($queries[$step]);
+			$umil->db_tools->db->sql_query($query);
+			meta_refresh(0, append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'run' => true, 'step' => ++$step)));
+			trigger_error(user_lang('QUERY_FINISHED', $step, sizeof($queries)));
 		}
 
 		trigger_error('MYSQL_UPGRADER_SUCCESSFULL');

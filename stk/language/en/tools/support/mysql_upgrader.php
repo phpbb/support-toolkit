@@ -47,6 +47,8 @@ $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER_RUN_EXPLAIN'		=> 'By checking this option the MySQL Upgrader will generate the queries and automatically run the result on your database.<br />This might take some time, do <strong>not</strong> interrupt this process until the tool notifies you that its ready.',
 	'MYSQL_UPGRADER_SCRIPT'				=> 'MySQL upgrader script',
 	'MYSQL_UPGRADER_SUCCESSFULL'		=> 'The MySQL Upgrader has been run successfully',
+	
+	'QUERY_FINISHED'	=> 'Finished running query %1$d of %2$d, continueing to the next step.',
 
 	'TOOL_MYSQL_ONLY'	=> 'This tool is only available for users of the MySQL DBMS',
 ));
