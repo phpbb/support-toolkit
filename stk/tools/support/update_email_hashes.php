@@ -24,19 +24,6 @@ class update_email_hashes
 	var $batch_size = 500;
 
 	/**
-	* This is only an issue in phpBB < 3.0.7
-	*/
-	function tool_active()
-	{
-		if (version_compare(PHPBB_VERSION, '3.0.7', '<'))
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	* Display Options
 	*/
 	function display_options()
@@ -54,7 +41,7 @@ class update_email_hashes
 		$step = request_var('step', 0);
 
 		// Select the batch
-		$sql = 'SELECT user_id, user_email
+		$sql = 'SELECT user_id, user_email, user_email_hash
 			FROM ' . USERS_TABLE;
 		$result	= $db->sql_query_limit($sql, $this->batch_size, ($step * $this->batch_size));
 		$batch	= $db->sql_fetchrowset($result);
@@ -67,8 +54,15 @@ class update_email_hashes
 
 		foreach ($batch as $userrow)
 		{
+			$new_hash = phpbb_email_hash($userrow['user_email']);
+			if ($userrow['user_email_hash'] == $new_hash)
+			{
+				// Skip if the hash hasn't changed
+				continue;
+			}
+			
 			// Update the field
-			$sql = 'UPDATE ' . USERS_TABLE . " SET user_email_hash = '" . phpbb_email_hash($userrow['user_email']) . "'
+			$sql = 'UPDATE ' . USERS_TABLE . " SET user_email_hash = '" . $new_hash . "'
 				WHERE user_id = " . $userrow['user_id'];
 			$db->sql_query($sql);
 		}
