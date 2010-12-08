@@ -264,7 +264,6 @@ class mysql_upgrader
 		// Write the result also to the cache so it can be downloaded later on
 		$cache->put('_stk_mysql_upgrader_result', $this->_upgrader);
 
-
 		// Set the template var
 		$template->assign_vars(array(
 			'L_MYSQL_UPGRADER_RESULT' => user_lang('MYSQL_UPGRADER_RESULT', append_sid(STK_INDEX, array('c' => 'support', 't' => 'mysql_upgrader', 'download' => true))),
