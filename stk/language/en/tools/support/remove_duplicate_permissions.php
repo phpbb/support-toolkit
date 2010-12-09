@@ -48,5 +48,3 @@ $lang = array_merge($lang, array(
 	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Remove duplicate permissions',
 	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Are you ready to remove the duplicate permissions?',
 ));
-
-?>

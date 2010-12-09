@@ -47,5 +47,3 @@ $lang = array_merge($lang, array(
 	'USERNAMEID'				=> 'Username or User ID',
 	'USERNAMEID_EXPLAIN'		=> 'Enter the Username or the User ID of the user whose password you want to change.',
 ));
-
-?>

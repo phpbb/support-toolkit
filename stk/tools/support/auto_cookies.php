@@ -66,4 +66,3 @@ class auto_cookies
 		trigger_error('COOKIE_SETTINGS_UPDATED');
 	}
 }
-?>

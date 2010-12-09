@@ -280,4 +280,3 @@ function get_groups()
 
 	return $option_list;
 }
-?>

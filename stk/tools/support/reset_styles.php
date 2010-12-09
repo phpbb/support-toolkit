@@ -72,4 +72,3 @@ function style_select2($value, $key)
 {
 	return '<select name="' . $key . '">' . style_select($value) . '</select>';
 }
-?>

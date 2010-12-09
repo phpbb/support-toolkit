@@ -204,5 +204,3 @@ class profile_list
 		page_footer();
 	}
 }
-
-?>

@@ -54,5 +54,3 @@ $lang = array_merge($lang, array(
 
 	'SANITISE_ANONYMOUS_USER'			=> 'Sanitise Anonymous User',
 ));
-
-?>

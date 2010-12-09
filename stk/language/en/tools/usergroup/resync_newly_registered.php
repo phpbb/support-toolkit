@@ -43,5 +43,3 @@ $lang = array_merge($lang, array(
 	'RESYNC_NEWLY_REGISTERED_FINISHED'		=> 'The newly registered users group was successfully resynchronised!',
 	'RESYNC_NEWLY_REGISTERED_NOT_FINISHED'	=> 'Resyncing of the newly registered users group is in process. Please don’t interrupt this process',
 ));
-
-?>

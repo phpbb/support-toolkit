@@ -422,4 +422,3 @@ else
 
 	page_footer();
 }
-?>

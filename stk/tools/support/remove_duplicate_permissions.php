@@ -117,4 +117,3 @@ class remove_duplicate_permissions
 		trigger_error('DUPLICATES_FOUND');
 	}
 }
-?>

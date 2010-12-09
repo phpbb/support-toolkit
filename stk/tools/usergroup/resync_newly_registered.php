@@ -216,5 +216,3 @@ class resync_newly_registered
 		$db->sql_query($sql);
 	}
 }
-
-?>

@@ -51,5 +51,3 @@ $lang = array_merge($lang, array(
 	'USER_GROUPS'			=> 'User groups',
 	'USER_GROUPS_EXPLAIN'	=> 'Make this user a member of the selected groups.',
 ));
-
-?>

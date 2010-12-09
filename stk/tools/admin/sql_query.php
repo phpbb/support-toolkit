@@ -119,5 +119,3 @@ class sql_query
 		trigger_error('SQL_QUERY_SUCCESS');
 	}
 }
-
-?>

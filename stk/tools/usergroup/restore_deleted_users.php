@@ -293,4 +293,3 @@ class restore_deleted_users
 		exit;
 	}
 }
-?>

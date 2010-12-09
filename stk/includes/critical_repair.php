@@ -201,4 +201,3 @@ class critical_repair
 		exit;
 	}
 }
-?>
