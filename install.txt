@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.2.1-pl1 ==
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
+* [Change] Remove closing php tags from the php files. (Bug #62478)
 * [Change] Dynamic BOM Sniffer white list. (Bug #62481)
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
 * [Fix] Hooks potentially break STK. (Bug #62352)
