@@ -217,12 +217,30 @@ function get_phpbb_tables()
 	$all_tables = get_tables($db);
 
 	// Only get tables using the phpBB prefix
-	foreach ($all_tables as $table)
+	if (!empty($table_prefix))
 	{
-		if (strpos($table, $table_prefix) === 0)
+		foreach ($all_tables as $table)
 		{
-			$_tables[] = $table;
+			if (strpos($table, $table_prefix) === 0)
+			{
+				$_tables[] = $table;
+			}
 		}
+	}
+	else
+	{
+		// Use is using an empty table prefix (Bug #62537)
+		// no way to determine the phpBB tables, in this case
+		// we'll show everything with a warning that the tool
+		// most likely want to trash a lot of tables '-,-
+		global $template;
+
+		$template->assign_vars(array(
+			'ERROR_MESSAGE' => user_lang('EMPTY_PREFIX_EXPLAIN'), 
+			'ERROR_TITLE'	=> user_lang('EMPTY_PREFIX'),
+		));
+		
+		$_tables = $all_tables;
 	}
 	sort($_tables);
 
