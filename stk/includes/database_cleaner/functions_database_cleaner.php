@@ -1,12 +1,12 @@
 <?php
 /**
-*
-* @package Support Toolkit - Database Cleaner
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Database Cleaner
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
  * @ignore
@@ -236,10 +236,10 @@ function get_phpbb_tables()
 		global $template;
 
 		$template->assign_vars(array(
-			'ERROR_MESSAGE' => user_lang('EMPTY_PREFIX_EXPLAIN'), 
+			'ERROR_MESSAGE' => user_lang('EMPTY_PREFIX_EXPLAIN'),
 			'ERROR_TITLE'	=> user_lang('EMPTY_PREFIX'),
 		));
-		
+
 		$_tables = $all_tables;
 	}
 	sort($_tables);
