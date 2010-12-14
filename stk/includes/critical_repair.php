@@ -123,6 +123,11 @@ class critical_repair
 	 */
 	function trigger_error($msg, $redirect_stk = false)
 	{
+		if (defined('ERK_NO_TRIGGER') && ERK_NO_TRIGGER === true)
+		{
+			return;
+		}
+
 		if (!is_array($msg))
 		{
 			$msg = array($msg);
