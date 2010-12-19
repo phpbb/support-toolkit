@@ -54,6 +54,14 @@ class datafile_3_0_6
 	);
 
 	/**
+	* @var Array Config entries that were removed by the 3.0.6 update
+	*/
+	var $removed_config_data = array(
+		'enable_queue_trigger'	=> array(),
+		'queue_trigger_posts'	=> array(),
+	);
+
+	/**
 	* @var Array All default permission settings
 	*/
 	var $permissions = array(
