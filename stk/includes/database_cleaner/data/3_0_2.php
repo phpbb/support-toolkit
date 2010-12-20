@@ -45,6 +45,13 @@ class datafile_3_0_2
 	);
 
 	/**
+	 * @var Array All default roles
+	 */
+	var $roles = array(
+		// No role changes 3.0.1 -> 3.0.2
+	);
+
+	/**
 	 * Define the module structure so that we can populate the database without
 	 * needing to hard-code module_id values
 	 */

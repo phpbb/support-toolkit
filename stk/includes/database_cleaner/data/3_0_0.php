@@ -436,6 +436,34 @@ class datafile_3_0_0
 		'u_viewonline'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_viewprofile'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 	);
+	
+	/**
+	 * @var Array All default roles
+	 */
+	var $roles = array(
+		'ROLE_ADMIN_STANDARD'		=> array('ROLE_DESCRIPTION_ADMIN_STANDARD', 'a_', 1),
+		'ROLE_ADMIN_FORUM'			=> array('ROLE_DESCRIPTION_ADMIN_FORUM', 'a_', 3),
+		'ROLE_ADMIN_USERGROUP'		=> array('ROLE_DESCRIPTION_ADMIN_USERGROUP', 'a_', 4),
+		'ROLE_ADMIN_FULL'			=> array('ROLE_DESCRIPTION_ADMIN_FULL', 'a_', 2),
+		'ROLE_USER_FULL'			=> array('ROLE_DESCRIPTION_USER_FULL', 'u_', 3),
+		'ROLE_USER_STANDARD'		=> array('ROLE_DESCRIPTION_USER_STANDARD', 'u_', 1),
+		'ROLE_USER_LIMITED'			=> array('ROLE_DESCRIPTION_USER_LIMITED', 'u_', 2),
+		'ROLE_USER_NOPM'			=> array('ROLE_DESCRIPTION_USER_NOPM', 'u_', 4),
+		'ROLE_USER_NOAVATAR'		=> array('ROLE_DESCRIPTION_USER_NOAVATAR', 'u_', 5),
+		'ROLE_MOD_FULL'				=> array('ROLE_DESCRIPTION_MOD_FULL', 'm_', 3),
+		'ROLE_MOD_STANDARD'			=> array('ROLE_DESCRIPTION_MOD_STANDARD', 'm_', 1),
+		'ROLE_MOD_SIMPLE'			=> array('ROLE_DESCRIPTION_MOD_SIMPLE', 'm_', 2),
+		'ROLE_MOD_QUEUE'			=> array('ROLE_DESCRIPTION_MOD_QUEUE', 'm_', 4),
+		'ROLE_FORUM_FULL'			=> array('ROLE_DESCRIPTION_FORUM_FULL', 'f_', 7),
+		'ROLE_FORUM_STANDARD'		=> array('ROLE_DESCRIPTION_FORUM_STANDARD', 'f_', 5),
+		'ROLE_FORUM_NOACCESS'		=> array('ROLE_DESCRIPTION_FORUM_NOACCESS', 'f_', 1),
+		'ROLE_FORUM_READONLY'		=> array('ROLE_DESCRIPTION_FORUM_READONLY', 'f_', 2),
+		'ROLE_FORUM_LIMITED'		=> array('ROLE_DESCRIPTION_FORUM_LIMITED', 'f_', 3),
+		'ROLE_FORUM_BOT'			=> array('ROLE_DESCRIPTION_FORUM_BOT', 'f_', 9),
+		'ROLE_FORUM_ONQUEUE'		=> array('ROLE_DESCRIPTION_FORUM_ONQUEUE', 'f_', 8),
+		'ROLE_FORUM_POLLS'			=> array('ROLE_DESCRIPTION_FORUM_POLLS', 'f_', 6),
+		'ROLE_FORUM_LIMITED_POLLS'	=> array('ROLE_DESCRIPTION_FORUM_LIMITED_POLLS', 'f_', 4),
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

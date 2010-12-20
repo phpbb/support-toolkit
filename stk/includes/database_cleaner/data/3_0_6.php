@@ -61,6 +61,14 @@ class datafile_3_0_6
 	);
 
 	/**
+	 * @var Array All default roles
+	 */
+	var $roles = array(
+		'ROLE_USER_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_USER_NEW_MEMBER', 'u_', 6),
+		'ROLE_FORUM_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_FORUM_NEW_MEMBER', 'f_', 10),
+	);
+
+	/**
 	 * Define the module structure so that we can populate the database without
 	 * needing to hard-code module_id values
 	 */
@@ -75,7 +83,7 @@ class datafile_3_0_6
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		'NEWLY_REGISTERED'	=> array(

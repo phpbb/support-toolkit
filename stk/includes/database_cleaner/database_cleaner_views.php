@@ -344,7 +344,7 @@ class database_cleaner_views
 			'message'	=> 'RESET_MODULES_EXPLAIN',
 		);
 
-		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
+		$this->success_message = 'DATABASE_ROLES_SUCCESS';
 	}
 
 	/**
@@ -380,6 +380,42 @@ class database_cleaner_views
 		}
 
 		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+	}
+	
+	/**
+	 * Validate the `acl_roles` table
+	 */
+	function roles()
+	{
+		// display extra config variables and let them check/uncheck the ones they want to add/remove
+		$this->_section_data['roles'] = array(
+			'NAME'		=> 'ROLE_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
+
+		$role_rows = $existing_roles = array();
+		get_role_rows($this->db_cleaner->data->roles, $role_rows, $existing_roles);
+		foreach ($role_rows as $name)
+		{
+			// Skip ones that are in the default install and are in the existing config
+			if (isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+			{
+				continue;
+			}
+
+			$this->_section_data['roles']['ITEMS'][] = array(
+				'NAME'			=> $name,
+				'FIELD_NAME'	=> $name,
+				'MISSING'		=> (!in_array($name, $existing_roles)) ? true : false,
+			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+
+		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
 	}
 
 	/**

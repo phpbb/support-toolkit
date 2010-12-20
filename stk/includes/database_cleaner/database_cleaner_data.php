@@ -37,6 +37,11 @@ class database_cleaner_data
 	var $permissions = array();
 
 	/**
+	 * @var Array The roles array for this version
+	 */
+	var $roles = array();
+
+	/**
 	 * @var Array array holding the module categorie structure
 	 */
 	var $module_categories = array();

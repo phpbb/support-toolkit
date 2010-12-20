@@ -41,6 +41,13 @@ class datafile_3_0_1
 	var $permissions = array(
 		// No permission changes 3.0.0 -> 3.0.1
 	);
+	
+	/**
+	 * @var Array All default roles
+	 */
+	var $roles = array(
+		// No role changes 3.0.0 -> 3.0.1
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

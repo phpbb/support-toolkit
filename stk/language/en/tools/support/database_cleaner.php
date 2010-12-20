@@ -55,6 +55,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
+	'DATABASE_ROLES_SUCCESS'		=> 'The phpBB system roles where restored successfully!',
 	'DATAFILE_NOT_FOUND'			=> 'The Support Toolkit couldn’t find the required data-file for your phpBB version!',
 
 	'ERROR'							=> 'Error',
@@ -91,7 +92,8 @@ $lang = array_merge($lang, array(
 		3	=> 'Config not changed',
 		4	=> 'Permissions not changed',
 		5	=> 'Groups not changed',
-		8	=> 'Final step',
+		6	=> 'Roles not changed',
+		9	=> 'Final step',
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
 		1	=> 'The database tables haven’t been changed',
@@ -99,7 +101,8 @@ $lang = array_merge($lang, array(
 		3	=> 'The configuration table doesn’t have any new/missing values',
 		4	=> 'There where no changes in the permission tables',
 		5	=> 'There where no changes in the phpBB system groups',
-		8	=> 'This last step will clear the cache and re-enable the board.',
+		6	=> 'There where no roles added or removed',
+		9	=> 'This last step will clear the cache and re-enable the board.',
 	),
 	'SUCCESS'						=> 'Success',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',

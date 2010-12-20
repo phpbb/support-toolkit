@@ -28,6 +28,7 @@ class database_cleaner
 		'config',
 		'permissions',
 		'groups',
+		'roles',
 		'modules',
 		'bots',
 		'final_step',

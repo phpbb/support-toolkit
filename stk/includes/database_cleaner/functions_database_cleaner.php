@@ -53,6 +53,24 @@ function get_permission_rows(&$permission_data, &$permission_rows, &$existing_pe
 	sort($permission_rows);
 }
 
+function get_role_rows(&$roles_data, &$role_rows, &$existing_roles)
+{
+	global $db;
+	
+	$existing_roles = array();
+	$sql = 'SELECT role_name
+		FROM ' . ACL_ROLES_TABLE;
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$existing_roles[] = $row['role_name'];
+	}
+	$db->sql_freeresult($result);
+
+	$role_rows = array_unique(array_merge(array_keys($roles_data), $existing_roles));
+	sort($role_rows);
+}
+
 /**
 * Get all the phpBB system groups
 */
@@ -261,6 +279,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->bots					= array_merge($data->bots, $_datafile->bots);
 		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
+		$data->roles				= array_merge($data->roles, $_datafile->roles);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);

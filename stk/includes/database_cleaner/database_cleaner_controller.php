@@ -581,6 +581,38 @@ class database_cleaner_controller
 			}
 		}
 	}
+	
+	/**
+	 * Fix system roles
+	 */
+	function roles(&$error, $selected)
+	{
+		global $umil;
+
+		$role_rows = $existing_roles = array();
+		get_role_rows($this->db_cleaner->data->roles, $role_rows, $existing_roles);
+		foreach ($role_rows as $name)
+		{
+			if (isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+			{
+				continue;
+			}
+
+			if (isset($selected[$name]))
+			{
+				if (isset($this->db_cleaner->data->roles[$name]) && !in_array($name, $existing_roles))
+				{
+					// Add it with the default settings we've got...
+					$umil->permission_role_add($name, $this->db_cleaner->data->roles[$name][1], $this->db_cleaner->data->roles[$name][0]);
+				}
+				else if (!isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+				{
+					// Remove it
+					$umil->permission_role_remove($name);
+				}
+			}
+		}
+	}
 
 	/**
 	* Correct the database tables based upon the selection
