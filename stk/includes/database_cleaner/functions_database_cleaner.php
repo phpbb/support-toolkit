@@ -235,13 +235,15 @@ function get_phpbb_tables()
 	$all_tables = get_tables($db);
 
 	// Only get tables using the phpBB prefix
-	foreach ($all_tables as $table)
-	{
-		if (strpos($table, $table_prefix) === 0)
+	if (!empty($table_prefix)){
+		foreach ($all_tables as $table)
 		{
-			$_tables[] = $table;
+			if (strpos($table, $table_prefix) === 0)
+			{
+				$_tables[] = $table;
+			}
 		}
-	}
+	}else{$_tables = $all_tables;}
 	sort($_tables);
 
 	return $_tables;
@@ -280,6 +282,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
 		$data->roles				= array_merge($data->roles, $_datafile->roles);
+		$data->role_data			= array_merge($data->role_data, $_datafile->role_data);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);

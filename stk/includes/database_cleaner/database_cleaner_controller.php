@@ -583,6 +583,51 @@ class database_cleaner_controller
 	}
 	
 	/**
+	 * Reset the phpBB system roles
+	 */
+	function role_data(&$error)
+	{
+		global $db;
+
+		if (isset($_POST['yes']))
+		{
+			$system_roles	= $this->db_cleaner->data->role_data;
+			$role_ids		= array();
+
+			// Fetch the role IDs
+			$sql = 'SELECT role_id, role_name
+				FROM ' . ACL_ROLES_TABLE . '
+				WHERE ' . $db->sql_in_set('role_name', array_keys($system_roles));
+			$result	= $db->sql_query($sql);
+			while ($role = $db->sql_fetchrow($result))
+			{
+				$role_ids[$role['role_name']] = $role['role_id'];
+			}
+			$db->sql_freeresult($result);
+
+			// Clear the ACL_ROLES_DATA_TABLE table
+			$sql = 'DELETE FROM ' . ACL_ROLES_DATA_TABLE . '
+				WHERE ' . $db->sql_in_set('role_id', $role_ids);
+			$db->sql_query($sql);
+
+			// Now re-build the role data
+			foreach ($system_roles as $role_name => $role_data)
+			{
+				$like_negate = (empty($role_data['NEGATE'])) ? false : true;
+
+				// Create the query
+				$sql  = 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting) ';
+				$sql .= "SELECT {$role_ids[$role_name]}, auth_option_id, {$role_data['SETTING']} ";
+				$sql .= 'FROM ' . ACL_OPTIONS_TABLE . " WHERE auth_option LIKE {$role_data['OPTION_LIKE']} ";
+				$sql .= (!empty($role_data['OPTION_IN'])) ? 'AND ' . $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate) : '';
+
+				// Run, run, run
+				$db->sql_query($sql);
+			}
+		}
+	}
+	
+	/**
 	 * Fix system roles
 	 */
 	function roles(&$error, $selected)

@@ -69,6 +69,14 @@ class datafile_3_0_6
 	);
 
 	/**
+	 * @var Array All default role data
+	 */
+	var $role_data = array(
+		// No role data changes 3.0.5 -> 3.0.6
+	);
+	
+
+	/**
 	 * Define the module structure so that we can populate the database without
 	 * needing to hard-code module_id values
 	 */

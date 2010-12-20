@@ -55,7 +55,8 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
-	'DATABASE_ROLES_SUCCESS'		=> 'The phpBB system roles where restored successfully!',
+	'DATABASE_ROLE_DATA_SUCCESS'	=> 'The phpBB system roles where restored successfully!',
+	'DATABASE_ROLES_SUCCESS'		=> 'The roles where updated successfully!',
 	'DATAFILE_NOT_FOUND'			=> 'The Support Toolkit couldn’t find the required data-file for your phpBB version!',
 
 	'ERROR'							=> 'Error',
@@ -84,6 +85,8 @@ $lang = array_merge($lang, array(
 	'RESET_MODULES_EXPLAIN'			=> 'Would you like to reset the modules to the default phpBB3 modules?  All existing modules will be removed and be replaced with the default ones.',
 	'RESET_MODULES_SKIP'			=> 'The module reset has been skipped',
 	'RESET_MODULE_SUCCESS'			=> 'The modules have been reset successfully!',
+	'RESET_ROLE_DATA'				=> 'Reset role data',
+	'RESET_ROLE_DATA_EXPLAIN'		=> 'This step will reset the phpBB system roles back to their original state, its highly adviced to run this if you made changes in the previous step.',
 	'ROWS'							=> 'Rows',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
@@ -93,7 +96,7 @@ $lang = array_merge($lang, array(
 		4	=> 'Permissions not changed',
 		5	=> 'Groups not changed',
 		6	=> 'Roles not changed',
-		9	=> 'Final step',
+		10	=> 'Final step',
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
 		1	=> 'The database tables haven’t been changed',
@@ -102,7 +105,7 @@ $lang = array_merge($lang, array(
 		4	=> 'There where no changes in the permission tables',
 		5	=> 'There where no changes in the phpBB system groups',
 		6	=> 'There where no roles added or removed',
-		9	=> 'This last step will clear the cache and re-enable the board.',
+		10	=> 'This last step will clear the cache and re-enable the board.',
 	),
 	'SUCCESS'						=> 'Success',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',

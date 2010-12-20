@@ -464,6 +464,34 @@ class datafile_3_0_0
 		'ROLE_FORUM_POLLS'			=> array('ROLE_DESCRIPTION_FORUM_POLLS', 'f_', 6),
 		'ROLE_FORUM_LIMITED_POLLS'	=> array('ROLE_DESCRIPTION_FORUM_LIMITED_POLLS', 'f_', 4),
 	);
+	
+	/**
+	 * @var Array All default role data
+	 */
+	var $role_data = array(
+		// Admin roles
+		'ROLE_ADMIN_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_switchperm', 'a_jabber', 'a_phpinfo', 'a_server', 'a_backup', 'a_styles', 'a_clearlogs', 'a_modules', 'a_language', 'a_email', 'a_bots', 'a_search', 'a_aauth', 'a_roles'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_FORUM'			=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_fauth', 'a_forum', 'a_forumadd', 'a_forumdel', 'a_mauth', 'a_prune', 'a_uauth', 'a_viewauth', 'a_view'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_USERGROUP'		=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_ban', 'a_group', 'a_groupadd', 'a_groupdel', 'a_ranks', 'a_uauth', 'a_user', 'a_viewauth', 'a_viewlogs'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_FULL'			=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

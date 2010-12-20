@@ -344,7 +344,7 @@ class database_cleaner_views
 			'message'	=> 'RESET_MODULES_EXPLAIN',
 		);
 
-		$this->success_message = 'DATABASE_ROLES_SUCCESS';
+		$this->success_message = 'DATABASE_ROLE_DATA_SUCCESS';
 	}
 
 	/**
@@ -380,6 +380,19 @@ class database_cleaner_views
 		}
 
 		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+	}
+	
+	/**
+	 * Reset system roles?
+	 */
+	function role_data()
+	{
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_ROLE_DATA',
+			'message'	=> 'RESET_ROLE_DATA_EXPLAIN',
+		);
+
+		$this->success_message = 'DATABASE_ROLES_SUCCESS';
 	}
 	
 	/**
