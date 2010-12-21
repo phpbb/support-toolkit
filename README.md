@@ -1,4 +1,4 @@
-[![Support Toolkit](http://www.phpbb.com/theme/images/support/support_toolkit_logo_small.png)](http://www.phpbb.com/support/stk "Support Toolkit")
+[![Support Toolkit](http://www.phpbb.com/theme/images/support/support_toolkit_logo_small.png)](http://www.phpbb.com/support/stk/ "Support Toolkit")
 
 The Support Toolkit (STK) provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software. 
 
@@ -17,4 +17,7 @@ Have a translation and want to be awesome? See the "Patches".
 If you find a bug, please submit it to the [Support Team Tools](http://www.phpbb.com/bugs/supportteamtools/ "Supprt Team Tools") bug tracker.
 
 ## Git branches
-The Support Toolkit is developed in multiple branches although main development is kept in the `stk/olympus` branch _(note: the `master` branch isn't used!)_
+The Support Toolkit is developed in multiple branches although main development is kept in the `stk/olympus` branch
+
+## LICENSE
+[GNU General Public License v2](http://opensource.org/licenses/gpl-2.0.php)
