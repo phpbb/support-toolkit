@@ -670,6 +670,15 @@ class database_cleaner_controller
 		{
 			$system_roles	= $this->db_cleaner->data->acl_role_data;
 			$role_ids		= array();
+			$sql_format		= 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting)
+								SELECT %1$d, auth_option_id, %2$d
+								FROM ' . ACL_OPTIONS_TABLE . '
+									WHERE auth_option LIKE %3$s';
+			$sql_format_in	= 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting)
+								SELECT %1$d, auth_option_id, %2$d
+								FROM ' . ACL_OPTIONS_TABLE . '
+									WHERE auth_option LIKE %3$s
+									AND %4$s';
 
 			// Fetch the role IDs
 			$sql = 'SELECT role_id, role_name
@@ -693,13 +702,17 @@ class database_cleaner_controller
 				// Trim role name to allow multiple entries for the same role
 				$role_name = trim($role_name);
 
-				$like_negate = (empty($role_data['NEGATE'])) ? false : true;
-
 				// Create the query
-				$sql  = 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting) ';
-				$sql .= "SELECT {$role_ids[$role_name]}, auth_option_id, {$role_data['SETTING']} ";
-				$sql .= 'FROM ' . ACL_OPTIONS_TABLE . " WHERE auth_option LIKE {$role_data['OPTION_LIKE']} ";
-				$sql .= (!empty($role_data['OPTION_IN'])) ? 'AND ' . $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate) : '';
+				$query = '';
+				if (!empty($role_data['OPTION_IN']))
+				{
+					$like_negate = (empty($role_data['NEGATE'])) ? false : true;
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE'], $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
+				}
+				else
+				{
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE']);
+				}
 
 				// Run, run, run
 				$db->sql_query($sql);
