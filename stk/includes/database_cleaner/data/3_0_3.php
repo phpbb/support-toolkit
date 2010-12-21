@@ -57,7 +57,18 @@ class datafile_3_0_3
 	 * @var Array All default role data
 	 */
 	var $role_data = array(
-		// No role data changes 3.0.2 -> 3.0.3
+		'ROLE_USER_LIMITED'		=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
+		'ROLE_USER_NOPM '		=> array(
+			'OPTION_IN'	=> array('u_masspm_group'),
+		),
+		'ROLE_USER_NOAVATAR'	=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
+		'ROLE_USER_NOAVATAR '	=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
 	);
 	
 
