@@ -52,7 +52,7 @@ class datafile_3_0_4
 	/**
 	 * @var Array All default role data
 	 */
-	var $role_data = array(
+	var $acl_role_data = array(
 		// No role data changes 3.0.3 -> 3.0.4
 	);
 	

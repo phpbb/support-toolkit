@@ -56,7 +56,7 @@ class datafile_3_0_3
 	/**
 	 * @var Array All default role data
 	 */
-	var $role_data = array(
+	var $acl_role_data = array(
 		'ROLE_USER_LIMITED'		=> array(
 			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
 		),

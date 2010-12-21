@@ -591,7 +591,7 @@ class database_cleaner_controller
 
 		if (isset($_POST['yes']))
 		{
-			$system_roles	= $this->db_cleaner->data->role_data;
+			$system_roles	= $this->db_cleaner->data->acl_role_data;
 			$role_ids		= array();
 
 			// Fetch the role IDs

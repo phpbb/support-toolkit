@@ -46,7 +46,7 @@ class database_cleaner_data
 	 * This array contains the data needed to build the queries as
 	 * found in `schemas/schema_data.sql`
 	 */
-	var $role_data = array();
+	var $acl_role_data = array();
 
 	/**
 	 * @var Array array holding the module categorie structure

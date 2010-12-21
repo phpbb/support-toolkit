@@ -468,7 +468,7 @@ class datafile_3_0_0
 	/**
 	 * @var Array All default role data
 	 */
-	var $role_data = array(
+	var $acl_role_data = array(
 		// Admin roles
 		'ROLE_ADMIN_STANDARD'		=> array(
 			'OPTION_LIKE'	=> "'a_%'",
