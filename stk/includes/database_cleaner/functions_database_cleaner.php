@@ -282,7 +282,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
 		$data->roles				= array_merge($data->roles, $_datafile->roles);
-		$data->role_data			= array_merge($data->role_data, $_datafile->role_data);
+		$data->role_data			= array_merge_recursive($data->role_data, $_datafile->role_data);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
