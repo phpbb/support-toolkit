@@ -638,22 +638,22 @@ class database_cleaner_controller
 		global $umil;
 
 		$role_rows = $existing_roles = array();
-		get_role_rows($this->db_cleaner->data->roles, $role_rows, $existing_roles);
+		get_role_rows($this->db_cleaner->data->acl_roles, $role_rows, $existing_roles);
 		foreach ($role_rows as $name)
 		{
-			if (isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+			if (isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->db_cleaner->data->roles[$name]) && !in_array($name, $existing_roles))
+				if (isset($this->db_cleaner->data->acl_roles[$name]) && !in_array($name, $existing_roles))
 				{
 					// Add it with the default settings we've got...
-					$umil->permission_role_add($name, $this->db_cleaner->data->roles[$name][1], $this->db_cleaner->data->roles[$name][0]);
+					$umil->permission_role_add($name, $this->db_cleaner->data->acl_roles[$name][1], $this->db_cleaner->data->acl_roles[$name][0]);
 				}
-				else if (!isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+				else if (!isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
 				{
 					// Remove it
 					$umil->permission_role_remove($name);

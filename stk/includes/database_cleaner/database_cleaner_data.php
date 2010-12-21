@@ -39,7 +39,7 @@ class database_cleaner_data
 	/**
 	 * @var Array The roles array for this version
 	 */
-	var $roles = array();
+	var $acl_roles = array();
 
 	/**
 	 * @var Array The role data array for this version

@@ -407,11 +407,11 @@ class database_cleaner_views
 		);
 
 		$role_rows = $existing_roles = array();
-		get_role_rows($this->db_cleaner->data->roles, $role_rows, $existing_roles);
+		get_role_rows($this->db_cleaner->data->acl_roles, $role_rows, $existing_roles);
 		foreach ($role_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing config
-			if (isset($this->db_cleaner->data->roles[$name]) && in_array($name, $existing_roles))
+			if (isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
 			{
 				continue;
 			}

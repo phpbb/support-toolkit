@@ -63,7 +63,7 @@ class datafile_3_0_6
 	/**
 	 * @var Array All default roles
 	 */
-	var $roles = array(
+	var $acl_roles = array(
 		'ROLE_USER_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_USER_NEW_MEMBER', 'u_', 6),
 		'ROLE_FORUM_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_FORUM_NEW_MEMBER', 'f_', 10),
 	);

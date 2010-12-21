@@ -440,7 +440,7 @@ class datafile_3_0_0
 	/**
 	 * @var Array All default roles
 	 */
-	var $roles = array(
+	var $acl_roles = array(
 		'ROLE_ADMIN_STANDARD'		=> array('ROLE_DESCRIPTION_ADMIN_STANDARD', 'a_', 1),
 		'ROLE_ADMIN_FORUM'			=> array('ROLE_DESCRIPTION_ADMIN_FORUM', 'a_', 3),
 		'ROLE_ADMIN_USERGROUP'		=> array('ROLE_DESCRIPTION_ADMIN_USERGROUP', 'a_', 4),
