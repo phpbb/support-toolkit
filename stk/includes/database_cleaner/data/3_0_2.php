@@ -31,7 +31,7 @@ class datafile_3_0_2
 	/**
 	* @var Array 3.0.2 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'referer_validation'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'check_attachment_content'	=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'mime_triggers'				=> array('config_value' => 'body|head|html|img|plaintext|a href|pre|script|table|title', 'is_dynamic' => '0'),

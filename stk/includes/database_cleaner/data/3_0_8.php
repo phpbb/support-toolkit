@@ -32,7 +32,7 @@ class datafile_3_0_8
 	/**
 	* @var Array 3.0.8-dev config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'load_unreads_search' => array('config_value' => '1', 'is_dynamic' => '0'),
 	);
 

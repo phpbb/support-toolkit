@@ -242,11 +242,11 @@ class database_cleaner_views
 		);
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing config
-			if (isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
+			if (isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config))
 			{
 				continue;
 			}

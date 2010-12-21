@@ -29,7 +29,7 @@ class database_cleaner_data
 	/**
 	* @var Array The config array for this version
 	*/
-	var $config_data = array();
+	var $config = array();
 
 	/**
 	* @var Array The permissions array for this version

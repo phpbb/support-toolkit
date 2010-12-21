@@ -80,7 +80,7 @@ class datafile_3_0_0
 	/**
 	* @var Array 3.0.0 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'active_sessions'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'allow_attachments'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'allow_autologin'				=> array('config_value' => '1', 'is_dynamic' => '0'),

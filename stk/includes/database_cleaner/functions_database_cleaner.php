@@ -279,7 +279,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 
 		// Set the data
 		$data->bots					= array_merge($data->bots, $_datafile->bots);
-		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
+		$data->config			= array_merge($data->config, $_datafile->config);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
 		$data->roles				= array_merge($data->roles, $_datafile->roles);
 		$data->role_data			= array_merge_recursive($data->role_data, $_datafile->role_data);
@@ -306,7 +306,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			// If $config['questionnaire_unique_id] exists add it to the config data array
 			if (isset($config['questionnaire_unique_id']))
 			{
-				$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
+				$data->config['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
 			}
 
 			// Need to force do some ordering on $module_extras
@@ -321,7 +321,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		case '3_0_2' :
 		case '3_0_1' :
 		case '3_0_0' :
-			$data->config_data['version'] = $phpbb_version;		// We always need to set the version afterwards
+			$data->config['version'] = $phpbb_version;		// We always need to set the version afterwards
 		break;
 	}
 

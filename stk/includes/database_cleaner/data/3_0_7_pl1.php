@@ -31,7 +31,7 @@ class datafile_3_0_7_pl1
 	/**
 	* @var Array 3.0.7-pl1 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		// No config changes 3.0.7 -> 3.0.7-pl1
 	);
 

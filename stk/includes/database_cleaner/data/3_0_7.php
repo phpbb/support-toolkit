@@ -31,7 +31,7 @@ class datafile_3_0_7
 	/**
 	* @var Array 3.0.7 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'feed_overall'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'feed_http_auth'		=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'feed_limit_post'		=> array('config_value' => '15', 'is_dynamic' => '0'),

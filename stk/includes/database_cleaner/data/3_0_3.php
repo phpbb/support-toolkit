@@ -31,7 +31,7 @@ class datafile_3_0_3
 	/**
 	* @var Array 3.0.3 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'enable_queue_trigger'	=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'queue_trigger_posts'	=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'pm_max_recipients'		=> array('config_value' => '0', 'is_dynamic' => '0'),

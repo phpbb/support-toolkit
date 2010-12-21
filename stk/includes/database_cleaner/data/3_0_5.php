@@ -31,7 +31,7 @@ class datafile_3_0_5
 	/**
 	* @var Array 3.0.5 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'captcha_gd_wave'			=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'captcha_gd_3d_noise'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'captcha_gd_fonts'			=> array('config_value' => '1', 'is_dynamic' => '0'),

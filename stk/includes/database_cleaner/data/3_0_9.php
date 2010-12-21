@@ -30,7 +30,7 @@ class datafile_3_0_9
 	/**
 	* @var Array 3.0.8-dev config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		// No config changes 3.0.8 -> 3.0.9
 	);
 

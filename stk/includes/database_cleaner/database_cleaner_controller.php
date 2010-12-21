@@ -213,22 +213,22 @@ class database_cleaner_controller
 		global $db;
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
-			if (isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
+			if (isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->db_cleaner->data->config_data[$name]) && !in_array($name, $existing_config))
+				if (isset($this->db_cleaner->data->config[$name]) && !in_array($name, $existing_config))
 				{
 					// Add it with the default settings we've got...
-					set_config($name, $this->db_cleaner->data->config_data[$name]['config_value'], $this->db_cleaner->data->config_data[$name]['is_dynamic']);
+					set_config($name, $this->db_cleaner->data->config[$name]['config_value'], $this->db_cleaner->data->config[$name]['is_dynamic']);
 				}
-				else if (!isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
+				else if (!isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config))
 				{
 					// Remove it
 					$db->sql_query('DELETE FROM ' . CONFIG_TABLE . " WHERE config_name = '" . $db->sql_escape($name) . "'");

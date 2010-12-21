@@ -31,7 +31,7 @@ class datafile_3_0_6
 	/**
 	* @var Array 3.0.6 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'captcha_plugin'				=> array('config_value' => 'phpbb_captcha_nogd', 'is_dynamic' => '0'),
 		'feed_enable'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'feed_limit'					=> array('config_value' => '10', 'is_dynamic' => '0'),
