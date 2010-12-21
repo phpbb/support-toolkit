@@ -181,7 +181,14 @@ class database_cleaner
 			return;
 		}
 
+		// Confirm boxes
+		$did_run = true;
+		if (!isset($_POST['yes']))
+		{
+			$did_run = false;
+		}
+
 		// Redirect to the next step
-		redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => true)));
+		redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => $did_run)));
 	}
 }
