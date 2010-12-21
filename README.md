@@ -1,4 +1,4 @@
-# [Support Toolkit](http://www.phpbb.com/support/stk "Support Toolkit")
+[![Support Toolkit](http://www.phpbb.com/theme/images/support/support_toolkit_logo_small.png)](http://www.phpbb.com/support/stk "Support Toolkit")
 
 The Support Toolkit (STK) provides a second "Administration Control Panel" that can be used to recover various part of a corrupted phpBB 3.0.x installation or to solve commonly encountered problems with the software. 
 
