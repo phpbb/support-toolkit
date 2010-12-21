@@ -303,6 +303,54 @@ class database_cleaner_views
 	}
 
 	/**
+	 * Validate the extensions
+	 */
+	function extensions()
+	{
+		global $user;
+		$user->add_lang('acp/attachments');
+
+		// Build the output
+		$last_extension_group = '';
+		foreach ($this->db_cleaner->data->extensions as $group => $data)
+		{
+			$group_ids = array();
+			$existing_extensions = get_extensions($group, $group_ids);
+			$extensions = array_unique(array_merge($data, $existing_extensions));
+			sort($extensions);
+
+			foreach ($extensions as $extension)
+			{
+				if ((!in_array($extension, $data) && in_array($extension, $existing_extensions)) || (in_array($extension, $data) && !in_array($extension, $existing_extensions)))
+				{
+					// Output the table block if it's not been done yet
+					if ($last_extension_group != $group)
+					{
+						$last_extension_group = $group;
+
+						$this->_section_data[$group] = array(
+							'NAME'	=> user_lang($group),
+							'TITLE'	=> 'COLUMNS',
+						);
+					}
+
+					// Add the data
+					$this->_section_data[$group]['ITEMS'][] = array(
+						'NAME'			=> $extension,
+						'FIELD_NAME'	=> $group . '_' . $extension,
+						'MISSING'		=> (!in_array($extension, $existing_extensions)) ? true : false,
+					);
+
+					if ($this->_has_changes === false)
+					{
+						$this->_has_changes = true;
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	* Display the last step
 	*/
 	function final_step()

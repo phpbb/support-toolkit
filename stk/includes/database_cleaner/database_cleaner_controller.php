@@ -280,6 +280,41 @@ class database_cleaner_controller
 	}
 
 	/**
+	 * Fix teh extensions
+	 */
+	function extensions()
+	{
+		global $db;
+
+		foreach ($this->db_cleaner->data->extensions as $group => $data)
+		{
+			$group_id = 0;
+			$existing_extensions = get_extensions($group, $group_id);
+			$extensions = array_unique(array_merge($data, $existing_extensions));
+			sort($extensions);
+
+			foreach ($extensions as $extension)
+			{
+				if (!in_array($extension, $data) && in_array($extension, $existing_extensions))
+				{
+					// Delete
+					$db->sql_query('DELETE FROM ' . EXTENSIONS_TABLE . "
+						WHERE group_id = {$group_id} 
+							AND extension = '" . $db->sql_escape($extension) . '\'');
+				}
+				else if (in_array($extension, $data) && !in_array($extension, $existing_extensions))
+				{
+					$insert = array(
+						'group_id'	=> $group_id,
+						'extension'	=> $extension,
+					);
+					$db->sql_query('INSERT INTO ' . EXTENSIONS_TABLE . ' ' . $db->sql_build_array('INSERT', $insert));
+				}
+			}
+		}
+	}
+
+	/**
 	* Finish it up.
 	*
 	* - Purge all the cache

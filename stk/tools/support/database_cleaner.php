@@ -27,6 +27,7 @@ class database_cleaner
 		'columns',
 		'config',
 		'extension_groups',
+		'extensions',
 		'permissions',
 		'groups',
 		'roles',

@@ -154,6 +154,13 @@ class database_cleaner_data
 				$this->extension_groups[$ext_group_trans[$name]] = $data;
 				unset($this->extension_groups[$name]);
 			}
+
+			// And the extensions have the same issue :/
+			foreach ($this->extensions as $name => $data)
+			{
+				$this->extensions[$ext_group_trans[$name]] = $data;
+				unset($this->extensions[$name]);
+			}
 		}
 	}
 }
