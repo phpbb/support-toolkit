@@ -54,7 +54,20 @@ class datafile_3_0_9
 	var $acl_role_data = array(
 		// No role data changes 3.0.8 -> 3.0.9
 	);
-	
+
+	/**
+	 * @var Array All default extension groups
+	 */
+	var $extension_groups = array(
+		// No extension group changes 3.0.8 -> 3.0.9
+	);
+
+	/**
+	 * @var Array All default extensions
+	 */
+	var $extensions = array(
+		// No extension changes 3.0.8 -> 3.0.9
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

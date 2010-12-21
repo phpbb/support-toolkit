@@ -58,6 +58,19 @@ class datafile_3_0_2
 		// No role data changes 3.0.1 -> 3.0.2
 	);
 
+	/**
+	 * @var Array All default extension groups
+	 */
+	var $extension_groups = array(
+		// No extension group changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	 * @var Array All default extensions
+	 */
+	var $extensions = array(
+		// No extension changes 3.0.1 -> 3.0.2
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

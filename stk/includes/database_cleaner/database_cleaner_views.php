@@ -265,6 +265,42 @@ class database_cleaner_views
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
+	
+	/**
+	 * Validate the extension groups
+	 */
+	function extension_groups()
+	{
+		// display extra config variables and let them check/uncheck the ones they want to add/remove
+		$this->_section_data['extension_groups'] = array(
+			'NAME'		=> 'EXTENSION_GROUPS_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
+
+		$extension_groups_rows = $existing_extension_groups = array();
+		get_extension_groups_rows($this->db_cleaner->data->extension_groups, $extension_groups_rows, $existing_extension_groups);
+		foreach ($extension_groups_rows as $name)
+		{
+			// Skip ones that are in the default install and are in the existing config
+			if (isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+			{
+				continue;
+			}
+
+			$this->_section_data['extension_groups']['ITEMS'][] = array(
+				'NAME'			=> $name,
+				'FIELD_NAME'	=> $name,
+				'MISSING'		=> (!in_array($name, $existing_extension_groups)) ? true : false,
+			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+
+		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+	}
 
 	/**
 	* Display the last step
@@ -379,7 +415,7 @@ class database_cleaner_views
 			}
 		}
 
-		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+		$this->success_message = 'EXTENSION_GROUPS_SUCCESS';
 	}
 	
 	/**

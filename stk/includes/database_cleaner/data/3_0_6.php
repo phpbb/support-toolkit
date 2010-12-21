@@ -83,7 +83,20 @@ class datafile_3_0_6
 			'SETTING'		=> '0',
 		),
 	);
-	
+
+	/**
+	 * @var Array All default extension groups
+	 */
+	var $extension_groups = array(
+		// No extension group changes 3.0.5 -> 3.0.6
+	);
+
+	/**
+	 * @var Array All default extensions
+	 */
+	var $extensions = array(
+		// No extension changes 3.0.5 -> 3.0.6
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

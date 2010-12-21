@@ -36,6 +36,27 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 	sort($config_rows);
 }
 
+/**
+ * Collect all extension groups
+ */
+function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_rows, &$existing_extension_groups)
+{
+	global $db;
+
+	$existing_extension_groups = array();
+	$sql = 'SELECT group_name
+		FROM ' . EXTENSION_GROUPS_TABLE;
+	$result	= $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$existing_extension_groups[] = $row['group_name'];
+	}
+	$db->sql_freeresult($result);
+
+	$extension_groups_rows = array_unique(array_merge(array_keys($extension_groups_data), $existing_extension_groups));
+	sort($extension_groups_rows);
+}
+
 function get_permission_rows(&$permission_data, &$permission_rows, &$existing_permissions)
 {
 	global $db;
@@ -283,6 +304,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->acl_options			= array_merge($data->acl_options, $_datafile->acl_options);
 		$data->acl_roles				= array_merge($data->acl_roles, $_datafile->acl_roles);
 		$data->acl_role_data			= array_merge_recursive($data->acl_role_data, $_datafile->acl_role_data);
+		$data->extension_groups		= array_merge($data->extension_groups, $_datafile->extension_groups);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);

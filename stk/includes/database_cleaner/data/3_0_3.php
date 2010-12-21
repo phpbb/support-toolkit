@@ -70,7 +70,20 @@ class datafile_3_0_3
 			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
 		),
 	);
-	
+
+	/**
+	 * @var Array All default extension groups
+	 */
+	var $extension_groups = array(
+		// No extension group changes 3.0.2 -> 3.0.3
+	);
+
+	/**
+	 * @var Array All default extensions
+	 */
+	var $extensions = array(
+		// No extension changes 3.0.2 -> 3.0.3
+	);
 
 	/**
 	 * Define the module structure so that we can populate the database without

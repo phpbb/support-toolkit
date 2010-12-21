@@ -236,6 +236,48 @@ class database_cleaner_controller
 			}
 		}
 	}
+	
+	/**
+	 * Fix the extension groups
+	 */
+	function extension_groups(&$error, $selected)
+	{
+		global $db;
+
+		$extension_groups_rows = $existing_extension_groups = array();
+		get_extension_groups_rows($this->db_cleaner->data->extension_groups, $extension_groups_rows, $existing_extension_groups);
+		foreach ($extension_groups_rows as $name)
+		{
+			if (isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+			{
+				continue;
+			}
+
+			if (isset($selected[$name]))
+			{
+				if (isset($this->db_cleaner->data->extension_groups[$name]) && !in_array($name, $existing_extension_groups))
+				{
+					$insert = array(
+						'group_name'		=> $name,
+						'cat_id'			=> $this->db_cleaner->data->extension_groups[$name][0],
+						'allow_group'		=> $this->db_cleaner->data->extension_groups[$name][1],
+						'download_mode'		=> $this->db_cleaner->data->extension_groups[$name][2],
+						'upload_icon'		=> $this->db_cleaner->data->extension_groups[$name][3],
+						'max_filesize'		=> $this->db_cleaner->data->extension_groups[$name][4],
+						'allowed_forums'	=> $this->db_cleaner->data->extension_groups[$name][5],
+					);
+
+					// Add it
+					$db->sql_query('INSERT INTO ' . EXTENSION_GROUPS_TABLE . ' ' . $db->sql_build_array('INSERT', $insert));
+				}
+				else if (!isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+				{
+					// Remove it
+					$db->sql_query('DELETE FROM ' . EXTENSION_GROUPS_TABLE . " WHERE group_name = '{$name}'");
+				}
+			}
+		}
+	}
 
 	/**
 	* Finish it up.

@@ -614,6 +614,28 @@ class datafile_3_0_0
 	);
 
 	/**
+	 * @var Array All default extension groups
+	 */
+	var $extension_groups = array(
+		'EXT_GROUP_IMAGES'				=> array(1, 1, 1, '', 0, ''),
+		'EXT_GROUP_ARCHIVES'			=> array(0, 1, 1, '', 0, ''),
+		'EXT_GROUP_PLAIN_TEXT'			=> array(0, 0, 1, '', 0, ''),
+		'EXT_GROUP_DOCUMENTS'			=> array(0, 0, 1, '', 0, ''),
+		'EXT_GROUP_REAL_MEDIA'			=> array(3, 0, 1, '', 0, ''),
+		'EXT_GROUP_WINDOWS_MEDIA'		=> array(2, 0, 1, '', 0, ''),
+		'EXT_GROUP_FLASH_FILES'			=> array(5, 0, 1, '', 0, ''),
+		'EXT_GROUP_QUICKTIME_MEDIA'		=> array(6, 0, 1, '', 0, ''),
+		'EXT_GROUP_DOWNLOADABLE_FILES'	=> array(0, 0, 1, '', 0, ''),
+	);
+
+	/**
+	 * @var Array All default extensions
+	 */
+	var $extensions = array(
+	
+	);
+
+	/**
 	 * Define the module structure so that we can populate the database without
 	 * needing to hard-code module_id values
 	 */
