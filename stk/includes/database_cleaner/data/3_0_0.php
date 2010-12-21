@@ -478,7 +478,7 @@ class datafile_3_0_0
 		),
 		'ROLE_ADMIN_FORUM'			=> array(
 			'OPTION_LIKE'	=> "'a_%'",
-			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_fauth', 'a_forum', 'a_forumadd', 'a_forumdel', 'a_mauth', 'a_prune', 'a_uauth', 'a_viewauth', 'a_view'),
+			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_fauth', 'a_forum', 'a_forumadd', 'a_forumdel', 'a_mauth', 'a_prune', 'a_uauth', 'a_viewauth', 'a_viewlogs'),
 			'SETTING'		=> '1',
 		),
 		'ROLE_ADMIN_USERGROUP'		=> array(
@@ -489,6 +489,126 @@ class datafile_3_0_0
 		'ROLE_ADMIN_FULL'			=> array(
 			'OPTION_LIKE'	=> "'a_%'",
 			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		
+		// User roles
+		'ROLE_USER_FULL'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_flash', 'u_pm_forward'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_LIMITED'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_attach', 'u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_attach', 'u_pm_emailpm', 'u_pm_flash', 'u_savedrafts', 'u_search', 'u_sendemail', 'u_sendim'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOPM'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_', 'u_chgavatar', 'u_chgcensors', 'u_chgemail', 'u_chgpasswd', 'u_download', 'u_hideonline', 'u_sig', 'u_viewprofile'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOPM '			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_readpm', 'u_sendpm', 'u_masspm'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_USER_NOAVATAR'		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_attach', 'u_chgavatar', 'u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_attach', 'u_pm_emailpm', 'u_pm_flash', 'u_savedrafts', 'u_search', 'u_sendemail', 'u_sendim'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOAVATAR '		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_chgavatar'),
+			'SETTING'		=> '0',
+		),
+		
+		// Moderator roles
+		'ROLE_MOD_FULL'				=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_MOD_STANDARD'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_ban', 'm_chgposter'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		), 
+		'ROLE_MOD_SIMPLE'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_', 'm_delete', 'm_edit', 'm_info', 'm_report'),
+			'SETTING'		=> '1',
+		), 
+		'ROLE_MOD_QUEUE'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_', 'm_approve', 'm_edit'),
+			'SETTING'		=> '1',
+		),
+		
+		// Forum roles
+		'ROLE_FORUM_FULL'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_flash', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_NOACCESS'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_READONLY'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_', 'f_download', 'f_list', 'f_read', 'f_search', 'f_subscribe', 'f_print'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_LIMITED'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_attach', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock', 'f_votechg'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_BOT'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_', 'f_download', 'f_list', 'f_read', 'f_print'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_ONQUEUE'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock', 'f_votechg', 'f_noapprove'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_ONQUEUE '		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_noapprove'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_POLLS'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_flash', 'f_ignoreflood', 'f_sticky', 'f_user_lock'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_LIMITED_POLLS'	=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_attach', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_sticky', 'f_user_lock', 'f_votechg'),
+			'NEGATE'		=> true,
 			'SETTING'		=> '1',
 		),
 	);

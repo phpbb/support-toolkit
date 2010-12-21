@@ -613,6 +613,9 @@ class database_cleaner_controller
 			// Now re-build the role data
 			foreach ($system_roles as $role_name => $role_data)
 			{
+				// Trim role name to allow multiple entries for the same role
+				$role_name = trim($role_name);
+
 				$like_negate = (empty($role_data['NEGATE'])) ? false : true;
 
 				// Create the query
