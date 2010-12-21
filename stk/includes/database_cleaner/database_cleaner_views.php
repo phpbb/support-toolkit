@@ -123,11 +123,11 @@ class database_cleaner_views
 		}
 
 		// Assign no changes text
-		if (isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
+		if (isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]]))
 		{
 			$template->assign_vars(array(
-				'NO_CHANGES_TEXT'	=> user_lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
-				'NO_CHANGES_TITLE'	=> user_lang('SECTION_NOT_CHANGED_TITLE', $this->db_cleaner->step),
+				'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+				'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
 			));
 		}
 
