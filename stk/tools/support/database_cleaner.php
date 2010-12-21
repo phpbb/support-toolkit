@@ -181,14 +181,7 @@ class database_cleaner
 			return;
 		}
 
-		// Step 6 & 7 can trigger two messages
-		$did_run = true;
-		if (($this->step == 6 || $this->step == 7) && !isset($_POST['yes']))
-		{
-			$did_run = false;
-		}
-
 		// Redirect to the next step
-		redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => $did_run)));
+		redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => true)));
 	}
 }

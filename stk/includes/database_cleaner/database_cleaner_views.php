@@ -40,6 +40,11 @@ class database_cleaner_views
 	* @var database_cleaner_data The database cleaner data object
 	*/
 	var $db_cleaner = array();
+	
+	/**
+	* @var String Some steps have a specific notice when not ran
+	*/
+	var $not_run_message = '';
 
 	/**
 	* @var String The message that is displayed once a step is done successfully
@@ -136,11 +141,17 @@ class database_cleaner_views
 			$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => ($this->db_cleaner->step + 1)));
 		}
 
+		$msg = $this->success_message;
+		if (empty($_REQUEST['did_run']) && $this->db_cleaner->step > 0)
+		{
+			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : '';
+		}
+
 		// Output some stuff we need always
 		$template->assign_vars(array(
 			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
 			'STEP'				=> $this->db_cleaner->step,
-			'SUCCESS_MESSAGE'	=> user_lang($this->success_message),
+			'SUCCESS_MESSAGE'	=> user_lang($msg),
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> $_u_next_step,
@@ -167,8 +178,8 @@ class database_cleaner_views
 		);
 
 		// Only success message when the modules have been reset
-		$did_run = request_var('did_run', false);
-		$this->success_message = ($did_run) ? 'RESET_MODULE_SUCCESS' : 'RESET_MODULES_SKIP';
+		$this->success_message	= 'RESET_MODULE_SUCCESS';
+		$this->not_run_message	= 'RESET_MODULES_SKIP';
 	}
 
 	/**
@@ -360,8 +371,8 @@ class database_cleaner_views
 		global $template;
 
 		// Only success message when the bots have been reset
-		$did_run = request_var('did_run', false);
-		$this->success_message = ($did_run) ? 'RESET_BOT_SUCCESS' : 'RESET_BOTS_SKIP';
+		$this->success_message	= 'RESET_BOT_SUCCESS';
+		$this->not_run_message	= 'RESET_BOTS_SKIP';
 
 		$this->_has_changes = true;
 	}
