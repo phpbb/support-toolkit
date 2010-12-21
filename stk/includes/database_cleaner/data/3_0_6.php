@@ -72,7 +72,16 @@ class datafile_3_0_6
 	 * @var Array All default role data
 	 */
 	var $role_data = array(
-		// No role data changes 3.0.5 -> 3.0.6
+		'ROLE_USER_NEW_MEMBER'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_sendpm', 'u_masspm', 'u_masspm_group'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_NEW_MEMBER'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_noapprove'),
+			'SETTING'		=> '0',
+		),
 	);
 	
 
