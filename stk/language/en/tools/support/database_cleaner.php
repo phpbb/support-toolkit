@@ -62,6 +62,7 @@ $lang = array_merge($lang, array(
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
 	'EXTENSION_GROUPS_SUCCESS'		=> 'The extension groups have been reset successfully',
+	'EXTENSIONS_SUCCESS'			=> 'The extensions have been reset successfully',
 
 	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your board’s cache.',
 

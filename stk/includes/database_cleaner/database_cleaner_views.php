@@ -348,6 +348,8 @@ class database_cleaner_views
 				}
 			}
 		}
+
+		$this->success_message = 'EXTENSION_GROUPS_SUCCESS';
 	}
 
 	/**
@@ -463,7 +465,7 @@ class database_cleaner_views
 			}
 		}
 
-		$this->success_message = 'EXTENSION_GROUPS_SUCCESS';
+		$this->success_message = 'EXTENSIONS_SUCCESS';
 	}
 	
 	/**
