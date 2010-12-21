@@ -50,6 +50,8 @@ update!
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
 * [Change] Dynamic BOM Sniffer white list. (Bug #62481)
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
+* [Change] Made the database cleaner user interface a bit more user friendly.
+* [Change] Database cleaner now also validates roles and extensions. (Bug #62475)
 * [Fix] Hooks potentially break STK. (Bug #62352)
 * [Fix] BOM Sniffer white list uses hard file extensions. (Bug 62473)
 * [Fix] Merge users tool in some cases incorrectly sets PM to and bcc addresses. (Bug #62486, Patch by D¡cky)
