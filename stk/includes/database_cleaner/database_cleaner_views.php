@@ -358,11 +358,11 @@ class database_cleaner_views
 		);
 
 		$permission_rows = $existing_permissions = array();
-		get_permission_rows($this->db_cleaner->data->permissions, $permission_rows, $existing_permissions);
+		get_permission_rows($this->db_cleaner->data->acl_options, $permission_rows, $existing_permissions);
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}

@@ -560,19 +560,19 @@ class database_cleaner_controller
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->db_cleaner->data->permissions[$name]) && !in_array($name, $existing_permissions))
+				if (isset($this->db_cleaner->data->acl_options[$name]) && !in_array($name, $existing_permissions))
 				{
 					// Add it with the default settings we've got...
-					$umil->permission_add($name, (($this->db_cleaner->data->permissions[$name]['is_global']) ? true : false));
+					$umil->permission_add($name, (($this->db_cleaner->data->acl_options[$name]['is_global']) ? true : false));
 				}
-				else if (!isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+				else if (!isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 				{
 					// Remove it
 					$umil->permission_remove($name, true);

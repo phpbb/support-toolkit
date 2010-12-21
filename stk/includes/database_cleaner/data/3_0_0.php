@@ -318,7 +318,7 @@ class datafile_3_0_0
 	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		'f_'				=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
 		'f_announce'		=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
 		'f_attach'			=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),

@@ -38,7 +38,7 @@ class datafile_3_0_7_pl1
 	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// No permission changes 3.0.7 -> 3.0.7-pl1
 	);
 

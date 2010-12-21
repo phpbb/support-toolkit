@@ -41,7 +41,7 @@ class datafile_3_0_3
 	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// Added permission
 		'u_masspm_group'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 	);

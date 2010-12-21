@@ -34,7 +34,7 @@ class database_cleaner_data
 	/**
 	* @var Array The permissions array for this version
 	*/
-	var $permissions = array();
+	var $acl_options = array();
 
 	/**
 	 * @var Array The roles array for this version
