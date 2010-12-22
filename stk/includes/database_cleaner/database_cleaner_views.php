@@ -118,7 +118,7 @@ class database_cleaner_views
 		}
 
 		// Assign no changes text
-		if (isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
+		if (!empty($this->_section_data) && isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
 		{
 			$template->assign_vars(array(
 				'NO_CHANGES_TEXT'	=> user_lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
@@ -127,17 +127,25 @@ class database_cleaner_views
 		}
 
 		// Determine the link for the next step
-		if ($this->_has_changes || !empty($this->_confirm_box))
+		if (!isset($this->_u_next_step))
 		{
-			$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true));
+			if ($this->_has_changes || !empty($this->_confirm_box))
+			{
+				$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true));
+			}
+			else
+			{
+				$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => ($this->db_cleaner->step + 1)));
+			}
 		}
 		else
 		{
-			$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => ($this->db_cleaner->step + 1)));
+			$_u_next_step = $this->_u_next_step;
 		}
 
 		// Output some stuff we need always
 		$template->assign_vars(array(
+			'S_HIDDEN_FIELDS'	=> (isset($this->_hidden_fields)) ? build_hidden_fields($this->_hidden_fields) : '',
 			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
 			'STEP'				=> $this->db_cleaner->step,
 			'SUCCESS_MESSAGE'	=> user_lang($this->success_message),
@@ -387,34 +395,63 @@ class database_cleaner_views
 	*/
 	function tables()
 	{
-		$found_tables	= get_phpbb_tables();
-		$req_tables		= $this->db_cleaner->data->tables;
-		$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
-		sort($tables);
+		global $table_prefix;
 
-		$this->_section_data['tables'] = array(
-			'NAME'		=> 'DATABASE_TABLES',
-			'TITLE'		=> 'DATABASE_TABLES',
-		);
-
-		foreach ($tables as $table)
+		if (!isset($_REQUEST['tables_confirm']))
 		{
-			// Table was added or removed
-			if (!isset($req_tables[$table]) && in_array($table, $found_tables) || isset($req_tables[$table]) && !in_array($table, $found_tables))
+			$found_tables	= get_phpbb_tables();
+			$req_tables		= $this->db_cleaner->data->tables;
+			$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
+			sort($tables);
+	
+			$this->_section_data['tables'] = array(
+				'NAME'		=> 'DATABASE_TABLES',
+				'TITLE'		=> 'DATABASE_TABLES',
+			);
+	
+			foreach ($tables as $table)
 			{
-				$this->_section_data['tables']['ITEMS'][] = array(
-					'NAME'			=> $table,
-					'FIELD_NAME'	=> $table,
-					'MISSING'		=> isset($req_tables[$table]) ? true : false,
-				);
-
-				if ($this->_has_changes === false)
+				// Table was added or removed
+				if (!isset($req_tables[$table]) && in_array($table, $found_tables) || isset($req_tables[$table]) && !in_array($table, $found_tables))
 				{
-					$this->_has_changes = true;
+					$this->_section_data['tables']['ITEMS'][] = array(
+						'NAME'			=> $table,
+						'FIELD_NAME'	=> $table,
+						'MISSING'		=> isset($req_tables[$table]) ? true : false,
+					);
+	
+					if ($this->_has_changes === false)
+					{
+						$this->_has_changes = true;
+					}
 				}
 			}
+			
+			// A bit nasty but the only real work around at this moment
+			if (empty($table_prefix) && $this->_has_changes)
+			{
+				$this->_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => false, 'tables_confirm' => true));
+			}
+	
+			$this->success_message = 'BOARD_DISABLE_SUCCESS';
 		}
+		else
+		{
+			// I'n not sure why request_var doesn't work here so we'll do it a bit different
+			$tables = array();
+			foreach ($_REQUEST['items'] as $table => $value)
+			{
+				set_var($table, $table, 'string', true);
+				set_var($value, $value, 'string', true);
+				$tables["items[{$table}]"] = $value;
+			}
+			
+			$this->_hidden_fields = $tables;
 
-		$this->success_message = 'BOARD_DISABLE_SUCCESS';
+			$this->_confirm_box = array(
+				'title'		=> 'EMPTY_PREFIX',
+				'message'	=> 'EMPTY_PREFIX_CONFIRM',
+			);
+		}
 	}
 }
