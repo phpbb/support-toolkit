@@ -306,6 +306,7 @@ class mysql_upgrader
 		print($result);
 
 		// Exit
+		garbage_collection();
 		exit_handler();
 	}
 
