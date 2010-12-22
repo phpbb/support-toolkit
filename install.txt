@@ -55,6 +55,7 @@ update!
 * [Fix] Merge users tool in some cases incorrectly sets PM to and bcc addresses. (Bug #62486, Patch by D¡cky)
 * [Fix] Hardcoded path to the STK. (Bug #62493)
 * [Fix] BOM Sniffer critical repair files not sniffed correctly. (Bug #62541)
+* [Fix] ERK breaks when style files are missing. (Bug #62557)
 
 == Changes since 1.0.2.1
 * [Fix] Wrong constant in the flash checker. (Bug #62497)
