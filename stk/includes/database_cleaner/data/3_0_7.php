@@ -44,10 +44,10 @@ class datafile_3_0_7
 	* @var Array Config entries that were removed by the 3.0.7 update
 	*/
 	var $removed_config_data = array(
-		'feed_limit'					=> array(),
-		'feed_overall_forums_limit'		=> array(),
-		'feed_overall_topics'			=> array(),
-		'feed_overall_topics_limit'		=> array(),
+		'feed_limit',
+		'feed_overall_forums_limit',
+		'feed_overall_topics',
+		'feed_overall_topics_limit',
 	);
 
 	/**

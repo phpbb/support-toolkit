@@ -41,8 +41,8 @@ class datafile_3_0_2
 	* @var Array Config entries that were removed by the 3.0.2 update
 	*/
 	var $removed_config_data = array(
-		'min_time_reg'		=> array(),
-		'min_time_terms'	=> array(),
+		'min_time_reg',
+		'min_time_terms',
 	);
 
 	/**
