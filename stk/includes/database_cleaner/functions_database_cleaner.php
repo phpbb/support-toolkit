@@ -278,6 +278,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		// Set the data
 		$data->bots					= array_merge($data->bots, $_datafile->bots);
 		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
+		$data->removed_config_data	= array_merge($data->removed_config_data, $_datafile->removed_config_data);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
