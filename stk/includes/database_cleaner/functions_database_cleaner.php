@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,8 +37,8 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 }
 
 /**
- * Collect all extension groups
- */
+* Collect all extension groups
+*/
 function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_rows, &$existing_extension_groups)
 {
 	global $db;
@@ -58,8 +58,8 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 }
 
 /**
- * Collect the extensions for a given group
- */
+* Collect the extensions for a given group
+*/
 function get_extensions($group, &$group_id)
 {
 	global $db;
@@ -336,6 +336,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
+		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
 		$_datafile->get_schema_struct($data->schema_data);
 
 		// Just make sure that nothing sticks

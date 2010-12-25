@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -34,6 +34,7 @@ class database_cleaner
 		'role_data',
 		'modules',
 		'bots',
+		'report_reasons',
 		'final_step',
 	);
 

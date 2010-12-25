@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -61,16 +61,16 @@ class datafile_3_0_6
 	);
 
 	/**
-	 * @var Array All default roles
-	 */
+	* @var Array All default roles
+	*/
 	var $acl_roles = array(
 		'ROLE_USER_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_USER_NEW_MEMBER', 'u_', 6),
 		'ROLE_FORUM_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_FORUM_NEW_MEMBER', 'f_', 10),
 	);
 
 	/**
-	 * @var Array All default role data
-	 */
+	* @var Array All default role data
+	*/
 	var $acl_role_data = array(
 		'ROLE_USER_NEW_MEMBER'			=> array(
 			'OPTION_LIKE'	=> "'u_%'",
@@ -85,23 +85,23 @@ class datafile_3_0_6
 	);
 
 	/**
-	 * @var Array All default extension groups
-	 */
+	* @var Array All default extension groups
+	*/
 	var $extension_groups = array(
 		// No extension group changes 3.0.5 -> 3.0.6
 	);
 
 	/**
-	 * @var Array All default extensions
-	 */
+	* @var Array All default extensions
+	*/
 	var $extensions = array(
 		// No extension changes 3.0.5 -> 3.0.6
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		// No Module categories changes 3.0.5 -> 3.0.6
 	);
@@ -126,6 +126,13 @@ class datafile_3_0_6
 			'group_desc_uid'		=> '',
 			'group_max_recipients'	=> 5,
 		),
+	);
+	
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		// No reason changes 3.0.5 -> 3.0.6
 	);
 
 	/**

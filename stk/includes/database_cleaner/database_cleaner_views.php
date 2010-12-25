@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -52,8 +52,8 @@ class database_cleaner_views
 	var $success_message = '';
 
 	/**
-	 * @var Boolean Has changes.
-	 */
+	* @var Boolean Has changes.
+	*/
 	var $_has_changes = false;
 
 	/**
@@ -278,8 +278,8 @@ class database_cleaner_views
 	}
 	
 	/**
-	 * Validate the extension groups
-	 */
+	* Validate the extension groups
+	*/
 	function extension_groups()
 	{
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
@@ -314,8 +314,8 @@ class database_cleaner_views
 	}
 
 	/**
-	 * Validate the extensions
-	 */
+	* Validate the extensions
+	*/
 	function extensions()
 	{
 		global $user;
@@ -371,8 +371,8 @@ class database_cleaner_views
 		global $template;
 
 		// Only success message when the bots have been reset
-		$this->success_message	= 'RESET_BOT_SUCCESS';
-		$this->not_run_message	= 'RESET_BOTS_SKIP';
+		$this->success_message	= 'RESET_REPORT_REASONS_SUCCESS';
+		$this->not_run_message	= 'RESET_REPORT_REASONS_SKIP';
 
 		$this->_has_changes = true;
 	}
@@ -480,8 +480,23 @@ class database_cleaner_views
 	}
 	
 	/**
-	 * Reset system roles?
-	 */
+	* Reset report reasons?
+	*/
+	function report_reasons()
+	{
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_REPORT_REASONS',
+			'message'	=> 'RESET_REPORT_REASONS_EXPLAIN',
+		);
+		
+		// Only success message when the bots have been reset
+		$this->success_message	= 'RESET_BOT_SUCCESS';
+		$this->not_run_message	= 'RESET_BOTS_SKIP';
+	}
+	
+	/**
+	* Reset system roles?
+	*/
 	function role_data()
 	{
 		$this->_confirm_box = array(
@@ -493,8 +508,8 @@ class database_cleaner_views
 	}
 	
 	/**
-	 * Validate the `acl_roles` table
-	 */
+	* Validate the `acl_roles` table
+	*/
 	function roles()
 	{
 		// display extra config variables and let them check/uncheck the ones they want to add/remove

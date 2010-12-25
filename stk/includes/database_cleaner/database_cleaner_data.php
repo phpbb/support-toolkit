@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,35 +37,35 @@ class database_cleaner_data
 	var $acl_options = array();
 
 	/**
-	 * @var Array The roles array for this version
-	 */
+	* @var Array The roles array for this version
+	*/
 	var $acl_roles = array();
 
 	/**
-	 * @var Array The role data array for this version
-	 * This array contains the data needed to build the queries as
-	 * found in `schemas/schema_data.sql`
-	 */
+	* @var Array The role data array for this version
+	* This array contains the data needed to build the queries as
+	* found in `schemas/schema_data.sql`
+	*/
 	var $acl_role_data = array();
 
 	/**
-	 * @var Array All default extension groups
-	 */
+	* @var Array All default extension groups
+	*/
 	var $extension_groups = array();
 
 	/**
-	 * @var Array All default extensions
-	 */
+	* @var Array All default extensions
+	*/
 	var $extensions = array();
 
 	/**
-	 * @var Array array holding the module categorie structure
-	 */
+	* @var Array array holding the module categorie structure
+	*/
 	var $module_categories = array();
 
 	/**
-	 * @var Array Module extra data
-	 */
+	* @var Array Module extra data
+	*/
 	var $module_extras = array();
 
 	/**
@@ -82,10 +82,15 @@ class database_cleaner_data
 	* @var Array An array containing all tables that are included in a vanilla phpBB install of this version
 	*/
 	var $tables = array();
+	
+	/**
+	* @var Array An array containing all report reasons
+	*/
+	var $report_reasons = array();
 
 	/**
-	 * Some data needs to be adjusted in certain cases
-	 */
+	* Some data needs to be adjusted in certain cases
+	*/
 	function init()
 	{
 		// Extract tables

@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -438,8 +438,8 @@ class datafile_3_0_0
 	);
 	
 	/**
-	 * @var Array All default roles
-	 */
+	* @var Array All default roles
+	*/
 	var $acl_roles = array(
 		'ROLE_ADMIN_STANDARD'		=> array('ROLE_DESCRIPTION_ADMIN_STANDARD', 'a_', 1),
 		'ROLE_ADMIN_FORUM'			=> array('ROLE_DESCRIPTION_ADMIN_FORUM', 'a_', 3),
@@ -466,8 +466,8 @@ class datafile_3_0_0
 	);
 	
 	/**
-	 * @var Array All default role data
-	 */
+	* @var Array All default role data
+	*/
 	var $acl_role_data = array(
 		// Admin roles
 		'ROLE_ADMIN_STANDARD'		=> array(
@@ -543,12 +543,12 @@ class datafile_3_0_0
 			'OPTION_IN'		=> array('m_ban', 'm_chgposter'),
 			'NEGATE'		=> true,
 			'SETTING'		=> '1',
-		), 
+		),
 		'ROLE_MOD_SIMPLE'			=> array(
 			'OPTION_LIKE'	=> "'m_%'",
 			'OPTION_IN'		=> array('m_', 'm_delete', 'm_edit', 'm_info', 'm_report'),
 			'SETTING'		=> '1',
-		), 
+		),
 		'ROLE_MOD_QUEUE'			=> array(
 			'OPTION_LIKE'	=> "'m_%'",
 			'OPTION_IN'		=> array('m_', 'm_approve', 'm_edit'),
@@ -614,8 +614,8 @@ class datafile_3_0_0
 	);
 
 	/**
-	 * @var Array All default extension groups
-	 */
+	* @var Array All default extension groups
+	*/
 	var $extension_groups = array(
 		'EXT_GROUP_IMAGES'				=> array(1, 1, 1, '', 0, ''),
 		'EXT_GROUP_ARCHIVES'			=> array(0, 1, 1, '', 0, ''),
@@ -629,8 +629,8 @@ class datafile_3_0_0
 	);
 
 	/**
-	 * @var Array All default extensions
-	 */
+	* @var Array All default extensions
+	*/
 	var $extensions = array(
 		'EXT_GROUP_IMAGES'				=> array(
 			'gif',
@@ -719,9 +719,9 @@ class datafile_3_0_0
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		'acp'	=> array(
 			'ACP_CAT_GENERAL'		=> array(
@@ -803,7 +803,7 @@ class datafile_3_0_0
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		'GUESTS'			=> array(
@@ -866,6 +866,16 @@ class datafile_3_0_0
 			'group_desc_uid'		=> '',
 			'group_max_recipients'	=> 5,
 		),
+	);
+
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		'warez'		=> array('{L_REPORT_WAREZ}', 1),
+		'spam'		=> array('{L_REPORT_SPAM}', 2),
+		'off_topic'	=> array('{L_REPORT_OFF_TOPIC}', 3),
+		'other'		=> array('{L_REPORT_OTHER}', 4),
 	);
 
 	/**
