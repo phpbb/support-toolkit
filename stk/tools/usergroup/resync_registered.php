@@ -1,15 +1,15 @@
 <?php
 /**
-*
-* @package Support Toolkit - Resynchronise Newly Registered users group
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resynchronise Registered users groups
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
-* @ignore
-*/
+ * @ignore
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -18,10 +18,10 @@ if (!defined('IN_PHPBB'))
 class resync_registered
 {
 	/**
-	* Display Options
-	*
-	* Output the options available
-	*/
+	 * Display Options
+	 *
+	 * @return void
+	 */
 	function display_options()
 	{
 		global $db;
@@ -61,6 +61,9 @@ class resync_registered
 		return 'RESYNC_REGISTERED';
 	}
 
+	/**
+	 * Run the tool
+	 */
 	function run_tool()
 	{
 		global $config, $db;
@@ -148,6 +151,10 @@ class resync_registered
 		trigger_error('RESYNC_REGISTERED_SUCCESS');
 	}
 
+	/**
+	 * Fetch the group IDs of the two groups
+	 * @return void
+	 */
 	function _get_group_ids()
 	{
 		global $db;
