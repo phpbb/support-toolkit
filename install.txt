@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.2.1-pl1 ==
 * [Add] MySQL Upgrader tool. (Bug #62477)
+* [Add] Re-sync registered users group. (Bug #62538)
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
 * [Change] Dynamic BOM Sniffer white list. (Bug #62481)
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
