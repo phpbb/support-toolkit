@@ -6,7 +6,7 @@ installation or to solve commonly encountered problems with the software.
 
 == Version ==
 Support Toolkit 1.0.3-dev
-Supported phpBB versions 3.0.0 - 3.0.7-pl1
+Supported phpBB versions 3.0.0 - 3.0.8
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -47,10 +47,20 @@ update!
 
 = Changelog =
 == Changes since 1.0.2.1-pl1 ==
+* [Add] MySQL Upgrader tool. (Bug #62477)
+* [Add] Re-sync registered users group. (Bug #62538)
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
+* [Change] Dynamic BOM Sniffer white list. (Bug #62481)
+* [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
+* [Fix] Correctly handle configuration values that where removed from phpBB. (Bug #62189, Patch by Noxwizard)
 * [Fix] Hooks potentially break STK. (Bug #62352)
 * [Fix] BOM Sniffer white list uses hard file extensions. (Bug 62473)
+* [Fix] Merge users tool in some cases incorrectly sets PM to and bcc addresses. (Bug #62486, Patch by D¡cky)
 * [Fix] Hardcoded path to the STK. (Bug #62493)
+* [Fix] Allow the database cleaner to work correctly when no table prefix is set. (Bug #62537)
+* [Fix] BOM Sniffer critical repair files not sniffed correctly. (Bug #62541)
+* [Fix] ERK breaks when style files are missing. (Bug #62557)
+* [Fix] Update UMIL to 1.0.4. (Bug #62568)
 
 == Changes since 1.0.2.1
 * [Fix] Wrong constant in the flash checker. (Bug #62497)

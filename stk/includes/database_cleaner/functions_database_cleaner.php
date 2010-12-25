@@ -1,12 +1,12 @@
 <?php
 /**
-*
-* @package Support Toolkit - Database Cleaner
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Database Cleaner
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
  * @ignore
@@ -217,12 +217,30 @@ function get_phpbb_tables()
 	$all_tables = get_tables($db);
 
 	// Only get tables using the phpBB prefix
-	foreach ($all_tables as $table)
+	if (!empty($table_prefix))
 	{
-		if (strpos($table, $table_prefix) === 0)
+		foreach ($all_tables as $table)
 		{
-			$_tables[] = $table;
+			if (strpos($table, $table_prefix) === 0)
+			{
+				$_tables[] = $table;
+			}
 		}
+	}
+	else
+	{
+		// Use is using an empty table prefix (Bug #62537)
+		// no way to determine the phpBB tables, in this case
+		// we'll show everything with a warning that the tool
+		// most likely want to trash a lot of tables '-,-
+		global $template;
+
+		$template->assign_vars(array(
+			'ERROR_MESSAGE' => user_lang('EMPTY_PREFIX_EXPLAIN'),
+			'ERROR_TITLE'	=> user_lang('EMPTY_PREFIX'),
+		));
+
+		$_tables = $all_tables;
 	}
 	sort($_tables);
 
@@ -260,6 +278,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		// Set the data
 		$data->bots					= array_merge($data->bots, $_datafile->bots);
 		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
+		$data->removed_config_data	= array_merge($data->removed_config_data, $_datafile->removed_config_data);
 		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);

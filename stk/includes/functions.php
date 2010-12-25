@@ -599,8 +599,7 @@ if (!function_exists('adm_back_link'))
 	*/
 	function adm_back_link($u_action)
 	{
-		global $user;
-		return '<br /><br /><a href="' . $u_action . '">&laquo; ' . $user->lang['BACK_TO_PREV'] . '</a>';
+		return '<br /><br /><a href="' . $u_action . '">&laquo; ' . user_lang('BACK_TO_PREV') . '</a>';
 	}
 }
 
