@@ -74,6 +74,9 @@ $lang = array_merge($lang, array(
 	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour avec succès !',
 	'DATAFILE_NOT_FOUND'			=> 'Le Support Toolkit n’a pas été capable de trouver le fichier de données que vous recherchez concernant votre version de phpBB !',
 
+	'EMPTY_PREFIX'					=> 'Aucun préfixe de base de données',
+	'EMPTY_PREFIX_CONFIRM'			=> 'Le nettoyeur de base de données permet d’apporter des modifications aux tables de votre base de données, mais étant donné que vous n’utilisez pas de préfixe de table, cela peut altérer des tables n’ayant aucun rapport avec phpBB. Êtes-vous sûr de vouloir continuer ?',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'Le nettoyeur de base de données a déterminé que vous n’utilisez pas de préfixe de table concernant les tables de phpBB. Le nettoyeur de base de données va devoir alors vérifier <strong>l’intégralité</strong> des tables dans votre base de données. Soyez prudent lors de son exécution et assurez-vous d’avoir exclu de la sélection toutes les tables n’ayant aucun rapport avec phpBB car elles peuvent être altérées par cet outil.<br />Si vous avez un doute sur la manipulation à suivre, demandez de l’aide dans les <a href="http://www.phpbb.com/community/viewforum.php?f=46">forums de support de phpBB</a>.',
 	'ERROR'							=> 'Erreur',
 	'EXTRA'							=> 'Supplémentaire',
 
