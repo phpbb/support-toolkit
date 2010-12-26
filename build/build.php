@@ -7,11 +7,18 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
+
+// Fetch the version
+if ($_SERVER['argc'] < 2)
+{
+	die('You must supply a version number for the packages that will be created!');
+}
+$stk_version = $_SERVER['argv'][1];
  
 // Make sure that "package is writable"
 if (!is_writable('package'))
 {
-	trigger_error('Make sure that this script can write to the `package` directory');
+	die('Make sure that this script can write to the `package` directory');
 }
 
 // Include some files 
@@ -19,7 +26,7 @@ include ('./functions_compress.php');
 include ('./functions_build.php');
 
 // Build the main STK package
-$stk			= new compress_zip('w', './package/support-toolkit-1.zip');
+$stk			= new compress_zip('w', "./package/support-toolkit-{$stk_version}.zip");
 $translation	= null;
 
 // Keep the BOM Sniffer whitelist
@@ -185,7 +192,7 @@ foreach ($translation_filelist as $dir => $filelist)
 				$translation->close();
 			}
 			
-			$translation = new compress_zip('w', "./package/support-toolkit-1_{$lang[1]}.zip");
+			$translation = new compress_zip('w', "./package/stk-{$stk_version}_{$lang[1]}.zip");
 			$lang_building = $lang[1];
 		}
 	}
