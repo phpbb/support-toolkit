@@ -1,2 +1,5 @@
+build/package/*
+build/whitelist_additional/*
+
 .DS_Store
 *~
