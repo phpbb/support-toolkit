@@ -336,6 +336,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
+		$data->removed_config_data	= array_merge($data->removed_config_data, $_datafile->removed_config_data);
 		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
 		$_datafile->get_schema_struct($data->schema_data);
 

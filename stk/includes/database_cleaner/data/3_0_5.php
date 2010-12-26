@@ -40,6 +40,13 @@ class datafile_3_0_5
 	);
 
 	/**
+	* @var Array Config entries that were removed by the 3.0.5 update
+	*/
+	var $removed_config_data = array(
+		// No config entries removed 3.0.4 -> 3.0.5
+	);
+
+	/**
 	* @var Array All default permission settings
 	*/
 	var $acl_options = array(
