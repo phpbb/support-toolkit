@@ -37,7 +37,7 @@ class datafile_3_0_9
 	/**
 	* @var Array Config entries that were removed by the 3.0.9 update
 	*/
-	var $removed_config_data = array(
+	var $removed_config = array(
 		// No config entries removed 3.0.8 -> 3.0.9
 	);
 
