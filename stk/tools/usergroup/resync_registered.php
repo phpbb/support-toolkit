@@ -91,15 +91,13 @@ class resync_registered
 		$batch	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
-		$insert_coppa = $insert_reg = array();
-		
 		// The board doesn't bother about COPPA
 		if (!$config['coppa_enable'])
 		{
 			foreach ($batch as $row)
 			{
 				$insert_reg[] = array(
-					'group_id'		=> $regid,
+					'group_id'		=> $g['REGISTERED'],
 					'user_id'		=> $row['user_id'],
 					'group_leader'	=> false,
 					'user_pending'	=> false,
