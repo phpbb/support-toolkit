@@ -6,6 +6,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
+ 
+/**
+ * @ignore
+ */
+if (php_sapi_name() != 'cli')
+{
+	die("This program must be run from the command line.\n");
+}
 
 /**
  * The main STK Build class
