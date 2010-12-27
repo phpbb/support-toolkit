@@ -16,13 +16,35 @@ include ('./functions_compress.php');
 $builder = new stk_builder();
 
 // Build the main package
-$builder->build();
+if (!empty($builder->build_command['full']) || !empty($builder->build_command['stk']))
+{
+	$builder->build();
+}
 
 // Build the translation packages
-$builder->build_translations($builder->translations);
+if (!empty($builder->build_command['full']) || !empty($builder->build_command['lang']))
+{
+	// When not running "full" build the translations list
+	if (!empty($builder->build_command['lang']))
+	{
+		$builder->get_translations_list();
+	}
+
+	$builder->build_translations($builder->translations);
+}
 
 // Finally build the whitelist
-$builder->build_whitelist();
+if (!empty($builder->build_command['full']) || !empty($builder->build_command['bom']))
+{
+	$download = false;
+	if (!empty($builder->build_command['bom']))
+	{
+		// When only generating the 'bom' file, download it
+		$download = true;
+	}
+
+	$builder->build_whitelist($download);
+}
 
 // Output any errors that were found
 $translation_errors = $builder->translation_errors();

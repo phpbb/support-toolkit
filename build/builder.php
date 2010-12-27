@@ -21,6 +21,11 @@ if (php_sapi_name() != 'cli')
 class stk_builder
 {
 	/**
+	 * The build command in a usable format
+	 */
+	public $build_command = array();
+
+	/**
 	 * Adjust the whitelist to include some other phpBB products
 	 * these should be added to the "whitelist_additional" directory
 	 * the following directories can be used:
@@ -53,12 +58,6 @@ class stk_builder
 	 * @var Array
 	 */
 	private $lang_builders = array();
-	
-	/**
-	 * Holds errors encounered in language pack validation
-	 * @var Array
-	 */
-	private $lang_erros = array();
 
 	/**
 	 * An array that keeps track of all language keys that
@@ -67,6 +66,19 @@ class stk_builder
 	 * @var Array
 	 */
 	private $lang_en_contents = array();
+	
+	/**
+	 * Holds errors encounered in language pack validation
+	 * @var Array
+	 */
+	private $lang_errors = array();
+	
+	/**
+	 * Keep track of the files that were validated, only way to
+	 * know whether files were removed
+	 * @var Array
+	 */
+	private $lang_files_checked = array();
 	
 	/**
 	 * The version of the package that will be created
@@ -97,19 +109,52 @@ class stk_builder
 	 */
 	public function __construct()
 	{
-		// Fetch the version
-		if ($_SERVER['argc'] < 2)
+		for ($i = 1; $i < $_SERVER['argc']; $i++)
 		{
-			die("You must supply a version number for the packages that will be created!\n");
+			// Is there an `=` sign?
+			if (strpos($_SERVER['argv'][$i], '=') === false)
+			{
+				continue;
+			}
+
+			$parts = explode('=', $_SERVER['argv'][$i]);
+			$this->build_command[$parts[0]] = $parts[1];
 		}
-		
+
+		// Make sure that we can run
+		if (!isset($this->build_command['version']))
+		{
+			print(" * This build script requires some commandline arguments in order to run.\n");
+			print(" * See the format:\n");
+			print(" ************************************************************************\n");
+			print(" * Required:\n");
+			print(" *    version=[version] The version for the generated package.\n");
+			print(" *\n");
+			print(" * Optional:\n");
+			print(" *    full=[true|false] Defines whether all packages are created (stk,\n");
+			print(" *                      translations and the BOM Sniffer whitelist.\n");
+			print(" *                      This is the default mode in which this builder runs!\n");
+			print(" *    stk=[true|false]  Build only the Support Toolkit\n");
+			print(" *    lang=[true|false] Build only the translation packs.\n");
+			print(" *    bom=[true|false]  Build only the BOM Sniffer whitelist file.\n");
+			print(" ************************************************************************\n");
+			exit;
+		}
+
+		// Set to full if no other arguments are given.
+		if ($_SERVER['argc'] < 3)
+		{
+			$this->build_command['full'] = true;
+		}
+
+		// Set the version number
+		$this->stk_version = $this->build_command['version'];
+
 		// Make sure we can build
 		if (!is_writable('package'))
 		{
 			die("Make sure that this script can write to the `package` directory\n");
 		}
-
-		$this->stk_version = $_SERVER['argv'][1];
 	}
 	
 	/**
@@ -122,45 +167,24 @@ class stk_builder
 		// Remove all non-english translations from the filelist
 		foreach ($filelist as $dir => $files)
 		{
+			if (empty($files))
+			{
+				unset($filelist[$dir]);
+			}
+
 			if (!preg_match('#^stk/language#ise', $dir))
 			{
 				continue;
 			}
 
-			$parts = explode('/', $dir);
-			if (!empty($parts[2]) && $parts[2] != 'en')
+			if (preg_match('#^stk/language/(?!en)#ise', $dir))
 			{
-				// Non English
 				unset($filelist[$dir]);
-
-				// Track translations
-				if (!in_array($parts[2], $this->translations))
-				{
-					$this->translations[] = $parts[2];
-				}
-
-				continue;
-			}
-
-			// Include the language files and store all the keys so we
-			// can validate the language packages later.
-			if (!defined('IN_PHPBB'))
-			{
-				define('IN_PHPBB', true);
-			}
-
-			foreach ($files as $f)
-			{
-				if (!preg_match('#([a-zA-Z_]+).php$#ise', $f))
-				{
-					continue;
-				}
-
-				$lang = array();
-				include "./../{$dir}{$f}";
-				$this->lang_en_contents[$f] = array_keys($lang);
 			}
 		}
+
+		// The translation list
+		$this->get_translations_list();
 		
 		$this->stk_build = new compress_zip('w', "./package/support-toolkit-{$this->stk_version}.zip");
 		$this->create_package(false, 'stk', $this->stk_build, $filelist);
@@ -187,13 +211,29 @@ class stk_builder
 				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk-{$this->stk_version}_{$translation}.zip");
 			}
 			$this->create_package("./../stk/language/{$translation}", 'language', $this->lang_builders[$translation], false, $translation);
+
+			// Now make sure no files where removed
+			$removed_files = array_diff(array_keys($this->lang_en_contents), $this->lang_files_checked[$translation]);
+			if (!empty($removed_files))
+			{
+				foreach ($removed_files as $file)
+				{
+					if (!isset($this->lang_errors[$translation]['removed']['files']))
+					{
+						$this->lang_errors[$translation]['removed']['files'] = array();
+					}
+		
+					$this->lang_errors[$translation]['removed']['files'][] = $file;
+				}
+			}
 		}
 	}
 	
 	/**
 	 * Build the STK Whitelist
+	 * @param  Boolean $download Download the file, or if false add to the archive
 	 */
-	public function build_whitelist()
+	public function build_whitelist($download)
 	{
 		// First the 'STK'
 		$this->_whitelist('./../stk/', array('includes/critical_repair'), array('config', 'erk'), 'stk');
@@ -210,9 +250,78 @@ class stk_builder
 			$params = array_merge(array('./whitelist_additional/' . $extra), $params);
 			call_user_func_array(array($this, '_whitelist'), $params);
 		}
-		
+
+		if ($download)
+		{
+			print(" *********************************************\n");
+			print(" *         THE BOM SNIFFER WHITELIST         *\n");
+			print(" *********************************************\n");
+			print(implode("\n", $this->whitelist) . "\n");
+
+			// When only building the Sniffer we exit
+			if (empty($this->build_command['lang']) && empty($this->build_command['stk']))
+			{
+				exit;
+			}
+
+			print(" *********************************************\n");
+			print(" *         END BOM SNIFFER WHITELIST         *\n");
+			print(" *********************************************\n");
+			return;
+		}
+
 		// Add the whitelist to the package
 		$this->stk_build->add_data(implode("\n", $this->whitelist), 'stk/includes/critical_repair/whitelist.txt');
+	}
+
+	/**
+	 * Build a list with all the translations that are in the package
+	 */
+	public function get_translations_list()
+	{
+		if (!defined('IN_PHPBB'))
+		{
+			define('IN_PHPBB', true);
+		}
+
+		$filelist = $this->filelist('./../stk/language/');
+		foreach ($filelist as $dir => $files)
+		{
+			if (empty($dir) || empty($files))
+			{
+				continue;
+			}
+
+			$parts = array();
+			preg_match('#^([a-zA-Z\-_]+)(.*)?$#ise', $dir, $parts);
+			if ($parts[1] != 'en')
+			{
+				// Non English
+				unset($filelist[$dir]);
+	
+				// Track translations
+				if (!in_array($parts[1], $this->translations))
+				{
+					$this->translations[] = $parts[1];
+				}
+	
+				continue;
+			}
+	
+			// Include the language files and store all the keys so we
+			// can validate the language packages later.
+			foreach ($files as $f)
+			{
+				if (!preg_match('#([a-zA-Z_]+).php$#ise', $f))
+				{
+					continue;
+				}
+	
+				$lang = array();
+				include "./../stk/language/{$dir}{$f}";
+				$this->lang_en_contents[$f] = array_keys($lang);
+			}
+		}
 	}
 
 	/**
@@ -417,9 +526,8 @@ class stk_builder
 			// The key is removed
 			else
 			{
-				if (!isset($this->lang_errors[$name]))
+				if (!isset($this->lang_errors[$name]['removed']))
 				{
-					$this->lang_errors[$name] = array();
 					$this->lang_errors[$name]['removed'][$file] = array();
 				}
 
@@ -445,6 +553,12 @@ class stk_builder
 				$this->lang_errors[$name]['added'][$file][] = $extra;
 			}
 		}
+
+		if (!isset($this->lang_files_checked[$name]))
+		{
+			$this->lang_files_checked[$name] = array();
+		}
+		$this->lang_files_checked[$name][] = $file;
 
 		// Reset
 		$lang	= array();
@@ -544,10 +658,17 @@ class stk_builder
 	public function __destruct()
 	{
 		// Close all the packages
-		$this->stk_build->close();
+		if ($this->stk_build instanceof compress)
+		{
+			$this->stk_build->close();
+		}
+
 		foreach ($this->lang_builders as $lang_builder)
 		{
-			$lang_builder->close();
+			if ($lang_builder instanceof compress)
+			{
+				$lang_builder->close();
+			}
 		}
 	}
 }
