@@ -55,6 +55,20 @@ class stk_builder
 	private $lang_builders = array();
 	
 	/**
+	 * Holds errors encounered in language pack validation
+	 * @var Array
+	 */
+	private $lang_erros = array();
+
+	/**
+	 * An array that keeps track of all language keys that
+	 * are in the English lang pack. This is used later for
+	 * the validation of the translations.
+	 * @var Array
+	 */
+	private $lang_en_contents = array();
+	
+	/**
 	 * The version of the package that will be created
 	 * @var String
 	 */
@@ -124,6 +138,27 @@ class stk_builder
 				{
 					$this->translations[] = $parts[2];
 				}
+
+				continue;
+			}
+
+			// Include the language files and store all the keys so we
+			// can validate the language packages later.
+			if (!defined('IN_PHPBB'))
+			{
+				define('IN_PHPBB', true);
+			}
+
+			foreach ($files as $f)
+			{
+				if (!preg_match('#([a-zA-Z_]+).php$#ise', $f))
+				{
+					continue;
+				}
+
+				$lang = array();
+				include "./../{$dir}{$f}";
+				$this->lang_en_contents[$f] = array_keys($lang);
 			}
 		}
 		
@@ -151,7 +186,7 @@ class stk_builder
 			{
 				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk-{$this->stk_version}_{$translation}.zip");
 			}
-			$this->create_package("./../stk/language/{$translation}", 'language', $this->lang_builders[$translation]);
+			$this->create_package("./../stk/language/{$translation}", 'language', $this->lang_builders[$translation], false, $translation);
 		}
 	}
 	
@@ -178,6 +213,48 @@ class stk_builder
 		
 		// Add the whitelist to the package
 		$this->stk_build->add_data(implode("\n", $this->whitelist), 'stk/includes/critical_repair/whitelist.txt');
+	}
+
+	/**
+	 * Output any translation errors
+	 */
+	public function translation_errors()
+	{
+		// None, nice translators :)
+		if (empty($this->lang_errors))
+		{
+			return false;
+		}
+
+		print(" ********************************\n");
+		print(" *   Translation issues found   *\n");
+		print(" ********************************\n");
+
+		foreach ($this->lang_errors as $pack => $packerrors)
+		{
+			print(" - Listing the issues found in: {$pack} -\n");
+
+			foreach ($packerrors as $type => $files)
+			{
+				print("\t*   The following entries where: {$type}");
+
+				foreach ($files as $file => $errors)
+				{
+					if ($file != 'files')
+					{
+						print("\n\t\tIn {$file}:\n\t\t\t- " . implode("\n\t\t\t- ", $errors) . "\n");
+					}
+					else
+					{
+						print("\n\t\t\t- " . implode("\n\t\t\t- ", $errors) . "\n");
+					}
+				}
+
+				print("\n\n");
+			}
+		}
+
+		return true;
 	}
 	
 	/**
@@ -233,9 +310,11 @@ class stk_builder
 	 * @param  compress_zip   $builder  The compress object used for this package
 	 * @param  Array|Boolean  $filelist If false for the first argument this param
 	 *                                  contains the filelist
+	 * @param  String         $transl   Must be set when packing non-englis language
+	 *                                  files, as these translations will be checked
 	 * @return void
 	 */
-	private function create_package($path, $mode, $builder, $filelist = false)
+	private function create_package($path, $mode, $builder, $filelist = false, $transl = '')
 	{
 		// Get the filelist
 		if ($path !== false)
@@ -282,11 +361,95 @@ class stk_builder
 					// When packing language files the path needs a slight adjustment
 					$dest = ltrim($dir . $file, '/');
 					$orig = "{$path}/{$dir}{$file}";
+
+					// Validate the language pack
+					if (!empty($transl))
+					{
+						$this->_validate_language_file($orig, $transl);
+					}
 				}
 
 				$builder->add_custom_file($orig, $dest);
 			}
 		}
+	}
+
+	/**
+	 * Validate the provided language file, this makes sure that the translations
+	 * atleast are complete
+	 * @param  String $path Path to the original file
+	 * @param  String $name The language of this translation
+	 * @return void
+	 */
+	private function _validate_language_file($path, $name)
+	{
+		// Grep the filename
+		$filename = array();
+		if (!preg_match('#([a-zA-Z_]+).php$#ise', $path, $filename))
+		{
+			// No .php file
+			return;
+		}
+		$file = $filename[1] . '.php';
+
+		// Added file
+		if (!isset($this->lang_en_contents[$file]))
+		{
+			if (!isset($this->lang_errors[$name]['added']['files']))
+			{
+				$this->lang_errors[$name]['added']['files'] = array();
+			}
+
+			$this->lang_errors[$name]['added']['files'][] = $file;
+			return;
+		}
+
+		include ($path);
+
+		// Compare the files
+		foreach ($this->lang_en_contents[$file] as $entry)
+		{
+			// The key exists
+			if (array_key_exists($entry, $lang))
+			{
+				unset($lang[$entry]);
+			}
+			// The key is removed
+			else
+			{
+				if (!isset($this->lang_errors[$name]))
+				{
+					$this->lang_errors[$name] = array();
+					$this->lang_errors[$name]['removed'][$file] = array();
+				}
+
+				$this->lang_errors[$name]['removed'][$file][] = $entry;
+			}
+		}
+
+		// Everything remaining in `$lang` was added by the author, notify him about this
+		if (!empty($lang))
+		{
+			foreach (array_keys($lang) as $extra)
+			{
+				if (!isset($this->lang_errors[$name]))
+				{
+					$this->lang_errors[$name] = array();
+				}
+
+				if (!isset($this->lang_error[$name]['added'][$file]))
+				{
+					$this->lang_errors[$name]['added'][$file] = array();
+				}
+
+				$this->lang_errors[$name]['added'][$file][] = $extra;
+			}
+		}
+
+		// Reset
+		$lang	= array();
+		$entry	= '';
+		$extra	= '';
 	}
 	
 	/**
