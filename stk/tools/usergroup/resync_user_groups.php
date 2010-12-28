@@ -278,13 +278,14 @@ class resync_registered
 		global $db;
 
 		$g = array();
-		$sql = 'SELECT group_id
+		$sql = 'SELECT group_id, group_name
 			FROM ' . GROUPS_TABLE . '
-			WHERE ' . $db->sql_in_set('group_name', array('REGISTERED', 'REGISTERED_COPPA')) .
-				'ORDER BY group_name DESC';
+			WHERE ' . $db->sql_in_set('group_name', array('REGISTERED', 'REGISTERED_COPPA'));
 		$result	= $db->sql_query_limit($sql, 2, 0);
-		$g['REGISTERED_COPPA'] = $db->sql_fetchfield('group_id', false, $result);
-		$g['REGISTERED'] = $db->sql_fetchfield('group_id', false, $result);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$g[$row['group_name']] = $row['group_id'];
+		}
 		$db->sql_freeresult($result);
 
 		return $g;
