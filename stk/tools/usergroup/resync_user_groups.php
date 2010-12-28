@@ -146,41 +146,7 @@ class resync_registered
 	 */
 	function can_run()
 	{
-		global $db;
-
-		// Get teh group IDs
-		$g = $this->_get_group_ids();
-
-		// Now figure out whether there are users that aren't part in any of these
-		if (!function_exists('group_memberships'))
-		{
-			require PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
-		}
-		$users = array();
-		$data = group_memberships($g);
-
-		if (!empty($data))
-		{
-			foreach ($data as $user)
-			{
-				$users[] = (int) $user['user_id'];
-			}
-	
-			$sql = 'SELECT user_id
-				FROM ' . USERS_TABLE . '
-				WHERE ' . $db->sql_in_set('user_id', $users, true) . '
-				AND user_type <> ' . USER_IGNORE;
-			$result	= $db->sql_query_limit($sql, 1, 0);
-			$set	= $db->sql_fetchfield('user_id', false, $result);
-			$db->sql_freeresult($result);
-
-			if ($set === false)
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return $this->_fetch_users(true);
 	}
 
 	/**
@@ -190,29 +156,10 @@ class resync_registered
 	{
 		global $config, $db;
 
-		// Get teh group IDs
+		// Get the needed data
+		$batch = $this->_fetch_users();
 		$g = $this->_get_group_ids();
 
-		// Now figure out whether there are users that aren't part in any of these
-		if (!function_exists('group_memberships'))
-		{
-			require PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
-		}
-		$users = array();
-		$data = group_memberships($g);
-		foreach ($data as $user)
-		{
-			$users[] = (int) $user['user_id'];
-		}
-
-		$sql = 'SELECT user_id
-			FROM ' . USERS_TABLE . '
-			WHERE ' . $db->sql_in_set('user_id', $users, true) . '
-			AND user_type <> ' . USER_IGNORE;
-		$result	= $db->sql_query($sql);
-		$batch	= $db->sql_fetchrowset($result);
-		$db->sql_freeresult($result);
-		
 		// The board doesn't bother about COPPA
 		if (!$config['coppa_enable'])
 		{
@@ -243,6 +190,50 @@ class resync_registered
 
 		$db->sql_multi_insert(USER_GROUP_TABLE, $insert_coppa);
 		$db->sql_multi_insert(USER_GROUP_TABLE, $insert_reg);
+	}
+
+	/**
+	 * Grep the users that aren't in the groups
+	 * @param  Boolean $missing If true this function will return whether there are users 
+	 *                          missing
+	 */
+	function _fetch_users($missing = false)
+	{
+		global $db;
+
+		if (!function_exists('group_memberships'))
+		{
+			require PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
+		}
+
+		// Get teh group IDs
+		$g = $this->_get_group_ids();
+
+		// Now figure out whether there are users that aren't part in any of these
+		$batch	= $users	= array();
+		$data	= group_memberships($g);
+		if (!empty($data))
+		{
+			foreach ($data as $user)
+			{
+				$users[] = (int) $user['user_id'];
+			}
+	
+			$sql = 'SELECT user_id
+				FROM ' . USERS_TABLE . '
+				WHERE ' . $db->sql_in_set('user_id', $users, true) . '
+				AND user_type <> ' . USER_IGNORE;
+			$result	= ($missing) ? $db->sql_query_limit($sql, 1, 0) : $db->sql_query($sql);
+			$batch	= $db->sql_fetchrowset($result);
+			$db->sql_freeresult($result);
+		}
+
+		// Return the correct stuff
+		if ($missing)
+		{
+			return (empty($batch)) ? false : true;
+		}
+		return $batch;
 	}
 
 	/**
