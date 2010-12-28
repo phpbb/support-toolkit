@@ -228,33 +228,9 @@ class resync_registered
 		}
 		else
 		{
-			$limit	= strtotime('- 13 years'); // Timestamp of "13" = COPPA years
-
 			foreach ($batch as $row)
 			{
-				$insert = '';
-
-				// No birthday give
-				if (empty($row['user_birthday']))
-				{
-					$insert = 'insert_coppa';
-				}
-				// Determine whether this is a coppa user
-				else
-				{
-					list($day,$month,$year) = explode('-', $row['user_birthday']);
-					$birthday_stamp = mktime(0, 0, 0, $month, $day, $year);
-
-					// Is this user < || > 13?
-					if ($birthday_stamp > $limit)
-					{
-						$insert = 'insert_coppa';
-					}
-					else
-					{
-						$insert = 'insert_reg';
-					}
-				}
+				$insert = $this->_get_new_group($row['user_birthday']);
 
 				array_push($$insert, array(
 					'group_id'		=> (int) ($insert == 'insert_coppa') ? $g['REGISTERED_COPPA'] : $g['REGISTERED'],
@@ -267,6 +243,44 @@ class resync_registered
 
 		$db->sql_multi_insert(USER_GROUP_TABLE, $insert_coppa);
 		$db->sql_multi_insert(USER_GROUP_TABLE, $insert_reg);
+	}
+
+	/**
+	 * When coppa is enabled determine the correct group this user is
+	 * put into
+	 * @param  String $birthday The birthday of the user
+	 * @return String The correct group
+	 */
+	function _get_new_group($birthday)
+	{
+		// Only determine the COPPA limit once
+		static $limit = 0;
+		if (empty($limit))
+		{
+			$limit = strtotime('- 13 years'); // Timestamp of "13" = COPPA years
+		}
+
+		// No birthday give
+		if (empty($birthday))
+		{
+			return 'insert_coppa';
+		}
+		// Determine whether this is a coppa user
+		else
+		{
+			list($day,$month,$year) = explode('-', $birthday);
+			$birthday_stamp = mktime(0, 0, 0, $month, $day, $year);
+
+			// Is this user < || > 13?
+			if ($birthday_stamp > $limit)
+			{
+				return 'insert_coppa';
+			}
+			else
+			{
+				return 'insert_reg';
+			}
+		}
 	}
 
 	/**
@@ -318,6 +332,9 @@ class resync_newly_registered
 	 */
 	function resync_newly_registered($main_object)
 	{
+		global $user;
+		$user->add_lang('acp/groups');
+
 		$this->parent = $main_object;
 	}
 
@@ -334,9 +351,7 @@ class resync_newly_registered
 	 */
 	function resync()
 	{
-		global $config, $user;
-
-		$user->add_lang('acp/groups');
+		global $config;
 
 		// Get global variables
 		$last = request_var('last', 0); // The user_id of the last user in this batch
