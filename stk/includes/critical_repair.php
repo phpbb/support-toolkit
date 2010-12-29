@@ -160,7 +160,7 @@ class critical_repair
 					}
 					else
 					{
-						echo '<a href="' . STK_ROOT_PATH . 'erk.php">Emergancy Repair Toolkit index</a> &bull; ';
+						echo '<a href="' . STK_ROOT_PATH . 'erk.php">Emergency Repair Toolkit index</a> &bull; ';
 					}
 					?>
 					<a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a>

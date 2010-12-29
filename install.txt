@@ -63,6 +63,7 @@ update!
 * [Fix] BOM Sniffer critical repair files not sniffed correctly. (Bug #62541)
 * [Fix] ERK breaks when style files are missing. (Bug #62557)
 * [Fix] Update UMIL to 1.0.4. (Bug #62568)
+* [Fix] Some language changes. (Bug #62585, Patch by Unknown Bliss)
 
 == Changes since 1.0.2.1
 * [Fix] Wrong constant in the flash checker. (Bug #62497)
