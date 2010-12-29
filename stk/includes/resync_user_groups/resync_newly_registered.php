@@ -22,8 +22,9 @@ if (!defined('IN_PHPBB'))
 class resync_newly_registered
 {
 	/**
-	* Array used to link steps to groups
-	*/
+	 * Array used to link steps to groups
+	 * @var Array
+	 */
 	var $groups	= array(
 		0	=> 'REGISTERED',
 		1	=> 'REGISTERED_COPPA',
@@ -137,12 +138,12 @@ class resync_newly_registered
 	}
 
 	/**
-	* Get the next batch of users.
-	*
-	* @param	$group_name	The name of the group of which the users are fetched
-	* @param	$last		The id of the last user in the previous batch
-	* @param	$group_id	Variable that will be filled with the group_id of the NEWLY_REGISTERED users group
-	*/
+	 * Get the next batch of users.
+	 *
+	 * @param	$group_name	The name of the group of which the users are fetched
+	 * @param	$last		The id of the last user in the previous batch
+	 * @param	$group_id	Variable that will be filled with the group_id of the NEWLY_REGISTERED users group
+	 */
 	function _get_user_batch($group_name, $last, &$nr_gid)
 	{
 		global $config, $db;
@@ -200,6 +201,12 @@ class resync_newly_registered
 		return $users;
 	}
 
+	/**
+	 * Make sure that the 'user_new' flag is updated correctly
+	 * @param  Array  $user_ids   The users that will be updated
+	 * @param  String $group_name The group that is currently handeled.
+	 * @return void
+	 */
 	function _fix_new_flag($user_ids, $group_name)
 	{
 		global $db;
