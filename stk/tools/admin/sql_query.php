@@ -146,8 +146,8 @@ class sql_query
 		$msg	= 'SQL ERROR [ ' . $db->sql_layer . ' ]<br /><br />' . $error['message'] . ' [' . $error['code'] . ']';
 
 		// Create some html to also embed the query
-		$return = $msg . '<dl class="codebox">
-			<dt>' . user_lang('ERROR') . ': <a href="#" onclick="selectCode(this); return false;">' . user_lang('SELECT_ALL_CODE') . "</a></dt>
+		$return = $msg . '<dl class="codebox querybox">
+			<dt>' . user_lang('ERROR_QUERY') . "</dt>
 			<dd><code>{$sql}</code></dd>
 		</dl>";
 
