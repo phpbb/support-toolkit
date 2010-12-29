@@ -1187,6 +1187,10 @@ input.disabled {
 	font-weight: bold;
 }
 
+.errorbox p {
+	border-bottom: thin dashed #f5f5f5;
+}
+
 /* Special cases for the error page */
 #errorpage #page-header a {
 	font-weight: bold;
