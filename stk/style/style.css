@@ -1784,3 +1784,10 @@ dl.codebox code {
 ----------------------------------------*/
 .missing { color: #FFFFFF; background-color: #BC2A4D; }
 .extra { color: #000000; background-color: #F0F0F0; }
+
+/* SQL Query tool
+----------------------------------------*/
+dl.querybox {
+	color: #000000;
+	text-align: left;
+}

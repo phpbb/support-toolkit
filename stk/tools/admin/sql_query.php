@@ -77,9 +77,20 @@ class sql_query
 		$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
+		// Return on error
+		$db->sql_return_on_error(true);
+
 		foreach ($sql_query as $sql)
 		{
+			// Run the query and make sure that nothing went wrong
 			$result = $db->sql_query($sql);
+			if ($db->sql_error_triggered)
+			{
+				// Write the error result to the cache and return the user back
+				// to the main page
+				$error[] = $this->_format_sql_error($sql);
+				continue;
+			}
 
 			if (isset($_POST['show_results']))
 			{
@@ -116,7 +127,31 @@ class sql_query
 		// Purge the cache
 		$cache->purge();
 
-		trigger_error('SQL_QUERY_SUCCESS');
+		if (empty($error))
+		{
+			trigger_error('SQL_QUERY_SUCCESS');
+		}
+	}
+
+	/**
+	 * Format the error message for the failed query
+	 * @param  String $sql        The failed query
+	 * @return String the message
+	 */
+	function _format_sql_error($sql)
+	{
+		global $db;
+
+		$error	= $db->sql_error($sql);
+		$msg	= 'SQL ERROR [ ' . $db->sql_layer . ' ]<br /><br />' . $error['message'] . ' [' . $error['code'] . ']';
+
+		// Create some html to also embed the query
+		$return = $msg . '<dl class="codebox querybox">
+			<dt>' . user_lang('ERROR_QUERY') . "</dt>
+			<dd><code>{$sql}</code></dd>
+		</dl>";
+
+		return $return;
 	}
 }
 
