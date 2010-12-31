@@ -308,9 +308,6 @@ function get_phpbb_tables()
 
 		$_tables = $all_tables;
 	}
-=======
-	}else{$_tables = $all_tables;}
->>>>>>> bug/erik/62475
 	sort($_tables);
 
 	return $_tables;
