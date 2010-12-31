@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -213,25 +213,102 @@ class database_cleaner_controller
 		global $db;
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
-			if (isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
+			if (isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->db_cleaner->data->config_data[$name]) && !in_array($name, $existing_config))
+				if (isset($this->db_cleaner->data->config[$name]) && !in_array($name, $existing_config))
 				{
 					// Add it with the default settings we've got...
-					set_config($name, $this->db_cleaner->data->config_data[$name]['config_value'], $this->db_cleaner->data->config_data[$name]['is_dynamic']);
+					set_config($name, $this->db_cleaner->data->config[$name]['config_value'], $this->db_cleaner->data->config[$name]['is_dynamic']);
 				}
-				else if (!isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config))
+				else if (!isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config))
 				{
 					// Remove it
 					$db->sql_query('DELETE FROM ' . CONFIG_TABLE . " WHERE config_name = '" . $db->sql_escape($name) . "'");
+				}
+			}
+		}
+	}
+	
+	/**
+	* Fix the extension groups
+	*/
+	function extension_groups(&$error, $selected)
+	{
+		global $db;
+
+		$extension_groups_rows = $existing_extension_groups = array();
+		get_extension_groups_rows($this->db_cleaner->data->extension_groups, $extension_groups_rows, $existing_extension_groups);
+		foreach ($extension_groups_rows as $name)
+		{
+			if (isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+			{
+				continue;
+			}
+
+			if (isset($selected[$name]))
+			{
+				if (isset($this->db_cleaner->data->extension_groups[$name]) && !in_array($name, $existing_extension_groups))
+				{
+					$insert = array(
+						'group_name'		=> $name,
+						'cat_id'			=> $this->db_cleaner->data->extension_groups[$name][0],
+						'allow_group'		=> $this->db_cleaner->data->extension_groups[$name][1],
+						'download_mode'		=> $this->db_cleaner->data->extension_groups[$name][2],
+						'upload_icon'		=> $this->db_cleaner->data->extension_groups[$name][3],
+						'max_filesize'		=> $this->db_cleaner->data->extension_groups[$name][4],
+						'allowed_forums'	=> $this->db_cleaner->data->extension_groups[$name][5],
+					);
+
+					// Add it
+					$db->sql_query('INSERT INTO ' . EXTENSION_GROUPS_TABLE . ' ' . $db->sql_build_array('INSERT', $insert));
+				}
+				else if (!isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+				{
+					// Remove it
+					$db->sql_query('DELETE FROM ' . EXTENSION_GROUPS_TABLE . " WHERE group_name = '{$name}'");
+				}
+			}
+		}
+	}
+
+	/**
+	* Fix teh extensions
+	*/
+	function extensions()
+	{
+		global $db;
+
+		foreach ($this->db_cleaner->data->extensions as $group => $data)
+		{
+			$group_id = 0;
+			$existing_extensions = get_extensions($group, $group_id);
+			$extensions = array_unique(array_merge($data, $existing_extensions));
+			sort($extensions);
+
+			foreach ($extensions as $extension)
+			{
+				if (!in_array($extension, $data) && in_array($extension, $existing_extensions))
+				{
+					// Delete
+					$db->sql_query('DELETE FROM ' . EXTENSIONS_TABLE . "
+						WHERE group_id = {$group_id}
+							AND extension = '" . $db->sql_escape($extension) . '\'');
+				}
+				else if (in_array($extension, $data) && !in_array($extension, $existing_extensions))
+				{
+					$insert = array(
+						'group_id'	=> $group_id,
+						'extension'	=> $extension,
+					);
+					$db->sql_query('INSERT INTO ' . EXTENSIONS_TABLE . ' ' . $db->sql_build_array('INSERT', $insert));
 				}
 			}
 		}
@@ -560,23 +637,226 @@ class database_cleaner_controller
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}
 
 			if (isset($selected[$name]))
 			{
-				if (isset($this->db_cleaner->data->permissions[$name]) && !in_array($name, $existing_permissions))
+				if (isset($this->db_cleaner->data->acl_options[$name]) && !in_array($name, $existing_permissions))
 				{
 					// Add it with the default settings we've got...
-					$umil->permission_add($name, (($this->db_cleaner->data->permissions[$name]['is_global']) ? true : false));
+					$umil->permission_add($name, (($this->db_cleaner->data->acl_options[$name]['is_global']) ? true : false));
 				}
-				else if (!isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+				else if (!isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 				{
 					// Remove it
 					$umil->permission_remove($name, true);
 					$umil->permission_remove($name, false);
+				}
+			}
+		}
+	}
+	
+	/**
+	* Reset the report reasons
+	*/
+	function report_reasons(&$error)
+	{
+		global $db;
+		
+		if (isset($_POST['yes']))
+		{
+			// First off all grep the ID of the `other`
+			$sql = 'SELECT reason_id
+				FROM ' . REPORTS_REASONS_TABLE . "
+				WHERE LOWER(reason_title) = 'other'";
+			$result = $db->sql_query($sql);
+			$other_reason_id = (int) $db->sql_fetchfield('reason_id');
+			$db->sql_freeresult($result);
+			
+			// Select everything
+			$result = $db->sql_query('SELECT * FROM ' . REPORTS_REASONS_TABLE);
+			while ($row = $db->sql_fetchrow($result))
+			{
+				// This is a default one, unset from the data array
+				if (array_key_exists($row['reason_title'], $this->db_cleaner->data->report_reasons))
+				{
+					unset($this->db_cleaner->data->report_reasons[$row['reason_title']]);
+					continue;
+				}
+				
+				// Delete, this is taken from "acp_reasons"
+				switch ($db->sql_layer)
+				{
+					// The ugly one!
+					case 'mysqli':
+					case 'mysql4':
+					case 'mysql':
+						// Change the reports using this reason to 'other'
+						$sql = 'UPDATE ' . REPORTS_TABLE . '
+							SET reason_id = ' . $other_reason_id . ", report_text = CONCAT('" . $db->sql_escape($row['reason_description']) . "\n\n', report_text)
+							WHERE reason_id = " . (int) $row['reason_id'];
+					break;
+
+					// Standard? What's that?
+					case 'mssql':
+					case 'mssql_odbc':
+					case 'mssqlnative':
+						// Change the reports using this reason to 'other'
+						$sql = "DECLARE @ptrval binary(16)
+
+								SELECT @ptrval = TEXTPTR(report_text)
+									FROM " . REPORTS_TABLE . '
+								WHERE reason_id = ' . (int) $row['reason_id'] . "
+
+								UPDATETEXT " . REPORTS_TABLE . ".report_text @ptrval 0 0 '" . $db->sql_escape($row['reason_description']) . "\n\n'
+
+								UPDATE " . REPORTS_TABLE . '
+									SET reason_id = ' . $other_reason_id . "
+								WHERE reason_id = $reason_id";
+					break;
+
+					// Teh standard
+					case 'postgres':
+					case 'oracle':
+					case 'firebird':
+					case 'sqlite':
+						// Change the reports using this reason to 'other'
+						$sql = 'UPDATE ' . REPORTS_TABLE . '
+							SET reason_id = ' . $other_reason_id . ", report_text = '" . $db->sql_escape($row['reason_description']) . "\n\n' || report_text
+							WHERE reason_id = " . (int) $row['reason_id'];
+					break;
+				}
+				$db->sql_query($sql);
+
+				$db->sql_query('DELETE FROM ' . REPORTS_REASONS_TABLE . ' WHERE reason_id = ' . (int) $row['reason_id']);
+			}
+			$db->sql_freeresult($result);
+			
+			// Did the user remove any of the original reasons?
+			if (!empty($this->db_cleaner->data->report_reasons))
+			{
+				global $user;
+				$user->add_lang('install');
+
+				if (!function_exists('adjust_language_keys_callback'))
+				{
+					include PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT;
+				}
+
+				// The highest next order
+				$sql = 'SELECT MAX(reason_order) as next
+					FROM ' . REPORTS_REASONS_TABLE;
+				$result	= $db->sql_query($sql);
+				$order	= $db->sql_fetchfield('next', false, $result);
+				$db->sql_freeresult($result);
+				
+				$insert = array();
+				foreach ($this->db_cleaner->data->report_reasons as $deleted => $data)
+				{
+					$insert[] = array(
+						'reason_title'			=> $deleted,
+						'reason_description'	=> $user->lang[preg_replace_callback('#\{L_([A-Z0-9\-_]*)\}#s', 'adjust_language_keys_callback', $data[0])],
+						'reason_order'			=> ++$order,
+					);
+				}
+				
+				// Insert
+				$db->sql_multi_insert(REPORTS_REASONS_TABLE, $insert);
+			}
+		}
+	}
+	
+	/**
+	* Reset the phpBB system roles
+	*/
+	function role_data(&$error)
+	{
+		global $db;
+
+		if (isset($_POST['yes']))
+		{
+			$system_roles	= $this->db_cleaner->data->acl_role_data;
+			$role_ids		= array();
+			$sql_format		= 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting)
+								SELECT %1$d, auth_option_id, %2$d
+								FROM ' . ACL_OPTIONS_TABLE . '
+									WHERE auth_option LIKE %3$s';
+			$sql_format_in	= 'INSERT INTO ' . ACL_ROLES_DATA_TABLE . ' (role_id, auth_option_id, auth_setting)
+								SELECT %1$d, auth_option_id, %2$d
+								FROM ' . ACL_OPTIONS_TABLE . '
+									WHERE auth_option LIKE %3$s
+									AND %4$s';
+
+			// Fetch the role IDs
+			$sql = 'SELECT role_id, role_name
+				FROM ' . ACL_ROLES_TABLE . '
+				WHERE ' . $db->sql_in_set('role_name', array_keys($system_roles));
+			$result	= $db->sql_query($sql);
+			while ($role = $db->sql_fetchrow($result))
+			{
+				$role_ids[$role['role_name']] = $role['role_id'];
+			}
+			$db->sql_freeresult($result);
+
+			// Clear the ACL_ROLES_DATA_TABLE table
+			$sql = 'DELETE FROM ' . ACL_ROLES_DATA_TABLE . '
+				WHERE ' . $db->sql_in_set('role_id', $role_ids);
+			$db->sql_query($sql);
+
+			// Now re-build the role data
+			foreach ($system_roles as $role_name => $role_data)
+			{
+				// Trim role name to allow multiple entries for the same role
+				$role_name = trim($role_name);
+
+				// Create the query
+				$query = '';
+				if (!empty($role_data['OPTION_IN']))
+				{
+					$like_negate = (empty($role_data['NEGATE'])) ? false : true;
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE'], $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
+				}
+				else
+				{
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE']);
+				}
+
+				// Run, run, run
+				$db->sql_query($sql);
+			}
+		}
+	}
+	
+	/**
+	* Fix system roles
+	*/
+	function roles(&$error, $selected)
+	{
+		global $umil;
+
+		$role_rows = $existing_roles = array();
+		get_role_rows($this->db_cleaner->data->acl_roles, $role_rows, $existing_roles);
+		foreach ($role_rows as $name)
+		{
+			if (isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
+			{
+				continue;
+			}
+
+			if (isset($selected[$name]))
+			{
+				if (isset($this->db_cleaner->data->acl_roles[$name]) && !in_array($name, $existing_roles))
+				{
+					// Add it with the default settings we've got...
+					$umil->permission_role_add($name, $this->db_cleaner->data->acl_roles[$name][1], $this->db_cleaner->data->acl_roles[$name][0]);
+				}
+				else if (!isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
+				{
+					// Remove it
+					$umil->permission_role_remove($name);
 				}
 			}
 		}

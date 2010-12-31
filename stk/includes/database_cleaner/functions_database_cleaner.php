@@ -9,8 +9,8 @@
  */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -36,6 +36,54 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 	sort($config_rows);
 }
 
+/**
+* Collect all extension groups
+*/
+function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_rows, &$existing_extension_groups)
+{
+	global $db;
+
+	$existing_extension_groups = array();
+	$sql = 'SELECT group_name
+		FROM ' . EXTENSION_GROUPS_TABLE;
+	$result	= $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$existing_extension_groups[] = $row['group_name'];
+	}
+	$db->sql_freeresult($result);
+
+	$extension_groups_rows = array_unique(array_merge(array_keys($extension_groups_data), $existing_extension_groups));
+	sort($extension_groups_rows);
+}
+
+/**
+* Collect the extensions for a given group
+*/
+function get_extensions($group, &$group_id)
+{
+	global $db;
+
+	$sql = 'SELECT e.extension, eg.group_id
+		FROM (' . EXTENSIONS_TABLE . ' e, ' . EXTENSION_GROUPS_TABLE . ' eg)
+		WHERE e.group_id = eg.group_id
+			AND eg.group_name = \'' . $db->sql_escape($group) . '\'';
+	$result	= $db->sql_query($sql);
+	$set	= array();
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$set[] = $row['extension'];
+
+		if (empty($group_id))
+		{
+			$group_id = $row['group_id'];
+		}
+	}
+	$db->sql_freeresult($result);
+
+	return $set;
+}
+
 function get_permission_rows(&$permission_data, &$permission_rows, &$existing_permissions)
 {
 	global $db;
@@ -51,6 +99,24 @@ function get_permission_rows(&$permission_data, &$permission_rows, &$existing_pe
 
 	$permission_rows = array_unique(array_merge(array_keys($permission_data), $existing_permissions));
 	sort($permission_rows);
+}
+
+function get_role_rows(&$roles_data, &$role_rows, &$existing_roles)
+{
+	global $db;
+	
+	$existing_roles = array();
+	$sql = 'SELECT role_name
+		FROM ' . ACL_ROLES_TABLE;
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$existing_roles[] = $row['role_name'];
+	}
+	$db->sql_freeresult($result);
+
+	$role_rows = array_unique(array_merge(array_keys($roles_data), $existing_roles));
+	sort($role_rows);
 }
 
 /**
@@ -242,6 +308,7 @@ function get_phpbb_tables()
 
 		$_tables = $all_tables;
 	}
+
 	sort($_tables);
 
 	return $_tables;
@@ -277,13 +344,21 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 
 		// Set the data
 		$data->bots					= array_merge($data->bots, $_datafile->bots);
-		$data->config_data			= array_merge($data->config_data, $_datafile->config_data);
-		$data->removed_config_data	= array_merge($data->removed_config_data, $_datafile->removed_config_data);
-		$data->permissions			= array_merge($data->permissions, $_datafile->permissions);
+		$data->config				= array_merge($data->config, $_datafile->config);
+		$data->acl_options			= array_merge($data->acl_options, $_datafile->acl_options);
+		$data->acl_roles			= array_merge($data->acl_roles, $_datafile->acl_roles);
+		$data->acl_role_data		= array_merge_recursive($data->acl_role_data, $_datafile->acl_role_data);
+		$data->extension_groups		= array_merge($data->extension_groups, $_datafile->extension_groups);
+		$data->extensions			= array_merge($data->extensions, $_datafile->extensions);
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
+		$data->removed_config	= array_merge($data->removed_config, $_datafile->removed_config);
+		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
 		$_datafile->get_schema_struct($data->schema_data);
+
+		// Just make sure that nothing sticks
+		unset($_datafile);
 
 		// Break after our version
 		if (version_compare($version, $phpbb_version, 'eq'))
@@ -303,7 +378,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			// If $config['questionnaire_unique_id] exists add it to the config data array
 			if (isset($config['questionnaire_unique_id']))
 			{
-				$data->config_data['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
+				$data->config['questionnaire_unique_id'] = array('config_value' => $config['questionnaire_unique_id'], 'is_dynamic' => '0');
 			}
 
 			// Need to force do some ordering on $module_extras
@@ -318,7 +393,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		case '3_0_2' :
 		case '3_0_1' :
 		case '3_0_0' :
-			$data->config_data['version'] = $phpbb_version;		// We always need to set the version afterwards
+			$data->config['version'] = $phpbb_version;		// We always need to set the version afterwards
 		break;
 	}
 

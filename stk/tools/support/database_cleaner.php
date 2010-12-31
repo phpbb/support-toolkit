@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -26,10 +26,15 @@ class database_cleaner
 		'tables',
 		'columns',
 		'config',
+		'extension_groups',
+		'extensions',
 		'permissions',
 		'groups',
+		'roles',
+		'role_data',
 		'modules',
 		'bots',
+		'report_reasons',
 		'final_step',
 	);
 
@@ -177,9 +182,9 @@ class database_cleaner
 			return;
 		}
 
-		// Step 6 & 7 can trigger two messages
+		// Confirm boxes
 		$did_run = true;
-		if (($this->step == 6 || $this->step == 7) && !isset($_POST['yes']))
+		if (!isset($_POST['yes']))
 		{
 			$did_run = false;
 		}
