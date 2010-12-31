@@ -184,12 +184,28 @@ class erk_bom_sniffer
 			}
 
 			// Step into the files
-			if (is_array($files))
+			if (!empty($files))
 			{
+				// Test whether we're sniffing a language directory (any)
+				$lang_test_dir	= '';
+				$lang_matches	= array();
+				if (preg_match('#language/([a-zA-Z\-_]+)/#ise', $directory, $lang_matches))
+				{
+					$lang_test_dir = str_replace($lang_matches[1], '..', $directory);
+				}
+
 				foreach ($files as $file)
 				{
+					// If this is inside a language directory we need to check whether this file is
+					// in the whitelist and adjust the whitelist to include it
+					$sniff_lang_file = false;
+					if (!empty($lang_test_dir))
+					{
+						$sniff_lang_file = (in_array($lang_test_dir . $file, $this->whitelist)) ? true : false;
+					}
+
 					// Test this file against the whitelist
-					if (!$stk_config['bom_sniffer_force_full_scan'] && !in_array($directory . $file, $this->whitelist))
+					if (!$stk_config['bom_sniffer_force_full_scan'] && (!in_array($directory . $file, $this->whitelist) && $sniff_lang_file === false))
 					{
 						continue;
 					}
@@ -201,6 +217,7 @@ class erk_bom_sniffer
 				}
 			}
 		}
+
 		// Once finished always write the new data back to the cache file
 		$this->cache->storedata();
 

@@ -387,7 +387,21 @@ class stk_builder
 			{
 				continue;
 			}
-			
+
+			// Language files get some love
+			$lang_match = array();
+			if (preg_match('#language/([a-zA-Z_\-]+)/#ise', $dir, $lang_match))
+			{
+				// non-english skip
+				if ($lang_match[1] != 'en')
+				{
+					continue;
+				}
+
+				// Replace `en` with `..` gets handled by the BOM Sniffer later on
+				$dir = str_replace('language/en/', 'language/../', $dir);
+			}
+
 			foreach ($files as $file)
 			{
 				// Skip all non-php files
