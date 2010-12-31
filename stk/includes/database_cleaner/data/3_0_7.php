@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,7 +31,7 @@ class datafile_3_0_7
 	/**
 	* @var Array 3.0.7 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'feed_overall'			=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'feed_http_auth'		=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'feed_limit_post'		=> array('config_value' => '15', 'is_dynamic' => '0'),
@@ -43,7 +43,7 @@ class datafile_3_0_7
 	/**
 	* @var Array Config entries that were removed by the 3.0.7 update
 	*/
-	var $removed_config_data = array(
+	var $removed_config = array(
 		'feed_limit',
 		'feed_overall_forums_limit',
 		'feed_overall_topics',
@@ -53,14 +53,42 @@ class datafile_3_0_7
 	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// No permission changes 3.0.6 -> 3.0.7
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* @var Array All default roles
+	*/
+	var $acl_roles = array(
+		// No role changes 3.0.6 -> 3.0.7
+	);
+
+	/**
+	* @var Array All default role data
+	*/
+	var $acl_role_data = array(
+		// No role data changes 3.0.6 -> 3.0.7
+	);
+
+	/**
+	* @var Array All default extension groups
+	*/
+	var $extension_groups = array(
+		// No extension group changes 3.0.6 -> 3.0.7
+	);
+
+	/**
+	* @var Array All default extensions
+	*/
+	var $extensions = array(
+		// No extension changes 3.0.6 -> 3.0.7
+	);
+
+	/**
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		// No Module categories changes 3.0.6 -> 3.0.7
 	);
@@ -69,10 +97,17 @@ class datafile_3_0_7
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		// No Group changes 3.0.6 -> 3.0.7
+	);
+	
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		// No reason changes 3.0.6 -> 3.0.7
 	);
 
 	/**
