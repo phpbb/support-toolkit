@@ -57,7 +57,7 @@ update!
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
 * [Change] Database cleaner now also validates roles, extensions and report reasons. (Bug #62475)
 * [Change] Merge the two system group resync tools into one. (Bug #62576)
-* [Change] Database cleaner now also validates roles, extensions and report reasons. (Bug #62475)
+* [Change] Changed the way the BOM Sniffer handles non-english language files. (Bug #62581)
 * [Fix] SQL error handling. (Bug #51225)
 * [Fix] Correctly handle configuration values that were removed from phpBB. (Bug #62189, Patch by Noxwizard)
 * [Fix] Hooks potentially break STK. (Bug #62352)
