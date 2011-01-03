@@ -37,7 +37,7 @@ class resync_avatars
 
 	function run_tool()
 	{
-		global $config, $db;
+		global $config, $db, $template;
 
 		$step	= request_var('step', 0);
 		$begin	= $this->_batch_size * $step;
@@ -97,6 +97,7 @@ class resync_avatars
 		}
 
 		// Next step
+		$template->assign_var('U_BACK_TOOL', false);
 		meta_refresh(3, append_sid(STK_INDEX, array('c' => 'admin', 't' => 'resync_avatars', 'step' => ++$step, 'submit' => true)));
 		trigger_error('RESYNC_AVATARS_PROGRESS');
 	}
