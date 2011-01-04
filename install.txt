@@ -49,7 +49,7 @@ update!
 == Changes since 1.0.2.1-pl1 ==
 * [Add] MySQL Upgrader tool. (Bug #62477)
 * [Add] Re-sync registered users group. (Bug #62538)
-* [Add] Re-sync avatars tool. (Bug #52815)
+* [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
 * [Change] Made the database cleaner user interface a bit more user friendly.
 * [Change] Added a better build script. (Bug #62471)
