@@ -41,12 +41,12 @@ class resync_report_flags
 		{
 			// Post flags
 			case 'pf':
-				$this->_resync_posts();
+				$this->_resync_pms_posts('posts');
 			break;
 
 			// PM flags
 			case 'pmf':
-				$this->_resync_pms();
+				$this->_resync_pms_posts('pms');
 			break;
 
 			// Reports
@@ -66,145 +66,80 @@ class resync_report_flags
 	}
 
 	/**
-	 * Make sure that all the reported pms have the report
-	 * flag set
+	 * Reset report flags for pm's or posts
 	 *
+	 * @param String $type Resync posts|pms
 	 * @return void
 	 */
-	function _resync_pms()
-	{
-		global $db;
-		
-		// Grep all the report data
-		$reported_pms = array();
-		$sql = 'SELECT pm_id
-			FROM ' . REPORTS_TABLE . '
-			WHERE post_id = 0';
-		$result	= $db->sql_query($sql);
-		while ($report = $db->sql_fetchrow($result))
-		{
-			$reported_pms[] = $report['pm_id'];
-		}
-		$db->sql_freeresult($result);
-
-		// Its broken
-		if (!empty($reported_pms))
-		{
-			// First reset all unflagged posts.
-			$corrupted = array();
-			$sql = 'SELECT pm_id
-				FROM ' . PRIVMSGS_TABLE . '
-				WHERE message_reported = 0
-					AND ' . $db->sql_in_set('pm_id', $reported_pms);
-			$result	= $db->sql_query($sql);
-			while ($pm = $db->sql_fetchrow($result))
-			{
-				$corrupted[] = $pm['pm_id'];
-			}
-			$db->sql_freeresult($result);
-
-			if (!empty($corrupted))
-			{
-				// We remark these posts as reported even when the report was closed
-				// this will be resolved in a later mode.
-				$sql = 'UPDATE ' . PRIVMSGS_TABLE . '
-					SET message_reported = 1
-					WHERE ' . $db->sql_in_set('pm_id', $corrupted);
-				$db->sql_query($sql);
-			}
-
-			// Now fetch any posts with a flag and no report and reset the flag
-			$corrupted = array();
-			$sql = 'SELECT pm_id
-				FROM ' . PRIVMSGS_TABLE . '
-				WHERE message_reported = 1
-					AND ' . $db->sql_in_set('pm_id', $reported_pms, true);
-			$result	= $db->sql_query($sql);
-			while ($pm = $db->sql_fetchrow($result))
-			{
-				$corrupted[] = $pm['pm_id'];
-			}
-			$db->sql_freeresult($result);
-
-			if (!empty($corrupted))
-			{
-				$sql = 'UPDATE ' . PRIVMSGS_TABLE . '
-					SET message_reported = 0
-					WHERE ' . $db->sql_in_set('pm_id', $corrupted);
-				$db->sql_query($sql);
-			}
-		}
-
-		// Next!
-		$this->_next_mode();
-	}
-
-	/**
-	 * Make sure that all the reported posts have the
-	 * report flag set.
-	 *
-	 * @return void
-	 */
-	function _resync_posts()
+	function _resync_pms_posts($type)
 	{
 		global $db;
 
+		// Set some SQL stuff based upon the type
+		$sql_id		= ($type == 'posts') ? 'post_id' : 'pm_id';
+		$sql_from	= ($type == 'posts') ? POSTS_TABLE : PRIVMSGS_TABLE;
+		$sql_nid	= ($type == 'posts') ? 'pm_id' : 'post_id';
+		$sql_where	= ($type == 'posts') ? 'post_reported' : 'message_reported';
+
 		// Grep all the report data
-		$reported_posts = array();
-		$sql = 'SELECT post_id
-			FROM ' . REPORTS_TABLE . '
-			WHERE pm_id = 0';
+		$reported	= array();
+		$sql = "SELECT {$sql_id}
+			FROM " . REPORTS_TABLE . "
+			WHERE {$sql_nid} = 0";
 		$result	= $db->sql_query($sql);
 		while ($report = $db->sql_fetchrow($result))
 		{
-			$reported_posts[] = $report['post_id'];
+			$reported[] = $report[$sql_id];
 		}
 		$db->sql_freeresult($result);
 
-		// Its broken
-		if (!empty($reported_posts))
+		// There are reports
+		if (!empty($reported))
 		{
-			// First reset all unflagged posts.
 			$corrupted = array();
-			$sql = 'SELECT post_id
-				FROM ' . POSTS_TABLE . '
-				WHERE post_reported = 0
-					AND ' . $db->sql_in_set('post_id', $reported_posts);
+
+			// Set all unflagged as flagged
+			$sql = "SELECT {$sql_id}
+				FROM {$sql_from}
+				WHERE {$sql_where} = 0
+					AND " . $db->sql_in_set($sql_id, $reported);
 			$result	= $db->sql_query($sql);
-			while ($post = $db->sql_fetchrow($result))
+			while ($row = $db->sql_fetchrow($result))
 			{
-				$corrupted[] = $post['post_id'];
+				$corrupted[] = $row[$sql_id];
 			}
 			$db->sql_freeresult($result);
 
 			if (!empty($corrupted))
 			{
-				// We remark these posts as reported even when the report was closed
-				// this will be resolved in a later mode.
-				$sql = 'UPDATE ' . POSTS_TABLE . '
-					SET post_reported = 1
-					WHERE ' . $db->sql_in_set('post_id', $corrupted);
+				// Well set them al to reported, switching the flag based on the report
+				// status is handeled later
+				$sql = "UPDATE {$sql_from}
+					SET {$sql_where} = 1
+					WHERE " . $db->sql_in_set($sql_id, $corrupted);
 				$db->sql_query($sql);
 			}
 
-			// Now fetch any posts with a flag and no report and reset the flag
+			// Reset and time for the other way around flag
 			$corrupted = array();
-			$sql = 'SELECT post_id
-				FROM ' . POSTS_TABLE . '
-				WHERE post_reported = 1
-					AND ' . $db->sql_in_set('post_id', $reported_posts, true);
+			$sql = "SELECT {$sql_id}
+				FROM {$sql_from}
+				WHERE {$sql_where} = 1
+					AND " . $db->sql_in_set($sql_id, $reported, true);
 			$result	= $db->sql_query($sql);
-			while ($post = $db->sql_fetchrow($result))
+			while ($row = $db->sql_fetchrow($result))
 			{
-				$corrupted[] = $post['post_id'];
+				$corrupted[] = $row[$sql_id];
 			}
 			$db->sql_freeresult($result);
 
 			if (!empty($corrupted))
 			{
-				$sql = 'UPDATE ' . POSTS_TABLE . '
-					SET post_reported = 0
-					WHERE ' . $db->sql_in_set('post_id', $corrupted);
+				// Well set them al to reported, switching the flag based on the report
+				// status is handeled later
+				$sql = "UPDATE {$sql_from}
+					SET {$sql_where} = 0
+					WHERE " . $db->sql_in_set($sql_id, $corrupted);
 				$db->sql_query($sql);
 			}
 		}
