@@ -35,7 +35,6 @@ class resync_report_flags
 	 */
 	function run_tool()
 	{
-		$this->step = request_var('step', 0);
 		$this->mode = request_var('m', 'pf');
 
 		switch ($this->mode)
@@ -297,7 +296,7 @@ class resync_report_flags
 		if (!empty($expected))
 		{
 			// Trash the flags on topics not in expected
-			$sql = 'UPDATE ' TOPICS_TABLE . '
+			$sql = 'UPDATE ' . TOPICS_TABLE . '
 				SET topic_reported = 0
 				WHERE ' . $db->sql_in_set('topic_id', $expected, true) . '
 					AND topic_reported = 1';
@@ -339,7 +338,7 @@ class resync_report_flags
 		$next = $modes[$this->mode];
 
 		// Build the link
-		$redirect = append_sid(STK_INDEX, array('c' => 'support', 't' => 'resync_report_flags', 'step' => 0, 'm' => $next, 'submit' => true));
+		$redirect = append_sid(STK_INDEX, array('c' => 'support', 't' => 'resync_report_flags', 'm' => $next, 'submit' => true));
 		meta_refresh(3, $redirect);
 		$template->assign_var('U_BACK_TOOL', false);
 		trigger_error('RESYNC_REPORT_FLAGS_NEXT');
