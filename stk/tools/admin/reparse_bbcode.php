@@ -332,7 +332,7 @@ class reparse_bbcode
 
 					// Insert back into the db
 					$sql = 'UPDATE ' . USERS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sig_data) . '
-						WHERE user_id = ' . $this->data['user_id'];
+						WHERE user_id = ' . (int) $this->data['user_id'];
 					$db->sql_query($sql);
 				break;
 			}
@@ -407,7 +407,7 @@ class reparse_bbcode
 		$poll_options = array();
 		$sql	= 'SELECT poll_option_id, poll_option_text
 			FROM ' . POLL_OPTIONS_TABLE . '
-			WHERE topic_id = ' . $this->data['topic_id'] . '
+			WHERE topic_id = ' . (int) $this->data['topic_id'] . '
 				ORDER BY poll_option_id';
 		$result = $db->sql_query($sql);
 		while ($option = $db->sql_fetchrow($result))
@@ -509,7 +509,7 @@ class reparse_bbcode
 			// Fetch the attachments for this post
 			$sql = 'SELECT attach_id, is_orphan, attach_comment, real_filename
 				FROM ' . ATTACHMENTS_TABLE . '
-				WHERE post_msg_id = ' . $this->data['post_id'] . '
+				WHERE post_msg_id = ' . (int) $this->data['post_id'] . '
 					AND in_message = 0
 					AND is_orphan = 0
 				ORDER BY filetime DESC';

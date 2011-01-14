@@ -95,7 +95,7 @@ class database_cleaner_controller
 						continue;
 					}
 
-					$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $username_clean . '\'';
+					$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $db->sql_escape($username_clean) . '\'';
 					$db->sql_query($sql);
 
 					$user_row = array(
@@ -273,7 +273,7 @@ class database_cleaner_controller
 				else if (!isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
 				{
 					// Remove it
-					$db->sql_query('DELETE FROM ' . EXTENSION_GROUPS_TABLE . " WHERE group_name = '{$name}'");
+					$db->sql_query('DELETE FROM ' . EXTENSION_GROUPS_TABLE . " WHERE group_name = '" . $db->sql_escape($name) . "'");
 				}
 			}
 		}
@@ -298,8 +298,8 @@ class database_cleaner_controller
 				if (!in_array($extension, $data) && in_array($extension, $existing_extensions))
 				{
 					// Delete
-					$db->sql_query('DELETE FROM ' . EXTENSIONS_TABLE . "
-						WHERE group_id = {$group_id}
+					$db->sql_query('DELETE FROM ' . EXTENSIONS_TABLE . '
+						WHERE group_id = ' . (int) $group_id . "
 							AND extension = '" . $db->sql_escape($extension) . '\'');
 				}
 				else if (in_array($extension, $data) && !in_array($extension, $existing_extensions))
@@ -365,7 +365,7 @@ class database_cleaner_controller
 						include(PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 					}
 					// Remove it
-					$db->sql_query('SELECT group_id FROM ' . GROUPS_TABLE . ' WHERE group_name = \'' . $name . '\'');
+					$db->sql_query('SELECT group_id FROM ' . GROUPS_TABLE . ' WHERE group_name = \'' . $db->sql_escape($name) . '\'');
 					$group_id = $db->sql_fetchfield('group_id');
 					group_delete($group_id, $name);
 				}
@@ -696,7 +696,7 @@ class database_cleaner_controller
 					case 'mysql':
 						// Change the reports using this reason to 'other'
 						$sql = 'UPDATE ' . REPORTS_TABLE . '
-							SET reason_id = ' . $other_reason_id . ", report_text = CONCAT('" . $db->sql_escape($row['reason_description']) . "\n\n', report_text)
+							SET reason_id = ' . (int) $other_reason_id . ", report_text = CONCAT('" . $db->sql_escape($row['reason_description']) . "\n\n', report_text)
 							WHERE reason_id = " . (int) $row['reason_id'];
 					break;
 
@@ -714,8 +714,8 @@ class database_cleaner_controller
 								UPDATETEXT " . REPORTS_TABLE . ".report_text @ptrval 0 0 '" . $db->sql_escape($row['reason_description']) . "\n\n'
 
 								UPDATE " . REPORTS_TABLE . '
-									SET reason_id = ' . $other_reason_id . "
-								WHERE reason_id = $reason_id";
+									SET reason_id = ' . (int) $other_reason_id . '
+								WHERE reason_id = ' . (int) $reason_id;
 					break;
 
 					// Teh standard
@@ -725,7 +725,7 @@ class database_cleaner_controller
 					case 'sqlite':
 						// Change the reports using this reason to 'other'
 						$sql = 'UPDATE ' . REPORTS_TABLE . '
-							SET reason_id = ' . $other_reason_id . ", report_text = '" . $db->sql_escape($row['reason_description']) . "\n\n' || report_text
+							SET reason_id = ' . (int) $other_reason_id . ", report_text = '" . $db->sql_escape($row['reason_description']) . "\n\n' || report_text
 							WHERE reason_id = " . (int) $row['reason_id'];
 					break;
 				}
@@ -817,11 +817,11 @@ class database_cleaner_controller
 				if (!empty($role_data['OPTION_IN']))
 				{
 					$like_negate = (empty($role_data['NEGATE'])) ? false : true;
-					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE'], $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $db->sql_escape($role_data['OPTION_LIKE']), $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
 				}
 				else
 				{
-					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE']);
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $db->sql_escape($role_data['OPTION_LIKE']));
 				}
 
 				// Run, run, run
