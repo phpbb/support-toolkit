@@ -116,21 +116,21 @@ class resync_avatars
 			switch ($mode)
 			{
 				case RESYNC_GROUP_AVATARS :
-					$update_sql[] = 'UPDATE ' . GROUPS_TABLE . "
-						SET group_avatar = '',
+					$update_sql[] = 'UPDATE ' . GROUPS_TABLE . '
+						SET group_avatar = \'\',
 							group_avatar_type = 0,
 							group_avatar_width = 0,
 							group_avatar_height = 0
-							WHERE group_id = {$row['id']}";
+							WHERE group_id = ' . (int) $row['id'];
 				break;
 
 				case RESYNC_USER_AVATARS :
-					$update_sql[] = 'UPDATE ' . USERS_TABLE . "
-						SET user_avatar = '',
+					$update_sql[] = 'UPDATE ' . USERS_TABLE . '
+						SET user_avatar = \'\',
 							user_avatar_type = 0,
 							user_avatar_width = 0,
 							user_avatar_height = 0
-							WHERE user_id = {$row['id']}";
+							WHERE user_id = ' . (int) $row['id'];
 				break;
 			}
 		}
