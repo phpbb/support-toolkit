@@ -236,38 +236,38 @@ class restore_deleted_users
 		$user_id = user_add($user_ary);
 
 		// Update forums table
-		$sql = 'UPDATE ' . FORUMS_TABLE . "
-			SET forum_last_poster_id = {$user_id}, forum_last_poster_name = '{$newname}', forum_last_poster_colour = '{$gcl}'
-			WHERE forum_last_poster_name = '{$oldname}'";
+		$sql = 'UPDATE ' . FORUMS_TABLE . '
+			SET forum_last_poster_id = ' . (int) $user_id . " , forum_last_poster_name = '" . $db->sql_escape($newname) . "', forum_last_poster_colour = '" . $db->sql_escape($gcl) . "'
+			WHERE forum_last_poster_name = '" . $db->sql_escape($oldname) . "'";
 		$db->sql_query($sql);
 
 		// Update posts table
-		$sql = 'UPDATE ' . POSTS_TABLE . "
-			SET poster_id = {$user_id}, post_username = ''
-			WHERE post_username = '{$oldname}'";
+		$sql = 'UPDATE ' . POSTS_TABLE . '
+			SET poster_id = ' . (int) $user_id . ", post_username = ''
+			WHERE post_username = '" . $db->sql_escape($oldname) . "'";
 		$db->sql_query($sql);
 
 		// Update topics table (first post)
-		$sql = 'UPDATE ' . TOPICS_TABLE . "
-			SET topic_poster = {$user_id}, topic_first_poster_name = '{$newname}', topic_first_poster_colour = '{$gcl}'
-			WHERE topic_first_poster_name = '{$oldname}'";
+		$sql = 'UPDATE ' . TOPICS_TABLE . '
+			SET topic_poster = ' . (int) $user_id . ", topic_first_poster_name = '" . $db->sql_escape($newname) . "', topic_first_poster_colour = '" . $db->sql_escape($gcl) . "'
+			WHERE topic_first_poster_name = '" . $db->sql_escape($oldname) . "'";
 		$db->sql_query($sql);
 
 		// Update topics table (last post)
-		$sql = 'UPDATE ' . TOPICS_TABLE . "
-			SET topic_last_poster_id = {$user_id}, topic_last_poster_name = '{$newname}', topic_last_poster_colour = '{$gcl}'
-			WHERE topic_last_poster_name = '{$oldname}'";
+		$sql = 'UPDATE ' . TOPICS_TABLE . '
+			SET topic_last_poster_id = ' . (int) $user_id . ", topic_last_poster_name = '" . $db->sql_escape($newname) . "', topic_last_poster_colour = '" . $db->sql_escape($gcl) . "'
+			WHERE topic_last_poster_name = '" . $db->sql_escape($oldname) . "'";
 		$db->sql_query($sql);
 
 		// Update user post count
 		$sql = 'SELECT COUNT(post_id) as post_cnt
 			FROM ' . POSTS_TABLE . '
-			WHERE poster_id = ' . $user_id;
+			WHERE poster_id = ' . (int) $user_id;
 		$result		= $db->sql_query($sql);
 		$post_cnt	= $db->sql_fetchfield('post_cnt', false, $result);
 		$db->sql_freeresult($result);
 
-		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_posts = ' . $post_cnt . ' WHERE user_id = ' . $user_id;
+		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_posts = ' . $post_cnt . ' WHERE user_id = ' . (int) $user_id;
 		$db->sql_query($sql);
 	}
 

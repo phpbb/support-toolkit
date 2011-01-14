@@ -31,11 +31,11 @@ class erk_style_dir_repair
 
 		$config['default_style'] = (!isset($config['default_style']) || !$config['default_style']) ? 1 : $config['default_style'];
 		$sql = 'SELECT t.template_path
-			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
-			WHERE s.style_id = {$config['default_style']}
+			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . ' i
+			WHERE s.style_id = ' . (int) $config['default_style'] . '
 				AND t.template_id = s.template_id
 				AND c.theme_id = s.theme_id
-				AND i.imageset_id = s.imageset_id";
+				AND i.imageset_id = s.imageset_id';
 		$result	= $db->sql_query($sql);
 		$t_path	= $db->sql_fetchfield('template_path', false, $result);
 		$db->sql_freeresult($result);
