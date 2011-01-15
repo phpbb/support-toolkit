@@ -1,16 +1,15 @@
 <?php
 /**
-*
-* @package Support Toolkit - SQL Query
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Avatars
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -38,17 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ERROR_QUERY'					=> 'Query containing the error',
-
-	'NO_RESULTS'					=> 'No Results',
-	'NO_SQL_QUERY'					=> 'You must enter a query to run.',
-
-	'QUERY_RESULT'					=> 'Query results',
-
-	'SHOW_RESULTS'					=> 'Show Results',
-	'SQL_QUERY'						=> 'Run SQL Query',
-	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query you wish to run. The tool will substitute "phpbb_" with your table prefix.<br />If the "Show Results" checkbox is checked the tool will display the results <em>(if any)</em> of the query.',
-
-	'SQL_QUERY_LEGEND'				=> 'SQL Query',
-	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
+	'RESYNC_ATTACHMENTS'			=> 'Resynchronise attachments',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'This tool will make sure that all avatars stored in the database actually have a file on the server. If the file is missing, this tool will remove the attachment from the database. Are you sure that you want to continue?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Attachments successfully resynchronised!',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronising attachments in progress. Please do not interrupt this process.',
 ));

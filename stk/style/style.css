@@ -1187,6 +1187,10 @@ input.disabled {
 	font-weight: bold;
 }
 
+.errorbox p {
+	border-bottom: thin dashed #f5f5f5;
+}
+
 /* Special cases for the error page */
 #errorpage #page-header a {
 	font-weight: bold;
@@ -1780,3 +1784,10 @@ dl.codebox code {
 ----------------------------------------*/
 .missing { color: #FFFFFF; background-color: #BC2A4D; }
 .extra { color: #000000; background-color: #F0F0F0; }
+
+/* SQL Query tool
+----------------------------------------*/
+dl.querybox {
+	color: #000000;
+	text-align: left;
+}

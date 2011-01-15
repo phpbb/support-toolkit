@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,7 +31,7 @@ class datafile_3_0_3
 	/**
 	* @var Array 3.0.3 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'enable_queue_trigger'	=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'queue_trigger_posts'	=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'pm_max_recipients'		=> array('config_value' => '0', 'is_dynamic' => '0'),
@@ -39,17 +39,63 @@ class datafile_3_0_3
 	);
 
 	/**
+	* @var Array Config entries that were removed by the 3.0.3 update
+	*/
+	var $removed_config = array(
+		// No config entries removed 3.0.2 -> 3.0.3
+	);
+
+	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// Added permission
 		'u_masspm_group'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* @var Array All default roles
+	*/
+	var $acl_roles = array(
+		// No role changes 3.0.2 -> 3.0.3
+	);
+
+	/**
+	* @var Array All default role data
+	*/
+	var $acl_role_data = array(
+		'ROLE_USER_LIMITED'		=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
+		'ROLE_USER_NOPM '		=> array(
+			'OPTION_IN'	=> array('u_masspm_group'),
+		),
+		'ROLE_USER_NOAVATAR'	=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
+		'ROLE_USER_NOAVATAR '	=> array(
+			'OPTION_IN'	=> array('u_masspm', 'u_masspm_group'),
+		),
+	);
+
+	/**
+	* @var Array All default extension groups
+	*/
+	var $extension_groups = array(
+		// No extension group changes 3.0.2 -> 3.0.3
+	);
+
+	/**
+	* @var Array All default extensions
+	*/
+	var $extensions = array(
+		// No extension changes 3.0.2 -> 3.0.3
+	);
+
+	/**
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		// No Module categories changes 3.0.2 -> 3.0.3
 	);
@@ -58,10 +104,17 @@ class datafile_3_0_3
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		// No Group changes 3.0.2 -> 3.0.3
+	);
+	
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		// No reason changes 3.0.2 -> 3.0.3
 	);
 
 	/**

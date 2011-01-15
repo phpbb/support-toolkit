@@ -6,10 +6,12 @@
 
 <p>{L_TITLE_EXPLAIN}</p>
 
-<!-- IF S_ERROR -->
+<!-- IF .errormsgrow -->
 	<div class="errorbox">
 		<h3>{L_WARNING}</h3>
-		<p>{ERROR_MSG}</p>
+		<!-- BEGIN errormsgrow -->
+			<p>{errormsgrow.MSG}</p>
+		<!-- END errormsgrow -->
 	</div>
 <!-- ENDIF -->
 

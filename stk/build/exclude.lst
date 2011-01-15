@@ -1,8 +1,0 @@
-*build/*
-*build
-*develop/*
-*develop
-*.svn*
-*.DS_Store*
-*.gitignore*
-*README.md*

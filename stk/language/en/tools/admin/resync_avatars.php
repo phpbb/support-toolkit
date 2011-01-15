@@ -1,16 +1,15 @@
 <?php
 /**
-*
-* @package Support Toolkit - SQL Query
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Avatars
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -38,17 +37,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ERROR_QUERY'					=> 'Query containing the error',
-
-	'NO_RESULTS'					=> 'No Results',
-	'NO_SQL_QUERY'					=> 'You must enter a query to run.',
-
-	'QUERY_RESULT'					=> 'Query results',
-
-	'SHOW_RESULTS'					=> 'Show Results',
-	'SQL_QUERY'						=> 'Run SQL Query',
-	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query you wish to run. The tool will substitute "phpbb_" with your table prefix.<br />If the "Show Results" checkbox is checked the tool will display the results <em>(if any)</em> of the query.',
-
-	'SQL_QUERY_LEGEND'				=> 'SQL Query',
-	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
+	'RESYNC_AVATARS'			=> 'Resynchronise avatars',
+	'RESYNC_AVATARS_CONFIRM'	=> 'This tool will make sure that all avatars used on the board extually exist on the server. When missing files are found the avatar will be removed from the users profile. Are you sure you want to continue?',
+	'RESYNC_AVATARS_FINISHED'	=> 'Avatars successfully resynchronised!',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Switching to the group avatars, please don’t interrupt this process!',
+	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronising avatars in process, please don’t interrupt this process!',
 ));

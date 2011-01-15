@@ -92,8 +92,8 @@ class readd_module_management
 			// This module exists, now make sure that it is enabled
 			$sql = 'SELECT module_id
 				FROM ' . MODULES_TABLE . "
-				WHERE module_class = '" . $module_data['class'] . "'
-					AND module_langname = '" . $module_data['lang_name'] . "'
+				WHERE module_class = '" . $db->sql_escape($module_data['class']) . "'
+					AND module_langname = '" . $db->sql_escape($module_data['lang_name']) . "'
 					AND module_enabled = 1";
 			$result		= $db->sql_query_limit($sql, 1, 0);
 			$enabled	= $db->sql_fetchfield('module_id', false, $result);
@@ -104,8 +104,8 @@ class readd_module_management
 				// Enable it
 				$sql = 'UPDATE ' . MODULES_TABLE . "
 					SET module_enabled = 1
-					WHERE module_class = '" . $module_data['class'] . "'
-						AND module_langname = '" . $module_data['lang_name'] . "'";
+					WHERE module_class = '" . $db->sql_escape($module_data['class']) . "'
+						AND module_langname = '" . $db->sql_escape($module_data['lang_name']) . "'";
 				$db->sql_query($sql);
 			}
 		}

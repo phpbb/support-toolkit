@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,23 +31,59 @@ class datafile_3_0_2
 	/**
 	* @var Array 3.0.2 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'referer_validation'		=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'check_attachment_content'	=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'mime_triggers'				=> array('config_value' => 'body|head|html|img|plaintext|a href|pre|script|table|title', 'is_dynamic' => '0'),
 	);
 
 	/**
+	* @var Array Config entries that were removed by the 3.0.2 update
+	*/
+	var $removed_config = array(
+		'min_time_reg',
+		'min_time_terms',
+	);
+
+	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// No permission changes 3.0.1 -> 3.0.2
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* @var Array All default roles
+	*/
+	var $acl_roles = array(
+		// No role changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* @var Array All default role data
+	*/
+	var $acl_role_data = array(
+		// No role data changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* @var Array All default extension groups
+	*/
+	var $extension_groups = array(
+		// No extension group changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* @var Array All default extensions
+	*/
+	var $extensions = array(
+		// No extension changes 3.0.1 -> 3.0.2
+	);
+
+	/**
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		// No Module categories changes 3.0.1 -> 3.0.2
 	);
@@ -56,10 +92,17 @@ class datafile_3_0_2
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		// No Group changes 3.0.1 -> 3.0.2
+	);
+	
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		// No reason changes 3.0.1 -> 3.0.2
 	);
 
 	/**

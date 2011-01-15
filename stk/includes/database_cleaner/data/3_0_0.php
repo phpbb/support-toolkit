@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -80,7 +80,7 @@ class datafile_3_0_0
 	/**
 	* @var Array 3.0.0 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'active_sessions'				=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'allow_attachments'				=> array('config_value' => '1', 'is_dynamic' => '0'),
 		'allow_autologin'				=> array('config_value' => '1', 'is_dynamic' => '0'),
@@ -316,9 +316,16 @@ class datafile_3_0_0
 	);
 
 	/**
+	* @var Array Config entries that were removed by the 3.0.0 update
+	*/
+	var $removed_config = array(
+		// No config entries removed 3.0.0 -> 3.0.0
+	);
+
+	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		'f_'				=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
 		'f_announce'		=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
 		'f_attach'			=> array('is_global' => '0', 'is_local' => '1', 'founder_only' => '0'),
@@ -436,11 +443,292 @@ class datafile_3_0_0
 		'u_viewonline'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 		'u_viewprofile'		=> array('is_global' => '1', 'is_local' => '0', 'founder_only' => '0'),
 	);
+	
+	/**
+	* @var Array All default roles
+	*/
+	var $acl_roles = array(
+		'ROLE_ADMIN_STANDARD'		=> array('ROLE_DESCRIPTION_ADMIN_STANDARD', 'a_', 1),
+		'ROLE_ADMIN_FORUM'			=> array('ROLE_DESCRIPTION_ADMIN_FORUM', 'a_', 3),
+		'ROLE_ADMIN_USERGROUP'		=> array('ROLE_DESCRIPTION_ADMIN_USERGROUP', 'a_', 4),
+		'ROLE_ADMIN_FULL'			=> array('ROLE_DESCRIPTION_ADMIN_FULL', 'a_', 2),
+		'ROLE_USER_FULL'			=> array('ROLE_DESCRIPTION_USER_FULL', 'u_', 3),
+		'ROLE_USER_STANDARD'		=> array('ROLE_DESCRIPTION_USER_STANDARD', 'u_', 1),
+		'ROLE_USER_LIMITED'			=> array('ROLE_DESCRIPTION_USER_LIMITED', 'u_', 2),
+		'ROLE_USER_NOPM'			=> array('ROLE_DESCRIPTION_USER_NOPM', 'u_', 4),
+		'ROLE_USER_NOAVATAR'		=> array('ROLE_DESCRIPTION_USER_NOAVATAR', 'u_', 5),
+		'ROLE_MOD_FULL'				=> array('ROLE_DESCRIPTION_MOD_FULL', 'm_', 3),
+		'ROLE_MOD_STANDARD'			=> array('ROLE_DESCRIPTION_MOD_STANDARD', 'm_', 1),
+		'ROLE_MOD_SIMPLE'			=> array('ROLE_DESCRIPTION_MOD_SIMPLE', 'm_', 2),
+		'ROLE_MOD_QUEUE'			=> array('ROLE_DESCRIPTION_MOD_QUEUE', 'm_', 4),
+		'ROLE_FORUM_FULL'			=> array('ROLE_DESCRIPTION_FORUM_FULL', 'f_', 7),
+		'ROLE_FORUM_STANDARD'		=> array('ROLE_DESCRIPTION_FORUM_STANDARD', 'f_', 5),
+		'ROLE_FORUM_NOACCESS'		=> array('ROLE_DESCRIPTION_FORUM_NOACCESS', 'f_', 1),
+		'ROLE_FORUM_READONLY'		=> array('ROLE_DESCRIPTION_FORUM_READONLY', 'f_', 2),
+		'ROLE_FORUM_LIMITED'		=> array('ROLE_DESCRIPTION_FORUM_LIMITED', 'f_', 3),
+		'ROLE_FORUM_BOT'			=> array('ROLE_DESCRIPTION_FORUM_BOT', 'f_', 9),
+		'ROLE_FORUM_ONQUEUE'		=> array('ROLE_DESCRIPTION_FORUM_ONQUEUE', 'f_', 8),
+		'ROLE_FORUM_POLLS'			=> array('ROLE_DESCRIPTION_FORUM_POLLS', 'f_', 6),
+		'ROLE_FORUM_LIMITED_POLLS'	=> array('ROLE_DESCRIPTION_FORUM_LIMITED_POLLS', 'f_', 4),
+	);
+	
+	/**
+	* @var Array All default role data
+	*/
+	var $acl_role_data = array(
+		// Admin roles
+		'ROLE_ADMIN_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_switchperm', 'a_jabber', 'a_phpinfo', 'a_server', 'a_backup', 'a_styles', 'a_clearlogs', 'a_modules', 'a_language', 'a_email', 'a_bots', 'a_search', 'a_aauth', 'a_roles'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_FORUM'			=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_fauth', 'a_forum', 'a_forumadd', 'a_forumdel', 'a_mauth', 'a_prune', 'a_uauth', 'a_viewauth', 'a_viewlogs'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_USERGROUP'		=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array('a_', 'a_authgroups', 'a_authusers', 'a_ban', 'a_group', 'a_groupadd', 'a_groupdel', 'a_ranks', 'a_uauth', 'a_user', 'a_viewauth', 'a_viewlogs'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_ADMIN_FULL'			=> array(
+			'OPTION_LIKE'	=> "'a_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		
+		// User roles
+		'ROLE_USER_FULL'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_flash', 'u_pm_forward'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_LIMITED'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_attach', 'u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_attach', 'u_pm_emailpm', 'u_pm_flash', 'u_savedrafts', 'u_search', 'u_sendemail', 'u_sendim'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOPM'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_', 'u_chgavatar', 'u_chgcensors', 'u_chgemail', 'u_chgpasswd', 'u_download', 'u_hideonline', 'u_sig', 'u_viewprofile'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOPM '			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_readpm', 'u_sendpm', 'u_masspm'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_USER_NOAVATAR'		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_attach', 'u_chgavatar', 'u_viewonline', 'u_chggrp', 'u_chgname', 'u_ignoreflood', 'u_pm_attach', 'u_pm_emailpm', 'u_pm_flash', 'u_savedrafts', 'u_search', 'u_sendemail', 'u_sendim'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_USER_NOAVATAR '		=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_chgavatar'),
+			'SETTING'		=> '0',
+		),
+		
+		// Moderator roles
+		'ROLE_MOD_FULL'				=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_MOD_STANDARD'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_ban', 'm_chgposter'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_MOD_SIMPLE'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_', 'm_delete', 'm_edit', 'm_info', 'm_report'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_MOD_QUEUE'			=> array(
+			'OPTION_LIKE'	=> "'m_%'",
+			'OPTION_IN'		=> array('m_', 'm_approve', 'm_edit'),
+			'SETTING'		=> '1',
+		),
+		
+		// Forum roles
+		'ROLE_FORUM_FULL'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_STANDARD'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_flash', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_NOACCESS'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array(),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_READONLY'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_', 'f_download', 'f_list', 'f_read', 'f_search', 'f_subscribe', 'f_print'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_LIMITED'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_attach', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock', 'f_votechg'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_BOT'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_', 'f_download', 'f_list', 'f_read', 'f_print'),
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_ONQUEUE'		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_poll', 'f_sticky', 'f_user_lock', 'f_votechg', 'f_noapprove'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_ONQUEUE '		=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_noapprove'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_POLLS'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_flash', 'f_ignoreflood', 'f_sticky', 'f_user_lock'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+		'ROLE_FORUM_LIMITED_POLLS'	=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_announce', 'f_attach', 'f_bump', 'f_delete', 'f_flash', 'f_icons', 'f_ignoreflood', 'f_sticky', 'f_user_lock', 'f_votechg'),
+			'NEGATE'		=> true,
+			'SETTING'		=> '1',
+		),
+	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* @var Array All default extension groups
+	*/
+	var $extension_groups = array(
+		'EXT_GROUP_IMAGES'				=> array(1, 1, 1, '', 0, ''),
+		'EXT_GROUP_ARCHIVES'			=> array(0, 1, 1, '', 0, ''),
+		'EXT_GROUP_PLAIN_TEXT'			=> array(0, 0, 1, '', 0, ''),
+		'EXT_GROUP_DOCUMENTS'			=> array(0, 0, 1, '', 0, ''),
+		'EXT_GROUP_REAL_MEDIA'			=> array(3, 0, 1, '', 0, ''),
+		'EXT_GROUP_WINDOWS_MEDIA'		=> array(2, 0, 1, '', 0, ''),
+		'EXT_GROUP_FLASH_FILES'			=> array(5, 0, 1, '', 0, ''),
+		'EXT_GROUP_QUICKTIME_MEDIA'		=> array(6, 0, 1, '', 0, ''),
+		'EXT_GROUP_DOWNLOADABLE_FILES'	=> array(0, 0, 1, '', 0, ''),
+	);
+
+	/**
+	* @var Array All default extensions
+	*/
+	var $extensions = array(
+		'EXT_GROUP_IMAGES'				=> array(
+			'gif',
+			'png',
+			'jpeg',
+			'jpg',
+			'tif',
+			'tiff',
+			'tga',
+		),
+		'EXT_GROUP_ARCHIVES'			=> array(
+			'gtar',
+			'gz',
+			'tar',
+			'zip',
+			'rar',
+			'ace',
+			'torrent',
+			'tgz',
+			'bz2',
+			'7z',
+		),
+		'EXT_GROUP_PLAIN_TEXT'			=> array(
+			'txt',
+			'c',
+			'h',
+			'cpp',
+			'hpp',
+			'diz',
+			'csv',
+			'ini',
+			'log',
+			'js',
+			'xml',
+		),
+		'EXT_GROUP_DOCUMENTS'			=> array(
+			'xls',
+			'xlsx',
+			'xlsm',
+			'xlsb',
+			'doc',
+			'docx',
+			'docm',
+			'dot',
+			'dotx',
+			'dotm',
+			'pdf',
+			'ai',
+			'ps',
+			'ppt',
+			'pptx',
+			'pptm',
+			'odg',
+			'odp',
+			'ods',
+			'odt',
+			'rtf',
+		),
+		'EXT_GROUP_REAL_MEDIA'			=> array(
+			'rm',
+			'ram',
+		),
+		'EXT_GROUP_WINDOWS_MEDIA'		=> array(
+			'wma',
+			'wmv',
+		),
+		'EXT_GROUP_FLASH_FILES'			=> array(
+			'swf',
+		),
+		'EXT_GROUP_QUICKTIME_MEDIA'		=> array(
+			'mov',
+			'm4v',
+			'm4a',
+			'mp4',
+			'3gp',
+			'3g2',
+			'qt',
+		),
+		'EXT_GROUP_DOWNLOADABLE_FILES'	=> array(
+			'mpeg',
+			'mpg',
+			'mp3',
+			'ogg',
+			'ogm',
+		),
+	);
+
+	/**
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		'acp'	=> array(
 			'ACP_CAT_GENERAL'		=> array(
@@ -522,7 +810,7 @@ class datafile_3_0_0
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		'GUESTS'			=> array(
@@ -585,6 +873,16 @@ class datafile_3_0_0
 			'group_desc_uid'		=> '',
 			'group_max_recipients'	=> 5,
 		),
+	);
+
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		'warez'		=> array('{L_REPORT_WAREZ}', 1),
+		'spam'		=> array('{L_REPORT_SPAM}', 2),
+		'off_topic'	=> array('{L_REPORT_OFF_TOPIC}', 3),
+		'other'		=> array('{L_REPORT_OTHER}', 4),
 	);
 
 	/**
