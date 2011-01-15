@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.2.1-pl1 ==
+* [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)
 * [Add] MySQL Upgrader tool. (Bug #62477)
 * [Add] Re-sync registered users group. (Bug #62538)
 * [Add] A tool that resynchronises the report topic flags. (Bug #62601)
