@@ -74,5 +74,3 @@ $umil->cache_purge(array(
 
 // Let's tell the user all is okay :)
 $critical_repair->trigger_error("The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.", true);
-
-?>

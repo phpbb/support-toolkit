@@ -55,6 +55,7 @@ update!
 * [Change] Made the database cleaner user interface a bit more user friendly.
 * [Change] Added a better build script. (Bug #62471)
 * [Change] The BOM Sniffer now also handles UMIL and AutoMOD if installed. (Bug #62474)
+* [Change] Remove closing php tags from the php files. (Bug #62478)
 * [Change] Dynamic BOM Sniffer white list. (Bug #62481)
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
 * [Change] Database cleaner now also validates roles, extensions and report reasons. (Bug #62475)

@@ -42,5 +42,3 @@ $lang = array_merge($lang, array(
 	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Are you sure you want to recreate the Module Management modules in the ACP?',
 	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'The modules have been recreated successfully!',
 ));
-
-?>

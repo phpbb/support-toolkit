@@ -173,4 +173,3 @@ class manage_founders
 		}
 	}
 }
-?>

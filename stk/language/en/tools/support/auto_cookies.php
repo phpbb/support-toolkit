@@ -43,5 +43,3 @@ $lang = array_merge($lang, array(
 
 	'COOKIE_SETTINGS_UPDATED'	=> 'Cookie settings successfully updated.',
 ));
-
-?>

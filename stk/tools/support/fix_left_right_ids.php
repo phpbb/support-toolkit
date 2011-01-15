@@ -110,5 +110,3 @@ class fix_left_right_ids
 		return $changes_made;
 	}
 }
-
-?>

@@ -52,5 +52,3 @@ $lang = array_merge($lang, array(
 	'SQL_QUERY_LEGEND'				=> 'SQL Query',
 	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
 ));
-
-?>

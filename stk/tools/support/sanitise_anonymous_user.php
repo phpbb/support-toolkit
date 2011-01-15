@@ -233,4 +233,3 @@ class sanitise_anonymous_user
 		}
 	}
 }
-?>

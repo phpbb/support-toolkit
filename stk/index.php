@@ -426,4 +426,3 @@ else
 
 	page_footer();
 }
-?>

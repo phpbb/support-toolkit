@@ -400,4 +400,3 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	// Call init
 	$data->init();
 }
-?>

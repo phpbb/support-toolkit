@@ -113,4 +113,3 @@ class readd_module_management
 		trigger_error('READD_MODULE_MANAGEMENT_SUCCESS');
 	}
 }
-?>

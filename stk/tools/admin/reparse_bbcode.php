@@ -657,4 +657,3 @@ class reparse_bbcode
 		$post_id = (int) trim($post_id);
 	}
 }
-?>

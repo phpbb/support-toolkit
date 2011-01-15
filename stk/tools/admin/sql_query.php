@@ -154,5 +154,3 @@ class sql_query
 		return $return;
 	}
 }
-
-?>

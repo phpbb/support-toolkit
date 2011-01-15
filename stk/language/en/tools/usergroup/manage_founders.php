@@ -57,5 +57,3 @@ $lang = array_merge($lang, array(
 	'USER_TO_FOUNDER'			=> 'User to make Founder',
 	'USER_TO_FOUNDER_EXPLAIN'	=> 'Enter the username or user ID of the user you would like to make a Board Founder.',
 ));
-
-?>

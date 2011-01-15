@@ -127,5 +127,3 @@ $lang = array_merge($lang, array(
 
 	'UNSTABLE_DEBUG_ONLY'			=> 'The database cleaner can only run on unstable phpBB versions <em>(dev, a, b, RC)</em>, when "DEBUG" is enabled through the phpBB config file.',
 ));
-
-?>

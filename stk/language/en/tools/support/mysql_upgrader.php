@@ -52,5 +52,3 @@ $lang = array_merge($lang, array(
 
 	'TOOL_MYSQL_ONLY'	=> 'This tool is only available for users of the MySQL DBMS',
 ));
-
-?>

@@ -29,4 +29,3 @@ $stk_config = array(
 	*/
 	'bom_sniffer_disable_backup' => false,
 );
-?>

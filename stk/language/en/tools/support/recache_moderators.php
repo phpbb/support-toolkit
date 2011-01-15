@@ -45,5 +45,3 @@ $lang = array_merge($lang, array(
 	'RECACHE_MODERATORS_COMPLETE'		=> 'The moderators have successfully been re-cached.',
 	'RECACHE_MODERATORS_CONFIRM'		=> 'Are you sure you want to re-cache the moderators?',
 ));
-
-?>

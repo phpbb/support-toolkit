@@ -45,5 +45,3 @@ $lang = array_merge($lang, array(
 	'STYLE'					=> 'Style',
 	'STYLE_EXPLAIN'			=> 'Select the style you want set as the default.',
 ));
-
-?>
