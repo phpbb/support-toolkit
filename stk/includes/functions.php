@@ -413,7 +413,7 @@ if (!defined('IN_PHPBB') || !defined('STK_VERSION'))
 
 \$stk_passwd\t\t\t\t= '{$_pass_string}';
 \$stk_passwd_expiration\t= {$_pass_exprire};
-?>";
+";
 			exit_handler();
 		break;
 	}
@@ -667,4 +667,3 @@ function pathinfo_filename($file) { //file.name.ext, returns file.name
 		return substr($file, 0, strrpos($file, '.'));
 	}
 }
-?>

@@ -52,5 +52,3 @@ $lang = array_merge($lang, array(
 
 	'SELECT_RUN_GROUP'	=> 'Select at least one group type that will be resynchronised!',
 ));
-
-?>
