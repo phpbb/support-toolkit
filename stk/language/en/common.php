@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-   'BACK_TOOL'							=> 'Back to last Tool',
+   'BACK_TOOL'							=> 'Back to last tool',
    'BOARD_FOUNDER_ONLY'					=> 'Only Board Founders may access the Support Toolkit.',
 
    'CAT_ADMIN'							=> 'Admin Tools',
@@ -64,7 +64,7 @@ $lang = array_merge($lang, array(
 
    'GEN_PASS_FAILED'					=> 'The Support Toolkit was unable to generate a new password. Please try again.',
    'GEN_PASS_FILE'						=> 'Generate password file.',
-   'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB at all you can use the internal authentication method of the Support Toolkit. To use this method you must <a href="%s"><strong>generate</strong></a> a new password file.',
+   'GEN_PASS_FILE_EXPLAIN'				=> 'If you aren’t able to login to phpBB you can use the internal authentication method of the Support Toolkit. To use this method you must <a href="%s"><strong>generate</strong></a> a new password file.',
 
    'INCORRECT_CLASS'					=> 'Incorrect class in: stk/tools/%1$s.%2$s',
    'INCORRECT_PASSWORD'					=> 'Password is incorrect',
@@ -80,7 +80,7 @@ $lang = array_merge($lang, array(
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn’t compatible with the version of phpBB that you are running',
    'PROCEED_TO_STK'						=> '%sProceed to the Support Toolkit%s',
 
-   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit.',
+   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself you can use the Support Toolkit.',
    'STK_LOGIN'							=> 'Support Toolkit Login',
    'STK_LOGIN_WAIT'						=> 'You must wait three seconds before re-attempting login. Please try again.',
    'STK_LOGOUT'							=> 'STK Logout',
