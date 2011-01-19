@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'FLASH_CHECKER'				=> 'Flash checker',
-	'FLASH_CHECKER_CONFIRM'		=> 'In phpBB 3.0.7-pl1, a possible XSS vulnerability was found in the built-in flash BBCode. This issue was resolved in phpBB 3.0.8. This tool will check all posts, pms and signatures for this vulnerable BBCode. If found it allows you to quickly reparse these posts to make sure that your board is safe. Check <a href="http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068">the phpBB 3.0.8 release announcement</a> for more information about the issue.',
-	'FLASH_CHECKER_FOUND'		=> 'The flash checker found some potentially dangerous flash bbcodes on your board. Click <a href="%s">here</a> to reparse the posts and private messages that contain this flash BBCode.',
-	'FLASH_CHECKER_NO_FOUND'	=> 'No potentially dangerous flash bbcodes found.',
+	'FLASH_CHECKER_CONFIRM'		=> 'In phpBB 3.0.7-pl1, a possible XSS vulnerability was found in the built-in flash BBCode. This issue was resolved in phpBB 3.0.8. This tool will check all posts, private messages, and signatures for this vulnerable BBCode. If found it allows you to quickly reparse these posts to make sure that your board is safe. Check <a href="http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068">the phpBB 3.0.8 release announcement</a> for more information about the issue.',
+	'FLASH_CHECKER_FOUND'		=> 'The flash checker found some potentially dangerous flash BBCodes on your board. Click <a href="%s">here</a> to reparse the posts and private messages that contain this flash BBCode.',
+	'FLASH_CHECKER_NO_FOUND'	=> 'No potentially dangerous flash BBCodes found.',
 ));
