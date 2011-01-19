@@ -80,7 +80,7 @@ $lang = array_merge($lang, array(
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn’t compatible with the version of phpBB that you are running',
    'PROCEED_TO_STK'						=> '%sProceed to the Support Toolkit%s',
 
-   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself you can use the Support Toolkit.',
+   'STK_FOUNDER_ONLY'					=> 'You must re-authenticate yourself before you can use the Support Toolkit.',
    'STK_LOGIN'							=> 'Support Toolkit Login',
    'STK_LOGIN_WAIT'						=> 'You must wait three seconds before re-attempting login. Please try again.',
    'STK_LOGOUT'							=> 'STK Logout',
