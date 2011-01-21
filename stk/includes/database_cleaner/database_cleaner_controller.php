@@ -817,15 +817,15 @@ class database_cleaner_controller
 				if (!empty($role_data['OPTION_IN']))
 				{
 					$like_negate = (empty($role_data['NEGATE'])) ? false : true;
-					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $db->sql_escape($role_data['OPTION_LIKE']), $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
+					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE'], $db->sql_in_set('auth_option', $role_data['OPTION_IN'], $like_negate));
 				}
 				else
 				{
-					$query = sprintf($sql_format_in, $role_ids[$role_name], $role_data['SETTING'], $db->sql_escape($role_data['OPTION_LIKE']));
+					$query = sprintf($sql_format, $role_ids[$role_name], $role_data['SETTING'], $role_data['OPTION_LIKE']);
 				}
 
 				// Run, run, run
-				$db->sql_query($sql);
+				$db->sql_query($query);
 			}
 		}
 	}
