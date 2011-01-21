@@ -123,7 +123,7 @@ class database_cleaner_views
 		}
 
 		// Assign no changes text
-		if (!empty($this->_section_data) && isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]]))
+		if (empty($this->_section_data) && isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]]))
 		{
 			$template->assign_vars(array(
 				'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
@@ -151,7 +151,7 @@ class database_cleaner_views
 		$msg = $this->success_message;
 		if (empty($_REQUEST['did_run']) && $this->db_cleaner->step > 0)
 		{
-			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : '';
+			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : ((isset($user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]])) ? $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]] : $this->success_message);
 		}
 
 		// Output some stuff we need always
