@@ -690,7 +690,7 @@ class erk_bom_sniffer
 
 				clearstatcache();
 
-				if (is_readable($filename) && $this->$this->phpbb_is_writable($filename))
+				if (is_readable($filename) && $this->phpbb_is_writable($filename))
 				{
 					break;
 				}
