@@ -14,7 +14,7 @@ Do you have an improvement? Did you fix a bug? Fork our GitHub repo, make your c
 Have a translation and want to be awesome? See the "Patches".
 
 ## Bug Tracker
-If you find a bug, please submit it to the [Support Team Tools](http://www.phpbb.com/bugs/supportteamtools/ "Supprt Team Tools") bug tracker.
+If you find a bug, please submit it to the [Support Team Tools](http://www.phpbb.com/bugs/supportteamtools/ "Supprt Team Tools") bug tracker. Please make sure that your ticket clearly states that it involes `stk/olympus`.
 
 ## Git branches
 The Support Toolkit is developed in multiple branches although main development is kept in the `stk/olympus` branch
