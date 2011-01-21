@@ -79,8 +79,8 @@ class mysql_upgrader
 			'title'	=> 'MYSQL_UPGRADER',
 			'vars'	=> array(
 				'legend1'	=> 'MYSQL_UPGRADER',
-				'download'	=> array('lang'  => 'MYSQL_UPGRADER_DOWNLOAD', 'type' => 'checkbox', 'explain' => 'true'),
-				'run'		=> array('lang'  => 'MYSQL_UPGRADER_RUN', 'type' => 'checkbox', 'explain' => 'true'),
+				'download'	=> array('lang'  => 'MYSQL_UPGRADER_DOWNLOAD', 'type' => 'checkbox:mode', 'default' => true, 'explain' => 'true'),
+				'run'		=> array('lang'  => 'MYSQL_UPGRADER_RUN', 'type' => 'checkbox:mode', 'explain' => 'true'),
 			),
 		);
 	}
@@ -96,9 +96,8 @@ class mysql_upgrader
 		$this->_db_cleaner->_setup();
 
 		// See what to do
-		$output	= request_var('output', false);
-		$run	= request_var('run', false);
-		$run_result = ($output === false && $run === true) ? true : false;
+		$mode	= request_var('mode', 'download');
+		$run_result = ($mode == 'run') ? true : false;
 
 		$sql = 'DESCRIBE ' . POSTS_TABLE . ' post_text';
 		$result = $db->sql_query($sql);
