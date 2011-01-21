@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.3-rc1 ==
 * [Fix] Blank messages when running the database cleaner. (Bug #62621)
+* [Fix] Reset Roles doesn't restore data. (Bug #62622)
 
 == Changes since 1.0.2.1-pl1 ==
 * [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)
