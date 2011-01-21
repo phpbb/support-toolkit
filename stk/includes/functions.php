@@ -76,7 +76,14 @@ function build_cfg_template($tpl_type, $name, $vars)
 		case 'checkbox':
 			$checked	= ($default) ? ' checked="checked"' : '';
 
-			$tpl['tpl'] = '<input type="checkbox" id="' . $name . '" name="' . $name . '"' . $checked . ' />';
+			if (empty($tpl_type[1]))
+			{
+				$tpl['tpl'] = '<input type="checkbox" id="' . $name . '" name="' . $name . '"' . $checked . ' />';
+			}
+			else
+			{
+				$tpl['tpl'] = '<input type="radio" id="' . $name . '" name="' . $tpl_type[1] . '" value="' . $name . '"' . $checked . ' />';
+			}
 		break;
 
 		case 'select':
