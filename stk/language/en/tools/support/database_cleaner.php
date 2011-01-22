@@ -95,7 +95,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SKIP'		=> 'The report reasons haven\'t been reset',
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'The report reasons have successfully been reset!',
 	'RESET_ROLE_DATA'				=> 'Reset role data',
-	'RESET_ROLE_DATA_EXPLAIN'		=> 'This step will reset the phpBB system roles back to their original state, its highly adviced to run this if you made changes in the previous step.',
+	'RESET_ROLE_DATA_EXPLAIN'		=> 'This step will reset the phpBB system roles back to their original state, its highly advised to run this if you made changes in the previous step.',
 	'ROWS'							=> 'Rows',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
