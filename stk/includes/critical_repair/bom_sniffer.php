@@ -739,7 +739,7 @@ class erk_bom_sniffer
 			if (file_exists($file))
 			{
 				// Canonicalise path to absolute path
-				$file = phpbb_realpath($file);
+				$file = $this->phpbb_realpath($file);
 
 				if (is_dir($file))
 				{
@@ -782,6 +782,193 @@ class erk_bom_sniffer
 		{
 			return is_writable($file);
 		}
+	}
+
+	/**
+	 * A wrapper for realpath
+	 */
+	function phpbb_realpath($path)
+	{
+		if (!function_exists('realpath'))
+		{
+			return $this->phpbb_own_realpath($path);
+		}
+		else
+		{
+			$realpath = realpath($path);
+
+			// Strangely there are provider not disabling realpath but returning strange values. :o
+			// We at least try to cope with them.
+			if ($realpath === $path || $realpath === false)
+			{
+				return $this->phpbb_own_realpath($path);
+			}
+
+			// Check for DIRECTORY_SEPARATOR at the end (and remove it!)
+			if (substr($realpath, -1) == DIRECTORY_SEPARATOR)
+			{
+				$realpath = substr($realpath, 0, -1);
+			}
+
+			return $realpath;
+		}
+	}
+
+	/**
+	 * @author Chris Smith <chris@project-minerva.org>
+	 * @copyright 2006 Project Minerva Team
+	 * @param string $path The path which we should attempt to resolve.
+	 * @return mixed
+	 */
+	function phpbb_own_realpath($path)
+	{
+		// Now to perform funky shizzle
+
+		// Switch to use UNIX slashes
+		$path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+		$path_prefix = '';
+
+		// Determine what sort of path we have
+		if (is_absolute($path))
+		{
+			$absolute = true;
+
+			if ($path[0] == '/')
+			{
+				// Absolute path, *NIX style
+				$path_prefix = '';
+			}
+			else
+			{
+				// Absolute path, Windows style
+				// Remove the drive letter and colon
+				$path_prefix = $path[0] . ':';
+				$path = substr($path, 2);
+			}
+		}
+		else
+		{
+			// Relative Path
+			// Prepend the current working directory
+			if (function_exists('getcwd'))
+			{
+				// This is the best method, hopefully it is enabled!
+				$path = str_replace(DIRECTORY_SEPARATOR, '/', getcwd()) . '/' . $path;
+				$absolute = true;
+				if (preg_match('#^[a-z]:#i', $path))
+				{
+					$path_prefix = $path[0] . ':';
+					$path = substr($path, 2);
+				}
+				else
+				{
+					$path_prefix = '';
+				}
+			}
+			else if (isset($_SERVER['SCRIPT_FILENAME']) && !empty($_SERVER['SCRIPT_FILENAME']))
+			{
+				// Warning: If chdir() has been used this will lie!
+				// Warning: This has some problems sometime (CLI can create them easily)
+				$path = str_replace(DIRECTORY_SEPARATOR, '/', dirname($_SERVER['SCRIPT_FILENAME'])) . '/' . $path;
+				$absolute = true;
+				$path_prefix = '';
+			}
+			else
+			{
+				// We have no way of getting the absolute path, just run on using relative ones.
+				$absolute = false;
+				$path_prefix = '.';
+			}
+		}
+
+		// Remove any repeated slashes
+		$path = preg_replace('#/{2,}#', '/', $path);
+
+		// Remove the slashes from the start and end of the path
+		$path = trim($path, '/');
+
+		// Break the string into little bits for us to nibble on
+		$bits = explode('/', $path);
+
+		// Remove any . in the path, renumber array for the loop below
+		$bits = array_values(array_diff($bits, array('.')));
+
+		// Lets get looping, run over and resolve any .. (up directory)
+		for ($i = 0, $max = sizeof($bits); $i < $max; $i++)
+		{
+			// @todo Optimise
+			if ($bits[$i] == '..' )
+			{
+				if (isset($bits[$i - 1]))
+				{
+					if ($bits[$i - 1] != '..')
+					{
+						// We found a .. and we are able to traverse upwards, lets do it!
+						unset($bits[$i]);
+						unset($bits[$i - 1]);
+						$i -= 2;
+						$max -= 2;
+						$bits = array_values($bits);
+					}
+				}
+				else if ($absolute) // ie. !isset($bits[$i - 1]) && $absolute
+				{
+					// We have an absolute path trying to descend above the root of the filesystem
+					// ... Error!
+					return false;
+				}
+			}
+		}
+
+		// Prepend the path prefix
+		array_unshift($bits, $path_prefix);
+
+		$resolved = '';
+
+		$max = sizeof($bits) - 1;
+
+		// Check if we are able to resolve symlinks, Windows cannot.
+		$symlink_resolve = (function_exists('readlink')) ? true : false;
+
+		foreach ($bits as $i => $bit)
+		{
+			if (@is_dir("$resolved/$bit") || ($i == $max && @is_file("$resolved/$bit")))
+			{
+				// Path Exists
+				if ($symlink_resolve && is_link("$resolved/$bit") && ($link = readlink("$resolved/$bit")))
+				{
+					// Resolved a symlink.
+					$resolved = $link . (($i == $max) ? '' : '/');
+					continue;
+				}
+			}
+			else
+			{
+				// Something doesn't exist here!
+				// This is correct realpath() behaviour but sadly open_basedir and safe_mode make this problematic
+				// return false;
+			}
+			$resolved .= $bit . (($i == $max) ? '' : '/');
+		}
+
+		// @todo If the file exists fine and open_basedir only has one path we should be able to prepend it
+		// because we must be inside that basedir, the question is where...
+		// @internal The slash in is_dir() gets around an open_basedir restriction
+		if (!@file_exists($resolved) || (!@is_dir($resolved . '/') && !is_file($resolved)))
+		{
+			return false;
+		}
+
+		// Put the slashes back to the native operating systems slashes
+		$resolved = str_replace('/', DIRECTORY_SEPARATOR, $resolved);
+
+		// Check for DIRECTORY_SEPARATOR at the end (and remove it!)
+		if (substr($resolved, -1) == DIRECTORY_SEPARATOR)
+		{
+			return substr($resolved, 0, -1);
+		}
+
+		return $resolved; // We got here, in the end!
 	}
 }
 
