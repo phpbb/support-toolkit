@@ -51,6 +51,7 @@ update!
 * [Fix] BOM Sniffer call to phpbb_realpath fails. (Bug #62620)
 * [Fix] Blank messages when running the database cleaner. (Bug #62621)
 * [Fix] Reset Roles doesn't restore data. (Bug #62622)
+* [Fix] Problem with text files in archive. (Bug #62627)
 
 == Changes since 1.0.2.1-pl1 ==
 * [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)

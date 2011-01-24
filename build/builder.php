@@ -464,7 +464,7 @@ class stk_builder
 				continue;
 			}
 			
-			$dir = rtrim($dir, '/') . '/';
+			$dir = !empty($dir) ? rtrim($dir, '/') . '/' : $dir;
 
 			// Do the file magic
 			foreach ($files as $file)
