@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.3-rc2 ==
+* [Fix] A language issue. (Bug #62635)
+
 == Changes since 1.0.3-rc1 ==
 * [Change] MySQL Upgrader allows for selecting both options. (Bug #62623)
 * [Fix] BOM Sniffer call to phpbb_realpath fails. (Bug #62620)
