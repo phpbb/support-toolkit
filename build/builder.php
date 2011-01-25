@@ -610,7 +610,9 @@ class stk_builder
 		switch ($type)
 		{
 			case 'stk' :
-				return 'README.md';
+				// Also ignore whitelist.txt, if this file already exists for
+				// whatever reason, it breaks stuff under certain circumstances (#62636).
+				return '(README.md|whitelist.txt)';
 			break;
 
 			default :
