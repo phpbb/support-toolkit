@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,5 @@ $lang = array_merge($lang, array(
 	'RECLEAN_USERNAMES'					=> 'Renettoyer les noms d’utilisateurs',
 	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms d’utilisateurs ont été renettoyés avec succès.',
 	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr de vouloir renettoyer tous les noms d’utilisateurs ?',
-	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de renettoyage des noms d’utilisateurs n’est pas totalement terminé. Veuillez patienter.',
+	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de renettoyage des noms d’utilisateurs est en cours d’exécution… Merci de ne pas interrompre ce processus.',
 ));
-
-?>

@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -59,8 +59,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RECACHE_MODERATORS'				=> 'Mettre de nouveau en cache les modérateurs',
-	'RECACHE_MODERATORS_COMPLETE'		=> 'Les modérateurs ont été de nouveau mis en cache avec succès.',
+	'RECACHE_MODERATORS_COMPLETE'		=> 'Le cache des modérateurs a été reconstruit avec succès.',
 	'RECACHE_MODERATORS_CONFIRM'		=> 'Êtes-vous sûr de vouloir mettre de nouveau en cache les modérateurs ?',
 ));
-
-?>

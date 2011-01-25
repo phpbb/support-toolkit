@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,5 +74,3 @@ $lang = array_merge($lang, array(
 	'REPARSE_PM_IDS'				=> 'Réanalyser les messages privés spécifiques',
 	'REPARSE_PM_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages privés spécifiques. Chaque ID doit être séparée par une virgule (par exemple, 1,2,3,5,8,13).',
 ));
-
-?>

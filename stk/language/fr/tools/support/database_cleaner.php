@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,8 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'Les colonnes de la base de données ont été mises à jour avec succès !',
 	'DATABASE_TABLES'				=> 'Tables de la base de données',
 	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour avec succès !',
+	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Les rôles système de phpBB a été restauré avec succès !',
+	'DATABASE_ROLES_SUCCESS'		=> 'Les rôles ont été mis à jour avec succès !',
 	'DATAFILE_NOT_FOUND'			=> 'Le Support Toolkit n’a pas été capable de trouver le fichier de données que vous recherchez concernant votre version de phpBB !',
 
 	'EMPTY_PREFIX'					=> 'Aucun préfixe de base de données',
@@ -79,6 +81,8 @@ $lang = array_merge($lang, array(
 	'EMPTY_PREFIX_EXPLAIN'			=> 'Le nettoyeur de base de données a déterminé que vous n’utilisez pas de préfixe de table concernant les tables de phpBB. Le nettoyeur de base de données va devoir alors vérifier <strong>l’intégralité</strong> des tables dans votre base de données. Soyez prudent lors de son exécution et assurez-vous d’avoir exclu de la sélection toutes les tables n’ayant aucun rapport avec phpBB car elles peuvent être altérées par cet outil.<br />Si vous avez un doute sur la manipulation à suivre, demandez de l’aide dans les <a href="http://www.phpbb.com/community/viewforum.php?f=46">forums de support de phpBB</a>.',
 	'ERROR'							=> 'Erreur',
 	'EXTRA'							=> 'Supplémentaire',
+	'EXTENSION_GROUPS_SUCCESS'		=> 'Les groupes d’extensions ont été réinitialisés avec succès',
+	'EXTENSIONS_SUCCESS'			=> 'Les extensions ont été réinitialisées avec succès',
 
 	'FINAL_STEP'					=> 'Ceci est l’étape finale.<br /><br />Nous allons à présent réactiver votre forum et purger son cache.',
 
@@ -103,23 +107,35 @@ $lang = array_merge($lang, array(
 	'RESET_MODULES_EXPLAIN'			=> 'Souhaitez-vous réinitialiser les modules avec les modules présents par défaut dans phpBB3 ? Tous les modules existants seront supprimés afin d’être remplacés par les modules présents par défaut.',
 	'RESET_MODULES_SKIP'			=> 'La réinitialisation du module a été ignorée',
 	'RESET_MODULE_SUCCESS'			=> 'Les modules ont été réinitialisés avec succès !',
+	'RESET_REPORT_REASONS'			=> 'Réinitialiser les raisons des rapports',
+	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajouté !',
+	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports ont été réinitialisées',
+	'RESET_REPORT_REASONS_SUCCESS'	=> 'Les raisons des rapports ont été réinitialisées avec succès !',
+	'RESET_ROLE_DATA'				=> 'Réinitialiser les données des rôles',
+	'RESET_ROLE_DATA_EXPLAIN'		=> 'Cette étape réinitialisera les rôles système de phpBB avec les valeurs par défaut, il est fortement recommandé d’exécuter cela si vous avez apporté des modifications lors de l’étape précédente.',
 	'ROWS'							=> 'Lignes',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
-		1	=> 'Tables non modifiées',
-		2	=> 'Colonnes non modifiées',
-		3	=> 'Configuration non modifiée',
-		4	=> 'Permissions non modifiées',
-		5	=> 'Groupes non modifiés',
-		8	=> 'Étape finale',
+		'tables'			=> 'Tables non modifiées',
+		'columns'			=> 'Colonnes non modifiées',
+		'config'			=> 'Configuration non modifiée',
+		'extension_groups'	=> 'Groupes d’extensions non modifiés',
+		'extensions'		=> 'Extensions non modifiées',
+		'permissions'		=> 'Permissions non modifiées',
+		'groups'			=> 'Groupes non modifiés',
+		'roles'				=> 'Rôles non modifiés',
+		'final_step'		=> 'Étape finale',
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
-		1	=> 'Les tables de la base de données n’ont pas été modifiées',
-		2	=> 'Les colonnes de la base de données n’ont pas été modifiées',
-		3	=> 'La table de configuration n’a aucune nouvelle valeur ou valeur manquante',
-		4	=> 'Il n’y a aucune modification dans les tables de permissions',
-		5	=> 'Il n’y a aucune modification dans les groupes système de phpBB',
-		8	=> 'Cette dernière étape videra le cache et réactivera le forum.',
+		'tables'			=> 'Les tables de la base de données n’ont pas été modifiées',
+		'columns'			=> 'Les colonnes de la base de données n’ont pas été modifiées',
+		'config'			=> 'La table de configuration n’a aucune nouvelle valeur ou valeur manquante',
+		'extension_groups'	=> 'La table des groupes d’extensions n’a aucune nouvelle valeur ou n’a aucune valeur manquante',
+		'extensions'		=> 'Les extensions par défaut n’ont pas été modifiées',
+		'permissions'		=> 'Il n’y a aucune modification dans les tables des permissions',
+		'groups'			=> 'Il n’y a aucune modification dans les groupes système de phpBB',
+		'roles'				=> 'Il n’y a aucun rôle ajouté ou supprimé',
+		'final_step'		=> 'Cette dernière étape videra le cache et réactivera le forum.',
 	),
 	'SUCCESS'						=> 'Succès',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Les groupes système ont été réinitialisés avec succès',
@@ -128,5 +144,3 @@ $lang = array_merge($lang, array(
 
 	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque “DEBUG” est activé dans le fichier de configuration de phpBB.',
 ));
-
-?>

@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -56,11 +56,11 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER'					=> 'Outil de mise à jour de MySQL',
-	'MYSQL_UPGRADER_BACKUP'				=> 'Cet outil est potentiellement dangereux, veuillez vous assurer d’avoir créé une sauvegarde de votre base de données avant de continuer !',
+	'MYSQL_UPGRADER_BACKUP'				=> 'Cet outil est potentiellement dangereux ; veuillez vous assurer d’avoir créé une sauvegarde de votre base de données avant de continuer !',
 	'MYSQL_UPGRADER_EXPLAIN'			=> 'Cet outil a été réalisé afin de résoudre certains problèmes rencontrés avec la base de données MySQL de votre installation de phpBB. Cet outil de mise à jour rendra incompatible votre schéma de base de données avec la nouvelle version. <em>Veuillez également consulter l’article de la base de connaissance à propos de “<a href="http://www.phpbb.com/kb/article/doesnt-have-a-default-value-errors">Ne pas avoir des erreurs de valeur par défaut</a>”.</em>',
 	'MYSQL_UPGRADER_DOWNLOAD'			=> 'Télécharger',
 	'MYSQL_UPGRADER_DOWNLOAD_EXPLAIN'	=> 'En cochant cette option, l’outil de mise à jour de MySQL génèrera les requêtes et vous affichera la conclusion à partir de laquelle vous pourrez télécharger le fichier de résultat.',
-	'MYSQL_UPGRADER_RESULT'				=> 'Vous trouverez ici les requêtes qui doivent être exécutées afin de mettre à jour le schéma de la base de données vers la bonne version de MySQL. Cliquez <a href="%s">ici</a> afin de télécharger les requêtes dans un fichier .sql.',
+	'MYSQL_UPGRADER_RESULT'				=> 'Vous trouverez ci-dessous les requêtes qui doivent être exécutées afin de mettre à jour le schéma de la base de données vers la bonne version de MySQL. Cliquez <a href="%s">ici</a> afin de télécharger les requêtes dans un fichier .sql.',
 	'MYSQL_UPGRADER_RUN'				=> 'Exécuter',
 	'MYSQL_UPGRADER_RUN_EXPLAIN'		=> 'En cochant cette option, l’outil de mise à jour de MySQL génèrera les requêtes et exécutera automatiquement le résultat sur votre base de données.<br />Cela peut prendre un certain temps, n’interrompez <strong>pas</strong> ce processus tant que l’outil ne vous ai pas notifié.',
 	'MYSQL_UPGRADER_SCRIPT'				=> 'Script de l’outil de mise à jour de MySQL',
@@ -70,5 +70,3 @@ $lang = array_merge($lang, array(
 
 	'TOOL_MYSQL_ONLY'	=> 'Cet outil n’est disponible que pour les utilisateurs de MySQL DBMS',
 ));
-
-?>
