@@ -625,4 +625,3 @@ class srt_generator
 		return false;
 	}
 }
-?>

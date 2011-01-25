@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'ERROR_QUERY'					=> 'Query containing the error',
+
 	'NO_RESULTS'					=> 'No Results',
 	'NO_SQL_QUERY'					=> 'You must enter a query to run.',
 
@@ -50,5 +52,3 @@ $lang = array_merge($lang, array(
 	'SQL_QUERY_LEGEND'				=> 'SQL Query',
 	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
 ));
-
-?>

@@ -50,5 +50,3 @@ $lang = array_merge($lang, array(
 	'TUTORIAL'			=> 'This is a tutorial',
 	'TUTORIAL_EXPLAIN'	=> 'This is an explanation for the tutorial',
 ));
-
-?>

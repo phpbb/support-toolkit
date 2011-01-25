@@ -1132,5 +1132,3 @@ class merge_users
 		return $groups;
 	}
 }
-
-?>

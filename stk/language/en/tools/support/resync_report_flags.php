@@ -1,15 +1,15 @@
 <?php
 /**
  *
- * @package Support Toolkit - Resynchronise Registered users groups
- * @copyright (c) 2009 phpBB Group
+ * @package Support Toolkit - Resynchronise report flags
+ * @copyright (c) 2011 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,11 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'NO_RESYNC_REGISTERED'		=> 'All users are in the registered users group.',
-
-	'RESYNC_REGISTERED'					=> 'Resynchronise registered users',
-	'RESYNC_REGISTERED_CONFIRM'			=> 'The tool has determined that not all users on your board are part of the "Registered <em>(COPPA)</em> users" group. Do you want to resyncronise these groups?<br /><strong>Note:</strong> If your board has COPPA enabled an a user hasn\'t entered a date of birth the user will be placed in the "Registered COPPA users" group!',
-	'RESYNC_REGISTERED_SUCCESS'			=> 'The users have been resynchronised successfully!',
+	'RESYNC_REPORT_FLAGS'			=> 'Resynchronise report flags',
+	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'This tool will resynchronise the report flags for all posts, topics and private messages.',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'All report flags have successfully been resynchronised!',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronising report flags in progress. Please do not interrupt this process',
 ));
-
-?>

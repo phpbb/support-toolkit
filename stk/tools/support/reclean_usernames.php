@@ -46,7 +46,7 @@ class reclean_usernames
         while ($row = $db->sql_fetchrow($result))
         {
         	$i++;
-        	$username_clean = utf8_clean_string($row['username']);
+        	$username_clean = $db->sql_escape(utf8_clean_string($row['username']));
 
         	if ($username_clean != $row['username_clean'])
         	{
@@ -68,5 +68,3 @@ class reclean_usernames
 		}
 	}
 }
-
-?>

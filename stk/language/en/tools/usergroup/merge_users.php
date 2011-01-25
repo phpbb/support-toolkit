@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'MERGE_USERS'						=> 'Merge users',
-	'MERGE_USERS_EXPLAIN'				=> 'Tool to move a user accounts assets into another account, the source users settings and group memberships are copied. Assets are user permissions, attachments, bans, bookmarks, drafts, forum/topic tracking, forum/topic watching, log entries, poll votes, posts, private messages, reports, topics, warnings and friends and foes.',
+	'MERGE_USERS_EXPLAIN'				=> 'Tool to move a user account\'s assets into another account; the source user\'s settings and group memberships are copied. Assets include user permissions, attachments, bans, bookmarks, drafts, forum/topic tracking, forum/topic watching, log entries, poll votes, posts, private messages, reports, topics, warnings and friends and foes.',
 
 	'MERGE_USERS_BOTH_FOUNDERS'	=> 'You cannot merge a founder with a non founder user.',
 	'MERGE_USERS_BOTH_IGNORE'	=> 'You cannot merge a bot with a normal user.',
@@ -57,5 +57,3 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_USER_TARGET'	=> 'Target user',
 ));
-
-?>

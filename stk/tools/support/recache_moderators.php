@@ -47,5 +47,3 @@ class recache_moderators
 		trigger_error('RECACHE_MODERATORS_COMPLETE');
 	}
 }
-
-?>

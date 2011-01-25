@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,7 +31,7 @@ class datafile_3_0_6
 	/**
 	* @var Array 3.0.6 config data
 	*/
-	var $config_data = array(
+	var $config = array(
 		'captcha_plugin'				=> array('config_value' => 'phpbb_captcha_nogd', 'is_dynamic' => '0'),
 		'feed_enable'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'feed_limit'					=> array('config_value' => '10', 'is_dynamic' => '0'),
@@ -56,7 +56,7 @@ class datafile_3_0_6
 	/**
 	* @var Array Config entries that were removed by the 3.0.6 update
 	*/
-	var $removed_config_data = array(
+	var $removed_config = array(
 		'enable_queue_trigger',
 		'queue_trigger_posts',
 	);
@@ -64,14 +64,52 @@ class datafile_3_0_6
 	/**
 	* @var Array All default permission settings
 	*/
-	var $permissions = array(
+	var $acl_options = array(
 		// No permission changes 3.0.5 -> 3.0.6
 	);
 
 	/**
-	 * Define the module structure so that we can populate the database without
-	 * needing to hard-code module_id values
-	 */
+	* @var Array All default roles
+	*/
+	var $acl_roles = array(
+		'ROLE_USER_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_USER_NEW_MEMBER', 'u_', 6),
+		'ROLE_FORUM_NEW_MEMBER'	=> array('ROLE_DESCRIPTION_FORUM_NEW_MEMBER', 'f_', 10),
+	);
+
+	/**
+	* @var Array All default role data
+	*/
+	var $acl_role_data = array(
+		'ROLE_USER_NEW_MEMBER'			=> array(
+			'OPTION_LIKE'	=> "'u_%'",
+			'OPTION_IN'		=> array('u_sendpm', 'u_masspm', 'u_masspm_group'),
+			'SETTING'		=> '0',
+		),
+		'ROLE_FORUM_NEW_MEMBER'			=> array(
+			'OPTION_LIKE'	=> "'f_%'",
+			'OPTION_IN'		=> array('f_noapprove'),
+			'SETTING'		=> '0',
+		),
+	);
+
+	/**
+	* @var Array All default extension groups
+	*/
+	var $extension_groups = array(
+		// No extension group changes 3.0.5 -> 3.0.6
+	);
+
+	/**
+	* @var Array All default extensions
+	*/
+	var $extensions = array(
+		// No extension changes 3.0.5 -> 3.0.6
+	);
+
+	/**
+	* Define the module structure so that we can populate the database without
+	* needing to hard-code module_id values
+	*/
 	var $module_categories = array(
 		// No Module categories changes 3.0.5 -> 3.0.6
 	);
@@ -83,7 +121,7 @@ class datafile_3_0_6
 	);
 
 	/**
-	* @var Arra All default groups
+	* @var Array All default groups
 	*/
 	var $groups = array(
 		'NEWLY_REGISTERED'	=> array(
@@ -96,6 +134,13 @@ class datafile_3_0_6
 			'group_desc_uid'		=> '',
 			'group_max_recipients'	=> 5,
 		),
+	);
+	
+	/**
+	* @var Array All default report reasons
+	*/
+	var $report_reasons = array(
+		// No reason changes 3.0.5 -> 3.0.6
 	);
 
 	/**

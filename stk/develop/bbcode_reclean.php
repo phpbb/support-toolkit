@@ -178,4 +178,3 @@ submit_post('edit', $post_data['post_subject'], $post_data['post_username'], $po
 
 
 exit;
-?>

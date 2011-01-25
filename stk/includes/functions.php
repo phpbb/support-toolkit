@@ -76,7 +76,14 @@ function build_cfg_template($tpl_type, $name, $vars)
 		case 'checkbox':
 			$checked	= ($default) ? ' checked="checked"' : '';
 
-			$tpl['tpl'] = '<input type="checkbox" id="' . $name . '" name="' . $name . '"' . $checked . ' />';
+			if (empty($tpl_type[1]))
+			{
+				$tpl['tpl'] = '<input type="checkbox" id="' . $name . '" name="' . $name . '"' . $checked . ' />';
+			}
+			else
+			{
+				$tpl['tpl'] = '<input type="radio" id="' . $name . '" name="' . $tpl_type[1] . '" value="' . $name . '"' . $checked . ' />';
+			}
 		break;
 
 		case 'select':
@@ -413,7 +420,7 @@ if (!defined('IN_PHPBB') || !defined('STK_VERSION'))
 
 \$stk_passwd\t\t\t\t= '{$_pass_string}';
 \$stk_passwd_expiration\t= {$_pass_exprire};
-?>";
+";
 			exit_handler();
 		break;
 	}
@@ -545,7 +552,8 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		{
 			$lines = array(
 				'The Support Toolkit encountered a fatal error.',
-				'As part of the package the Support Toolkit includes an Emergancy Repair Kit, this kit is designed to resolve certain errors that can prevent phpBB and the STK from working correctly. Its adviced to run the ERK so it can attempt to recover the found error.<br />To run the erk click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>',
+				'The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning. It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
+To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>.',
 			);
 			$redirect_stk = false;
 		}
@@ -667,4 +675,3 @@ function pathinfo_filename($file) { //file.name.ext, returns file.name
 		return substr($file, 0, strrpos($file, '.'));
 	}
 }
-?>

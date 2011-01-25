@@ -1,16 +1,15 @@
 <?php
 /**
-*
-* @package Support Toolkit - Resynchronise Newly Registered users group
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Avatars
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -38,10 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_NEWLY_REGISTERED'				=> 'Resynchronise newly registered users',
-	'RESYNC_NEWLY_REGISTERED_CONFIRM'		=> 'Are you sure that you want to resynchronise the newly registered users group? This will remove/add all users to/from the “Newly Registered Users Group” that fit the settings in the ACP.',
-	'RESYNC_NEWLY_REGISTERED_FINISHED'		=> 'The newly registered users group was successfully resynchronised!',
-	'RESYNC_NEWLY_REGISTERED_NOT_FINISHED'	=> 'Resyncing of the newly registered users group is in process. Please don’t interrupt this process',
+	'RESYNC_ATTACHMENTS'			=> 'Resynchronise attachments',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'This tool will make sure that all avatars stored in the database actually have a file on the server. If the file is missing, this tool will remove the attachment from the database. Are you sure that you want to continue?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Attachments successfully resynchronised!',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronising attachments in progress. Please do not interrupt this process.',
 ));
-
-?>

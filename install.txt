@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.3-dev
+Support Toolkit 1.0.3-rc1
 Supported phpBB versions 3.0.0 - 3.0.8
 
 == Authors ==
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.3-dev ==
-To upgrade a previous version of the STK to 1.0.3-dev, remove your previous
+== Upgrade to 1.0.3-rc1 ==
+To upgrade a previous version of the STK to 1.0.3-rc1, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,13 +46,30 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.3-rc1 ==
+* [Change] MySQL Upgrader allows for selecting both options. (Bug #62623)
+* [Fix] BOM Sniffer call to phpbb_realpath fails. (Bug #62620)
+* [Fix] Blank messages when running the database cleaner. (Bug #62621)
+* [Fix] Reset Roles doesn't restore data. (Bug #62622)
+* [Fix] Problem with text files in archive. (Bug #62627)
+
 == Changes since 1.0.2.1-pl1 ==
+* [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)
 * [Add] MySQL Upgrader tool. (Bug #62477)
 * [Add] Re-sync registered users group. (Bug #62538)
+* [Add] A tool that resynchronises the report topic flags. (Bug #62601)
 * [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
+* [Change] Made the database cleaner user interface a bit more user friendly.
+* [Change] Added a better build script. (Bug #62471)
+* [Change] The BOM Sniffer now also handles UMIL and AutoMOD if installed. (Bug #62474)
+* [Change] Remove closing php tags from the php files. (Bug #62478)
 * [Change] Dynamic BOM Sniffer white list. (Bug #62481)
 * [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
-* [Fix] Correctly handle configuration values that where removed from phpBB. (Bug #62189, Patch by Noxwizard)
+* [Change] Database cleaner now also validates roles, extensions and report reasons. (Bug #62475)
+* [Change] Merge the two system group resync tools into one. (Bug #62576)
+* [Change] Changed the way the BOM Sniffer handles non-english language files. (Bug #62581)
+* [Fix] SQL error handling. (Bug #51225)
+* [Fix] Correctly handle configuration values that were removed from phpBB. (Bug #62189, Patch by Noxwizard)
 * [Fix] Hooks potentially break STK. (Bug #62352)
 * [Fix] BOM Sniffer white list uses hard file extensions. (Bug 62473)
 * [Fix] Merge users tool in some cases incorrectly sets PM to and bcc addresses. (Bug #62486, Patch by D¡cky)
@@ -61,6 +78,8 @@ update!
 * [Fix] BOM Sniffer critical repair files not sniffed correctly. (Bug #62541)
 * [Fix] ERK breaks when style files are missing. (Bug #62557)
 * [Fix] Update UMIL to 1.0.4. (Bug #62568)
+* [Fix] Some language changes. (Bug #62585, Patch by Unknown Bliss; #62594 Patch by Noxwizard; Bug #62480; Bug #62615)
+* [Fix] Correctly sanitise all queries. (Bug #62606)
 
 == Changes since 1.0.2.1
 * [Fix] Wrong constant in the flash checker. (Bug #62497)

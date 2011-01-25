@@ -106,4 +106,3 @@ class change_password
 		trigger_error(sprintf($user->lang['CHANGE_PASSWORD_SUCCESS'], append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, 'mode=viewprofile&amp;u=' . $user_id), $username));
 	}
 }
-?>

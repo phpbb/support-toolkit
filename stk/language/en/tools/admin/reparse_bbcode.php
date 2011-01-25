@@ -57,5 +57,3 @@ $lang = array_merge($lang, array(
 	'REPARSE_PM_IDS'				=> 'Reparse Specific PMs',
 	'REPARSE_PM_IDS_EXPLAIN'		=> 'To reparse specific PMs only, specifiy PM IDs in a comma-separated list (e.g. 1,2,3,5,8,13).',
 ));
-
-?>

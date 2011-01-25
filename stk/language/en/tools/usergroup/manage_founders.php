@@ -38,11 +38,11 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'DEMOTE_FAILED'				=> 'Couldn’t remove founder status of all users!',
-	'DEMOTE_FOUNDERS'			=> 'Demote founders',
-	'DEMOTE_SUCCESSFULL'		=> 'Successfully removed the founder status of %d users!',
+	'DEMOTE_FAILED'				=> 'Couldn’t remove Founder status of all users!',
+	'DEMOTE_FOUNDERS'			=> 'Demote Founders',
+	'DEMOTE_SUCCESSFULL'		=> 'Successfully removed the Founder status of %d users!',
 
-	'FOUNDERS'					=> 'Users with founder status',
+	'FOUNDERS'					=> 'Users with Founder status',
 
 	'MAKE_FOUNDER'				=> 'Make a user Board Founder',
 	'MAKE_FOUNDER_CONFIRM'		=> 'Are you sure you want to make <a href="%1$s">%2$s</a> a Board Founder?  This will give <a href="%1$s">%2$s</a> the ability to delete your account, among other powers.',
@@ -52,10 +52,8 @@ $lang = array_merge($lang, array(
 
 	'NO_FOUNDERS'				=> 'No Founders Found',
 
-	'PROMOTE_FOUNDER'			=> 'Promote to founder',
+	'PROMOTE_FOUNDER'			=> 'Promote to Founder',
 
 	'USER_TO_FOUNDER'			=> 'User to make Founder',
 	'USER_TO_FOUNDER_EXPLAIN'	=> 'Enter the username or user ID of the user you would like to make a Board Founder.',
 ));
-
-?>

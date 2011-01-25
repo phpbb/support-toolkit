@@ -48,5 +48,3 @@ class purge_cache
 		trigger_error('PURGE_CACHE_COMPLETE');
 	}
 }
-
-?>

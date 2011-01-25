@@ -43,13 +43,11 @@ $lang = array_merge($lang, array(
 
 	'RESTORE_DELETED_USERS'						=> 'Restore Deleted Users',
 	'RESTORE_DELETED_USERS_CONFLICT'			=> 'Restore Deleted Users :: Conflicted',
-	'RESTORE_DELETED_USERS_CONFLICT_EXPLAIN'	=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has ran. This tool doesn’t provide a list of generated passwords per user!<br /><br />During the last run this tool found some usernames that already exist on this board. Please provide a new name for these users.',
-	'RESTORE_DELETED_USERS_EXPLAIN'				=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has ran. This tool doesn’t provide a list of generated passwords per user!',
+	'RESTORE_DELETED_USERS_CONFLICT_EXPLAIN'	=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has been run; this tool does <b>not</b> provide a list of these generated passwords.<br /><br />During the last run this tool found some usernames that already exist on this board. Please provide a new name for these users.',
+	'RESTORE_DELETED_USERS_EXPLAIN'				=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has been run; this tool does <b>not</b> provide a list of these generated passwords.',
 
 	'SELECT_USERS'	=> 'Select users to restore',
 
 	'USER_RESTORED_SUCCESSFULLY'	=> 'The selected user has been restored successfully.',
 	'USERS_RESTORED_SUCCESSFULLY'	=> 'The selected users have been restored successfully.',
 ));
-
-?>

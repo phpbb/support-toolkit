@@ -9,8 +9,8 @@
 */
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,6 +40,11 @@ class database_cleaner_views
 	* @var database_cleaner_data The database cleaner data object
 	*/
 	var $db_cleaner = array();
+	
+	/**
+	* @var String Some steps have a specific notice when not ran
+	*/
+	var $not_run_message = '';
 
 	/**
 	* @var String The message that is displayed once a step is done successfully
@@ -47,8 +52,8 @@ class database_cleaner_views
 	var $success_message = '';
 
 	/**
-	 * @var Boolean Has changes.
-	 */
+	* @var Boolean Has changes.
+	*/
 	var $_has_changes = false;
 
 	/**
@@ -118,11 +123,11 @@ class database_cleaner_views
 		}
 
 		// Assign no changes text
-		if (!empty($this->_section_data) && isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step]))
+		if (empty($this->_section_data) && isset($user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]]))
 		{
 			$template->assign_vars(array(
-				'NO_CHANGES_TEXT'	=> user_lang('SECTION_NOT_CHANGED_EXPLAIN', $this->db_cleaner->step),
-				'NO_CHANGES_TITLE'	=> user_lang('SECTION_NOT_CHANGED_TITLE', $this->db_cleaner->step),
+				'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+				'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
 			));
 		}
 
@@ -143,12 +148,18 @@ class database_cleaner_views
 			$_u_next_step = $this->_u_next_step;
 		}
 
+		$msg = $this->success_message;
+		if (empty($_REQUEST['did_run']) && $this->db_cleaner->step > 0)
+		{
+			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : ((isset($user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]])) ? $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]] : $this->success_message);
+		}
+
 		// Output some stuff we need always
 		$template->assign_vars(array(
 			'S_HIDDEN_FIELDS'	=> (isset($this->_hidden_fields)) ? build_hidden_fields($this->_hidden_fields) : '',
 			'LAST_STEP'			=> sizeof($this->db_cleaner->step_to_action),
 			'STEP'				=> $this->db_cleaner->step,
-			'SUCCESS_MESSAGE'	=> user_lang($this->success_message),
+			'SUCCESS_MESSAGE'	=> user_lang($msg),
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> $_u_next_step,
@@ -175,8 +186,8 @@ class database_cleaner_views
 		);
 
 		// Only success message when the modules have been reset
-		$did_run = request_var('did_run', false);
-		$this->success_message = ($did_run) ? 'RESET_MODULE_SUCCESS' : 'RESET_MODULES_SKIP';
+		$this->success_message	= 'RESET_MODULE_SUCCESS';
+		$this->not_run_message	= 'RESET_MODULES_SKIP';
 	}
 
 	/**
@@ -250,11 +261,11 @@ class database_cleaner_views
 		);
 
 		$config_rows = $existing_config = array();
-		get_config_rows($this->db_cleaner->data->config_data, $config_rows, $existing_config);
+		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing config, or if it was removed by a later update
-			if ((isset($this->db_cleaner->data->config_data[$name]) && in_array($name, $existing_config)) || in_array($name, $this->db_cleaner->data->removed_config_data))
+			if ((isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config)) || in_array($name, $this->db_cleaner->data->removed_config))
 			{
 				continue;
 			}
@@ -273,6 +284,92 @@ class database_cleaner_views
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
+	
+	/**
+	* Validate the extension groups
+	*/
+	function extension_groups()
+	{
+		// display extra config variables and let them check/uncheck the ones they want to add/remove
+		$this->_section_data['extension_groups'] = array(
+			'NAME'		=> 'EXTENSION_GROUPS_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
+
+		$extension_groups_rows = $existing_extension_groups = array();
+		get_extension_groups_rows($this->db_cleaner->data->extension_groups, $extension_groups_rows, $existing_extension_groups);
+		foreach ($extension_groups_rows as $name)
+		{
+			// Skip ones that are in the default install and are in the existing config
+			if (isset($this->db_cleaner->data->extension_groups[$name]) && in_array($name, $existing_extension_groups))
+			{
+				continue;
+			}
+
+			$this->_section_data['extension_groups']['ITEMS'][] = array(
+				'NAME'			=> $name,
+				'FIELD_NAME'	=> $name,
+				'MISSING'		=> (!in_array($name, $existing_extension_groups)) ? true : false,
+			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+
+		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+	}
+
+	/**
+	* Validate the extensions
+	*/
+	function extensions()
+	{
+		global $user;
+		$user->add_lang('acp/attachments');
+
+		// Build the output
+		$last_extension_group = '';
+		foreach ($this->db_cleaner->data->extensions as $group => $data)
+		{
+			$group_ids = array();
+			$existing_extensions = get_extensions($group, $group_ids);
+			$extensions = array_unique(array_merge($data, $existing_extensions));
+			sort($extensions);
+
+			foreach ($extensions as $extension)
+			{
+				if ((!in_array($extension, $data) && in_array($extension, $existing_extensions)) || (in_array($extension, $data) && !in_array($extension, $existing_extensions)))
+				{
+					// Output the table block if it's not been done yet
+					if ($last_extension_group != $group)
+					{
+						$last_extension_group = $group;
+
+						$this->_section_data[$group] = array(
+							'NAME'	=> user_lang($group),
+							'TITLE'	=> 'COLUMNS',
+						);
+					}
+
+					// Add the data
+					$this->_section_data[$group]['ITEMS'][] = array(
+						'NAME'			=> $extension,
+						'FIELD_NAME'	=> $group . '_' . $extension,
+						'MISSING'		=> (!in_array($extension, $existing_extensions)) ? true : false,
+					);
+
+					if ($this->_has_changes === false)
+					{
+						$this->_has_changes = true;
+					}
+				}
+			}
+		}
+
+		$this->success_message = 'EXTENSION_GROUPS_SUCCESS';
+	}
 
 	/**
 	* Display the last step
@@ -282,8 +379,8 @@ class database_cleaner_views
 		global $template;
 
 		// Only success message when the bots have been reset
-		$did_run = request_var('did_run', false);
-		$this->success_message = ($did_run) ? 'RESET_BOT_SUCCESS' : 'RESET_BOTS_SKIP';
+		$this->success_message	= 'RESET_REPORT_REASONS_SUCCESS';
+		$this->not_run_message	= 'RESET_REPORT_REASONS_SKIP';
 
 		$this->_has_changes = true;
 	}
@@ -352,7 +449,7 @@ class database_cleaner_views
 			'message'	=> 'RESET_MODULES_EXPLAIN',
 		);
 
-		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
+		$this->success_message = 'DATABASE_ROLE_DATA_SUCCESS';
 	}
 
 	/**
@@ -366,11 +463,11 @@ class database_cleaner_views
 		);
 
 		$permission_rows = $existing_permissions = array();
-		get_permission_rows($this->db_cleaner->data->permissions, $permission_rows, $existing_permissions);
+		get_permission_rows($this->db_cleaner->data->acl_options, $permission_rows, $existing_permissions);
 		foreach ($permission_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing permissions
-			if (isset($this->db_cleaner->data->permissions[$name]) && in_array($name, $existing_permissions))
+			if (isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 			{
 				continue;
 			}
@@ -387,7 +484,71 @@ class database_cleaner_views
 			}
 		}
 
-		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
+		$this->success_message = 'EXTENSIONS_SUCCESS';
+	}
+	
+	/**
+	* Reset report reasons?
+	*/
+	function report_reasons()
+	{
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_REPORT_REASONS',
+			'message'	=> 'RESET_REPORT_REASONS_EXPLAIN',
+		);
+		
+		// Only success message when the bots have been reset
+		$this->success_message	= 'RESET_BOT_SUCCESS';
+		$this->not_run_message	= 'RESET_BOTS_SKIP';
+	}
+	
+	/**
+	* Reset system roles?
+	*/
+	function role_data()
+	{
+		$this->_confirm_box = array(
+			'title'		=> 'RESET_ROLE_DATA',
+			'message'	=> 'RESET_ROLE_DATA_EXPLAIN',
+		);
+
+		$this->success_message = 'DATABASE_ROLES_SUCCESS';
+	}
+	
+	/**
+	* Validate the `acl_roles` table
+	*/
+	function roles()
+	{
+		// display extra config variables and let them check/uncheck the ones they want to add/remove
+		$this->_section_data['roles'] = array(
+			'NAME'		=> 'ROLE_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
+
+		$role_rows = $existing_roles = array();
+		get_role_rows($this->db_cleaner->data->acl_roles, $role_rows, $existing_roles);
+		foreach ($role_rows as $name)
+		{
+			// Skip ones that are in the default install and are in the existing config
+			if (isset($this->db_cleaner->data->acl_roles[$name]) && in_array($name, $existing_roles))
+			{
+				continue;
+			}
+
+			$this->_section_data['roles']['ITEMS'][] = array(
+				'NAME'			=> $name,
+				'FIELD_NAME'	=> $name,
+				'MISSING'		=> (!in_array($name, $existing_roles)) ? true : false,
+			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+
+		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
 	}
 
 	/**

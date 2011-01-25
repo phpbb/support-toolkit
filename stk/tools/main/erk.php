@@ -44,4 +44,3 @@ class erk
 		page_footer();
 	}
 }
-?>

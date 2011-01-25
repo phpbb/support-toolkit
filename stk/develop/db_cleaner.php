@@ -98,4 +98,3 @@ function output_list($data, $key, $list_key = false)
 
 	echo $output;
 }
-?>

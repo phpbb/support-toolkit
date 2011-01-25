@@ -312,14 +312,18 @@ if ($plugin->get_part('t'))
 			if (!empty($error))
 			{
 				array_walk($error, 'use_lang');
+
+				foreach ($error as $e)
+				{
+					$template->assign_block_vars('errormsgrow', array(
+						'MSG'	=> $e,
+					));
+				}
 			}
 
 			$template->assign_vars(array(
 				'L_TITLE'			=> $user->lang[$options['title']],
 				'L_TITLE_EXPLAIN'	=> (isset($user->lang[$options['title'] . '_EXPLAIN'])) ? $user->lang[$options['title'] . '_EXPLAIN'] : '',
-
-				'S_ERROR'			=> (!empty($error)) ? true : false,
-				'ERROR_MSG'			=> (!empty($error)) ? implode('<br />', $error) : '',
 			));
 
 			foreach ($options['vars'] as $name => $vars)
@@ -422,4 +426,3 @@ else
 
 	page_footer();
 }
-?>
