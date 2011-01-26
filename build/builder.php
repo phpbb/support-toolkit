@@ -148,7 +148,7 @@ class stk_builder
 		}
 
 		// Set the version number
-		$this->stk_version = $this->build_command['version'];
+		$this->stk_version = str_replace('.', '_', $this->build_command['version']);
 
 		// Make sure we can build
 		if (!is_writable('package'))
@@ -186,7 +186,7 @@ class stk_builder
 		// The translation list
 		$this->get_translations_list();
 		
-		$this->stk_build = new compress_zip('w', "./package/support-toolkit-{$this->stk_version}.zip");
+		$this->stk_build = new compress_zip('w', "./package/support_toolkit_{$this->stk_version}.zip");
 		$this->create_package(false, 'stk', $this->stk_build, $filelist);
 	}
 	
@@ -208,7 +208,7 @@ class stk_builder
 			// Create the compresser
 			if (empty($this->lang_builders[$translation]))
 			{
-				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk-{$this->stk_version}_{$translation}.zip");
+				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk_{$this->stk_version}_{$translation}.zip");
 			}
 			$this->create_package("./../stk/language/{$translation}", 'language', $this->lang_builders[$translation], false, $translation);
 
