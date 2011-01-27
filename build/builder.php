@@ -198,6 +198,8 @@ class stk_builder
 	 */
 	public function build_translations($translations = array())
 	{
+		$file_skip = $this->get_file_ignores('lang');
+
 		foreach ($translations as $translation)
 		{
 			if (!is_dir("./../stk/language/{$translation}"))
@@ -218,6 +220,11 @@ class stk_builder
 			{
 				foreach ($removed_files as $file)
 				{
+					if (preg_match("#^{$file_skip}$#ise", $file))
+					{
+						continue;
+					}
+
 					if (!isset($this->lang_errors[$translation]['removed']['files']))
 					{
 						$this->lang_errors[$translation]['removed']['files'] = array();
@@ -614,6 +621,10 @@ class stk_builder
 				// whatever reason, it breaks stuff under certain circumstances (#62636).
 				return '(README.md|whitelist.txt)';
 			break;
+
+			case 'lang' :
+				// SRT generator can't be translated
+				return 'srt_generator.php';
 
 			default :
 				return '';
