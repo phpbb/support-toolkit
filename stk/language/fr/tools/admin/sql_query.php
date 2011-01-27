@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'ERROR_QUERY'					=> 'Requête contenant l’erreur',
+
 	'NO_RESULTS'					=> 'Aucun résultat',
 	'NO_SQL_QUERY'					=> 'Vous devez saisir une requête à exécuter.',
 
@@ -67,5 +69,3 @@ $lang = array_merge($lang, array(
 	'SQL_QUERY_LEGEND'				=> 'Requête SQL',
 	'SQL_QUERY_SUCCESS'				=> 'La requête SQL a été exécutée avec succès.',
 ));
-
-?>

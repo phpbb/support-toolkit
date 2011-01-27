@@ -17,17 +17,16 @@
 * with this program; if not, write to the Free Software Foundation, Inc.,
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *
-* @package   Support Toolkit - Change Password
+* @package   Support Toolkit - Resync Avatars
 * @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
 * @copyright (c) 2009 phpBB Group
 * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
 *
 */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -55,12 +54,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CHANGE_PASSWORD'			=> 'Modifier le mot de passe',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Modifier le mot de passe d’un utilisateur.',
-	'CHANGE_PASSWORD_SUCCESS'	=> 'Le mot de passe de <a href="%s">%s</a> a été modifié avec succès.',
-
-	'PASSWORD_CONFIRM'			=> 'Saisissez de nouveau le mot de passe',
-
-	'USERNAMEID'				=> 'Nom ou ID de l’utilisateur',
-	'USERNAMEID_EXPLAIN'		=> 'Saisissez le nom ou l’ID de l’utilisateur dont vous souhaitez modifier le mot de passe.',
+	'RESYNC_AVATARS'			=> 'Resynchroniser les avatars',
+	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr de vouloir continuer ?',
+	'RESYNC_AVATARS_FINISHED'	=> 'Les avatars ont été resynchronisés avec succès !',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Commutation aux avatars de groupe, merci de ne pas interrompre ce processus !',
+	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours, merci de ne pas interrompre ce processus !',
 ));

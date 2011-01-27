@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,5 +74,3 @@ $lang = array_merge($lang, array(
 	'USER_TO_FOUNDER'			=> 'Utilisateur à promouvoir en fondateur',
 	'USER_TO_FOUNDER_EXPLAIN'	=> 'Saisissez le nom ou l’ID de l’utilisateur que vous souhaitez promouvoir en fondateur.',
 ));
-
-?>
