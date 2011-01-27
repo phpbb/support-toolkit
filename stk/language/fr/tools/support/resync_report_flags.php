@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,16 @@
 * with this program; if not, write to the Free Software Foundation, Inc.,
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *
-* @package   Support Toolkit - Resynchronise Newly Registered users group
+* @package   Support Toolkit - Resynchronise report flags
 * @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
+* @copyright (c) 2011 phpBB Group
 * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
 *
 */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -55,10 +54,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_NEWLY_REGISTERED'				=> 'Resynchroniser les utilisateurs récemment inscrits',
-	'RESYNC_NEWLY_REGISTERED_CONFIRM'		=> 'Êtes-vous sûr de vouloir resynchroniser le groupe des utilisateurs récemment inscrits ? Cela ajoutera ou supprimera tous les utilisateurs du “groupe des utilisateurs récemment inscrits” qui correspond aux paramètres du PCA.',
-	'RESYNC_NEWLY_REGISTERED_FINISHED'		=> 'Le groupe des utilisateurs récemment inscrits a été resynchronisé avec succès !',
-	'RESYNC_NEWLY_REGISTERED_NOT_FINISHED'	=> 'La resynchronisation du groupe des utilisateurs récemment inscrits est en cours. Merci ne pas interrompre cette opération',
+	'RESYNC_REPORT_FLAGS'			=> 'Resynchroniser les marqueurs de rapport',
+	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Cet outil resynchronisera les marqueurs de rapport de tous les messages, sujets et messages privés.',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tous les marqueurs de rapport ont été resynchronisés avec succès !',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronisation des marqueurs de rapport en cours. Merci de ne pas interrompre ce processus',
 ));
-
-?>

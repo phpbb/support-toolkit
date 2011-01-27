@@ -17,17 +17,16 @@
 * with this program; if not, write to the Free Software Foundation, Inc.,
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 *
-* @package   Support Toolkit - Change Password
+* @package   Support Toolkit - Resync Attachments
 * @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
 * @copyright (c) 2009 phpBB Group
 * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
 *
 */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -55,12 +54,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CHANGE_PASSWORD'			=> 'Modifier le mot de passe',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Modifier le mot de passe d’un utilisateur.',
-	'CHANGE_PASSWORD_SUCCESS'	=> 'Le mot de passe de <a href="%s">%s</a> a été modifié avec succès.',
-
-	'PASSWORD_CONFIRM'			=> 'Saisissez de nouveau le mot de passe',
-
-	'USERNAMEID'				=> 'Nom ou ID de l’utilisateur',
-	'USERNAMEID_EXPLAIN'		=> 'Saisissez le nom ou l’ID de l’utilisateur dont vous souhaitez modifier le mot de passe.',
+	'RESYNC_ATTACHMENTS'			=> 'Resynchroniser les pièces jointes',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Cet outil vérifiera si toutes les pièces jointes stockées actuellement dans la base de données ont un fichier sur le serveur. Si le fichier est manquant, cet outil supprimera la pièce jointe de la base de données. Êtes-vous sûr de vouloir continuer ?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Les pièces jointes ont été resynchronisées avec succès !',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronisation des pièces jointes en cours. Merci de ne pas interrompre ce processus.',
 ));
