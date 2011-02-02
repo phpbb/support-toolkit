@@ -229,7 +229,7 @@ class stk_builder
 						$this->lang_errors[$translation]['removed']['files'] = array();
 					}
 		
-					$this->lang_errors[$translation]['removed']['files'][] = $file;
+					$this->lang_errors[$translation]['removed']['files'][] = "./../stk/language/{$translation}/{$file}";
 				}
 			}
 		}
@@ -361,7 +361,7 @@ class stk_builder
 					}
 					else
 					{
-						print("\n\t\t\t- " . implode("\n\t\t\t- ", $errors) . "\n");
+						print("\n\t\t- " . implode("\n\t\t- ", $errors) . "\n");
 					}
 				}
 
@@ -529,7 +529,7 @@ class stk_builder
 				$this->lang_errors[$name]['added']['files'] = array();
 			}
 
-			$this->lang_errors[$name]['added']['files'][] = $file;
+			$this->lang_errors[$name]['added']['files'][] = $path;
 			return;
 		}
 
@@ -548,10 +548,10 @@ class stk_builder
 			{
 				if (!isset($this->lang_errors[$name]['removed']))
 				{
-					$this->lang_errors[$name]['removed'][$file] = array();
+					$this->lang_errors[$name]['removed'][$path] = array();
 				}
 
-				$this->lang_errors[$name]['removed'][$file][] = $entry;
+				$this->lang_errors[$name]['removed'][$path][] = $entry;
 			}
 		}
 
@@ -565,12 +565,12 @@ class stk_builder
 					$this->lang_errors[$name] = array();
 				}
 
-				if (!isset($this->lang_error[$name]['added'][$file]))
+				if (!isset($this->lang_error[$name]['added'][$path]))
 				{
-					$this->lang_errors[$name]['added'][$file] = array();
+					$this->lang_errors[$name]['added'][$path] = array();
 				}
 
-				$this->lang_errors[$name]['added'][$file][] = $extra;
+				$this->lang_errors[$name]['added'][$path][] = $extra;
 			}
 		}
 
