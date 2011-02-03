@@ -109,40 +109,46 @@ class stk_builder
 	 */
 	public function __construct()
 	{
-		for ($i = 1; $i < $_SERVER['argc']; $i++)
-		{
-			// Is there an `=` sign?
-			if (strpos($_SERVER['argv'][$i], '=') === false)
-			{
-				continue;
-			}
-
-			$parts = explode('=', $_SERVER['argv'][$i]);
-			$this->build_command[$parts[0]] = $parts[1];
-		}
+		// Fetch the options
+		$options = getopt('v:fslb');
 
 		// Make sure that we can run
-		if (!isset($this->build_command['version']))
+		if (empty($options))
 		{
-			print(" * This build script requires some commandline arguments in order to run.\n");
-			print(" * See the format:\n");
-			print(" ************************************************************************\n");
-			print(" * Required:\n");
-			print(" *    version=[version] The version for the generated package.\n");
-			print(" *\n");
-			print(" * Optional:\n");
-			print(" *    full=[true|false] Defines whether all packages are created (stk,\n");
-			print(" *                      translations and the BOM Sniffer whitelist.\n");
-			print(" *                      This is the default mode in which this builder runs!\n");
-			print(" *    stk=[true|false]  Build only the Support Toolkit\n");
-			print(" *    lang=[true|false] Build only the translation packs.\n");
-			print(" *    bom=[true|false]  Build only the BOM Sniffer whitelist file.\n");
-			print(" ************************************************************************\n");
+			print("This build script requires some commandline arguments in order to run.\n");
+			print("Usage: php build.php -v version [OPTIONS]\n");
+			print("\nOPTIONS\n");
+			print("\t-v version           The version for the generated package. (mandatory)\n");
+			print("\t-f                   Defines whether all packages are created (stk,\n");
+			print("\t                     translations and the BOM Sniffer whitelist.)\n");
+			print("\t                     This is the default mode in which this builder runs! (optional)\n");
+			print("\t-s                   Build only the Support Toolkit (optional)\n");
+			print("\t-l                   Build only the translation packs. (optional)\n");
+			print("\t-b                   Build only the BOM Sniffer whitelist file. (optional)\n");
+			print("\nEXAMPLES\n");
+			print("\tphp build.php -v 1.0.0\n");
+			print("\tphp build.php -v 1.0.0 -f\n");
+			print("\t\tThese command creates the a full packages with version number 1.0.0\n");
+			print("\tphp build.php -v 1.0.0 -s\n");
+			print("\t\tThis command only builds the STK package for version 1.0.0\n");
+			print("\tphp build.php -v 1.0.0 -l\n");
+			print("\t\tThis command only builds and validates the language packages\n");
+			print("\tphp build.php -v 1.0.0 -b\n");
+			print("\t\tThis command will generate and output the whitelist\n");
 			exit;
 		}
 
+		$this->build_command['version'] = $options['v'];
+		$this->build_command['full']	= (isset($options['f'])) ? $options['f'] : false;
+		$this->build_command['stk']		= (isset($options['f'])) ? $options['s'] : false;
+		$this->build_command['lang']	= (isset($options['f'])) ? $options['l'] : false;
+		$this->build_command['bom']		= (isset($options['f'])) ? $options['b'] : false;
+
 		// Set to full if no other arguments are given.
-		if ($_SERVER['argc'] < 3)
+		if ($this->build_command['full'] == false &&
+			$this->build_command['stk'] == false &&
+			$this->build_command['lang'] == false &&
+			$this->build_command['bom'] == false)
 		{
 			$this->build_command['full'] = true;
 		}
@@ -230,7 +236,7 @@ class stk_builder
 						$this->lang_errors[$translation]['removed']['files'] = array();
 					}
 		
-					$this->lang_errors[$translation]['removed']['files'][] = $file;
+					$this->lang_errors[$translation]['removed']['files'][] = "./../stk/language/{$translation}/{$file}";
 				}
 			}
 		}
@@ -362,7 +368,7 @@ class stk_builder
 					}
 					else
 					{
-						print("\n\t\t\t- " . implode("\n\t\t\t- ", $errors) . "\n");
+						print("\n\t\t- " . implode("\n\t\t- ", $errors) . "\n");
 					}
 				}
 
@@ -530,7 +536,7 @@ class stk_builder
 				$this->lang_errors[$name]['added']['files'] = array();
 			}
 
-			$this->lang_errors[$name]['added']['files'][] = $file;
+			$this->lang_errors[$name]['added']['files'][] = $path;
 			return;
 		}
 
@@ -549,10 +555,10 @@ class stk_builder
 			{
 				if (!isset($this->lang_errors[$name]['removed']))
 				{
-					$this->lang_errors[$name]['removed'][$file] = array();
+					$this->lang_errors[$name]['removed'][$path] = array();
 				}
 
-				$this->lang_errors[$name]['removed'][$file][] = $entry;
+				$this->lang_errors[$name]['removed'][$path][] = $entry;
 			}
 		}
 
@@ -566,12 +572,12 @@ class stk_builder
 					$this->lang_errors[$name] = array();
 				}
 
-				if (!isset($this->lang_error[$name]['added'][$file]))
+				if (!isset($this->lang_error[$name]['added'][$path]))
 				{
-					$this->lang_errors[$name]['added'][$file] = array();
+					$this->lang_errors[$name]['added'][$path] = array();
 				}
 
-				$this->lang_errors[$name]['added'][$file][] = $extra;
+				$this->lang_errors[$name]['added'][$path][] = $extra;
 			}
 		}
 
