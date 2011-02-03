@@ -48,7 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
-* [Fix] A language issue. (Bug #62635)
+* [Fix] Some language issues. (Bug #62635, #62647)
 * [Fix] Prevent the creation of a ghost whitelist file. (Bug #62636)
 
 == Changes since 1.0.3-rc1 ==
