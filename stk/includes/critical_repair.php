@@ -117,15 +117,25 @@ class critical_repair
 	/**
 	 * Trigger an error message, this method *must* be called when an ERK tool
 	 * encounters an error. You can not rely on msg_handler!
-	 * @param	String|Array	$msg			The error message or an string array containing multiple lines
-	 * @param	Boolean			$redirect_stk	Show a backlink to the STK, otherwise to the ERK
+	 * @param	String|Array	$msg				The error message or an string array containing multiple lines
+	 * @param	Boolean			$redirect_stk		Show a backlink to the STK, otherwise to the ERK
+	 * @param	Array			$msg_handler_args	Arugments that will be passed to the phpBB msg_handler, should only
+	 *												be set when called from stk_msg_handler
 	 * @return	void
 	 */
-	function trigger_error($msg, $redirect_stk = false)
+	function trigger_error($msg, $redirect_stk = false, $msg_handler_args = array())
 	{
 		if (defined('ERK_NO_TRIGGER') && ERK_NO_TRIGGER === true)
 		{
 			return;
+		}
+
+		// Fall back to the phpBB error handler
+		if (!empty($msg_handler_args))
+		{
+			$msg = (is_array($msg)) ? implode('<br />', $msg) : $msg;
+			msg_handler($msg_handler_args[0], $msg, $msg_handler_args[1], $msg_handler_args[2]);
+			exit;
 		}
 
 		if (!is_array($msg))
