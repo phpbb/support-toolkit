@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'MERGE_USERS'						=> 'Fusionner les utilisateurs',
-	'MERGE_USERS_EXPLAIN'				=> 'Cet outil vous permet de déplacer un compte d’utilisateur dans un autre compte. Les réglages, les permissions, les pièces jointes, les bannissements, les favoris, les brouillons, les adhésions aux groupes, aux forums, aux sujets et aux messages, les historiques, les votes aux sondages, les messages, les messages privés, les rapports, des sujets, les avertissements, et enfin les amis et les ignorés seront copiés.',
+	'MERGE_USERS_EXPLAIN'				=> 'Cet outil vous permet de déplacer les réglages d’un compte d’utilisateur dans un autre compte. Les réglages incluent les permissions, les pièces jointes, les bannissements, les favoris, les brouillons, les adhésions aux groupes, aux forums, aux sujets et aux messages, les historiques, les votes aux sondages, les messages, les messages privés, les rapports, des sujets, les avertissements et les amis et les ignorés.',
 
 	'MERGE_USERS_BOTH_FOUNDERS'	=> 'Vous ne pouvez pas fusionner un fondateur avec un utilisateur qui n’en est pas.',
 	'MERGE_USERS_BOTH_IGNORE'	=> 'Vous ne pouvez pas fusionner un robot avec un utilisateur normal.',
@@ -74,5 +74,3 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_USER_TARGET'	=> 'Utilisateur cible',
 ));
-
-?>

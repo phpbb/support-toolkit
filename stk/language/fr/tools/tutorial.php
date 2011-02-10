@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -67,5 +67,3 @@ $lang = array_merge($lang, array(
 	'TUTORIAL'			=> 'Ceci est un didacticiel',
 	'TUTORIAL_EXPLAIN'	=> 'Ceci est une explication du didacticiel',
 ));
-
-?>

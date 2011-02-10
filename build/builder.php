@@ -154,7 +154,7 @@ class stk_builder
 		}
 
 		// Set the version number
-		$this->stk_version = $this->build_command['version'];
+		$this->stk_version = str_replace('.', '_', $this->build_command['version']);
 
 		// Make sure we can build
 		if (!is_writable('package'))
@@ -192,7 +192,7 @@ class stk_builder
 		// The translation list
 		$this->get_translations_list();
 		
-		$this->stk_build = new compress_zip('w', "./package/support-toolkit-{$this->stk_version}.zip");
+		$this->stk_build = new compress_zip('w', "./package/support_toolkit_{$this->stk_version}.zip");
 		$this->create_package(false, 'stk', $this->stk_build, $filelist);
 	}
 	
@@ -204,6 +204,8 @@ class stk_builder
 	 */
 	public function build_translations($translations = array())
 	{
+		$file_skip = $this->get_file_ignores('lang');
+
 		foreach ($translations as $translation)
 		{
 			if (!is_dir("./../stk/language/{$translation}"))
@@ -214,7 +216,7 @@ class stk_builder
 			// Create the compresser
 			if (empty($this->lang_builders[$translation]))
 			{
-				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk-{$this->stk_version}_{$translation}.zip");
+				$this->lang_builders[$translation] = new compress_zip('w', "./package/stk_{$this->stk_version}_{$translation}.zip");
 			}
 			$this->create_package("./../stk/language/{$translation}", 'language', $this->lang_builders[$translation], false, $translation);
 
@@ -224,6 +226,11 @@ class stk_builder
 			{
 				foreach ($removed_files as $file)
 				{
+					if (preg_match("#^{$file_skip}$#ise", $file))
+					{
+						continue;
+					}
+
 					if (!isset($this->lang_errors[$translation]['removed']['files']))
 					{
 						$this->lang_errors[$translation]['removed']['files'] = array();
@@ -616,8 +623,14 @@ class stk_builder
 		switch ($type)
 		{
 			case 'stk' :
-				return 'README.md';
+				// Also ignore whitelist.txt, if this file already exists for
+				// whatever reason, it breaks stuff under certain circumstances (#62636).
+				return '(README.md|whitelist.txt)';
 			break;
+
+			case 'lang' :
+				// SRT generator can't be translated
+				return 'srt_generator.php';
 
 			default :
 				return '';

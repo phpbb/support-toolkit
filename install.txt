@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.3-rc1
+Support Toolkit 1.0.3
 Supported phpBB versions 3.0.0 - 3.0.8
 
 == Authors ==
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.3-rc1 ==
-To upgrade a previous version of the STK to 1.0.3-rc1, remove your previous
+== Upgrade to 1.0.3 ==
+To upgrade a previous version of the STK to 1.0.3, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,6 +46,12 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.3-rc2 ==
+* [Change] Some tweaks to the build script.
+* [Fix] Some language issues. (Bug #62635, #62647)
+* [Fix] Prevent the creation of a ghost whitelist file. (Bug #62636)
+* [Fix] "Non-static errors" in the ERK. (Bug #62649)
+
 == Changes since 1.0.3-rc1 ==
 * [Change] MySQL Upgrader allows for selecting both options. (Bug #62623)
 * [Fix] BOM Sniffer call to phpbb_realpath fails. (Bug #62620)

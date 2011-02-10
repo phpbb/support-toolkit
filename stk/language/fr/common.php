@@ -2,7 +2,7 @@
 /**
 *
 * This file is part of French STK translation.
-* Copyright (c) 2010 Maël Soucaze.
+* Copyright (c) 2010 - 2011 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ $lang = array_merge($lang, array(
 
    'GEN_PASS_FAILED'					=> 'Le Support Toolkit n’a pas été capable de générer un nouveau mot de passe. Veuillez réessayer.',
    'GEN_PASS_FILE'						=> 'Générer un fichier de mot de passe.',
-   'GEN_PASS_FILE_EXPLAIN'				=> 'Si vous n’arrivez plus du tout à vous connecter à phpBB, vous pouvez utiliser la méthode d’authentification interne de Support Toolkit. Pour utiliser cette méthode, vous devez <a href="%s"><strong>générer</strong></a> un nouveau fichier de mot de passe.',
+   'GEN_PASS_FILE_EXPLAIN'				=> 'Si vous n’arrivez plus à vous connecter à phpBB, vous pouvez utiliser la méthode d’authentification interne de Support Toolkit. Pour utiliser cette méthode, vous devez <a href="%s"><strong>générer</strong></a> un nouveau fichier de mot de passe.',
 
    'INCORRECT_CLASS'					=> 'Classe incorrecte dans : stk/tools/%1$s.%2$s',
    'INCORRECT_PASSWORD'					=> 'Le mot de passe est incorrect',
@@ -115,5 +115,3 @@ $lang = array_merge($lang, array(
 
    'USING_STK_LOGIN'					=> 'Vous vous êtes connecté en utilisant la méthode d’authentification interne au STK. Il est recommandé d’utiliser cette méthode <strong>seulement</strong> lorsqu’il vous est impossible de vous connecter à phpBB.<br />Pour désactiver cette méthode d’authentification, cliquez <a href="%1$s">ici</a>.',
 ));
-
-?>
