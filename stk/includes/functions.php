@@ -534,7 +534,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 	if (defined('IN_ERK'))
 	{
 		global $critical_repair;
-		$critical_repair->trigger_error($msg_text);
+		$critical_repair->trigger_error($msg_text, false, array($errno, $errfile, $errline));
 	}
 
 	// If the STK triggers a fatal error before IN_STK is defined we'll show a page

@@ -50,6 +50,7 @@ update!
 * [Change] Some tweaks to the build script.
 * [Fix] Some language issues. (Bug #62635, #62647)
 * [Fix] Prevent the creation of a ghost whitelist file. (Bug #62636)
+* [Fix] "Non-static errors" in the ERK. (Bug #62649)
 
 == Changes since 1.0.3-rc1 ==
 * [Change] MySQL Upgrader allows for selecting both options. (Bug #62623)
