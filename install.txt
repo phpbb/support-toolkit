@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.3 ==
+* [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
+
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
 * [Fix] Some language issues. (Bug #62635, #62647)

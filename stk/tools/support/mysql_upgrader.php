@@ -45,7 +45,7 @@ class mysql_upgrader
 		// cleaner for this tool
 		if (!class_exists('database_cleaner'))
 		{
-			require STK_INDEX . 'tools/support/database_cleaner.' . PHP_EXT;
+			require STK_ROOT_PATH . 'tools/support/database_cleaner.' . PHP_EXT;
 		}
 		$this->_db_cleaner = new database_cleaner();
 
