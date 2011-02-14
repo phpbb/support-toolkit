@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.3 ==
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
+* [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
