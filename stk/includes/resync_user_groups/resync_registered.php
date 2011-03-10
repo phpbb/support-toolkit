@@ -54,6 +54,8 @@ class resync_registered
 		$batch = $this->_fetch_users();
 		$g = $this->_get_group_ids();
 
+		$insert_coppa = $insert_reg = array();
+
 		// The board doesn't bother about COPPA
 		if (!$config['coppa_enable'])
 		{
