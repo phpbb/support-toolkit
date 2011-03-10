@@ -50,6 +50,7 @@ update!
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
 * [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
 * [Fix] In some cases the database cleaner is loaded twice, causing blank pages. (Bug #62660, Patch by D¡cky)
+* [Fix] Undefined index error in the resync user groups tool. (Bug #62687)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
