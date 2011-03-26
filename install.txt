@@ -49,6 +49,7 @@ update!
 == Changes since 1.0.3 ==
 * [Fix] Correctly package the translation packages. (Bug #62651)
 * [Fix] Remove unused button from the database cleaner. (Bug #62663)
+* [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
