@@ -307,7 +307,7 @@ class reparse_bbcode
 					$this->_reparse_post($post_data);
 
 					// Re-submit the post through API
-					submit_post('edit', $this->data['post_subject'], $this->data['username'], $this->data['topic_type'], $this->poll, $post_data, true, true);
+					submit_post('edit', $this->data['post_subject'], $this->data['post_username'], $this->data['topic_type'], $this->poll, $post_data, true, true);
 				break;
 
 				case BBCODE_REPARSE_PMS :
