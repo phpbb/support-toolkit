@@ -210,7 +210,7 @@ class reparse_bbcode
 //		}
 
 		// Greb our batch
-		$bitfield = (isset($_POST['reparseall'])) ? true : false;
+		$bitfield = (empty($_REQUEST['reparseall'])) ? true : false;
 
 		switch ($mode)
 		{
@@ -369,6 +369,7 @@ class reparse_bbcode
 			'submit'	=> true,
 			'mode'		=> $_next_mode,
 			'step'		=> $_next_step,
+			'reparseall'	=> (!empty($_REQUEST['reparseall'])) ? true : false,
 		);
 
 		meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $params));
