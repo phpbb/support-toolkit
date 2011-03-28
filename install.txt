@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.3 ==
+* [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
 * [Fix] Remove unused button from the database cleaner. (Bug #62663)
 * [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
