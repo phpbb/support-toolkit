@@ -5,8 +5,8 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.3
-Supported phpBB versions 3.0.0 - 3.0.8
+Support Toolkit 1.0.3-pl1
+Supported phpBB versions 3.0.0 - 3.0.9
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.3 ==
-To upgrade a previous version of the STK to 1.0.3, remove your previous
+== Upgrade to 1.0.3-pl1 ==
+To upgrade a previous version of the STK to 1.0.3-pl1, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -47,9 +47,13 @@ update!
 
 = Changelog =
 == Changes since 1.0.3 ==
+* [Change] Revert to use the phpBB common.php. (Bug #62658)
 * [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
+* [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
+* [Fix] In some cases the database cleaner is loaded twice, causing blank pages. (Bug #62660, Patch by D¡cky)
 * [Fix] Remove unused button from the database cleaner. (Bug #62663)
+* [Fix] Undefined index error in the resync user groups tool. (Bug #62687)
 * [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
 * [Fix] BBCode reparser doesn't keep "reparseall" flag. (Bug #62725)
 
