@@ -34,7 +34,7 @@ class database_cleaner_controller
 	/**
 	* Reset all bots
 	*/
-	function bots(&$error)
+	function bots($error)
 	{
 		global $config, $db;
 
@@ -52,7 +52,7 @@ class database_cleaner_controller
 			{
 				// If we reach this point then something has gone very wrong
 				$error[] = 'NO_BOT_GROUP';
-				return;
+				return $error;
 			}
 			else
 			{
@@ -138,7 +138,7 @@ class database_cleaner_controller
 	* - Add removed columns
 	* - Remove added columns
 	*/
-	function columns(&$error, $selected)
+	function columns($error, $selected)
 	{
 		global $umil;
 
@@ -200,6 +200,8 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 
 	/**
@@ -208,7 +210,7 @@ class database_cleaner_controller
 	* - Add removed entries
 	* - Remove added entries
 	*/
-	function config(&$error, $selected)
+	function config($error, $selected)
 	{
 		global $db;
 
@@ -235,12 +237,14 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 	
 	/**
 	* Fix the extension groups
 	*/
-	function extension_groups(&$error, $selected)
+	function extension_groups($error, $selected)
 	{
 		global $db;
 
@@ -277,6 +281,8 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 
 	/**
@@ -336,7 +342,7 @@ class database_cleaner_controller
 	/**
 	* Correct the system groups
 	*/
-	function groups(&$error, $selected)
+	function groups($error, $selected)
 	{
 		global $db;
 
@@ -371,6 +377,8 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 
 	/**
@@ -397,7 +405,7 @@ class database_cleaner_controller
 	* This will remove all added modules and will re-add and re-enable all vanilla
 	* modules
 	*/
-	function modules(&$error)
+	function modules($error)
 	{
 		global $db, $lang;
 
@@ -623,12 +631,14 @@ class database_cleaner_controller
 				$_module->remove_cache_file();
 			}
 		}
+
+		return $error;
 	}
 
 	/**
 	* Fix permissions
 	*/
-	function permissions(&$error, $selected)
+	function permissions($error, $selected)
 	{
 		global $umil;
 
@@ -657,12 +667,14 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 	
 	/**
 	* Reset the report reasons
 	*/
-	function report_reasons(&$error)
+	function report_reasons($error)
 	{
 		global $db;
 		
@@ -767,12 +779,14 @@ class database_cleaner_controller
 				$db->sql_multi_insert(REPORTS_REASONS_TABLE, $insert);
 			}
 		}
+
+		return $error;
 	}
 	
 	/**
 	* Reset the phpBB system roles
 	*/
-	function role_data(&$error)
+	function role_data($error)
 	{
 		global $db;
 
@@ -828,12 +842,14 @@ class database_cleaner_controller
 				$db->sql_query($query);
 			}
 		}
+
+		return $error;
 	}
 	
 	/**
 	* Fix system roles
 	*/
-	function roles(&$error, $selected)
+	function roles($error, $selected)
 	{
 		global $umil;
 
@@ -860,6 +876,8 @@ class database_cleaner_controller
 				}
 			}
 		}
+
+		return $error;
 	}
 
 	/**
@@ -869,7 +887,7 @@ class database_cleaner_controller
 	* - Add removed tables
 	* - Removed added tables
 	*/
-	function tables(&$error, $selected)
+	function tables($error, $selected)
 	{
 		global $umil;
 
@@ -899,4 +917,6 @@ class database_cleaner_controller
 			}
 		}
 	}
+
+	return $error;
 }

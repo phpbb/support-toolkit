@@ -178,7 +178,7 @@ if (!class_exists('database_cleaner'))
 			$this->object = new database_cleaner_controller($this);
 
 			// Call the correct method
-			call_user_func(array($this->object, $this->step_to_action[$this->step]), &$error, $selected);
+			$error = call_user_func(array($this->object, $this->step_to_action[$this->step]), $error, $selected);
 
 			// Error?
 			if (!empty($error))

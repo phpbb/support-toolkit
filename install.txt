@@ -52,6 +52,7 @@ update!
 * [Fix] Correctly package the translation packages. (Bug #62651)
 * [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
 * [Fix] In some cases the database cleaner is loaded twice, causing blank pages. (Bug #62660, Patch by D¡cky)
+* [Fix] Depricated error in PHP 5.3.x. (Bug #62662)
 * [Fix] Remove unused button from the database cleaner. (Bug #62663)
 * [Fix] Undefined index error in the resync user groups tool. (Bug #62687)
 * [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
