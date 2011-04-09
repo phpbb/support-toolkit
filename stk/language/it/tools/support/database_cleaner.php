@@ -89,6 +89,7 @@ $lang = array_merge($lang, array(
 	'RESET_BOT_SUCCESS'				=> 'I Bots sono stati reimpostati con successo!',
 	'RESET_MODULES'					=> 'Reimposta Moduli',
 	'RESET_MODULES_EXPLAIN'			=> 'Vuoi reimpostare l’elenco Moduli predefinito?  Tutti gli esistenti Moduli saranno eliminati e sostituiti con la configurazione predefinita.',
+        'RESET_BOTS_SKIP'				=> 'Il Bot è stato ignorato',
 	'RESET_MODULES_SKIP'			=> 'Il reset del modulo è stato ignorato',
 	'RESET_MODULE_SUCCESS'			=> 'I moduli sono stati reimpostati con successo!',
 	'ROWS'							=> 'Righe',
