@@ -5,7 +5,7 @@
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/08
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
