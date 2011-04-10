@@ -315,7 +315,7 @@ class srt_generator
 		else
 		{
 			$_cached_data	= $cache->get('_stk_srt_generator');
-			$_prefilled		= unserialize(htmlspecialchars_decode(request_var('prefill', '')));
+			$_prefilled		= unserialize(htmlspecialchars_decode(request_var('prefill', '', true)));
 
 			// $_cached_data can be "false"
 			if ($_cached_data === false)
@@ -334,7 +334,7 @@ class srt_generator
 				}
 				else
 				{
-					$_answers[$question['name']] = request_var($question['name'], '');
+					$_answers[$question['name']] = request_var($question['name'], '', true);
 				}
 
 				// For some types some aditional stuff is needed here
