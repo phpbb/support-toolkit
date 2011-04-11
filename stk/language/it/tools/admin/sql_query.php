@@ -50,7 +50,7 @@ $lang = array_merge($lang, array(
 
 	'SHOW_RESULTS'					=> 'Mostra risultati',
 	'SQL_QUERY'						=> 'Esegui query SQL',
-	'SQL_QUERY_EXPLAIN'				=> 'Inserisci la query SQL da eseguire. Se il tuo prefisso non è phpbb_ verrà automaticamente cambiato nel prefisso utilizzato per questa installazione.<br />Se il pulsante "Mostra risultati" è selezionato lo strumento visualizza i risultati <em>(se esistono)</em> della query.',
+	'SQL_QUERY_EXPLAIN'				=> 'Inserisci la query SQL da eseguire. Se il tuo prefisso non è phpbb_ verrà automaticamente cambiato nel prefisso utilizzato da questa installazione.<br />Se il pulsante “Mostra risultati” è selezionato lo strumento visualizza i risultati <em>(se esistono)</em> della query.',
 	
 	'SQL_QUERY_LEGEND'				=> 'Query SQL',
 	'SQL_QUERY_SUCCESS'				=> 'La query SQL è stata eseguita con successo.',

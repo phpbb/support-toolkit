@@ -35,11 +35,11 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » " " …
+// ’ » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Qui di seguito c’è la copia del modello della richiesta di supporto. Clicca qui sotto per copiarlo negli appunti, quindi creare un nuovo post nel <a href="http://www.phpbb.com/community/viewforum.php?f=46">Forum di supporto</a> con queste informazioni. Se il tuo argomento è già esistente nel forum, copia il modello in una risposta nell’argomento esistente anziché crearne uno nuovo.',
+	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Qui di seguito c’è la copia del modello della richiesta di supporto. Clicca qui sotto per copiarlo negli appunti, quindi creare un nuovo messaggio nel <a href="http://www.phpbb.com/community/viewforum.php?f=46">Forum di supporto</a> con queste informazioni. Se il tuo argomento è già esistente nel forum, copia il modello in una risposta nell’argomento esistente anziché crearne uno nuovo.',
 	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Il generatore di template non ha potuto caricare le risposte. Assicurati di aver correttamente avviato lo strumento.',
 	'SRT_GENERATOR'					=> 'Generatore di richiesta di supporto',
 	'SRT_GENERATOR_LANDING'			=> 'Generatore di richiesta di supporto',
@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 	'STEP1_MOD_EXPLAIN'		=> 'Ha avuto inizio questa problema dopo l’installazione o l’eliminazione di una MOD?',
 	'STEP1_MOD_ERROR'		=> 'Domande di supporto per le problematiche connesse alle MOD (es., se hai installato una MOD e ora hai nuovi errori) devi scrivere nell’argomento dove hai scaricato la MOD. Se la MOD è stata scaricata su un altro sito devi chiedere supporto su quel sito.<br /><br /><a href="http://www.phpbb.com/community/viewforum.php?f=81">Vai al forum delle MOD</a>',
 	'STEP1_HACKED'			=> 'La tua board è stata hackerata?',
-	'STEP1_HACKED_EXPLAIN'	=> 'Seleziona "Si" per questa opzione se vuoi chiedere supporto in seguito alla deturpazione, quindi compromessa della tua board.',
+	'STEP1_HACKED_EXPLAIN'	=> 'Seleziona “Sì” per questa opzione se vuoi chiedere supporto in seguito alla deturpazione, quindi compromessa della tua board.',
 	'STEP1_HACKED_ERROR'	=> 'Se la tua board è stata hackerata, ti chiediamo di presentare una relazione con l’indagine sugli incidenti nel tracker invece di postare nel forum di supporto in modo che non siano divulgate informazioni private.<br /><br />Vedi <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">questo argomento</a> per leggere le istruzioni.',
 ));
 
@@ -91,19 +91,19 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'SRT_QUESTIONS_EXPLAIN'	=> array(
 		'step2'	=> array(
-			'phpbb_version'		=> 'Il generatore SRT non può determinare la tua versione di phpBB, seleziona quindi la tua attuale versione. Per trovare questa informazione, loggati sulla tua board e clicca sul link a fondo pagina. Clicca su "Pannello di Controllo Amministratore". Clicca sulla scheda "Sistema".',
-			'board_url'			=> 'L’URL è l’indirizzo internet della tua board. La maggior parte dei problemi sono più facilmente risolvibili quando si può visualizzare la tua board. Se non vuoi dare queste informazioni, scrivi "n/a".',
-			'dbms'				=> 'Determina la versione database e il tipo che attualmente stai usando, vai nel Pannello di Controllo Amministratore. Nella scheda "Generale", individua "Server Database:" nella tabella statistica.',
-			'php'				=> 'Determina quale versione di PHP stai usando, trovi questa informazione nel Pannello di Controllo Amministratore. Nella scheda "Generale", clicca su "Informazione PHP", e trova la "Versione di PHP x.y.z"',
+			'phpbb_version'		=> 'Il generatore SRT non può determinare la tua versione di phpBB, seleziona quindi la tua attuale versione. Per trovare questa informazione, loggati sulla tua board e clicca sul link a fondo pagina. Clicca su “Pannello di Controllo Amministratore”. Clicca sulla scheda “Sistema”.',
+			'board_url'			=> 'L’URL è l’indirizzo internet della tua board. La maggior parte dei problemi sono più facilmente risolvibili quando si può visualizzare la tua board. Se non vuoi dare queste informazioni, scrivi “n/a”.',
+			'dbms'				=> 'Determina la versione database e il tipo che attualmente stai usando, vai nel Pannello di Controllo Amministratore. Nella scheda “Generale”, individua “Server Database:” nella tabella statistica.',
+			'php'				=> 'Determina quale versione di PHP stai usando, trovi questa informazione nel Pannello di Controllo Amministratore. Nella scheda “Generale”, clicca su “Informazione PHP”, e trova la “Versione di PHP x.y.z”',
 			'host_name'			=> 'Alcuni problemi riscontrati con le board phpBB possono essere attribuiti a determinati host. Questo spazio deve essere riempito con la società che fornisce il pacchetto di web hosting (come GoDaddy, Yahoo, 1 & 1, ecc.). Allo stesso modo, se sei a conoscenza su quale host la tua board è ospitata, indica anche questo.',
-			'install_type'		=> 'Se si è installato la board scaricando i file phpBB, caricandoli sul tuo host, quindi con la navigazione al programma di installazione, selezionare "Ho installato la board personalmente." Se invece qualcuno altro ha fatto l’installazione per te, seleziona "Qualcun altro ha installato per me". Se è stato utilizzato uno strumento automatico come Fantastico, selezionare "ho utilizzato uno strumento fornito dal mio host."',
-			'inst_converse'		=> 'Se la tua board è una nuova installazione questo significa che la board non esisteva prima di installare phpBB. Se hai recentemente aggiornato la tua board da una versione precedente di phpBB3 devi selezionate "Aggiornamento da una versione precedente di phpBB3". Se si tratta di una conversione, questo significa che la tua board è stato installato in precedenza con un altro software, quindi, successivamente convertito in phpBB.',
+			'install_type'		=> 'Se si è installato la board scaricando i file phpBB, caricandoli sul tuo host, quindi con la navigazione al programma di installazione, selezionare “Ho installato la board personalmente”. Se invece qualcuno altro ha fatto l’installazione per te, seleziona “Qualcun altro ha installato per me”. Se è stato utilizzato uno strumento automatico come Fantastico, selezionare “ho utilizzato uno strumento fornito dal mio host”.',
+			'inst_converse'		=> 'Se la tua board è una nuova installazione questo significa che la board non esisteva prima di installare phpBB. Se hai recentemente aggiornato la tua board da una versione precedente di phpBB3 devi selezionate “Aggiornamento da una versione precedente di phpBB3”. Se si tratta di una conversione, questo significa che la tua board è stato installato in precedenza con un altro software, quindi, successivamente convertito in phpBB.',
 			'mods_installed'	=> 'Le MOD sono spesso la causa di molti problemi con phpBB. Queste informazioni possono aiutare a determinare la causa esatta del problema.',
-			'registration_req'	=> 'Seleziona "Si" se occorre essere registrato e loggato per verificare questo problema.',
+			'registration_req'	=> 'Seleziona “Sì” se occorre essere registrato e autenticato per verificare questo problema.',
 		),
 		'step3'	=> array(
-			'installed_styles'		=> 'Uno stile non aggiornato è la causa di molti problemi. Se non conosci quali stili hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda "Stili".',
-			'installed_languages'	=> 'Un pacchetto li lingua è la causa di molti problemi. Se non conosci quale pacchetto di lingua hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda "Sistema". Seleziona "Pacchetti lingua" dalla lista delle pagine sulla sinistra.',
+			'installed_styles'		=> 'Uno stile non aggiornato è la causa di molti problemi. Se non conosci quali stili hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda “Stili”.',
+			'installed_languages'	=> 'Un pacchetto li lingua è la causa di molti problemi. Se non conosci quale pacchetto di lingua hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda “Sistema”. Seleziona “Pacchetti di lingua” dalla lista delle pagine sulla sinistra.',
 			'xp_level'				=> 'Seleziona l’opzione che ti descrive.',
 			'problem_started'		=> 'Descrivi l’azione che descrive il problema e come è iniziato (aggiornamento della board, installando una MOD, etc.), queste notizie sono prioritarie.',
 			'problem_description'	=> 'Quando descrivi il problema cerca di essere il più dettagliato possibile. Includi le informazioni riguardanti il problema e quando è iniziato, come riprodurre il problema, e qualsiasi altra informazione che ritieni utile.',
