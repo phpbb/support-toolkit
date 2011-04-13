@@ -1,27 +1,11 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Database Cleaner
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Database Cleaner
+* @version 1.0.1-dev
+* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
+* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -108,7 +92,7 @@ $lang = array_merge($lang, array(
 	'RESET_MODULES_SKIP'			=> 'La réinitialisation du module a été ignorée',
 	'RESET_MODULE_SUCCESS'			=> 'Les modules ont été réinitialisés avec succès !',
 	'RESET_REPORT_REASONS'			=> 'Réinitialiser les raisons des rapports',
-	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajouté !',
+	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajoutées !',
 	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports ont été réinitialisées',
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Les raisons des rapports ont été réinitialisées avec succès !',
 	'RESET_ROLE_DATA'				=> 'Réinitialiser les données des rôles',

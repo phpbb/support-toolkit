@@ -1,27 +1,11 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Reparse BBCode
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Reparse BBCode
+* @version 1.0.1-dev
+* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
+* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -68,7 +52,7 @@ $lang = array_merge($lang, array(
 		1	=> 'Réanalyse des messages terminée, début de la réanalyse des messages privés.',
 		2	=> 'Réanalyse des messages privés terminée, début de la réanalyse des signatures.',
 	),
-	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyé ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
+	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyées ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Réanalyser les messages spécifiques',
 	'REPARSE_POST_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages spécifiques. Chaque ID doit être séparée par une virgule.',
 	'REPARSE_PM_IDS'				=> 'Réanalyser les messages privés spécifiques',
