@@ -56,7 +56,7 @@ class add_user
 	*/
 	function run_tool(&$error)
 	{
-		global $config, $user;
+		global $cache, $config, $user;
 
 		$user->add_lang(array('acp/groups', 'ucp'));
 
@@ -96,8 +96,16 @@ class add_user
 			'tz'				=> request_var('tz', (float) $timezone),
 		);
 
+		// A bit of cache hacking to get around disallowed usernames,
+		// should be rethought in future versions (#62685)
+		$cache->destroy('_disallowed_usernames');
+		$cache->put('_disallowed_usernames', array());
+
 		// Check vars
 		$this->validate_data($data, $error);
+
+		// Make sure that the username list is recached next time around
+		$cache->destroy('_disallowed_usernames');
 
 		// Something went wrong
 		if (!empty($error))
