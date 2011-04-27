@@ -58,6 +58,7 @@ update!
 * [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
 * [Fix] BBCode reparser doesn't keep "reparseall" flag. (Bug #62725)
 * [Fix] Allow multibyte characters in the SRT generator. (Bug #62744)
+* [Fix] Allow disallowed user names in the "add user" tool. (Bug #62685)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
