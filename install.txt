@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.3 ==
+* [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
 * [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
