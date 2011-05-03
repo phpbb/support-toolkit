@@ -1791,3 +1791,10 @@ dl.querybox {
 	color: #000000;
 	text-align: left;
 }
+
+/* Mark column
+----------------------------------------*/
+.mark {
+	width: 10%;
+	text-align: center;
+}

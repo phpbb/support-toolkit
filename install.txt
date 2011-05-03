@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.3 ==
+* [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
 * [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
@@ -58,6 +59,7 @@ update!
 * [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
 * [Fix] BBCode reparser doesn't keep "reparseall" flag. (Bug #62725)
 * [Fix] Allow multibyte characters in the SRT generator. (Bug #62744)
+* [Fix] Allow disallowed user names in the "add user" tool. (Bug #62685)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
