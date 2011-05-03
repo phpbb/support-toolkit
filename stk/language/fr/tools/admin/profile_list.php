@@ -41,6 +41,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Tous',
 
+	'CLICK_TO_DELETE'		=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
+
 	'FILTER'				=> 'Filtre',
 
 	'LIMIT'					=> 'Limite',
@@ -50,4 +52,8 @@ $lang = array_merge($lang, array(
 
 	'PROFILE_LIST'			=> 'Liste des profils',
 	'PROFILE_LIST_EXPLAIN'	=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
+
+	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
+	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés avec succès !',
 ));
