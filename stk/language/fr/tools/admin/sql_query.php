@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 
 	'SHOW_RESULTS'					=> 'Afficher les résultats',
 	'SQL_QUERY'						=> 'Exécuter une requête SQL',
-	'SQL_QUERY_EXPLAIN'				=> 'Saisissez la requête SQL que vous souhaitez exécuter. L’outil remplacera “phpbb_” par votre préfixe de table.<br />Si vous avez coché l’affichage des résultats, l’outil affichera les résultats <em>(s’il y en a)</em> de la requête.',
+	'SQL_QUERY_EXPLAIN'				=> 'Saisissez la requête SQL que vous souhaitez exécuter. L’outil remplacera « phpbb_ » par votre préfixe de table.<br />Si vous avez coché l’affichage des résultats, l’outil affichera les résultats <em>(s’il y en a)</em> de la requête.',
 
 	'SQL_QUERY_LEGEND'				=> 'Requête SQL',
 	'SQL_QUERY_SUCCESS'				=> 'La requête SQL a été exécutée avec succès.',

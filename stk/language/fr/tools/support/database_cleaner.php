@@ -52,7 +52,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_CLEANER_MISSING'		=> 'Tous les champs surlignés sur un fond rouge comme celui-ci sont des objets manquants qui devraient être ajoutés. <strong>Si la case est cochée, ils seront ajoutés</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'Le nettoyeur de base de données a terminé toutes ses tâches avec succès !<br /><br />Veuillez vous assurer de sauvegarder à nouveau votre base de données.',
 	'DATABASE_CLEANER_WARNING'		=> 'Cet outil n’apporte AUCUNE GARANTIE et les utilisateurs de cet outil devraient sauvegarder entièrement leur base de données en cas d’échec.<br /><br />Avant de continuer, veuillez vous assurer de détenir une sauvegarde de votre base de données !',
-	'DATABASE_CLEANER_WELCOME'		=> 'Bienvenue sur l’outil de nettoyage de la base de données !<br /><br />Cet outil a été créé afin de supprimer les colonnes, les lignes et les tables supplémentaires de votre base de données qui ne sont pas présentes par défaut dans l’installation de phpBB3, et il ajoute les éléments manquants qui peuvent être nécessaires dans la base de données.<br /><br />Lorsque vous êtes prêt à continuer, veuillez cliquer sur le bouton “continuer” afin de commencer à utiliser l’outil de nettoyage de la base de données (veuillez noter que votre forum sera désactivé le temps de l’opération).',
+	'DATABASE_CLEANER_WELCOME'		=> 'Bienvenue sur l’outil de nettoyage de la base de données !<br /><br />Cet outil a été créé afin de supprimer les colonnes, les lignes et les tables supplémentaires de votre base de données qui ne sont pas présentes par défaut dans l’installation de phpBB3, et il ajoute les éléments manquants qui peuvent être nécessaires dans la base de données.<br /><br />Lorsque vous êtes prêt à continuer, veuillez cliquer sur le bouton « continuer » afin de commencer à utiliser l’outil de nettoyage de la base de données (veuillez noter que votre forum sera désactivé le temps de l’opération).',
 	'DATABASE_COLUMNS_SUCCESS'		=> 'Les colonnes de la base de données ont été mises à jour avec succès !',
 	'DATABASE_TABLES'				=> 'Tables de la base de données',
 	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour avec succès !',
@@ -126,5 +126,5 @@ $lang = array_merge($lang, array(
 
 	'TYPE'							=> 'Type',
 
-	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque “DEBUG” est activé dans le fichier de configuration de phpBB.',
+	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque « DEBUG » est activé dans le fichier de configuration de phpBB.',
 ));

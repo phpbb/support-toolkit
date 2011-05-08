@@ -39,8 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'UPDATE_EMAIL_HASHES'				=> 'Mettre à jour les hachages d’e-mails',
-	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Dans les installations de phpBB, particulièrement dans phpBB 3.0.7, passer d’un système d’exploitation 32 bits à un système d’exploitation 64 bits peut provoquer un dysfonctionnement dans le hachage des e-mails. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Consultez le rapport de bogue concerné</a>)</em><br />Cet outil vous permet de mettre à jour les hachages dans la base de données afin qu’ils fonctionnent correctement.',
-	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tous les hachages d’e-mails ont été mis à jour avec succès !',
-	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Mise à jour des hachages d’e-mails en cours.',
+	'UPDATE_EMAIL_HASHES'				=> 'Mettre à jour les hachages des courriels',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Dans les installations de phpBB, particulièrement dans phpBB 3.0.7, passer d’un système d’exploitation 32 bits à un système d’exploitation 64 bits peut provoquer un dysfonctionnement dans le hachage des courriels. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Consultez le rapport de bogue concerné</a>)</em><br />Cet outil vous permet de mettre à jour les hachages dans la base de données afin qu’ils fonctionnent correctement.',
+	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tous les hachages des courriels ont été mis à jour avec succès !',
+	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Mise à jour des hachages des courriels en cours.',
 ));

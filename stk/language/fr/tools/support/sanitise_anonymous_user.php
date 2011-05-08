@@ -49,7 +49,7 @@ $lang = array_merge($lang, array(
 	'ANONYMOUS_WRONG_DATA'				=> 'Les données de profil de l’utilisateur anonyme sont incorrectes.',
 	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'Les données de profil de l’utilisateur anonyme sont partiellement incorrectes. Souhaitez-vous réparer cela ?',
 	'ANONYMOUS_WRONG_GROUPS'			=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs.',
-	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe “INVITÉS” ?',
+	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe « INVITÉS » ?',
 
 	'REDIRECT_NEXT_STEP'				=> 'Vous allez être redirigé vers la prochaine étape.',
 
