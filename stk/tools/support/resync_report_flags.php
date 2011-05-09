@@ -208,7 +208,7 @@ class resync_report_flags
 		{
 			$queries[] = 'UPDATE ' . PRIVMSGS_TABLE . '
 				SET message_reported = 0
-				WHERE ' . $db->sql_in_set('pm_id', $pms);
+				WHERE ' . $db->sql_in_set('msg_id', $pms);
 		}
 
 		// Run them
