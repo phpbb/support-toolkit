@@ -75,29 +75,19 @@ class resync_report_flags
 	{
 		global $db;
 
-		// Set some SQL stuff based upon the type
-		$sql_id		= ($type == 'posts') ? 'post_id' : 'pm_id';
-		$sql_from	= ($type == 'posts') ? POSTS_TABLE : PRIVMSGS_TABLE;
-		$sql_nid	= ($type == 'posts') ? 'pm_id' : 'post_id';
-		$sql_where	= ($type == 'posts') ? 'post_reported' : 'message_reported';
+		// Fetch the report data
+		$reported = $this->_get_reported($type);
 
-		// Grep all the report data
-		$reported	= array();
-		$sql = "SELECT {$sql_id}
-			FROM " . REPORTS_TABLE . "
-			WHERE {$sql_nid} = 0";
-		$result	= $db->sql_query($sql);
-		while ($report = $db->sql_fetchrow($result))
-		{
-			$reported[] = $report[$sql_id];
-		}
-		$db->sql_freeresult($result);
-
-		// There are reports
+		// Anything to do at all?
 		if (!empty($reported))
 		{
-			$corrupted = array();
+			// Set some SQL stuff based upon the type
+			$sql_id		= ($type == 'posts') ? 'post_id' : 'msg_id';
+			$sql_from	= ($type == 'posts') ? POSTS_TABLE : PRIVMSGS_TABLE;
+			$sql_where	= ($type == 'posts') ? 'post_reported' : 'message_reported';
 
+			$corrupted = array();
+			
 			// Set all unflagged as flagged
 			$sql = "SELECT {$sql_id}
 				FROM {$sql_from}
@@ -146,6 +136,32 @@ class resync_report_flags
 
 		// Next!
 		$this->_next_mode();
+	}
+
+	/**
+	 * Get all reports for a given type
+	 *
+	 * @param  String $type The type that gets resynced
+	 * @return Array        All report data
+	 */
+	function _get_reported($type)
+	{
+		global $db;
+
+		$sql_id	= ($type == 'posts') ? 'post_id' : 'pm_id';
+
+		$sql = "SELECT {$sql_id}
+			FROM " . REPORTS_TABLE . "
+			WHERE {$sql_id} > 0";
+		$result	= $db->sql_query($sql);
+		$set	= array();
+		while ($report = $db->sql_fetchrow($result))
+		{
+			$set[] = $report[$sql_id];
+		}
+		$db->sql_freeresult($result);
+
+		return $set;
 	}
 
 	/**
