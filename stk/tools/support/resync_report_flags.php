@@ -233,11 +233,17 @@ class resync_report_flags
 
 		// Grep all the topics that should be flagged
 		$expected = array();
-		$sql = 'SELECT DISTINCT t.topic_id
-			FROM (' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t)
-			WHERE p.post_reported = 1
-				AND t.topic_id = p.topic_id';
-		$result	= $db->sql_query($sql);
+		$sql_ary = array(
+			'SELECT'	=> 't.topic_id',
+			'FROM'		=> array(
+				POSTS_TABLE		=> 'p',
+				TOPICS_TABLE	=> 't',
+			),
+			'WHERE'		=> 'p.post_reported = 1
+								AND t.topic_id = p.topic_id',
+		);
+		$sql = $db->sql_build_query('SELECT_DISTINCT', $sql_ary);
+		$result = $db->sql_query($sql);
 		while ($topic = $db->sql_fetchrow($result))
 		{
 			$expected[] = $topic['topic_id'];
