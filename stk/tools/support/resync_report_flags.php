@@ -75,29 +75,19 @@ class resync_report_flags
 	{
 		global $db;
 
-		// Set some SQL stuff based upon the type
-		$sql_id		= ($type == 'posts') ? 'post_id' : 'pm_id';
-		$sql_from	= ($type == 'posts') ? POSTS_TABLE : PRIVMSGS_TABLE;
-		$sql_nid	= ($type == 'posts') ? 'pm_id' : 'post_id';
-		$sql_where	= ($type == 'posts') ? 'post_reported' : 'message_reported';
+		// Fetch the report data
+		$reported = $this->_get_reported($type);
 
-		// Grep all the report data
-		$reported	= array();
-		$sql = "SELECT {$sql_id}
-			FROM " . REPORTS_TABLE . "
-			WHERE {$sql_nid} = 0";
-		$result	= $db->sql_query($sql);
-		while ($report = $db->sql_fetchrow($result))
-		{
-			$reported[] = $report[$sql_id];
-		}
-		$db->sql_freeresult($result);
-
-		// There are reports
+		// Anything to do at all?
 		if (!empty($reported))
 		{
-			$corrupted = array();
+			// Set some SQL stuff based upon the type
+			$sql_id		= ($type == 'posts') ? 'post_id' : 'msg_id';
+			$sql_from	= ($type == 'posts') ? POSTS_TABLE : PRIVMSGS_TABLE;
+			$sql_where	= ($type == 'posts') ? 'post_reported' : 'message_reported';
 
+			$corrupted = array();
+			
 			// Set all unflagged as flagged
 			$sql = "SELECT {$sql_id}
 				FROM {$sql_from}
@@ -149,6 +139,32 @@ class resync_report_flags
 	}
 
 	/**
+	 * Get all reports for a given type
+	 *
+	 * @param  String $type The type that gets resynced
+	 * @return Array        All report data
+	 */
+	function _get_reported($type)
+	{
+		global $db;
+
+		$sql_id	= ($type == 'posts') ? 'post_id' : 'pm_id';
+
+		$sql = "SELECT {$sql_id}
+			FROM " . REPORTS_TABLE . "
+			WHERE {$sql_id} > 0";
+		$result	= $db->sql_query($sql);
+		$set	= array();
+		while ($report = $db->sql_fetchrow($result))
+		{
+			$set[] = $report[$sql_id];
+		}
+		$db->sql_freeresult($result);
+
+		return $set;
+	}
+
+	/**
 	 * Make sure that the post flags are correct, this will adjust
 	 * flags based upon the status of the report. This method
 	 * assumes that all pms/posts are correctly flagged as reported
@@ -192,7 +208,7 @@ class resync_report_flags
 		{
 			$queries[] = 'UPDATE ' . PRIVMSGS_TABLE . '
 				SET message_reported = 0
-				WHERE ' . $db->sql_in_set('pm_id', $pms);
+				WHERE ' . $db->sql_in_set('msg_id', $pms);
 		}
 
 		// Run them
@@ -217,11 +233,17 @@ class resync_report_flags
 
 		// Grep all the topics that should be flagged
 		$expected = array();
-		$sql = 'SELECT DISTINCT t.topic_id
-			FROM (' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t)
-			WHERE p.post_reported = 1
-				AND t.topic_id = p.topic_id';
-		$result	= $db->sql_query($sql);
+		$sql_ary = array(
+			'SELECT'	=> 't.topic_id',
+			'FROM'		=> array(
+				POSTS_TABLE		=> 'p',
+				TOPICS_TABLE	=> 't',
+			),
+			'WHERE'		=> 'p.post_reported = 1
+								AND t.topic_id = p.topic_id',
+		);
+		$sql = $db->sql_build_query('SELECT_DISTINCT', $sql_ary);
+		$result = $db->sql_query($sql);
 		while ($topic = $db->sql_fetchrow($result))
 		{
 			$expected[] = $topic['topic_id'];
