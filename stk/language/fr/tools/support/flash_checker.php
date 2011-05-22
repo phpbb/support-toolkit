@@ -2,7 +2,7 @@
 /**
  *
  * @package Support Toolkit - Flash checker
- * @version 1.0.1-dev
+ * @version 1.0.1
  * @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/  
  * @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License

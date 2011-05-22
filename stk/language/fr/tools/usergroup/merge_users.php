@@ -2,7 +2,7 @@
 /**
 *
 * @package Support Toolkit - Merge Users
-* @version 1.0.1-dev
+* @version 1.0.1
 * @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
 * @author ToonArmy (Chris Smith) <toonarmy@phpbb.com> http://www.cs278.org/
 * @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
