@@ -254,7 +254,7 @@ class mysql_upgrader
 			// Do we now need to re-add the fulltext index? ;)
 			if ($table_name == ($table_prefix . 'posts') && $drop_index)
 			{
-				$this->_upgrader .= 'ALTER TABLE ' . $table_name . ' ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text)' . PHP_EOL;
+				$this->_upgrader .= 'ALTER TABLE ' . $table_name . ' ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text);' . PHP_EOL;
 			}
 		}
 

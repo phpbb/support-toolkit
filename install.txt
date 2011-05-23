@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.4-rc1 ==
+* [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
+
 == Changes since 1.0.3 ==
 * [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
