@@ -174,7 +174,7 @@ function get_columns($table)
 			// PostgreSQL
 			case 'postgres'	:
 				$sql = "SELECT a.attname
-					FROM pg_class AS c, pg_attribute AS a
+					FROM pg_class c, pg_attribute a
 					WHERE c.relname = '%s'
 						AND a.attnum > 0
 						AND a.attrelid = c.oid";
@@ -182,11 +182,11 @@ function get_columns($table)
 			break;
 
 			// MsSQL
-			case 'mssql'	:
+			case 'mssql'		:
+			case 'mssqlnative'	:
 				$sql = "SELECT c.name
 					FROM syscolumns c
-					LEFT JOIN (sysobjects o)
-					ON (c.id = o.id)
+					LEFT JOIN sysobjects o ON c.id = o.id
 					WHERE o.name = '%s'";
 				$column_name = 'name';
 			break;

@@ -258,6 +258,7 @@ class erk_config_repair
 			break;
 
 			case 'mssql':
+			case 'mssqlnative':
 			case 'mssql_odbc':
 				$prefix_length = 90;
 			break;
