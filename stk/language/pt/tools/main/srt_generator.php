@@ -5,7 +5,7 @@
  * @version $Id$
  * @copyright (c) 2010 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * Translated By: http://phpbbportugal.com/
+ * @Traduzido por: http://phpbbportugal.com - segundo as normas do Acordo Ortográfico
  */
 
 /**
@@ -38,50 +38,50 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Below is your copy of the Support Request Template. Click below to copy it to your clipboard, then create a new post in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">Support forum</a> with this information. If you already have an existing support topic regarding your issue, please copy the template into a reply to your existing topic instead of creating a new one.',
-	'COULDNT_LOAD_SRT_ANSWERS'		=> 'The Support Request Template Generator couldn’t load the answers. Make sure that you’ve correctly started the tool.',
-	'SRT_GENERATOR'					=> 'Support Request Template Generator',
-	'SRT_GENERATOR_LANDING'			=> 'Support Request Template Generator',
-	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Welcome to the Support Team’s Support Request Template Generator. This is the quickest and most efficient way to complete our Support Request Template. The generator will ask you a series of eight to ten questions that are useful for diagnosing most issues. It will then compile your answers into a list that may be copied and pasted into your support topic.<br />This STK tool does the same thing as the <a href="http://www.phpbb.com/support/stk/">SRT Generator on www.phpbb.com</a> but attempts to pre-fill certain questions.<br /><br />Do you wish run the SRT Generator?',
-	'SRT_NO_CACHE'					=> 'The Support Request Template generator uses the phpBB cache system to store information while going through all the steps. You’re using the phpBB null cache which isn’t compatible with this tool. Please switch to one of the other caching backends to use this tool or use the <a href="http://www.phpbb.com/support/srt/">online SRT Generator</a>',
-	'START_OVER'					=> 'Start over',
+	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Em baixo existe um modelo para pedido de Suporte. Clique para copiá-lo para a área de transferência e, com esta informação, abrir um novo Tópico no <a href="http://www.phpbb.com/community/viewforum.php?f=46">Fórum de Suporte</a>. Se já existe um Tópico sobre o seu problema, em vez de abrir um novo, use-o para colocar o seu pedido de suporte.',
+	'COULDNT_LOAD_SRT_ANSWERS'		=> 'O Gerador de Pedido de Suporte não carregou as respostas. Verifique se que iniciou a ferramenta corretamente.',
+	'SRT_GENERATOR'					=> 'Gerador de Pedido de Suporte',
+	'SRT_GENERATOR_LANDING'			=> 'Gerador de Pedido de Suporte',
+	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Bem-vindo ao Gerador de Pedido de Suporte da Equipa de Suporte. Este é o processo mais rápido e eficiente de preenchimento do modelo de Pedido de Suporte. Este gerador fará, entre oito a dez perguntas que são as mais indicadas, para diagnosticar a maioria dos problemas. As respostas são compiladas numa lista que deve ser copiada e colada no seu Tópico de Pedido de Suporte. <br /> Esta ferramenta STK faz o mesmo que o <a href="http://www.phpbb.com/support/stk/">Gerador SRT em www.phpbb.com</a>, no entanto, este acrescenta tentativas de pré-preencher certas em algumas questões. <br /><br /> Deseja executar o gerador SRT?',
+	'SRT_NO_CACHE'					=> 'O Gerador de Pedido de Suporte, usa o sistema de cache do phpBB, para armazenar informações durante as sucessivas etapas. A cache do seu phpBB está desativada, o que não é compatível com esta ferramenta. Por favor, mude para um modo de cache, para ou use o <a href="http://www.phpbb.com/support/srt/">Gerador online SRT</a>',
+	'START_OVER'					=> 'Recomeçar',
 ));
 
 // Step 1 strings
 $lang = array_merge($lang, array(
 //	'STEP1_CONVERT'			=> '',
 //	'STEP1_CONVERT_EXPLAIN'	=> '',
-	'STEP1_MOD'				=> 'Is your problem MOD-related?',
-	'STEP1_MOD_EXPLAIN'		=> 'Did this problem start after installing or removing a MOD?',
-	'STEP1_MOD_ERROR'		=> 'Support questions for MOD related issues (e.g., if you have just installed a MOD and are now getting errors) should be posted within the topic of where you have downloaded the MOD. If the MOD was downloaded from another site you will have to seek support there.<br /><br /><a href="http://www.phpbb.com/community/viewforum.php?f=81">Go to the MOD Forums</a>',
-	'STEP1_HACKED'			=> 'Was your board hacked?',
-	'STEP1_HACKED_EXPLAIN'	=> 'Select "Yes" for this option if you are seeking support because your board was defaced/otherwise compromised.',
-	'STEP1_HACKED_ERROR'	=> 'If your board was hacked, we ask that you file a report with the Incident Investigation Tracker instead of posting in the Support forum so that no private information is disclosed.<br /><br />See <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">this post</a> for directions on doing so.',
+	'STEP1_MOD'				=> 'O problema relaciona-se com Modificações?',
+	'STEP1_MOD_EXPLAIN'		=> 'O problema começou depois de instalar ou desinstalar uma modificação?',
+	'STEP1_MOD_ERROR'		=> 'Questões relacionadas com suporte a Modificações (por exemplo, se instalou uma Modificação e agora tem mensagens de erros) devem ser colocadas no Tópico de onde transferiu a Modificação. Se a Modificação foi transferida de outro site, terá que procurar Suporte lá. <br /><br /> <a href="http://www.phpbb.com/community/viewforum.php?f=81">Ir para o Fórum de Modificações</a>',
+	'STEP1_HACKED'			=> 'O seu Fórum foi invadido (hackeado)',
+	'STEP1_HACKED_EXPLAIN'	=> 'Nesta opção selecione "Sim" se procura Suporte porque o seu Fórum está desconfigurado.',
+	'STEP1_HACKED_ERROR'	=> 'Se o seu Fórum foi invadido (hackeado), envie um relatório com o Incident Investigation Tracker, em vez de pedir suporte no Fórum, para que nenhuma informação privada seja divulgada. <br /><br /> Leia <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">este post</a> para obter mais instruções sobre o fazer.',
 ));
 
 // The questions
 $lang = array_merge($lang, array(
 	'SRT_QUESTIONS'			=> array(
 		'step2'	=> array(
-			'phpbb_version'		=> 'What version of phpBB are you using?',
-			'board_url'			=> 'What is your board’s URL?',
-			'dbms'				=> 'Which database type/version are you using?',
-			'php'				=> 'Which PHP version are you using?',
-			'host_name'			=> 'Who do you host your board with?',
-			'install_type'		=> 'How did you install your board?',
-			'inst_converse'		=> 'Is your board a fresh install or a conversion?',
-			'mods_installed'	=> 'Do you have any MODs installed?',
-			'registration_req'	=> 'Is registration required to reproduce this issue?',
+			'phpbb_version'		=> 'Qual versão do phpBB que está a usar?',
+			'board_url'			=> 'Qual é o URL do seu Fórum?',
+			'dbms'				=> 'Que tipo de Base de Dados e versão está a usar?',
+			'php'				=> 'Qual é a versão do PHP que está a usar?',
+			'host_name'			=> 'Quem aloja o seu Fórum?',
+			'install_type'		=> 'Como instalou o seu Fórum phpBB',
+			'inst_converse'		=> 'O seu Fórum phpBB é uma nova instalação ou uma conversão?',
+			'mods_installed'	=> 'Tem alguma Modificação instalada?',
+			'registration_req'	=> 'O problema só se manifesta depois do Acesso?',
 		),
 		'step3'	=> array(
-			'installed_styles'		=> 'What styles do you currently have installed?',
-			'installed_languages'	=> 'What language(s) is your board currently using?',
-			'xp_level'				=> 'What is your level of experience?',
-			'problem_started'		=> 'When did your problem begin?',
-			'problem_description'	=> 'Please describe your problem.',
-			'installed_mods'		=> 'What MODs do you have installed?',
-			'test_username'			=> 'What username can be used to view this issue?',
-			'test_password'			=> 'What password can be used to view this issue?',
+			'installed_styles'		=> 'Quais os estilos que tem instalados?',
+			'installed_languages'	=> 'Qual o idioma que está a usar no seu Fórum phpBB?',
+			'xp_level'				=> 'Qual o seu nível de experiência?',
+			'problem_started'		=> 'Quando é que o seu problema começou?',
+			'problem_description'	=> 'Descreva o seu problema.',
+			'installed_mods'		=> 'Quais as Modificações que tem instaladas?',
+			'test_username'			=> 'Que Utilizador pode ser usado para ver este problema?',
+			'test_password'			=> 'Qual a Senha deste Utilizador?',
 		),
 	),
 ));
@@ -90,25 +90,25 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'SRT_QUESTIONS_EXPLAIN'	=> array(
 		'step2'	=> array(
-			'phpbb_version'		=> 'The SRT Generator couldn’t determine which phpBB version you are using, please select the correct version. To find this information, login to your board and scroll down to the bottom of the page. Click "Administration Control Panel". Click the "System" tab.',
-			'board_url'			=> 'Your board URL is the address that you use to access your board. Most problems are more easily fixed when one can view your board. If you do not want to give out this information, please enter "n/a".',
-			'dbms'				=> 'To determine which database version and type you are using, go to the Administration Control Panel. On the "General" tab, locate "Database server:" in the statistics table.',
-			'php'				=> 'To determine which PHP version you are using, go to the Administration Control Panel. On the "General" tab, click on "PHP Information", here you’ll find "PHP Version x.y.z"',
-			'host_name'			=> 'Some problems experienced with phpBB boards can be attributed to particular hosts. This field should be filled with the company that is providing your webhosting package (like GoDaddy, Yahoo!, 1&1, etc.). If you are hosting the board yourself, please indicate this. Likewise, if you do not know who is hosting your board, please indicate this as well.',
-			'install_type'		=> 'If you installed your board by downloading the phpBB files, uploading them to your host, then browsing to the installer, select "I installed the board by myself." If you had someone do the installation for you, select "Someone else installed my board for me." If you used an automated tool like Fantastico, select "I used a tool provided by my host."',
-			'inst_converse'		=> 'If your board was a fresh install, this means your board did not exist prior to installing phpBB. If you recently updated your board from an older version of phpBB3 prior to your problem beginning, then selected "Update from a previous version of phpBB3". If it is a conversion, this means your board was installed previously as another piece of software then later converted to phpBB.',
-			'mods_installed'	=> 'MODs are often the cause of many problems with phpBB. This information can help to determine the exact cause of your issue.',
-			'registration_req'	=> 'Select "Yes" if one must be registered and logged in to experience this problem.',
+			'phpbb_version'		=> 'O Gerador de SRT não determinou que versão do phpBB está a usar, selecione a versão correta. Para a encontrar, entre no "Painel de Administração" e clique no separador "Sistema".',
+			'board_url'			=> 'O URL é o endereço que usa para entrar no seu Fórum. A maioria dos problemas resolve-se mais facilmente quando se pode ver o Fórum. Se não deseja dar essa informação, por favor, digite "n / a".',
+			'dbms'				=> 'Para determinar a versão e tipo de Base de Dados entre no Painel de Administração. No separador "Geral", localize "Servidor da Base de Dados" na Tabela Estatísticas do Fórum.',
+			'php'				=> 'Para determinar a versão do PHP, entre no Painel de Administração. No separador "Geral", clique no menu "Informação PHP" e encontrará a informação "PHP Version xyz".',
+			'host_name'			=> 'Alguns dos problemas com Fóruns phpBB podem ser atribuídos aos servidores anfitriões. Neste campo deve indicar a empresa que fornece o serviço de hospedagem web (como o GoDaddy, Yahoo, 1 & 1, etc.) Se o Fórum é hospedando por si mesmo, ou não sabe quem faz, por favor indique-o.',
+			'install_type'		=> 'Se, para instalar o seu Fórum, transferiu os ficheiros do phpBB, enviou-os para o Servidor, e de seguida correu o instalador, selecione " Usei o pacote de transferência do phpBB.com" Se alguém fez a instalação por si, selecione "Alguém me instalou por mim o phpBB" Se usou uma ferramenta automática como o Fantastico, selecione "Usei uma ferramenta disponibilizada pelo meu fornecedor de alojamento".',
+			'inst_converse'		=> 'Se o seu Fórum é uma instalação nova, significa que não existia antes de instalar o phpBB. Se atualizou recentemente o seu Fórum de uma versão anterior ao phpBB3 antes do início problema, então, selecione “Atualização de versão anterior à phpBB3”. Se é uma conversão, significa que o phpBB foi instalado anteriormente usando outro software, mais tarde convertido para phpBB.',
+			'mods_installed'	=> 'As Modificações são uma a causa frequente de problemas no phpBB. Esta informação pode ajudar a determinar a causa exata do problema.',
+			'registration_req'	=> 'Selecione "Sim" se é preciso estar registrado e logado para ver o problema.',
 		),
 		'step3'	=> array(
-			'installed_styles'		=> 'An out of date style is the cause of many problems. If you do not know which styles you have installed, go to the Administration Control Panel, then browse to the "Styles" tab.',
-			'installed_languages'	=> 'An out of date language pack is the cause of many problems. If you do not know which language packs you have installed, go to the Administration Control Panel, then browse to the "System" tab. Next, select "Language packs" from the list of pages on the left.',
-			'xp_level'				=> 'Please select the option that best describes you.',
-			'problem_started'		=> 'Please describe the actions you took (updating your board, installing a MOD, etc.) prior to this problem becoming noticeable.',
-			'problem_description'	=> 'When describing your problem, please attempt to be as detailed as possible. Include information regarding when the problem started, steps to reproduce the problem, and any other information that you deem helpful.',
-			'installed_mods'		=> 'Please try to be as detailed as you can when listing your installed MODs. This information greatly helps us in determining the cause of your problem.',
-			'test_username'			=> 'Please provide the username to a test account that can be used to view this issue. Do <strong>not</strong> provide this information if the user requires more than "regular user" privileges.',
-			'test_password'			=> 'Please provide the password to a test account that can be used to view this issue. Do <strong>not</strong> provide this information if the user requires more than "regular user" privileges.',
+			'installed_styles'		=> 'Um estilo desatualizado é causa de muitos problemas. Se não sabe quais os estilos que tem instalados, vá ao Painel de Administração, e procure o separador "Estilo".',
+			'installed_languages'	=> 'Se não sabe que pacotes de idiomas que tem instalados, vá ao Painel de Administração, e procure o separador "Sistema". Clique no menu "Pacotes de Idiomas".',
+			'xp_level'				=> 'Por favor, selecione a opção que melhor o descreve.',
+			'problem_started'		=> 'Por favor, descreva as suas ações (atualização do phpBB, instalação de uma Modificação, etc) antes deste problema se tornar visível.',
+			'problem_description'	=> 'Tente descrever o problema o mais detalhadamente possível. Inclua informações sobre quando o começou, os passos necessários para o reproduzir, e quaisquer outras informações que julgue úteis.',
+			'installed_mods'		=> 'Tente ser o mais detalhado possível na lista de Modificações instaladas. Esta informação ajuda muito na determinação da causa do problema.',
+			'test_username'			=> 'Forneça o nome de um Utilizador de uma conta de teste para este problema possa ser observado. Por favor <strong>Não</strong> dê esta informação se o Utilizador precisar de Permissões superiores à Permissões de Utilizador comum.',
+			'test_password'			=> 'Forneça uma Senha da conta de teste para este problema possa ser observado. Por favor <strong>Não</strong> dê esta informação se o Utilizador precisar de Permissões superiores à Permissões de Utilizador comum.',
 		),
 	),
 ));
@@ -118,25 +118,25 @@ $lang = array_merge($lang, array(
 	'SRT_DROPDOWN_OPTIONS'	=> array(
 		'step2'	=> array(
 			'install_type'	=> array(
-				'myself'		=> 'I used the download package from phpBB.com',
-				'third'			=> 'I used a download package provided by another website',
-				'someone_else'	=> 'Someone else installed my board for me',
-				'automated'		=> 'I used a tool provided by my host',
+				'myself'		=> 'Usei o pacote de transferência do phpBB.com',
+				'third'			=> 'Usei o pacote de transferência de outro site',
+				'someone_else'	=> 'Alguém me instalou por mim o phpBB',
+				'automated'		=> 'Usei uma ferramenta disponibilizada pelo meu fornecedor de alojamento',
 			),
 			'inst_converse'	=> array(
-				'fresh'				=> 'Fresh Install',
-				'phpbb_update'		=> 'Update from a previous version of phpBB3',
-				'convert_phpbb2'	=> 'Conversion from phpBB2',
-				'convert_other'		=> 'Conversion from another software',
+				'fresh'				=> 'Instalação nova',
+				'phpbb_update'		=> 'Atualização de versão anterior à phpBB3',
+				'convert_phpbb2'	=> 'Conversão do phpBB2',
+				'convert_other'		=> 'Conversão de outro software',
 			)
 		),
 		'step3'	=> array(
 			'xp_level'		=> array(
-				'new_both'		=> 'New to PHP and phpBB',
-				'new_phpbb'		=> 'New to phpBB but not PHP',
-				'new_php'		=> 'New to PHP but not phpBB',
-				'comfort'		=> 'Comfortable with PHP and phpBB',
-				'experienced'	=> 'Experienced with PHP and phpBB',
+				'new_both'		=> 'Iniciado em PHP e phpBB',
+				'new_phpbb'		=> 'Iniciado em phpBB mas não PHP',
+				'new_php'		=> 'Iniciado em PHP mas não phpBB',
+				'comfort'		=> 'Confortável com PHP e phpBB',
+				'experienced'	=> 'Experiente em PHP e phpBB',
 			),
 		),
 	),

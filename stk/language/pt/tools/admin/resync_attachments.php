@@ -4,7 +4,7 @@
  * @package Support Toolkit - Resync Attachments
  * @copyright (c) 2009 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @Traduzido por: http://phpbbportugal.com - segundo as normas do Acordo Ortográfico
+ * @Traduzido por: http://phpbbportugal.com - segundo as normas do Acordo Ortográfico
  */
 
 /**
@@ -37,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_ATTACHMENTS'			=> 'Sincronizar anexos novamente',
+	'RESYNC_ATTACHMENTS'			=> 'Sincronizar anexos',
 	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Esta ferramenta verifica se todos os anexos armazenados na Base de Dados têm o respetivo ficheiro no Servidor. Se o ficheiro não existir, esta ferramenta irá remover o anexo da base de dados. Tem certeza que deseja continuar?',
 	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Anexos sincronizados com sucesso!',
 	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Sincronização de anexos em andamento. Não interrompa este processo.',

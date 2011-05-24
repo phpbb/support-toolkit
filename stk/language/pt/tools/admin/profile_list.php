@@ -40,6 +40,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Todos',
 
+	'CLICK_TO_DELETE'		=> 'Apagar todos os utilizadores selecionados, clicando neste botão. <em>(Não pode ser revertido!)</em>',
+
 	'FILTER'				=> 'Filtro',
 
 	'LIMIT'					=> 'Limite',
@@ -49,6 +51,10 @@ $lang = array_merge($lang, array(
 
 	'PROFILE_LIST'			=> 'Lista do Perfil',
 	'PROFILE_LIST_EXPLAIN'	=> 'Ferramenta para exibir informações do Perfil para múltiplos Utilizadores. Esta ferramenta pode ajudar a detetar contas Spam.',
+
+	'USERS_DELETE'				=> 'Apagar utilizadores selecionados',
+	'USERS_DELETE_CONFIRM'		=> 'Tem a certeza que quer apagar os utilizadores selecionados? Apagando os utilizadores com esta ferramente <strong>eliminará</strong> também todas as suas mensagens!',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Todos os utilizadores selecionados foram apagados com sucesso!',
 ));
 
 ?>
