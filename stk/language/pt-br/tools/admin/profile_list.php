@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Todos',
 	
-	'CLICK_TO_DELETE'		=> 'Exclui todos os usuárioa selecionado clicando neste botão. <em>(Não pode ser desfeito!)</em>',
+	'CLICK_TO_DELETE'		=> 'Exclui todos os usuários selecionados clicando neste botão. <em>(Não pode ser desfeito!)</em>',
 
 	'FILTER'				=> 'Filtrar',
 
