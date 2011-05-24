@@ -37,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_AVATARS'			=> 'Sincronizar avatares novamente',
+	'RESYNC_AVATARS'			=> 'Sincronizar avatares',
 	'RESYNC_AVATARS_CONFIRM'	=> 'Esta ferramenta verifica se todos os avatares usados no fórum têm a respetiva imagem no servidor. Se a imagem não existir, o avatar será removido do perfil dos utilizadores. Tem certeza que deseja continuar?',
 	'RESYNC_AVATARS_FINISHED'	=> 'Avatares sincronizados com sucesso!',
 	'RESYNC_AVATARS_NEXT_MODE'	=> 'A mudar o grupo do avatar, não interrompa este processo!',

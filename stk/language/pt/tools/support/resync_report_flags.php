@@ -37,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_REPORT_FLAGS'			=> 'Sincronizar denúncias novamente',
+	'RESYNC_REPORT_FLAGS'			=> 'Sincronizar denúncias',
 	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Esta ferramenta sincroniza as denúncias para todas as Mensagens, Tópicos e Mensagens Privadas.',
 	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Todos as denúncias foram sincronizadas com sucesso!',
 	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Sincronização das denúncias em progresso. Não interrompa este processo',

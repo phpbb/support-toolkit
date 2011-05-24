@@ -43,7 +43,7 @@ $lang = array_merge($lang, array(
 	'MERGE_USERS_EXPLAIN'				=> 'Ferramenta para fundir contas ativas de utilizadores. São copiadas as definições de utilizador e de Grupo. São copiadas as permissões de utilizador, acessórios, expulsões, marcadores de páginas, rascunhos, acompanhamento de Fóruns e Tópicos, o fórum / tópico assistindo, entradas nos registos, votos em votações, mensagens, mensagens privadas, relatórios, temas, avisos e amigos e inimigos.',
 
 	'MERGE_USERS_BOTH_FOUNDERS'			=> 'Não pode fundir um Fundador com um utilizador normal.',
-	'MERGE_USERS_BOTH_IGNORE'			=> 'Não pode fundir um bot com um utilizador normal.',
+	'MERGE_USERS_BOTH_IGNORE'			=> 'Não pode fundir um bot (Motor de Pesquisa) com um utilizador normal.',
 
 	'MERGE_USERS_MERGED'				=> 'Utilizadores fundidos com sucesso',
 
