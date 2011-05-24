@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'BACK_TOOL'							=> 'Voltar para a última Ferramenta',
+	'BACK_TOOL'							=> 'Voltar à última Ferramenta',
 	'BOARD_FOUNDER_ONLY'				=> 'Só os Fundadores têm acesso ao Support Toolkit.',
 
 	'CAT_ADMIN'							=> 'Ferramentas de Administração',
@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	'CAT_ERK'							=> 'Kit de reparação de emergência',
 	'CAT_ERK_EXPLAIN'					=> 'O kit de reparação de emergência é um pacote separado do STK, que é construído para executar alguns testes que podem detetar problemas na sua instalação do phpBB que possam impedir a sua placa de trabalhar. Clique <a href="%s">aqui</a> para executar o kIT.',
 	'CAT_MAIN'							=> 'Geral',
-	'CAT_MAIN_EXPLAIN'					=> 'O Support Toolkit, ou STK, é uma ferramenta que pode ser usada para recuperar instalações de phpBB 3.0.x, ou corrigir problemas duma instalação em funcionamento. O stk é um segundo ACP que pode ser facilmente instalado em qualquer instalação de phpBB 3, e tem a aparência do ACP do phpBB 3, mas o Administrador tem acesso a todo um novo conjunto de ferramentas que podem ser utilizadas nos casos em que phpBB não funcione correctamente ou tenha deixado de funcionar totalmente.',
+	'CAT_MAIN_EXPLAIN'					=> 'O Support Toolkit ou STK, são ferramentas desenhadas recuperar ou corrigir instalações phpBB 3x. O stk é um segundo Painel de Controlo do Utilizador facilmente instalável em qualquer sistema phpBB 3x, idêntico ao ACP do phpBB 3x. O Administrador tem acesso a um conjunto de ferramentas que podem ser utilizadas mesmo que o phpBB não funcione correctamente ou não funcione de todo.',
 	'CAT_SUPPORT'						=> 'Ferramentas de Manutenção',
 	'CAT_SUPPORT_EXPLAIN'				=> 'Ferramentas de manutenção são instrumentos de correção e recuperação de partes de uma instalação phpBB 3.0.',
 	'CAT_USERGROUP'						=> 'Ferramentas Utilizadores/Grupos',
@@ -57,12 +57,12 @@ $lang = array_merge($lang, array(
 
 	'DOWNLOAD_PASS'						=> 'Transferir o ficheiro com a senha.',
 
-	'EMERGENCY_LOGIN_NAME'				=> 'Login de emergência STK',
+	'EMERGENCY_LOGIN_NAME'				=> 'Acesso de emergência STK',
 	'ERK'								=> 'Kit de reparação de emergência',
 
 	'FAIL_REMOVE_PASSWD'				=> 'Não foi possível remover o ficheiro com a senha expirada. Remova o ficheiro manualmente!',
 
-	'GEN_PASS_FAILED'					=> 'Algo correu mal durante a geração do ficheiro de senha. Por favor repita o processo.',
+	'GEN_PASS_FAILED'					=> 'Algo correu mal durante a geração do ficheiro da senha. Por favor repita o processo.',
 	'GEN_PASS_FILE'						=> 'Cria nova senha de acesso.',
 	'GEN_PASS_FILE_EXPLAIN'				=> 'Se já não consegue entrar no phpBB pode usar o método de autenticação interna do STK. Para utilizar este método, deve <a href="%s">criar</a> uma nova senha de acesso.',
 
@@ -73,8 +73,8 @@ $lang = array_merge($lang, array(
 	'LOGIN_STK_SUCCESS'					=> 'O seu Registo foi verificado com sucesso. Vai ser redirecionado para o Support Toolkit.',
 
 	'NOTICE'							=> 'Atenção',
-	'NO_VERSION_FILE'					=> 'O Support Toolkit (stk) não consegui verificar a última versão. Por favor vá à <a href="http://www.phpbb.com/support/stk/">página</a> do Support Toolkit (stk) e verifique se está a usar a última versão antes de continuar.',
-	
+	'NO_VERSION_FILE'					=> 'O Support Toolkit (stk) não conseguiu verificar a última versão. Por favor vá à <a href="http://www.phpbb.com/support/stk/">página</a> do Support Toolkit (stk) e verifique se está a usar a última versão antes de continuar.',
+
 	'PASS_GENERATED'					=> 'O ficheiro com a sua senha STK foi criado com sucesso!<br/>A senha que foi criada é: <em>%1$s</em><br />Esta senha expira em: <span style="text-decoration: underline;">%2$s</span>, depois desta data <strong>tem</strong> que criar um novo ficheiro para continuar a usar o login de emergência!<br /><br />Use o botão seguinte para fazer a transferência do ficheiro. Depois de transferido o ficheiro para o seu computador envie-o para a directoria "stk" do servidor',
 	'PASS_GENERATED_REDIRECT'			=> 'Depois de enviar o ficheiro para o local correto clique <a href="%s"><strong>aqui</strong></a> para ir para a página de acesso.',
 	'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Esta ferramenta não é compatível com sua a versão do phpBB',

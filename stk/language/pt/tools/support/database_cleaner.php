@@ -46,7 +46,7 @@ $lang = array_merge($lang, array(
 	'CONFIG_UPDATE_SUCCESS'			=> 'As definições de configuração foram atualizadas com sucesso!',
 	'CONTINUE'						=> 'Continuar',
 
-	'DATABASE_CLEANER'				=> 'Limpeza da Base de Dados',
+	'DATABASE_CLEANER'				=> 'Limpar Base de Dados',
 	'DATABASE_CLEANER_EXTRA'		=> 'Outros elementos extra foram adicionados por Modificações.  <strong>Selecione a caixa de verificação para remover</strong>.',
 	'DATABASE_CLEANER_MISSING'		=> 'Os campos com fundo vermelho como este são itens em falta que devem ser acrescentados. <strong>Selecione a caixa de verificação para adicionar</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'Todas as tarefas de limpeza da Base de dados terminaram com sucesso<br /><br />Faça uma nova cópia de segurança da Base de Dados.',
@@ -74,7 +74,7 @@ $lang = array_merge($lang, array(
 	'MISSING'						=> 'Perdido',
 	'MODULE_UPDATE_SUCCESS'			=> 'Os módulos foram atualizados com sucesso!',
 
-	'NO_BOT_GROUP'					=> 'Não foi possível redefinir os Bots. Falta o Grupo de Bots.',
+	'NO_BOT_GROUP'					=> 'Não foi possível redefinir os Bots (Motores de Pesquisa). Falta o Grupo de Bots.',
 
 	'PERMISSION_SETTINGS'			=> 'Opções de Permissões',
 	'PERMISSION_UPDATE_SUCCESS'		=> 'As configurações das permissões foram atualizados com sucesso!',
@@ -82,10 +82,10 @@ $lang = array_merge($lang, array(
 
 	'QUIT'							=> 'Sair',
 
-	'RESET_BOTS'					=> 'Desativar Bots',
-	'RESET_BOTS_EXPLAIN'			=> 'Gostaria de repor os bots padrão do phpBB3? Todos os bots extra existentes serão removidos e substituídos pelo padrão definido.',
-	'RESET_BOTS_SKIP'				=> 'A redefinição do bot foi ignorada',
-	'RESET_BOT_SUCCESS'				=> 'Os bots foram redefinidos com sucesso!',
+	'RESET_BOTS'					=> 'Desativar Motores de Pesquisa',
+	'RESET_BOTS_EXPLAIN'			=> 'Gostaria de repor os Motores de Pesquisa padrão do phpBB3? Todos os Motores de Pesquisa extra existentes serão removidos e substituídos pelo padrão definido.',
+	'RESET_BOTS_SKIP'				=> 'A redefinição do Motor de Pesquisa foi ignorada',
+	'RESET_BOT_SUCCESS'				=> 'Os Motores de Pesquisa foram redefinidos com sucesso!',
 	'RESET_MODULES'					=> 'Desativa Módulos',
 	'RESET_MODULES_EXPLAIN'			=> 'Gostaria de repor os módulos para o padrão phpBB3? Todos os módulos extra existentes serão removidos e serão substituído pelo padrão phpBB3.',
 	'RESET_MODULES_SKIP'			=> 'A redefinição do módulo foi ignorada',
