@@ -1,6 +1,0 @@
-build/package/*
-build/whitelist_additional/*
-stk/includes/critical_repair/whitelist.txt
-
-.DS_Store
-*~
