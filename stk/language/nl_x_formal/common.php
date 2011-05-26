@@ -58,6 +58,7 @@ $lang = array_merge($lang, array(
    'DOWNLOAD_PASS'						=> 'Wachtwoordbestand downloaden',
 
    'EMERGENCY_LOGIN_NAME'				=> 'STK nood-aanmelding',
+   'ERK'								=> 'Nood reparatie kit',
 
    'FAIL_REMOVE_PASSWD'					=> 'Kon het verlopen wachtwoordbestand niet verwijderen. Verwijder dit bestand handmatig!',
 

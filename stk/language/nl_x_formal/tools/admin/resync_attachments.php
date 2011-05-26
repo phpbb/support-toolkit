@@ -1,16 +1,15 @@
 <?php
 /**
-*
-* @package Support Toolkit - SQL Query
-* @version $Id: sql_query.php 325 2010-10-17 20:54:48Z Raimon $
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Attachments
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -38,19 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ERROR_QUERY'					=> 'De query bevat de volgende fout',
-
-	'NO_RESULTS'					=> 'Geen resultaten',
-	'NO_SQL_QUERY'					=> 'U moet een query invoeren',
-
-	'QUERY_RESULT'					=> 'Query resultaten',
-
-	'SHOW_RESULTS'					=> 'Resultaten weergeven',
-	'SQL_QUERY'						=> 'SQL-query uitvoeren',
-	'SQL_QUERY_EXPLAIN'				=> 'Voer de SQL-query in die u wilt uitvoeren. Het hulpmiddel zal de “phpbb_” prefix vervangen met de prefix die u gebruikt.',
-	
-	'SQL_QUERY_LEGEND'				=> 'SQL-query',
-	'SQL_QUERY_SUCCESS'				=> 'De SQL-query is uitgevoerd.',
+	'RESYNC_ATTACHMENTS'			=> 'Bijlagen hersynchroniseren',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Dit hulpmiddel controleert of alle bijlagen die opgeslagen zijn in de database ook echt een bestand zijn op de server. Wanneer het bestand ontbreekt, zal het hulpmiddel de bijlagen verwijderen van de database. Weet u zeker dat u door wilt gaan?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Bijlagen zijn succesvol hersynchroniseerd!',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Bezig met hersynchroniseren van bijlagen. Onderbreek dit proces niet!',
 ));
-
-?>
