@@ -53,6 +53,6 @@ $lang = array_merge($lang, array(
 	'PROFILE_LIST_EXPLAIN'	=> 'Een tool voor het weergeven van profielinformatie van meerdere gebruikers. Deze tool kan bijdragen in het detecteren van spam accounts.',
 
 	'USERS_DELETE'				=> 'Verwijder geselecteerde gebruikers',
-	'USERS_DELETE_CONFIRM'		=> 'Weet je zeker dat je de geselecteerde gebruikers wilt verwijderen? Als je via deze tool gebruikers verwijderd, <strong>worden</strong> tevens all hun berichten verwijderd!',
+	'USERS_DELETE_CONFIRM'		=> 'Weet je zeker dat je de geselecteerde gebruikers wilt verwijderen? Als je via deze tool gebruikers verwijderd, <strong>worden</strong> tevens al hun berichten verwijderd!',
 	'USERS_DELETE_SUCCESSFULL'	=> 'Alle geselecteerde gebruikers zijn succesvol verwijderd!',
 ));
