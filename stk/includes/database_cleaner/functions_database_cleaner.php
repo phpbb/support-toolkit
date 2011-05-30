@@ -24,7 +24,14 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 	global $db;
 
 	$existing_config = array();
-	$sql = 'SELECT config_name FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
+	$sql_ary = array(
+		'SELECT'	=> 'c.config_name',
+		'FROM'		=> array(
+			CONFIG_TABLE => 'c',
+		),
+		'ORDER_BY'	=> 'config_name ASC',
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -44,8 +51,13 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 	global $db;
 
 	$existing_extension_groups = array();
-	$sql = 'SELECT group_name
-		FROM ' . EXTENSION_GROUPS_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'eg.group_name',
+		'FROM'		=> array(
+			EXTENSION_GROUPS_TABLE => 'eg',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -64,10 +76,16 @@ function get_extensions($group, &$group_id)
 {
 	global $db;
 
-	$sql = 'SELECT e.extension, eg.group_id
-		FROM (' . EXTENSIONS_TABLE . ' e, ' . EXTENSION_GROUPS_TABLE . ' eg)
-		WHERE e.group_id = eg.group_id
-			AND eg.group_name = \'' . $db->sql_escape($group) . '\'';
+	$sql_ary = array(
+		'SELECT'	=> 'e.extension, eg.group_id',
+		'FROM'		=> array(
+			EXTENSIONS_TABLE		=> 'e',
+			EXTENSION_GROUPS_TABLE	=> 'eg',
+		),
+		'WHERE'		=> "e.group_id = eg.group_id
+							AND eg.group_name = '" . $db->sql_escape($group) . "'",
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	$set	= array();
 	while ($row = $db->sql_fetchrow($result))
@@ -89,7 +107,13 @@ function get_permission_rows(&$permission_data, &$permission_rows, &$existing_pe
 	global $db;
 
 	$existing_permissions = array();
-	$sql = 'SELECT auth_option FROM ' . ACL_OPTIONS_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'ao.auth_option',
+		'FROM'		=> array(
+			ACL_OPTIONS_TABLE => 'ao',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -106,8 +130,13 @@ function get_role_rows(&$roles_data, &$role_rows, &$existing_roles)
 	global $db;
 	
 	$existing_roles = array();
-	$sql = 'SELECT role_name
-		FROM ' . ACL_ROLES_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'ar.role_name',
+		'FROM'		=> array(
+			ACL_ROLES_TABLE => 'ar',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -127,7 +156,14 @@ function get_group_rows(&$group_data, &$group_rows, &$existing_groups)
 	global $db;
 
 	$existing_groups = array();
-	$sql = 'SELECT group_name FROM ' . GROUPS_TABLE . ' WHERE group_type = 3';
+	$sql_ary = array(
+		'SELECT'	=> 'g.group_name',
+		'FROM'		=> array(
+			GROUPS_TABLE => 'g',
+		),
+		'WHERE'		=> 'group_type = 3',
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
