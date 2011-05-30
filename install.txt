@@ -50,6 +50,7 @@ update!
 * [Fix] Resolve "500 Server errors" on IIS. (Bug #62679)
 * [Fix] Unexpected return while running database cleaner. (Bug #62799)
 * [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
+* [Fix] Stricter HTTPS check in the auto cookie tool. (Bug #62814, Patch by Noxwizard)
 
 == Changes since 1.0.3 ==
 * [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
