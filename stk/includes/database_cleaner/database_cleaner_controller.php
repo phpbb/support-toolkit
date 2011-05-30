@@ -916,7 +916,7 @@ class database_cleaner_controller
 				}
 			}
 		}
-	}
 
-	return $error;
+		return $error;
+	}
 }
