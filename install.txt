@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.4-rc1 ==
 * [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
+* [Change] Some changes to the database cleaner to correctly support all the phpBB DBMS.
 * [Fix] Resolve "500 Server errors" on IIS. (Bug #62679)
 * [Fix] Unexpected return while running database cleaner. (Bug #62799)
 * [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
