@@ -39,6 +39,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Todos',
+	
+	'CLICK_TO_DELETE'		=> 'Excluir todos os usuários selecionados clicando neste botão. <em>(Não pode ser desfeito!)</em>',
 
 	'FILTER'				=> 'Filtrar',
 
@@ -49,4 +51,8 @@ $lang = array_merge($lang, array(
 
 	'PROFILE_LIST'			=> 'Lista de perfis',
 	'PROFILE_LIST_EXPLAIN'	=> 'Esta ferramenta exibe as informações do perfil de múltiplos usuários. Ela poderá também lhe auxiliar a identificar contas provenientes de spam.',
+	
+	'USERS_DELETE'				=> 'Excluir usuários selecionados',
+	'USERS_DELETE_CONFIRM'		=> 'Você deseja realmente excluir os usuários selecionados? Excluindo os usuários através dessa ferramenta, <strong>removerá</strong> todas as suas mensagens!',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Todos os usuários selecionados foram excluídos com sucesso',
 ));
