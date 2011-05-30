@@ -40,7 +40,7 @@ class auto_cookies
 				'cookie_domain'			=> array('lang' => 'COOKIE_DOMAIN', 'type' => 'text:40:255', 'explain' => false, 'default' => $_domain),
 				'cookie_name'			=> array('lang' => 'COOKIE_NAME', 'type' => 'text:40:255', 'explain' => false, 'default' => $config['cookie_name']),
 				'cookie_path'			=> array('lang' => 'COOKIE_PATH', 'type' => 'text:40:255', 'explain' => false, 'default' => htmlspecialchars(substr($_SERVER['PHP_SELF'], 0, -13)), ENT_COMPAT, 'UTF-8'),
-				'cookie_secure'			=> array('lang' => 'COOKIE_SECURE', 'type' => 'radio:disabled_enabled', 'explain' => true, 'default' => ((isset($_SERVER['HTTPS'])) ? true : false)),
+				'cookie_secure'			=> array('lang' => 'COOKIE_SECURE', 'type' => 'radio:disabled_enabled', 'explain' => true, 'default' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true : false)),
 			)
 		);
 	}
