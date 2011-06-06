@@ -106,6 +106,8 @@ if (!class_exists('database_cleaner'))
 		*/
 		function _setup()
 		{
+			global $db;
+
 			// Get the step.
 			// If the step is outside the $this->step_to_action range set it to 0
 			$this->step = request_var('step', 0);
@@ -125,8 +127,14 @@ if (!class_exists('database_cleaner'))
 				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
 			}
 
+			if (!class_exists('phpbb_db_tools'))
+			{
+				include PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
+			}
+			$db_tools = new phpbb_db_tools($db);
+
 			// Load all data for this version
-			$this->data = new database_cleaner_data();
+			$this->data = new database_cleaner_data($db_tools);
 			fetch_cleaner_data($this->data, $this->phpbb_version);
 		}
 
