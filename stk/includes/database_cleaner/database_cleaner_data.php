@@ -189,13 +189,20 @@ class database_cleaner_data
 			}
 		}
 
-		// Firebird and Oracle, need the table names in 
+		// Firebird and Oracle, need the table and column names in 
 		// UPPERCASE. #62821
 		switch ($this->db_tools)
 		{
 			case 'firebird'	:
 			case 'oracle'	:
+				// Uppercase the table names
 				stk_array_walk_keys($this->tables, 'strtoupper');
+
+				// Loop into the data structure to alter the columns
+				foreach ($this->tables as $table => $null)
+				{
+					stk_array_walk_keys($this->tables[$table]['COLUMNS'], 'strtoupper');
+				}
 			break;
 		}
 	}
