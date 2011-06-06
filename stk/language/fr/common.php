@@ -1,27 +1,11 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit
+* @version 1.0.1
+* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
+* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -92,7 +76,7 @@ $lang = array_merge($lang, array(
    'NOTICE'								=> 'Avertissement',
    'NO_VERSION_FILE'					=> 'Le Support Toolkit (STK) n’a pas pu déterminer la dernière version. Veuillez vous rendre sur la <a href="http://phpbb.com/support/stk">section relative à Support Toolkit sur phpBB.com</a> et vérifier que vous utilisez bien la dernière version avant de continuer à utiliser le STK.',
 
-   'PASS_GENERATED'						=> 'Votre fichier de mot de passe STK a été généré avec succès !<br/>Le mot de passe qui vous a été généré est : <em>%1$s</em><br />Ce mot de passe expirera le : <span style="text-decoration: underline;">%2$s</span>. Après cette date, vous <strong>devrez</strong> générer un nouveau fichier de mot de passe avant de pouvoir continuer à utiliser la fonctionnalité de la connexion d’urgence !<br /><br />Utilisez le bouton suivant afin de télécharger le fichier. Une fois que vous avez téléchargé ce fichier, vous devrez le transférer sur votre serveur dans le répertoire “stk”',
+   'PASS_GENERATED'						=> 'Votre fichier de mot de passe STK a été généré avec succès !<br/>Le mot de passe qui vous a été généré est : <em>%1$s</em><br />Ce mot de passe expirera le : <span style="text-decoration: underline;">%2$s</span>. Après cette date, vous <strong>devrez</strong> générer un nouveau fichier de mot de passe avant de pouvoir continuer à utiliser la fonctionnalité de la connexion d’urgence !<br /><br />Utilisez le bouton suivant afin de télécharger le fichier. Une fois que vous avez téléchargé ce fichier, vous devrez le transférer sur votre serveur dans le répertoire « stk »',
    'PASS_GENERATED_REDIRECT'			=> 'Une fois que vous avez transféré le fichier de mot de passe au bon emplacement, cliquez <a href="%s">ici</a> afin de retourner sur la page de connexion.',
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Cet outil n’est pas compatible avec la version de phpBB que vous utilisez',
    'PROCEED_TO_STK'						=> '%sContinuer vers le Support Toolkit%s',
