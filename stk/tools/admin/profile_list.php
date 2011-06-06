@@ -24,6 +24,12 @@ class profile_list
 
 		page_header($user->lang['PROFILE_LIST']);
 
+		if (!class_exists('phpbb_db_tools'))
+		{
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
+		}
+		$db_tools = new phpbb_db_tools($db);
+
 		$user->add_lang('memberlist');
 
 		// Handle delete
@@ -96,7 +102,15 @@ class profile_list
 
 			if ($empty_only)
 			{
-				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+				// MSSQL* needs a special treatment. #62819
+				if ($option == 'user_sig' && in_array($db_tools->sql_layer, array('mssql', 'mssqlnative')))
+				{
+					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . "DATALENGTH(user_sig) > 0";
+				}
+				else
+				{
+					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+				}
 			}
 		}
 
