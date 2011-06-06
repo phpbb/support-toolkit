@@ -103,9 +103,9 @@ class profile_list
 			if ($empty_only)
 			{
 				// MSSQL* needs a special treatment. #62819
-				if ($option == 'user_sig' && in_array($db_tools->sql_layer, array('mssql', 'mssqlnative')))
+				if (in_array($option, array('user_occ', 'user_interests', 'user_sig')) && in_array($db_tools->sql_layer, array('mssql', 'mssqlnative')))
 				{
-					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . "DATALENGTH(user_sig) > 0";
+					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . "DATALENGTH({$option}) > 0";
 				}
 				else
 				{
