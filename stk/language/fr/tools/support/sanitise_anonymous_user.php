@@ -1,27 +1,11 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Anonymous group check
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Anonymous group check
+* @version 1.0.1
+* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
+* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -65,7 +49,7 @@ $lang = array_merge($lang, array(
 	'ANONYMOUS_WRONG_DATA'				=> 'Les données de profil de l’utilisateur anonyme sont incorrectes.',
 	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'Les données de profil de l’utilisateur anonyme sont partiellement incorrectes. Souhaitez-vous réparer cela ?',
 	'ANONYMOUS_WRONG_GROUPS'			=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs.',
-	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe “INVITÉS” ?',
+	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe « INVITÉS » ?',
 
 	'REDIRECT_NEXT_STEP'				=> 'Vous allez être redirigé vers la prochaine étape.',
 
