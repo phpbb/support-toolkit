@@ -102,14 +102,24 @@ class profile_list
 
 			if ($empty_only)
 			{
-				// MSSQL* needs a special treatment. #62819
-				if (in_array($option, array('user_occ', 'user_interests', 'user_sig')) && in_array($db_tools->sql_layer, array('mssql', 'mssqlnative')))
+				switch ($db_tools->sql_layer)
 				{
-					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . "DATALENGTH({$option}) > 0";
-				}
-				else
-				{
-					$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+					case 'mssql'		:
+					case 'mssqlnative'	:
+						$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
+
+						if (in_array($option, array('user_occ', 'user_interests', 'user_sig')))
+						{
+							$profile_where .= "DATALENGTH({$option}) > 0";
+						}
+						else
+						{
+							$profile_where .= "{$option} <> ''";
+						}
+					break;
+
+					default:
+						$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
 				}
 			}
 		}
