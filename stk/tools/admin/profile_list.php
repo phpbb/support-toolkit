@@ -102,13 +102,13 @@ class profile_list
 
 			if ($empty_only)
 			{
+				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
+
 				switch ($db_tools->sql_layer)
 				{
 					case 'mssql'		:
 					case 'mssqlnative'	:
-						$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
-
-						if (in_array($option, array('user_occ', 'user_interests', 'user_sig')))
+						if ($option == 'user_sig')
 						{
 							$profile_where .= "DATALENGTH({$option}) > 0";
 						}
@@ -119,7 +119,7 @@ class profile_list
 					break;
 
 					default:
-						$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+						$profile_where .= "{$option} <> ''";
 				}
 			}
 		}
