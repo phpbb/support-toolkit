@@ -24,6 +24,12 @@ class profile_list
 
 		page_header($user->lang['PROFILE_LIST']);
 
+		if (!class_exists('phpbb_db_tools'))
+		{
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
+		}
+		$db_tools = new phpbb_db_tools($db);
+
 		$user->add_lang('memberlist');
 
 		// Handle delete
@@ -96,7 +102,25 @@ class profile_list
 
 			if ($empty_only)
 			{
-				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
+
+				switch ($db_tools->sql_layer)
+				{
+					case 'mssql'		:
+					case 'mssqlnative'	:
+						if ($option == 'user_sig')
+						{
+							$profile_where .= "DATALENGTH({$option}) > 0";
+						}
+						else
+						{
+							$profile_where .= "{$option} <> ''";
+						}
+					break;
+
+					default:
+						$profile_where .= "{$option} <> ''";
+				}
 			}
 		}
 
