@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.4-rc2 ==
+* [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
+
 == Changes since 1.0.4-rc1 ==
 * [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
 * [Change] Some changes to the database cleaner to correctly support all the phpBB DBMS.

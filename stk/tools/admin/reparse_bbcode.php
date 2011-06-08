@@ -216,14 +216,17 @@ class reparse_bbcode
 		{
 			case BBCODE_REPARSE_POSTS :
 				$sql_ary = array(
-					'SELECT'	=> 'f.*, p.*, t.*, u.username',
+					'SELECT'	=> 'f.forum_id, f.enable_indexing,
+									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, 
+									t.topic_id, t.topic_replies, t.topic_replies_real, t.topic_first_post_id, t.topic_last_post_id, t.topic_type, t.topic_status, t.topic_title, t.poll_title, t.topic_time_limit, t.poll_start, t.poll_length, t.poll_max_options, t.poll_last_vote, t.poll_vote_change,
+									u.username',
 					'FROM'		=> array(
 						FORUMS_TABLE	=> 'f',
 						POSTS_TABLE		=> 'p',
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield != '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id' . (sizeof($reparse_posts) ? ' AND ' . $db->sql_in_set('p.post_id', $reparse_posts) : ''),
+					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield <> '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id' . (sizeof($reparse_posts) ? ' AND ' . $db->sql_in_set('p.post_id', $reparse_posts) : ''),
 				);
 			break;
 
@@ -234,7 +237,7 @@ class reparse_bbcode
 						PRIVMSGS_TABLE	=> 'pm',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield != '' AND " : '') . 'u.user_id = pm.author_id' . (sizeof($reparse_pms) ? ' AND ' . $db->sql_in_set('pm.msg_id', $reparse_pms) : ''),
+					'WHERE'		=> (($bitfield) ? "pm.bbcode_bitfield <> '' AND " : '') . 'u.user_id = pm.author_id' . (sizeof($reparse_pms) ? ' AND ' . $db->sql_in_set('pm.msg_id', $reparse_pms) : ''),
 				);
 			break;
 
@@ -244,7 +247,7 @@ class reparse_bbcode
 					'FROM'		=> array(
 						USERS_TABLE	=> 'u',
 					),
-					'WHERE'		=> ($bitfield) ? "u.user_sig_bbcode_bitfield != ''" : '',
+					'WHERE'		=> ($bitfield) ? "u.user_sig_bbcode_bitfield <> ''" : '',
 				);
 			break;
 		}

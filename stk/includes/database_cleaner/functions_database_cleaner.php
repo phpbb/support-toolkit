@@ -318,6 +318,8 @@ function get_phpbb_tables()
 	// Function returns all tables in the database
 	$all_tables = get_tables($db);
 
+	// @TODO: tprefix, uppercase voor firebird/oracle!
+
 	// Only get tables using the phpBB prefix
 	if (!empty($table_prefix))
 	{
