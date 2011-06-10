@@ -92,12 +92,6 @@ if (!class_exists('database_cleaner'))
 				return 'DATAFILE_NOT_FOUND';
 			}
 
-			// As this method is always called we can use a small hackish way to ensure the database cleaner is always setup when needed
-			if (request_var('t', '') == 'database_cleaner' && !class_exists('database_cleaner_data'))
-			{
-				$this->_setup();
-			}
-
 			return true;
 		}
 
@@ -138,6 +132,7 @@ if (!class_exists('database_cleaner'))
 			global $template, $user;
 
 			// Setup
+			$this->_setup();
 			$user->add_lang('acp/common');
 
 			// Setup $this->object
@@ -161,6 +156,9 @@ if (!class_exists('database_cleaner'))
 		*/
 		function run_tool(&$error)
 		{
+			// Setup
+			$this->_setup();
+
 			$selected = request_var('items', array('' => ''));
 
 			if ($this->step > 0 && !check_form_key('database_cleaner'))
