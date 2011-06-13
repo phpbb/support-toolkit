@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.4-rc2 ==
+* [Fix] Database cleaner doesn't continues. (Bug #62801)
 * [Fix] Profile List fails on MSSQL. (Bug #62819)
 * [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
 
