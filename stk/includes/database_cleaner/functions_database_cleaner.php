@@ -323,7 +323,8 @@ function get_phpbb_tables()
 	{
 		foreach ($all_tables as $table)
 		{
-			if (strpos($table, $table_prefix) === 0)
+			// Use `stripos` for Oracle and Firebird support. (#62821)
+			if (stripos($table, $table_prefix) === 0)
 			{
 				$_tables[] = $table;
 			}
