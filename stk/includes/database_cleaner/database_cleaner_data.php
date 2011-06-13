@@ -191,7 +191,7 @@ class database_cleaner_data
 
 		// Firebird and Oracle, need the table and column names in 
 		// UPPERCASE. #62821
-		switch ($this->db_tools)
+		switch ($this->db_tools->sql_layer)
 		{
 			case 'firebird'	:
 			case 'oracle'	:
