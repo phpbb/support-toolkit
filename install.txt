@@ -50,6 +50,7 @@ update!
 * [Fix] Database cleaner doesn't continues. (Bug #62801)
 * [Fix] Profile List fails on MSSQL. (Bug #62819)
 * [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
+* [Fix] All tables and columns marked missing in Firebird and Oracle. (Bug #62821)
 
 == Changes since 1.0.4-rc1 ==
 * [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
