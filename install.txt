@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.4-rc2 ==
+* [Add] Added support for phpBB 3.0.9.
 * [Fix] Database cleaner doesn't continues. (Bug #62801)
 * [Fix] Profile List fails on MSSQL. (Bug #62819)
 * [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
@@ -62,7 +63,6 @@ update!
 
 == Changes since 1.0.3 ==
 * [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
-* [Add] Added support for phpBB 3.0.9.
 * [Change] Revert to use the phpBB common.php. (Bug #62658)
 * [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
