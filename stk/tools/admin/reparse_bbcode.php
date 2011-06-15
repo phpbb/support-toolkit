@@ -59,6 +59,12 @@ class reparse_bbcode
 	var $data = array();
 
 	/**
+	 * The total number of posts when the "reparseall" flag is set
+	 * @var integer
+	 */
+	var $max = 0;
+
+	/**
 	* BBCode options
 	*/
 	var $flags = array(
@@ -127,6 +133,7 @@ class reparse_bbcode
 		$user->add_lang('posting');
 
 		// Define some vars that we'll need
+		$last_batch			= false;
 		$reparse_id 		= request_var('reparseids', '');
 		$reparse_pm_id		= request_var('reparsepms', '');
 		$mode				= request_var('mode', BBCODE_REPARSE_POSTS);
@@ -212,6 +219,52 @@ class reparse_bbcode
 		// Greb our batch
 		$bitfield = (empty($_REQUEST['reparseall'])) ? true : false;
 
+		// When reparsing everything we need some additional information
+		// including how many posts/pms/sigs we'll be reparsing. This is
+		// needed for MSSQL as that DBMS doesn't appear to break correct
+		// from the loop when it has fetched the last row.
+		// #62822
+		if ($bitfield === false)
+		{
+			// Get the total
+			$this->max = request_var('rowsmax', 0);
+			if ($this->max == 0)
+			{
+				switch ($mode)
+				{
+					case BBCODE_REPARSE_POSTS :
+						$ccol = 'post_id';
+						$ctab = POSTS_TABLE;
+					break;
+
+					case BBCODE_REPARSE_PMS:
+						$ccol = 'msg_id';
+						$ctab = PRIVMSGS_TABLE;
+					break;
+
+					case BBCODE_REPARSE_SIGS:
+						$ccol = 'user_id';
+						$ctab = USERS_TABLE;
+					break;
+				}
+
+				$sql = "SELECT COUNT({$ccol}) AS cnt
+					FROM {$ctab}";
+				$result		= $db->sql_query($sql);
+				$this->max	= $db->sql_fetchfield('cnt', false, $result);
+				$db->sql_freeresult($result);
+			}
+
+			// Change step_size if needed
+			if ($start + $this->step_size > $this->max)
+			{
+				$this->step_size = $this->max - $start;
+
+				// Make sure that the loop is finished
+				$last_batch = true;
+			}
+		}
+
 		switch ($mode)
 		{
 			case BBCODE_REPARSE_POSTS :
@@ -257,14 +310,14 @@ class reparse_bbcode
 		$db->sql_freeresult($result);
 
 		// Finished?
-		if (!$batch && $mode == BBCODE_REPARSE_SIGS)
+		if ($last_batch && $mode == BBCODE_REPARSE_SIGS)
 		{
 			// Done!
 			$cache->destroy('_stk_reparse_posts');
 			$cache->destroy('_stk_reparse_pms');
 			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
 		}
-		else if (!$batch)
+		else if ($last_batch)
 		{
 			// Move to the next type
 			$this->_next_step(0, $mode, true);
@@ -364,11 +417,13 @@ class reparse_bbcode
 
 		$_next_mode	= ($next_mode === false) ? $mode : ++$mode;
 		$_next_step	= ($next_mode === false) ? ++$step : 0;
+		$_rowsmax	= ($next_mode === false) ? $this->max : 0;
 
 		// Create the redirect params
 		$params = array(
 			'c'			=> 'admin',
 			't'			=> 'reparse_bbcode',
+			'rowsmax'	=> $_rowsmax,
 			'submit'	=> true,
 			'mode'		=> $_next_mode,
 			'step'		=> $_next_step,
