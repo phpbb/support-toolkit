@@ -219,12 +219,22 @@ class reparse_bbcode
 		// Greb our batch
 		$bitfield = (empty($_REQUEST['reparseall'])) ? true : false;
 
-		// When reparsing everything we need some additional information
-		// including how many posts/pms/sigs we'll be reparsing. This is
-		// needed for MSSQL as that DBMS doesn't appear to break correct
-		// from the loop when it has fetched the last row.
+		// The MSSQL DBMS doesn't break correctly out of the loop
+		// when it is finished reparsing the last post. Therefore
+		// we'll have to find out manually whether the tool is
+		// finished, and if not how many objects it can select
+		// if ($this->step_size * $step > 'maxrows')
 		// #62822
-		if ($bitfield === false)
+
+		// First the easiest, the user selected certain posts/pms
+		if (!empty($reparse_posts) || !empty($reparse_pms))
+		{
+			$this->step_size = (!empty($reparse_posts)) ? sizeof($reparse_posts) : sizeof($reparse_pms);
+
+			// This is always done in one go
+			$last_batch = true;
+		}
+		else
 		{
 			// Get the total
 			$this->max = request_var('rowsmax', 0);
@@ -235,21 +245,27 @@ class reparse_bbcode
 					case BBCODE_REPARSE_POSTS :
 						$ccol = 'post_id';
 						$ctab = POSTS_TABLE;
+						$bbf  = 'bbcode_bitfield';
 					break;
 
 					case BBCODE_REPARSE_PMS:
 						$ccol = 'msg_id';
 						$ctab = PRIVMSGS_TABLE;
+						$bbf  = 'bbcode_bitfield';
 					break;
 
 					case BBCODE_REPARSE_SIGS:
 						$ccol = 'user_id';
 						$ctab = USERS_TABLE;
+						$bbf  = 'user_sig_bbcode_bitfield';
 					break;
 				}
 
+				$sql_where = ($bitfield === false) ? '' : "WHERE {$bbf} <> ''";
+
 				$sql = "SELECT COUNT({$ccol}) AS cnt
-					FROM {$ctab}";
+					FROM {$ctab}
+					{$sql_where}";
 				$result		= $db->sql_query($sql);
 				$this->max	= $db->sql_fetchfield('cnt', false, $result);
 				$db->sql_freeresult($result);
@@ -308,20 +324,6 @@ class reparse_bbcode
 		$result	= $db->sql_query_limit($sql, $this->step_size, $start);
 		$batch	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
-
-		// Finished?
-		if ($last_batch && $mode == BBCODE_REPARSE_SIGS)
-		{
-			// Done!
-			$cache->destroy('_stk_reparse_posts');
-			$cache->destroy('_stk_reparse_pms');
-			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
-		}
-		else if ($last_batch)
-		{
-			// Move to the next type
-			$this->_next_step(0, $mode, true);
-		}
 
 		// Backup
 		// For now disabled. Have to see how to implement this with regards to sigs and pms
@@ -399,6 +401,20 @@ class reparse_bbcode
 			unset($this->poll, $post_data, $pm_data);
 			$this->flags = array_fill_keys(array_keys($this->flags), false);
 			$_user2->keyvalues		= array();
+		}
+
+		// Finished?
+		if ($last_batch && $mode == BBCODE_REPARSE_SIGS)
+		{
+			// Done!
+			$cache->destroy('_stk_reparse_posts');
+			$cache->destroy('_stk_reparse_pms');
+			trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
+		}
+		else if ($last_batch)
+		{
+			// Move to the next type
+			$this->_next_step(0, $mode, true);
 		}
 
 		// Next step
