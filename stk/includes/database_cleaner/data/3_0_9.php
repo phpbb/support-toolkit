@@ -31,9 +31,9 @@ class datafile_3_0_9
 	* @var Array 3.0.8-dev config data
 	*/
 	var $config = array(
-		'ip_login_limit_max'		=> array('config_value' => '50', 'is_dynamic' => '0'),
-		'ip_login_limit_time'		=> array('config_value' => '21600', 'is_dynamic' => '0'),
-		'ip_login_limit_forwarded'	=> array('config_value' => '0', 'is_dynamic' => '0'),
+		'ip_login_limit_max'			=> array('config_value' => '50', 'is_dynamic' => '0'),
+		'ip_login_limit_time'			=> array('config_value' => '21600', 'is_dynamic' => '0'),
+		'ip_login_limit_use_forwarded'	=> array('config_value' => '0', 'is_dynamic' => '0'),
 	);
 
 	/**
