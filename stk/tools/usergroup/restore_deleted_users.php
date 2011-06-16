@@ -25,7 +25,7 @@ class restore_deleted_users
 	*/
 	function display_options()
 	{
-		global $db;
+		global $db, $template;
 
 		$conflicted = request_var('conflicted', array(0 => 0));
 
@@ -61,10 +61,13 @@ class restore_deleted_users
 
 		// Build the output
 		$user_vars = array();
-		foreach ($users as $user)
+		foreach ($users as $u)
 		{
-			$user_vars["{$var}[{$user['post_id']}]"] = array('lang' => $user['post_username'], 'explain' => false, 'type' => $type);
+			$user_vars["{$var}[{$u['post_id']}]"] = array('lang' => $u['post_username'], 'explain' => false, 'type' => $type);
 		}
+
+		// Add Mark/Unmark all
+		$template->assign_var('S_MARK_ALL', $var);
 
 		// Return usable data
 		return array(

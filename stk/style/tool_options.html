@@ -35,6 +35,13 @@
 		<!-- ENDIF -->
 	<!-- END options -->
 
+	<!-- IF S_MARK_ALL -->
+	<dl class="small">
+		<dt>&nbsp;</dt>
+		<dd><a href="#" onclick="marklist('stk', '{S_MARK_ALL}', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('stk', '{S_MARK_ALL}', false); return false;">{L_UNMARK_ALL}</a></dd>
+	</dl>
+	<!-- ENDIF -->
+
 	<p class="submit-buttons">
 		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
 		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
