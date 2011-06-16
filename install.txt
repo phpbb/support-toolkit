@@ -49,6 +49,7 @@ update!
 == Changes since 1.0.4-rc2 ==
 * [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
 * [Fix] Database cleaner doesn't continues. (Bug #62801)
+* [Fix] Restore Deleted Users tool uses invalid grouping. (Bug #62818, Patch by Noxwizard)
 * [Fix] Profile List fails on MSSQL. (Bug #62819)
 * [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
 * [Fix] All tables and columns marked missing in Firebird and Oracle. (Bug #62821)
