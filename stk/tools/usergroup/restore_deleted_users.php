@@ -33,7 +33,7 @@ class restore_deleted_users
 		if (empty($conflicted))
 		{
 			$var = 'post';
-			$sql = 'SELECT post_id, post_username
+			$sql = 'SELECT MAX(post_id) AS post_id, post_username
 				FROM ' . POSTS_TABLE . '
 				WHERE poster_id = ' . ANONYMOUS . '
 					GROUP BY post_username';
@@ -43,7 +43,7 @@ class restore_deleted_users
 		else
 		{
 			$var = 'conflicted';
-			$sql = 'SELECT post_id, post_username
+			$sql = 'SELECT MAX(post_id) AS post_id, post_username
 				FROM ' . POSTS_TABLE . '
 				WHERE ' . $db->sql_in_set('post_id', $conflicted);
 			$title = 'RESTORE_DELETED_USERS_CONFLICT';
