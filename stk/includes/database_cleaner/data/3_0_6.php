@@ -203,7 +203,10 @@ class datafile_3_0_6
 		{
 			global $umil;
 
-			include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+			if (!defined('CAPTCHA_QUESTIONS_TABLE'))
+			{
+				include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+			}
 
 			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE) || $umil->table_exists(CAPTCHA_ANSWERS_TABLE) || $umil->table_exists(CAPTCHA_QA_CONFIRM_TABLE))
 			{
