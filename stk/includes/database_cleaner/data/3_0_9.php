@@ -234,7 +234,6 @@ class datafile_3_0_9
 		// Create the login attempt table
 		$schema_data['phpbb_login_attempts'] = array(
 			'COLUMNS'			=> array(
-				'attempt_id'			=> array('UINT', NULL, 'auto_increment'),
 				'attempt_ip'			=> array('VCHAR:40', ''),
 				'attempt_browser'		=> array('VCHAR:150', ''),
 				'attempt_forwarded_for'	=> array('VCHAR:255', ''),
@@ -243,7 +242,6 @@ class datafile_3_0_9
 				'username'				=> array('VCHAR_UNI:255', 0),
 				'username_clean'		=> array('VCHAR_CI', 0),
 			),
-			'PRIMARY_KEY'		=> 'attempt_id',
 			'KEYS'				=> array(
 				'att_ip'		=> array('INDEX', array('attempt_ip', 'attempt_time')),
 				'att_for'		=> array('INDEX', array('attempt_forwarded_for', 'attempt_time')),
