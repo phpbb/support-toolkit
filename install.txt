@@ -5,8 +5,8 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.4-rc1
-Supported phpBB versions 3.0.0 - 3.0.8
+Support Toolkit 1.0.4
+Supported phpBB versions 3.0.0 - 3.0.9
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.4-rc1 ==
-To upgrade a previous version of the STK to 1.0.4-rc1, remove your previous
+== Upgrade to 1.0.4-rc2 ==
+To upgrade a previous version of the STK to 1.0.4-rc2, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,12 +46,23 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.4-rc2 ==
+* [Add] Added support for phpBB 3.0.9.
+* [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
+* [Fix] Database cleaner doesn't continue. (Bug #62801)
+* [Fix] Restore Deleted Users tool uses invalid grouping. (Bug #62818, Patch by Noxwizard)
+* [Fix] Profile List fails on MSSQL. (Bug #62819)
+* [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
+* [Fix] All tables and columns marked missing in Firebird and Oracle. (Bug #62821)
+* [Fix] Reparse All BBCodes enters infinite loop for MSSQL. (Bug #62822)
+
 == Changes since 1.0.4-rc1 ==
 * [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
 * [Change] Some changes to the database cleaner to correctly support all the phpBB DBMS.
 * [Fix] Resolve "500 Server errors" on IIS. (Bug #62679)
 * [Fix] Unexpected return while running database cleaner. (Bug #62799)
 * [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
+* [Fix] Stricter HTTPS check in the auto cookie tool. (Bug #62814, Patch by Noxwizard)
 
 == Changes since 1.0.3 ==
 * [Add] Add the ability to delete users to the profile list tool. (Bug #62727)

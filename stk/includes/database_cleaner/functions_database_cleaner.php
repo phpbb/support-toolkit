@@ -318,12 +318,15 @@ function get_phpbb_tables()
 	// Function returns all tables in the database
 	$all_tables = get_tables($db);
 
+	// @TODO: tprefix, uppercase voor firebird/oracle!
+
 	// Only get tables using the phpBB prefix
 	if (!empty($table_prefix))
 	{
 		foreach ($all_tables as $table)
 		{
-			if (strpos($table, $table_prefix) === 0)
+			// Use `stripos` for Oracle and Firebird support. (#62821)
+			if (stripos($table, $table_prefix) === 0)
 			{
 				$_tables[] = $table;
 			}
@@ -407,6 +410,26 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	switch($phpbb_version)
 	{
 		case '3_0_9' :
+			// The extension group names have been changed, remove the old ones
+			foreach ($data->extension_groups as $key => $null)
+			{
+				if (strpos($key, 'EXT_') === 0)
+				{
+					unset($data->extension_groups[$key]);
+				}
+			}
+
+			// Same for the extensions
+			foreach ($data->extensions as $key => $null)
+			{
+				if (strpos($key, 'EXT_') === 0)
+				{
+					unset($data->extensions[$key]);
+				}
+			}
+
+		// No Break;
+
 		case '3_0_8' :
 		case '3_0_7_pl1' :
 		case '3_0_7' :
@@ -421,7 +444,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			$extra_add = array('ACP_FORUM_PERMISSIONS_COPY');
 			array_splice($data->module_extras['acp']['ACP_FORUM_BASED_PERMISSIONS'], 1, 0, $extra_add);
 
-		// No Break
+		// No Break;
 
 		case '3_0_5' :
 		case '3_0_4' :

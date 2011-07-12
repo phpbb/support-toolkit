@@ -675,3 +675,25 @@ function pathinfo_filename($file) { //file.name.ext, returns file.name
 		return substr($file, 0, strrpos($file, '.'));
 	}
 }
+
+/**
+ * A function that behaves like `array_walk` but instead
+ * of walking over the values this function walks
+ * over the keys
+ */
+function stk_array_walk_keys(&$array, $callback)
+{
+	if (!is_callable($callback))
+	{
+		return;
+	}
+
+	$tmp_array = array();
+	foreach ($array as $key => $null)
+	{
+		$walked_key = call_user_func($callback, $key);
+		$tmp_array[$walked_key] = $array[$key];
+		unset($array[$key]);
+	}
+	$array = $tmp_array;
+}

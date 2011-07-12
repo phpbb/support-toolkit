@@ -73,7 +73,7 @@ if (!class_exists('database_cleaner'))
 			$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
 
 			// Unstable versions can only be used when debugging
-			if (preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
+			if (preg_match('#^([0-9_]+)_a|b|dev|RC([0-9]*)$#i', $this->phpbb_version))
 			{
 				if (!defined('DEBUG'))
 				{
@@ -92,12 +92,6 @@ if (!class_exists('database_cleaner'))
 				return 'DATAFILE_NOT_FOUND';
 			}
 
-			// As this method is always called we can use a small hackish way to ensure the database cleaner is always setup when needed
-			if (request_var('t', '') == 'database_cleaner' && !class_exists('database_cleaner_data'))
-			{
-				$this->_setup();
-			}
-
 			return true;
 		}
 
@@ -106,6 +100,8 @@ if (!class_exists('database_cleaner'))
 		*/
 		function _setup()
 		{
+			global $db;
+
 			// Get the step.
 			// If the step is outside the $this->step_to_action range set it to 0
 			$this->step = request_var('step', 0);
@@ -125,8 +121,14 @@ if (!class_exists('database_cleaner'))
 				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
 			}
 
+			if (!class_exists('phpbb_db_tools'))
+			{
+				include PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
+			}
+			$db_tools = new phpbb_db_tools($db);
+
 			// Load all data for this version
-			$this->data = new database_cleaner_data();
+			$this->data = new database_cleaner_data($db_tools);
 			fetch_cleaner_data($this->data, $this->phpbb_version);
 		}
 
@@ -138,6 +140,7 @@ if (!class_exists('database_cleaner'))
 			global $template, $user;
 
 			// Setup
+			$this->_setup();
 			$user->add_lang('acp/common');
 
 			// Setup $this->object
@@ -161,6 +164,9 @@ if (!class_exists('database_cleaner'))
 		*/
 		function run_tool(&$error)
 		{
+			// Setup
+			$this->_setup();
+
 			$selected = request_var('items', array('' => ''));
 
 			if ($this->step > 0 && !check_form_key('database_cleaner'))
