@@ -5,8 +5,8 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.4-rc2
-Supported phpBB versions 3.0.0 - 3.0.8
+Support Toolkit 1.0.4
+Supported phpBB versions 3.0.0 - 3.0.9
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
