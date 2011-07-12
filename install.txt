@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.4-rc2 ==
+* [Add] Added support for phpBB 3.0.9.
 * [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
 * [Fix] Database cleaner doesn't continue. (Bug #62801)
 * [Fix] Restore Deleted Users tool uses invalid grouping. (Bug #62818, Patch by Noxwizard)

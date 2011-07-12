@@ -73,7 +73,7 @@ if (!class_exists('database_cleaner'))
 			$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
 
 			// Unstable versions can only be used when debugging
-			if (preg_match('#a|b|dev|RC$#i', $this->phpbb_version))
+			if (preg_match('#^([0-9_]+)_a|b|dev|RC([0-9]*)$#i', $this->phpbb_version))
 			{
 				if (!defined('DEBUG'))
 				{
