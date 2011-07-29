@@ -54,6 +54,6 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Przyznaj status założyciela witryny',
 
-	'USER_TO_FOUNDER'			=> 'Użytkownicy do statusu założyciela',
+	'USER_TO_FOUNDER'			=> 'Użytkownik',
 	'USER_TO_FOUNDER_EXPLAIN'	=> 'Wprowadź nazwę, albo ID użytkownika, któremu chciałbyś przyznać status założyciela witryny.',
 ));
