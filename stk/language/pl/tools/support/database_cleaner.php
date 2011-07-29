@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 
 	'DATABASE_CLEANER'				=> 'Sprzątnij bazę danych',
 	'DATABASE_CLEANER_EXTRA'		=> 'Rzeczy dodane przez modyfikacje.  <strong>W przypadku zaznaczenia zostaną usunięte</strong>.',
-	'DATABASE_CLEANER_MISSING'		=> 'Wszystkie pola oznaczone czerwonym tłem jak tutaj są brakujące i powinny zostać dodane.  <strong>Jeżeli zaznaczone, to pola zostaną dodane.</strong>.',
+	'DATABASE_CLEANER_MISSING'		=> 'Wszystkie pola oznaczone czerwonym tłem (jak tutaj) są brakujące i powinny zostać dodane.  <strong>Jeżeli zaznaczone, to pola zostaną dodane.</strong>',
 	'DATABASE_CLEANER_SUCCESS'		=> 'Wszystkie zadania zostały wykonane.<br /><br />Pamiętaj, aby ponownie wykonać kopię bazy danych.',
 	'DATABASE_CLEANER_WARNING'		=> 'Narzędzie NIE DAJE GWARANCJI na poprawne wykonanie czynności, dlatego użytkownicy tego narzędzia powinni wykonać kopię swojej bazy danych.<br /><br />Przed rozpoczęciem upewnij się, że posiadasz kopię bazy danych!',
 	'DATABASE_CLEANER_WELCOME'		=> 'Witaj w narzędziu oczyszczania bazy danych!<br /><br />Narzędzie zostało stworzone do usuwania kolumn, wierszy i tabel z bazy danych, które nie znajdują się w standardowej instalacji phpBB3 oraz do odtworzenia brakujących elementów.<br /><br />Jeżeli jesteś gotowy kontynuować kliknij na przycisk Kontynuuj, który uruchomi narzędzie oczyszczania. (Twoja witryna będzie wyłączona do czasu zakończenia)',
