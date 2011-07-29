@@ -37,8 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_REPORT_FLAGS'			=> 'Synchronizuj flagi raportów',
-	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Te narzędzie synchronizuje flagi raportów dla postów, tematów i prywatnych wiadomości.',
-	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Flagi raportów zostały zsynchronizowane.',
-	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Trwa synchronizowanie flag raportów. Nie przerywaj tego procesu.',
+	'RESYNC_REPORT_FLAGS'			=> 'Synchronizuj flagi zgłoszeń',
+	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Te narzędzie synchronizuje flagi zgłoszeń postów, tematów i prywatnych wiadomości.',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Flagi zgłoszeń zostały zsynchronizowane.',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Trwa synchronizowanie flag zgłoszeń. Nie przerywaj tego procesu.',
 ));
