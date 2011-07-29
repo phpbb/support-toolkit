@@ -40,6 +40,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Wszystkie',
 
+	'CLICK_TO_DELETE'		=> 'Usuń zaznaczonych użytkowników klikając w ten przycisk. <em>(Nie można cofnąć!)</em>',
+
 	'FILTER'				=> 'Filtr',
 
 	'LIMIT'					=> 'Limit',
@@ -49,4 +51,8 @@ $lang = array_merge($lang, array(
 
 	'PROFILE_LIST'			=> 'Lista profili',
 	'PROFILE_LIST_EXPLAIN'	=> 'Te narzędzie wyświetla informacje o różnych użytkownikach. Może być także używane do wykrywania kont spamerskich.',
+
+	'USERS_DELETE'				=> 'Usuń zaznaczonych użytkowników',
+	'USERS_DELETE_CONFIRM'		=> 'Czy na pewno chcesz usunąć wybranych użytkowników? Usuwanie użytkowników poprzez te narzędzie <strong>usunie</strong> również wszystkie ich posty.',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Wybrani użytkownicy zostali usunięci.',
 ));
