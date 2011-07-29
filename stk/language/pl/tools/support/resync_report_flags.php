@@ -4,6 +4,7 @@
  * @package Support Toolkit - Resynchronise report flags
  * @copyright (c) 2011 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @translation (c) 2011 Olympus.pl http://www.phpbb.pl
  *
  */
 

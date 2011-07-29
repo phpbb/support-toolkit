@@ -5,6 +5,7 @@
 * @version $Id: sanitize_anonymous_user.php 155 2009-06-13 20:06:09Z marshalrusty $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @translation (c) 2011 Olympus.pl http://www.phpbb.pl
 *
 */
 

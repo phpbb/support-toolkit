@@ -5,6 +5,7 @@
 * @version $Id$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @translation (c) 2011 Olympus.pl http://www.phpbb.pl
 *
 */
 
