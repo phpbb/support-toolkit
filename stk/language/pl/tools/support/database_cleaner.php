@@ -48,9 +48,9 @@ $lang = array_merge($lang, array(
 
 	'DATABASE_CLEANER'				=> 'Sprzątnij bazę danych',
 	'DATABASE_CLEANER_EXTRA'		=> 'Rzeczy dodane przez modyfikacje.  <strong>W przypadku zaznaczenia zostaną usunięte</strong>.',
-	'DATABASE_CLEANER_MISSING'		=> 'Any fields with a red background like this are missing items that should be added.  <strong>If the check box is selected it will be added</strong>.',
+	'DATABASE_CLEANER_MISSING'		=> 'Wszystkie pola oznaczone czerwonym tłem jak tutaj są brakujące i powinny zostać dodane.  <strong>Jeżeli zaznaczone, to pola zostaną dodane.</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'Wszystkie zadania zostały wykonane.<br /><br />Pamiętaj, aby ponownie wykonać kopię bazy danych.',
-	'DATABASE_CLEANER_WARNING'		=> 'This tool comes with NO WARRANTY and users of this tool should back up their entire database in case of a failure.<br /><br />Before continuing, make sure you have a database backup!',
+	'DATABASE_CLEANER_WARNING'		=> 'Narzędzie NIE DAJE GWARANCJI na poprawne wykonanie czynności, dlatego użytkownicy tego narzędzia powinni wykonać kopię swojej bazy danych.<br /><br />Przed rozpoczęciem upewnij się, że posiadasz kopię bazy danych!',
 	'DATABASE_CLEANER_WELCOME'		=> 'Witaj w narzędziu oczyszczania bazy danych!<br /><br />Narzędzie zostało stworzone do usuwania kolumn, wierszy i tabel z bazy danych, które nie znajdują się w standardowej instalacji phpBB3 oraz do odtworzania brakujących elementów.<br /><br />Jeżeli jesteś gotowy kontynuować kliknij na przycisk Kontynuuj, który uruchomi narzędzie oczyszczania. (Twoja witryna będzie wyłączona do czasu zakończenia)',
 	'DATABASE_COLUMNS_SUCCESS'		=> 'Kolumny zostały zaktualizowane!',
 	'DATABASE_TABLES'				=> 'Tabele bazy danych',
@@ -60,16 +60,16 @@ $lang = array_merge($lang, array(
 	'DATAFILE_NOT_FOUND'			=> 'Pakiet Support Toolkit nie mógł znaleźć wymaganego pliku danych dla Twojej wersji phpBB!',
 
 	'EMPTY_PREFIX'					=> 'Brak prefiksu tabel',
-	'EMPTY_PREFIX_CONFIRM'			=> 'The database cleaner is about to make changes to the tables in your database, but as you are using an empty table prefix this might affect non-phpBB tables. Are you sure that you want to continue?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to procede seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
+	'EMPTY_PREFIX_CONFIRM'			=> 'Nie wprowadzono prefiksu dla tabel, co może spowodować zmiany w tabel niezwiązanych z phpBB. Czy na pewno chcesz kontynuować?',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'Nie ustawienie prefiksu dla tabel phpBB skutkuje tym, że narzędzie sprawdzi <strong>wszystkie</strong> tabele w bazie danych. Upewnij się, że odznaczyłeś wszystkie tabele, które nie są związane z phpBB. W innym wypadku mogą zostać one uszkodzone.<br />Jeżeli nie jesteś pewien jak przejść ten proces poszukaj pomocy na <a href="http://www.phpbb.com/community/viewforum.php?f=46">forach wsparcia</a>.',
 	'ERROR'							=> 'Błąd',
 	'EXTRA'							=> 'Dodatkowe',
 	'EXTENSION_GROUPS_SUCCESS'		=> 'Grupy rozszerzeń zostały zresetowane.',
 	'EXTENSIONS_SUCCESS'			=> 'Rozszerzenia zostały zresetowane',
 
-	'FINAL_STEP'					=> 'To jest końcowy etap.<br /><br />Teraz witryna zostanie włączona oraz wyczyszczony zostanie bufor.',
+	'FINAL_STEP'					=> 'To jest końcowy etap.<br /><br />Teraz witryna zostanie włączona oraz nastąpi wyczyszczenie bufora.',
 
-	'INSTRUCTIONS'					=> 'Polecenia',
+	'INSTRUCTIONS'					=> 'Instrukcje',
 
 	'MISSING'						=> 'Brakujące',
 	'MODULE_UPDATE_SUCCESS'			=> 'Moduły zostały zaktualizowane',
