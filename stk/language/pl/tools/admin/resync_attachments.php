@@ -37,8 +37,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_ATTACHMENTS'			=> 'Zsynchronizuj załączniki',
+	'RESYNC_ATTACHMENTS'			=> 'Synchronizuj załączniki',
 	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'To narzędzie sprawdza czy wszystkie załączniki przechowywane w bazie danych mają plik na serwerze. Jeżeli brakuje pliku, wtedy załącznik jest usuwany z bazy danych. Czy na pewno chcesz kontynuować?',
-	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Załączniki zostały zsynchronizowane!',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Załączniki zostały zsynchronizowane.',
 	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Trwa synchronizowanie załączników. Nie przerywaj tego procesu.',
 ));
