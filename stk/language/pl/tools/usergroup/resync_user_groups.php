@@ -42,11 +42,11 @@ $lang = array_merge($lang, array(
 	'RESYNC_USER_GROUPS_NO_RUN'		=> 'Żadne grupy nie wymagają synchronizacji!',
 	'RESYNC_USER_GROUPS_SETTINGS'	=> 'Opcje synchronizacji',
 	'RUN_BOTH_FINISHED'				=> 'Wszystkie grupy zostały zsynchronizowane.',
-	'RUN_RNR'						=> 'Zsynchronizuj nowych użytkowników',
+	'RUN_RNR'						=> 'Synchronizuj nowo zarejestrowanych użytkowników',
 	'RUN_RNR_EXPLAIN'				=> 'To zaktualizuje grupę "Nowo zarejestrowani użytkownicy", tak aby zawierała użytkowników, którzy spełniają kryteria określone w panelu administracji.',
 	'RUN_RNR_FINISHED'				=> 'Grupa nowo zarejestrowanych użytkowników została zsynchronizowana.',
 	'RUN_RNR_NOT_FINISHED'			=> 'Trwa synchronizowanie grupy nowo zarejestrowanych użytkowników. Nie przerywaj tego procesu.',
-	'RUN_RR'						=> 'Zsynchronizuj zarejestrowanych użytkowników',
+	'RUN_RR'						=> 'Synchronizuj zarejestrowanych użytkowników',
 	'RUN_RR_EXPLAIN'				=> 'Narzędzie stwierdziło, że nie wszyscy użytkownicy są członkami grupy "Zarejestrowani użytkownicy <em>(COPPA)</em>". Czy chcesz zsynchronizować te grupy?<br /><strong>Uwaga:</strong> Jeżeli na Twojej witrynie włączona jest opcja COPPA, a użytkownik nie ma wprowadzonej daty urodzenia, to zostanie umieszczony w grupie "Zarejestrowani użytkownicy COPPA"!',
 	'RUN_RR_FINISHED'				=> 'Użytkownicy zostali zsynchronizowani.',
 
