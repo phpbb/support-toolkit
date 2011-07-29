@@ -37,9 +37,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_AVATARS'			=> 'Zsynchronizuj awatary',
+	'RESYNC_AVATARS'			=> 'Synchronizuj awatary',
 	'RESYNC_AVATARS_CONFIRM'	=> 'Te narzędzie sprawdza czy pliki awatarów używanych na witrynie istnieją na serwerze. W przypadku brakującego pliku, awatar zostanie usunięty z profilu użytkownika. Czy na pewno chcesz kontynuować?',
-	'RESYNC_AVATARS_FINISHED'	=> 'Awatary zostały zsynchronizowane!',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Przejście do awatarów grup. Nie przerywaj tego procesu!',
+	'RESYNC_AVATARS_FINISHED'	=> 'Awatary zostały zsynchronizowane.',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Przejście do awatarów grup. Nie przerywaj tego procesu.',
 	'RESYNC_AVATARS_PROGRESS'	=> 'Trwa synchronizowanie awatarów. Nie przerywaj tego procesu.',
 ));
