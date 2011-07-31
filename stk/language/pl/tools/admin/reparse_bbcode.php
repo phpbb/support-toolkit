@@ -44,7 +44,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Przetwórz znaczniki BBCode',
 	'REPARSE_ALL_EXPLAIN'		=> 'Jeżeli zaznaczone, narzędzie przetworzy wszystkie treści witryny. Domyślnie przetwarzane są tylko posty/prywatne wiadomości/podpisy, które zostały wcześniej przetworzone przez phpBB. Opcja jest ignorowana w przypadku wybrania konkretnych postów, bądź prywatnych wiadomości.',
-	'REPARSE_BBCODE'			=> 'Przetwórz znacznik BBCode',
+	'REPARSE_BBCODE'			=> 'Przetwórz znaczniki BBCode',
 	'REPARSE_BBCODE_COMPLETE'	=> 'Znaczniki BBCode zostały przetworzone.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Czy na pewno chcesz przetworzyć wszystkie znaczniki BBCode? Pamiętaj, że te narzędzie może uszkodzić instalację phpBB. Z tego powodu <strong>wykonaj kopię bazy danych przed rozpoczęciem</strong>. Pamiętaj też, że ten proces może trwać dłuższą chwilę.',
 	'REPARSE_BBCODE_PROGRESS'	=> 'Ukończono etap: %1$d. Rozpoczynanie etapu: %2$d',
