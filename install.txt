@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.4
+Support Toolkit 1.0.5
 Supported phpBB versions 3.0.0 - 3.0.9
 
 == Authors ==
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.4 ==
-To upgrade a previous version of the STK to 1.0.4, remove your previous
+== Upgrade to 1.0.5-dev ==
+To upgrade a previous version of the STK to 1.0.5-dev, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,6 +46,8 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.4 ==
+
 == Changes since 1.0.4-rc2 ==
 * [Add] Added support for phpBB 3.0.9.
 * [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
