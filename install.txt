@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.4 ==
 * [Fix] Added missing language entry. (Bug #62856)
+* [Fix] Reparse bbcode changes topic poster to guest (Bug #62889, Patch by Dicky)
 
 == Changes since 1.0.4-rc2 ==
 * [Add] Added support for phpBB 3.0.9.
