@@ -364,8 +364,22 @@ class reparse_bbcode
 					// Reparse the post
 					$this->_reparse_post($post_data);
 
+					// Set post_username
+					// post_username is either empty or contains guest username.
+					// If empty post username and if p.poster_id is not ANONYMOUS, use u.username else leave as it is.
+					// Bug #62889
+					$username = '';
+					if ($this->data['poster_id'] == ANONYMOUS)
+					{
+						$username = !empty($this->data['post_username']) ? trim($this->data['post_username']) : '';
+					}
+					else
+					{
+						$username = $this->data['username'];
+					}
+
 					// Re-submit the post through API
-					submit_post('edit', $this->data['post_subject'], $this->data['post_username'], $this->data['topic_type'], $this->poll, $post_data, true, true);
+					submit_post('edit', $this->data['post_subject'], $username, $this->data['topic_type'], $this->poll, $post_data, true, true);
 				break;
 
 				case BBCODE_REPARSE_PMS :
