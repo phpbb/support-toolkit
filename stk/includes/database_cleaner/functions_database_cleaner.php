@@ -368,7 +368,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		include PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT;
 	}
 	$filelist = array_shift(filelist(STK_ROOT_PATH . 'includes/database_cleaner/', 'data/', PHP_EXT));
-	sort($filelist);
+	usort($filelist, 'version_compare');
 
 	// Add the data
 	foreach ($filelist as $file)
