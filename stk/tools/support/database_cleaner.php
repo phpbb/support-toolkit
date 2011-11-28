@@ -81,8 +81,8 @@ if (!class_exists('database_cleaner'))
 				}
 				else
 				{
-					// Strip down to the magic "5"
-					$this->phpbb_version = substr($this->phpbb_version, 0, 5);
+					// Get rid of any unstable identifiers
+					$this->phpbb_version = substr($this->phpbb_version, 0, strrpos($this->phpbb_version, '_'));
 				}
 			}
 

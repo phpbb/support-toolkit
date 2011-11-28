@@ -51,6 +51,7 @@ update!
 * [Fix] Added missing language entry. (Bug #62856)
 * [Fix] Reparse bbcode changes topic poster to guest (Bug #62889, Patch by Dicky)
 * [Fix] STK password variable incorrectly unset when not logged in. (Bug #62946)
+* [Fix] Correct version handling in the database cleaner. (Bug #62961)
 
 == Changes since 1.0.4-rc2 ==
 * [Add] Added support for phpBB 3.0.9.
