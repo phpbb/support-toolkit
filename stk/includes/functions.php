@@ -435,6 +435,8 @@ function perform_authed_quick_tasks($action)
 {
 	global $user;
 
+	$logout = false;
+
 	switch ($action)
 	{
 		// User wants to logout and remove the password file
