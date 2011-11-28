@@ -6,7 +6,7 @@ installation or to solve commonly encountered problems with the software.
 
 == Version ==
 Support Toolkit 1.0.5-RC1
-Supported phpBB versions 3.0.0 - 3.0.9
+Supported phpBB versions 3.0.0 - 3.0.10-RC2
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.4 ==
+* [Add] Added support for phpBB 3.0.10.
 * [Fix] Added missing language entry. (Bug #62856)
 * [Fix] Reparse bbcode changes topic poster to guest (Bug #62889, Patch by Dicky)
 * [Fix] STK password variable incorrectly unset when not logged in. (Bug #62946)
