@@ -48,6 +48,7 @@ update!
 = Changelog =
 == Changes since 1.0.4 ==
 * [Fix] Added missing language entry. (Bug #62856)
+* [Fix] STK password variable incorrectly unset when not logged in. (Bug #62946)
 
 == Changes since 1.0.4-rc2 ==
 * [Add] Added support for phpBB 3.0.9.
