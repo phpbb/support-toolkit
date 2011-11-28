@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit
-* @phpBB source Id: common.php 482 2010-07-05 10:07:42Z erikfrerejean $
-* @version $Id: common.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

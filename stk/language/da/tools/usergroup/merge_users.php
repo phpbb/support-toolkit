@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Merge Users
-* @phpBB source:: merge_users.php 489 2010-08-13 07:40:58Z toonarmy $
-* @version $Id: merge_users.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @author Chris Smith <toonarmy@phpbb.com> (http://www.cs278.org/)
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

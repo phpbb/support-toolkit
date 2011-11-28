@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Make Founder
-* @phpBB source: manage_founders.php 336 2010-04-02 11:13:36Z erikfrerejean $
-* @version $Id: manage_founders.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Database Cleaner
-* @phpBB source: database_cleaner.php 415 2010-06-09 00:44:26Z iwisdom $
-* @version $Id: database_cleaner.php 120 2011-02-12 07:46:33Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

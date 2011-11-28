@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Change Password
-* @phpBB source: change_password.php 251 2009-11-03 13:16:11Z erikfrerejean $
-* @version $Id: change_password.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team
