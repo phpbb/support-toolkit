@@ -19,7 +19,7 @@ if (!defined('IN_PHPBB'))
 /**
 * phpBB 3.0.10 data file
 */
-class datafile_3_0_10_RC2
+class datafile_3_0_10
 {
 	/**
 	* @var Array The bots
