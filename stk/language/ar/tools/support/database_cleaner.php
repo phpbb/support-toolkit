@@ -94,9 +94,10 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS'			=> 'اعادة تعين سبب التقرير',
 	'RESET_REPORT_REASONS_EXPLAIN'	=> 'هل تود اعادة تعين سبب التقرير الى الافتراضي؟ سيقوم ذلك بحذف جميع اسباب التقارير المعينة سابقاً!',
 	'RESET_REPORT_REASONS_SKIP'		=> 'لم يتم تعين سبب التقرير',
-	'RESET_REPORT_REASONS_SUCCESS'	=> 'سبب التقرير تم اعادة تعينة بنجاح!',
-	'RESET_ROLE_DATA'				=> 'اعادة تعين معلومات الادوار',
+	'RESET_REPORT_REASONS_SUCCESS'	=> 'تمت إعادة تعيين أسباب التقرير بنجاح!',
+	'RESET_ROLE_DATA'				=> 'إعادة تعيين معلومات الأدوار',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'هذه الخطوة ستقوم بإعادة تعين جميع الادوار الى الافتراضية مره اخرى، نحن نشدد على ان لا تقوم بهذه الخطوة الا اذا قمت بعمل تغيرات في الخطوة السابقة فقط.',
+	'ROLE_SETTINGS'					=> 'إعدادات الأدوار',
 	'ROWS'							=> 'صف',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
