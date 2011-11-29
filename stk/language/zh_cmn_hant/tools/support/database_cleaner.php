@@ -96,6 +96,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> '檢舉理由已成功地重新設定！',
 	'RESET_ROLE_DATA'				=> '重新設定角色資料',
 	'RESET_ROLE_DATA_EXPLAIN'		=> '這個步驟將重新設定 phpBB 系統角色回到原始的狀態。如果您在之前有改變它，那麼強烈建議您運行這個工具。',
+	'ROLE_SETTINGS'					=> '角色設定',
 	'ROWS'							=> '列',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
