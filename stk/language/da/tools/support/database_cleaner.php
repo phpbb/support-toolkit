@@ -98,6 +98,7 @@ $lang = array_merge($lang, array(
  	'RESET_REPORT_REASONS_SUCCESS'  => 'Rapportbegrundelser blev nulstillet!',
  	'RESET_ROLE_DATA'        => 'Nulstil rolledata',
  	'RESET_ROLE_DATA_EXPLAIN'    => 'Dette trin vil nulstille phpBBs systemroller, så standardindstillinger vil gælde for disse. Det anbefales at udføre dette, hvis du foretog ændringer i tidligere trin.',
+	'ROLE_SETTINGS'          => 'Rolleindstillinger',
 	'ROWS'							=> 'Rækker',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
