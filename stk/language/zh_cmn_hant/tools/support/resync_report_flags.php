@@ -43,4 +43,4 @@ $lang = array_merge($lang, array(
 	'RESYNC_REPORT_FLAGS_NEXT'		=> '正在進行重新同步檢舉標誌，請不要中斷這個過程！',
 ));
 
-?>                                              
+?>
