@@ -409,7 +409,8 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	// Perform some actions that only have to be done on given versions or on all
 	switch($phpbb_version)
 	{
-		case '3_0_9' :
+		case '3_0_10'	:
+		case '3_0_9' 	:
 			// The extension group names have been changed, remove the old ones
 			foreach ($data->extension_groups as $key => $null)
 			{
