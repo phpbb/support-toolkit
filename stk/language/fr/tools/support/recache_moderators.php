@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Recache moderators
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2010 phpBB Group, 2010 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2010 phpBB Group, (c) 2010 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -43,6 +42,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RECACHE_MODERATORS'				=> 'Mettre de nouveau en cache les modérateurs',
-	'RECACHE_MODERATORS_COMPLETE'		=> 'Le cache des modérateurs a été reconstruit avec succès.',
-	'RECACHE_MODERATORS_CONFIRM'		=> 'Êtes-vous sûr de vouloir mettre de nouveau en cache les modérateurs ?',
+	'RECACHE_MODERATORS_COMPLETE'		=> 'Le cache des modérateurs a été reconstruit.',
+	'RECACHE_MODERATORS_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
 ));

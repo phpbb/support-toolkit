@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Readd Module Management
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -40,6 +39,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'READD_MODULE_MANAGEMENT'			=> 'Recréer les modules de la gestion du module',
-	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Êtes-vous sûr de vouloir recréer dans le PCA les modules de la gestion du module ?',
-	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'Les modules ont été recréés avec succès !',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir recréer dans le PCA les modules de la gestion du module ?',
+	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'Les modules ont été recréés.',
 ));
