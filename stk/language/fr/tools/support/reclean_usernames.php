@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Reclean Usernames
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -43,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RECLEAN_USERNAMES'					=> 'Renettoyer les noms d’utilisateurs',
-	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms d’utilisateurs ont été renettoyés avec succès.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr de vouloir renettoyer tous les noms d’utilisateurs ?',
-	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de renettoyage des noms d’utilisateurs est en cours d’exécution… Merci de ne pas interrompre ce processus.',
+	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms d’utilisateurs ont été renettoyés.',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir renettoyer tous les noms d’utilisateurs ?',
+	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de renettoyage des noms d’utilisateurs est en cours d’exécution… Veuillez ne pas interrompre cette opération.',
 ));

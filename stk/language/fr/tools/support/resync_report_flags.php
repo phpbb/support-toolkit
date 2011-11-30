@@ -2,10 +2,9 @@
 /**
  *
  * @package Support Toolkit - Resynchronise report flags
- * @version 1.0.1
- * @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/  
- * @copyright (c) 2011 phpBB Group, 2011 Maël Soucaze
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version $Id$
+ * @copyright (c) 2011 phpBB Group, (c) 2011 phpBB.fr
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
  *
  */
 
@@ -41,6 +40,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'RESYNC_REPORT_FLAGS'			=> 'Resynchroniser les marqueurs de rapport',
 	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Cet outil resynchronisera les marqueurs de rapport de tous les messages, sujets et messages privés.',
-	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tous les marqueurs de rapport ont été resynchronisés avec succès !',
-	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronisation des marqueurs de rapport en cours. Merci de ne pas interrompre ce processus',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tous les marqueurs de rapport ont été resynchronisés.',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronisation des marqueurs de rapport en cours. Veuillez ne pas interrompre cette opération.',
 ));
