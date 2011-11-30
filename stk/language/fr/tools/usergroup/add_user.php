@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Add User
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -48,7 +47,7 @@ $lang = array_merge($lang, array(
 	'GROUP_LEADER'			=> 'Responsable du groupe',
 	'GROUP_LEADER_EXPLAIN'	=> 'Faire de cet utilisateur le responsable des groupes sélectionnés.',
 
-	'USER_ADDED'			=> 'L’utilisateur a été créé avec succès !',
+	'USER_ADDED'			=> 'L’utilisateur a été créé.',
 	'USER_GROUPS'			=> 'Groupes d’utilisateurs',
 	'USER_GROUPS_EXPLAIN'	=> 'Faire de cet utilisateur un membre des groupes sélectionnés.',
 ));

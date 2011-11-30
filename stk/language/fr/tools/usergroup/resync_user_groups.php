@@ -2,10 +2,9 @@
 /**
  *
  * @package Support Toolkit - Resynchronise Registered users groups
- * @version 1.0.1
- * @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/  
- * @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
  *
  */
 
@@ -43,14 +42,14 @@ $lang = array_merge($lang, array(
 	'RESYNC_USER_GROUPS_EXPLAIN'	=> 'Cet outil vérifie si les utilisateurs sont bien membres des groupes par défaut <em>(utilisateurs inscrits, utilisateurs COPPA inscrits et utilisateurs récemment inscrits)</em>',
 	'RESYNC_USER_GROUPS_NO_RUN'		=> 'Tous les groupes semblent être à jour !',
 	'RESYNC_USER_GROUPS_SETTINGS'	=> 'Resynchroniser les réglages',
-	'RUN_BOTH_FINISHED'				=> 'Tous les groupes d’utilisateurs ont été resynchronisés avec succès !',
+	'RUN_BOTH_FINISHED'				=> 'Tous les groupes d’utilisateurs ont été resynchronisés !',
 	'RUN_RNR'						=> 'Resynchroniser les utilisateurs récemment inscrits',
 	'RUN_RNR_EXPLAIN'				=> 'Cela mettra à jour le groupe des « utilisateurs récemment inscrits » afin qu’il contienne tous les utilisateurs qui correspondent aux critères définis dans le PCA.',
-	'RUN_RNR_FINISHED'				=> 'Le groupe des utilisateurs récemment inscrits a été resynchronisé avec succès !',
-	'RUN_RNR_NOT_FINISHED'			=> 'Le groupe des utilisateurs récemment inscrits est en cours de resynchronisation. Merci ne pas interrompre ce processus',
+	'RUN_RNR_FINISHED'				=> 'Le groupe des utilisateurs récemment inscrits a été resynchronisé.',
+	'RUN_RNR_NOT_FINISHED'			=> 'Le groupe des utilisateurs récemment inscrits est en cours de resynchronisation. Veuillez ne pas interrompre cette opération.',
 	'RUN_RR'						=> 'Resynchroniser les utilisateurs inscrits',
 	'RUN_RR_EXPLAIN'				=> 'L’outil a déterminé que tous les utilisateurs de votre forum ne sont pas membres du groupe des « utilisateurs <em>(COPPA)</em> inscrits ». Souhaitez-vous resynchroniser ces groupes ?<br /><strong>Note :</strong> si votre forum a la COPPA activée, les utilisateurs n’ayant pas entré une date de naissance seront placés dans le groupe des « utilisateurs COPPA inscrits » !',
-	'RUN_RR_FINISHED'				=> 'Les utilisateurs ont été synchronisés avec succès !',
+	'RUN_RR_FINISHED'				=> 'Les utilisateurs ont été synchronisés.',
 
 	'SELECT_RUN_GROUP'	=> 'Veuillez sélectionner au moins un type de groupe qui sera resynchronisé.',
 ));

@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - MySQL Upgrader
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -48,7 +47,7 @@ $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER_RUN'				=> 'Exécuter',
 	'MYSQL_UPGRADER_RUN_EXPLAIN'		=> 'En cochant cette option, l’outil de mise à jour de MySQL génèrera les requêtes et exécutera automatiquement le résultat sur votre base de données.<br />Cela peut prendre un certain temps, n’interrompez <strong>pas</strong> ce processus tant que l’outil ne vous ai pas notifié.',
 	'MYSQL_UPGRADER_SCRIPT'				=> 'Script de l’outil de mise à jour de MySQL',
-	'MYSQL_UPGRADER_SUCCESSFULL'		=> 'L’outil de mise à jour de MySQL a été exécuté avec succès',
+	'MYSQL_UPGRADER_SUCCESSFULL'		=> 'L’outil de mise à jour de MySQL a été exécuté.',
 	
 	'QUERY_FINISHED'	=> 'Termine d’exécuter la requête %1$d sur %2$d, continue vers la prochaine étape.',
 

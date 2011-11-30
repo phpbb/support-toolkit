@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Change Password
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -41,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Modifier le mot de passe',
 	'CHANGE_PASSWORD_EXPLAIN'	=> 'Modifier le mot de passe d’un utilisateur.',
-	'CHANGE_PASSWORD_SUCCESS'	=> 'Le mot de passe de <a href="%s">%s</a> a été modifié avec succès.',
+	'CHANGE_PASSWORD_SUCCESS'	=> 'Le mot de passe de <a href="%s">%s</a> a été modifié.',
 
 	'PASSWORD_CONFIRM'			=> 'Saisissez de nouveau le mot de passe',
 
