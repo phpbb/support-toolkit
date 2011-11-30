@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Duplicate Permission Remover
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -47,5 +46,5 @@ $lang = array_merge($lang, array(
 	'NO_DUPLICATES_FOUND'					=> 'L’outil a terminé la vérification des permissions dupliquées et n’en a trouvé aucune.',
 
 	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Supprimer les permissions dupliquées',
-	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr de vouloir supprimer les permissions dupliquées ?',
+	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir supprimer les permissions dupliquées ?',
 ));
