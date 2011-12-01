@@ -96,6 +96,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'O relatório de movitos foi resetado com sucesso!',
 	'RESET_ROLE_DATA'				=> 'Resetar dados de tarefas',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Essa etapa resetará o sitema de tarefas do phpBB ao seu estado original, é altamente recomendado que execute isso se você fez mudanças na etapa anterior.',
+	'ROLE_SETTINGS'					=> 'Configurações de Tarefas',
 	'ROWS'							=> 'Linhas',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
