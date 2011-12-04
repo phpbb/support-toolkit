@@ -98,6 +98,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Έχει γίνει επιτυχής επαναφορά των λόγων αναφορών!',
 	'RESET_ROLE_DATA'				=> 'Επαναφορά ρόλων δεδομένα',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Το βήμα αυτό θα επαναφέρει τους  ρόλους phpBB πίσω στην αρχική τους κατάσταση, προτείνετε ιδιαίτερα να εκτελέσετε αυτό αν έχετε κάνει αλλαγές στο προηγούμενο βήμα.',
+	'ROLE_SETTINGS'					=> 'Ρυθμίσεις ρόλων',
 	'ROWS'							=> 'Σειρές',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
