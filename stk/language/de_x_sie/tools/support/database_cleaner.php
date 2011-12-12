@@ -99,6 +99,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Die Gründe für eine Meldung wurden erfolgreich zurückgesetzt!',
 	'RESET_ROLE_DATA'				=> 'Rollen zurücksetzen',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Dieser Vorgang setzt die eingebauten Rollen von phpBB auf ihre Standardwerte zurück. Dieser Vorgang sollte durchgeführt werden, wenn im vorhergenden Schritt Änderungen durchgeführt wurden.',
+	'ROLE_SETTINGS'					=> 'Rollen-Einstellungen',
 	'ROWS'							=> 'Eintrag',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
