@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.5-rc1 ==
+* [Fix] Correctly handle empty module data when resetting the boards modules. (Bug #62958)
+
 == Changes since 1.0.4 ==
 * [Add] Added support for phpBB 3.0.10.
 * [Fix] Added missing language entry. (Bug #62856)
