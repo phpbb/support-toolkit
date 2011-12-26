@@ -565,7 +565,8 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		// phpBB handler
 		switch ($errno)
 		{
-			case E_STRICT ;
+			case E_STRICT :
+			case E_DEPRECATED :
 				return true;
 			break;
 			default :
