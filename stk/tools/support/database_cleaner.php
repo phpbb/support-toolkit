@@ -2,205 +2,132 @@
 /**
 *
 * @package Support Toolkit - Database Cleaner
-* @version $Id$
+* @version $Id: database_cleaner.php 262 2009-11-10 14:58:25Z erikfrerejean $
+* @translate $Id: database_cleaner.php 262 2010-02-14 14:08:29 dorin $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
 */
 
 /**
-* @ignore
+* DO NOT CHANGE
 */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-// Under certain circumstances it is possible that this file
-// is included twice. (Bug #62660)
-if (!class_exists('database_cleaner'))
+if (empty($lang) || !is_array($lang))
 {
-	class database_cleaner
-	{
-		/**
-		* @var Array An array that is used to link step numbers with the action. Used to call the correct methods
-		*/
-		var $step_to_action = array(
-			'introduction',
-			'tables',
-			'columns',
-			'config',
-			'extension_groups',
-			'extensions',
-			'permissions',
-			'groups',
-			'roles',
-			'role_data',
-			'modules',
-			'bots',
-			'report_reasons',
-			'final_step',
-		);
-
-		/**
-		* @var database_cleaner_data The database cleaner data object
-		*/
-		var $data = null;
-
-		/**
-		* @var mixed Contains the views or controller object, depending on what is going on
-		*/
-		var $object = null;
-
-		/**
-		* @var String phpBB version number
-		*/
-		var $phpbb_version = '';
-
-		/**
-		* @var Integer The step that is being ran
-		*/
-		var $step = 0;
-
-		/**
-		* Do we have a datafile for this version?
-		*/
-		function tool_active()
-		{
-			global $config;
-
-			// Correctly format the version number. Only RC releases are in uppercase
-			$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
-
-			// Unstable versions can only be used when debugging
-			if (preg_match('#^([0-9_]+)_a|b|dev|RC([0-9]*)$#i', $this->phpbb_version))
-			{
-				if (!defined('DEBUG'))
-				{
-					return 'UNSTABLE_DEBUG_ONLY';
-				}
-				else
-				{
-					// Strip down to the magic "5"
-					$this->phpbb_version = substr($this->phpbb_version, 0, 5);
-				}
-			}
-
-			// Data file exists?
-			if (file_exists(STK_ROOT_PATH . 'includes/database_cleaner/data/' . $this->phpbb_version . '.' . PHP_EXT) === false)
-			{
-				return 'DATAFILE_NOT_FOUND';
-			}
-
-			return true;
-		}
-
-		/**
-		* Correctly setup the database cleaner
-		*/
-		function _setup()
-		{
-			global $db;
-
-			// Get the step.
-			// If the step is outside the $this->step_to_action range set it to 0
-			$this->step = request_var('step', 0);
-			if ($this->step < 0 || $this->step > sizeof($this->step_to_action))
-			{
-				$this->step = 0;
-			}
-
-			// include the required file for this version
-			if (!function_exists('fetch_cleaner_data'))
-			{
-				include STK_ROOT_PATH . 'includes/database_cleaner/functions_database_cleaner.' . PHP_EXT;
-			}
-
-			if (!class_exists('database_cleaner_data'))
-			{
-				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
-			}
-
-			if (!class_exists('phpbb_db_tools'))
-			{
-				include PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
-			}
-			$db_tools = new phpbb_db_tools($db);
-
-			// Load all data for this version
-			$this->data = new database_cleaner_data($db_tools);
-			fetch_cleaner_data($this->data, $this->phpbb_version);
-		}
-
-		/**
-		* Display the correct confirmation screen
-		*/
-		function display_options()
-		{
-			global $template, $user;
-
-			// Setup
-			$this->_setup();
-			$user->add_lang('acp/common');
-
-			// Setup $this->object
-			if (!class_exists('database_cleaner_views'))
-			{
-				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_views.' . PHP_EXT;
-			}
-			$this->object = new database_cleaner_views($this);
-
-			// Call the correct view method
-			call_user_func(array($this->object, $this->step_to_action[$this->step]));
-
-			// Output the page
-			$this->object->display();
-		}
-
-		/**
-		* Perform the right actions
-		* @param Array $error An array that will be filled with error messages that might occure
-		* @return void
-		*/
-		function run_tool(&$error)
-		{
-			// Setup
-			$this->_setup();
-
-			$selected = request_var('items', array('' => ''));
-
-			if ($this->step > 0 && !check_form_key('database_cleaner'))
-			{
-				// Kick them if bad form key
-				$error[] = 'FORM_INVALID';
-				return;
-			}
-
-			// Setup $this->object
-			if (!class_exists('database_cleaner_controller'))
-			{
-				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_controller.' . PHP_EXT;
-			}
-			$this->object = new database_cleaner_controller($this);
-
-			// Call the correct method
-			$error = call_user_func(array($this->object, $this->step_to_action[$this->step]), $error, $selected);
-
-			// Error?
-			if (!empty($error))
-			{
-				return;
-			}
-
-			// Confirm boxes
-			$did_run = true;
-			if (!isset($_POST['yes']))
-			{
-				$did_run = false;
-			}
-
-			// Redirect to the next step
-			redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => $did_run)));
-		}
-	}
+	$lang = array();
 }
+
+// DEVELOPERS PLEASE NOTE
+//
+// All language files should use UTF-8 as their encoding and the files must not contain a BOM.
+//
+// Placeholders can now contain order information, e.g. instead of
+// 'Page %s of %s' you can (and should) write 'Page %1$s of %2$s', this allows
+// translators to re-order the output of data while ensuring it remains correct
+//
+// You do not need this where single placeholders are used, e.g. 'Message %d' is fine
+// equally where a string contains only two placeholders which are used to wrap text
+// in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ » “ ” …
+//
+
+$lang = array_merge($lang, array(
+	'BOARD_DISABLE_REASON'			=> 'Forumul este momentan dezactivat pentru lucrări de întreţinere. Vă rugăm reveniţi!',
+	'BOARD_DISABLE_SUCCESS'			=> 'Forumul a fost dezactivat cu succes!',
+
+	'COLUMNS'						=> 'Coloane',
+	'CONFIG_SETTINGS'				=> 'Setări de configurare',
+	'CONFIG_UPDATE_SUCCESS'			=> 'Setările de configurare au fost actualizate cu succes!',
+	'CONTINUE'						=> 'Continuă',
+
+	'DATABASE_CLEANER'				=> 'Curăţare bază de date',
+	'DATABASE_CLEANER_EXTRA'		=> 'Orice alte elemente suplimentare adăugate de modificări.  <strong>În cazul în care este bifată caseta de selecţie, vor fi eliminate</strong>.',
+	'DATABASE_CLEANER_MISSING'		=> 'Orice câmpuri cu un fundal roşu ca acesta sunt elemente care lipsesc şi trebuie să fie adăugate.  <strong>În cazul în care este bifată caseta de selecţie, vor fi adăugate</strong>.',
+	'DATABASE_CLEANER_SUCCESS'		=> 'Curăţarea bazei de date a fost finalizată cu succes pentru toate sarcinile!<br /><br />Asiguraţi-vă că aţi făcut din nou o salvare a bazei de date.',
+	'DATABASE_CLEANER_WARNING'		=> 'Acest utilitar nu oferă NICIO GARANŢIE şi utilizatorii acestui utilitar ar trebui să facă salvări ale bazei de date pentru a avea posibilitatea reconstituirii acesteia în caz de accidente.<br /><br />Înainte de a continua, asiguraţi-vă că aţi salvat baza de date!',
+	'DATABASE_CLEANER_WELCOME'		=> 'Bine aţi venit la utilitarul de curăţare a bazei de date!<br /><br />Acest utilitar a fost creat pentru a şterge coloanele, rândurile şi tabele din baza de date adăugate unei instalări standard a phpBB3 şi adaugă elementele lipsă care sunt necesare în baza de date.<br /><br />Când sunteţi gata să continuaţi apăsaţi butonul Continuă pentru a porni curăţarea bazei de date (reţineţi că forumul va fi dezactivat până la finalizarea procesului).',
+	'DATABASE_COLUMNS_SUCCESS'		=> 'Coloanele din baza de date au fost actualizate cu succes!',
+	'DATABASE_TABLES'				=> 'Tabelele bazei de date',
+	'DATABASE_TABLES_SUCCESS'		=> 'Tabelele bazei de date au fost actualizate cu succes!',
+	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Rolurile de sistem phpBB au fost restaurate cu succes!',
+	'DATABASE_ROLES_SUCCESS'		=> 'Rolurile au fost actualizate cu succes!',
+	'DATAFILE_NOT_FOUND'			=> 'Support Toolkit nu a putut găsi fişierele de date necesare pentru versiunea phpBB instalată!',
+
+	'EMPTY_PREFIX'					=> 'Niciun prefix pentru baza de date',
+	'EMPTY_PREFIX_CONFIRM'			=> 'Utilitarul de curăţare a bazei de date este gata să efectueze modificări la tabele în baza dumeavoastră de date dar pentru că nu folosiţi un prefix la tabele această acţiune ar putea tabelele care nu au legătura cu phpBB. Sunteţi sigur că vreţi să continuaţi?',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'Utilitarul de curăţare a bazei de date a constatat că nu aveţi specificat un prefix pentru tabelele phpBB din baza de date. Datorită acestui fapt, utilitarul va verifica <strong>toate</strong> tabelele din baza de date. Continuaţi cu atenţie şi asiguraţi-vă că excludeţi din selecţie orice tabelă care nu aparţine de phpBB. Dacă nu procedaţi astfel riscaţi să afectaţi tabelele din baza de date care nu fac parte din phpBB.<br />Dacă nu sunteţi sigur cum trebuie procedat, cereţi ajutor în <a href="http://www.phpbb.com/community/viewforum.php?f=46">forumurile de suport phpBB</a>.',
+	'ERROR'							=> 'Eroare',
+	'EXTRA'							=> 'Extra',
+	'EXTENSION_GROUPS_SUCCESS'		=> 'The extension groups have been reset successfully',
+	'EXTENSIONS_SUCCESS'			=> 'The extensions have been reset successfully',
+
+	'FINAL_STEP'					=> 'Acesta este pasul final.<br /><br />Acum forumul va fi reactivat şi cache-ul forumului va fi şters.',
+
+	'INSTRUCTIONS'					=> 'Instrucţiuni',
+
+	'MISSING'						=> 'Lipsesc',
+	'MODULE_UPDATE_SUCCESS'			=> 'Modulele au fost actualizate cu succes!',
+
+	'NO_BOT_GROUP'					=> 'Boţii nu au putut fi resetaţi, lipseşte grupul boţilor.',
+
+	'PERMISSION_SETTINGS'			=> 'Permisiuni',
+	'PERMISSION_UPDATE_SUCCESS'		=> 'Setarea permisiunilor a fost actualizată cu succes!',
+	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Versiunea dumneavoastră phpBB3 nu este acceptată (sau unele fişiere ale utilitarului Suport Toolkit lipsesc).<br />phpBB 3.0.0 + ar trebui să fie suportat, dar poate dura ceva timp până ce o nouă versiune acestui utilitar va fi actualizată pentru a fi conformă cu cea mai nouă versiune phpBB 3.0.',
+
+	'QUIT'							=> 'Renunţă',
+
+	'RESET_BOTS'					=> 'Resetare boţi',
+	'RESET_BOTS_EXPLAIN'			=> 'Doriţi să resetaţi lista cu boţi la lista standard a phpBB3? Toţi roboţii existenţi vor fi eliminaţi şi vor fi înlocuiţi cu setul standard.',
+	'RESET_BOTS_SKIP'				=> 'Resetarea boţilor a fost sărită',
+	'RESET_BOT_SUCCESS'				=> 'Boţii au fost resetaţi cu succes!',
+	'RESET_MODULES'					=> 'Resetare module',
+	'RESET_MODULES_EXPLAIN'			=> 'Doriţi să resetaţi modulele la cele standard phpBB3?  Toate modulele existente vor fi şterse şi înlocuite cu cele standard.',
+	'RESET_MODULES_SKIP'			=> 'Modulul de resetare a fost sărit',
+	'RESET_MODULE_SUCCESS'			=> 'Modulele au fost resetate cu succes!',
+	'RESET_REPORT_REASONS'			=> 'Resetare rapoarte cu motive',
+	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Vreţi să resetaţi rapoartele cu motive? Această acţiune va şterge toate rapoartele adăugate!',
+	'RESET_REPORT_REASONS_SKIP'		=> 'Rapoartele cu motive nu au fost resetate',
+	'RESET_REPORT_REASONS_SUCCESS'	=> 'Rapoartele cu motive au fost resetate cu succes!',
+	'RESET_ROLE_DATA'				=> 'Resetare setări rol',
+	'RESET_ROLE_DATA_EXPLAIN'		=> 'Această procedură va reseta sistemul de roluri al phpBB la starea iniţiala, este recomandat să executaţi acestă procedură dacă aţi efectuat modificări la pasul anterior.',
+	'ROLE_SETTINGS'					=> 'Setări rol',
+	'ROWS'							=> 'Rânduri',
+
+	'SECTION_NOT_CHANGED_TITLE'		=> array(
+		'tables'			=> 'Tabele neschimbate',
+		'columns'			=> 'Coloane neschimbate',
+		'config'			=> 'Configurare neschimbată',
+		'extension_groups'	=> 'Grupuri extensii neschimbate',
+		'extensions'		=> 'Extensii neschimbate',
+		'permissions'		=> 'Permisiuni neschimbate',
+		'groups'			=> 'Grupuri neschimbate',
+		'roles'				=> 'Roluri neschimbate',
+		'final_step'		=> 'Pasul final',
+	),
+	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
+		'tables'			=> 'Tabelele bazei de date nu au fost schimbate',
+		'columns'			=> 'Coloanele din baza de date nu au fost schimbate',
+		'config'			=> 'Tabela de configurare nu are nicio valoare nouă/lipsă',
+		'extension_groups'	=> 'Tabela pentru grupurile de extensii nu are nicio valoare nouă/lipsă',
+		'extensions'		=> 'Extensiile standard nu s-au schimbat',
+		'permissions'		=> 'Nu au fost schimbări în tabelele cu permisiuni',
+		'groups'			=> 'Nu au fost schimbări în grupurile de sistem ale phpBB',
+		'roles'				=> 'Nu au fost roluri adăugate sau şterse',
+		'final_step'		=> 'Acest ultim pas va şterge cache-ul şi va reactiva forumul.',
+	),
+	'SUCCESS'						=> 'Succes',
+	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Grupurile de sistem ale phpBB au fost resetate cu succes',
+
+	'TYPE'							=> 'Tip',
+	
+	'UNSTABLE_DEBUG_ONLY'			=> 'Utilitarul de curăţare a bazei de date poate rula pe versiuni phpBB instabiles <em>(dev, a, b, RC)</em> doar dacă variabila "DEBUG" din fişierul de configurare phpBB este activată.',
+));
+
+
+?>
