@@ -96,6 +96,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Rapoartele cu motive au fost resetate cu succes!',
 	'RESET_ROLE_DATA'				=> 'Resetare setări rol',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Această procedură va reseta sistemul de roluri al phpBB la starea iniţiala, este recomandat să executaţi acestă procedură dacă aţi efectuat modificări la pasul anterior.',
+	'ROLE_SETTINGS'					=> 'Setări rol',
 	'ROWS'							=> 'Rânduri',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
