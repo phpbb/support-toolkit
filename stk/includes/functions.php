@@ -551,8 +551,8 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 	if (defined('IN_STK') && !defined('IN_ERK'))
 	{
 		// Some magic to fix the links to the STK index rather than phpBB's
-		global $phpbb_root_path;
-		$phpbb_root_path = STK_ROOT_PATH;
+		//global $phpbb_root_path;
+		//$phpbb_root_path = STK_ROOT_PATH;
 
 		return msg_handler($errno, $msg_text, $errfile, $errline);
 	}
