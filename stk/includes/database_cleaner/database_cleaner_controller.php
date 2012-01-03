@@ -493,6 +493,13 @@ class database_cleaner_controller
 
 				foreach ($module_info as $module_basename => $fileinfo)
 				{
+					if (empty($fileinfo['modes']))
+					{
+						// Apparently it is possible to have an empty "modules" array.
+						// #62958
+						continue;
+					}
+
 					foreach ($fileinfo['modes'] as $module_mode => $row)
 					{
 						foreach ($row['cat'] as $cat_name)

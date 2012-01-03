@@ -135,7 +135,7 @@ class erk_style_dir_repair
 	 */
 	function refresh()
 	{
-		global $db;
+		global $db, $stk_no_error;
 
 		// Fetch all the style dirs
 		$style_dirs = array();
@@ -152,7 +152,7 @@ class erk_style_dir_repair
 		}
 		
 		// Disable the message handler
-		@define('ERK_NO_TRIGGER', true);
+		$stk_no_error = true;
 		
 		// Get all the styles from the database
 		$sql = 'SELECT s.style_id, t.template_path
@@ -177,6 +177,6 @@ class erk_style_dir_repair
 		}
 		
 		// Enable the message handler
-		@define('ERK_NO_TRIGGER', false);
+		$stk_no_error = false;
 	}
 }

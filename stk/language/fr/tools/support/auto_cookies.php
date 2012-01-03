@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Auto Cookies
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -40,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'AUTO_COOKIES'				=> 'Automatisation des cookies',
-	'AUTO_COOKIES_EXPLAIN'		=> 'Cet outil vous permet de modifier les réglages des cookies de votre forum. Les réglages qui vous sont suggérés sont corrects dans la plupart des cas. Si vous n’êtes pas certain que les réglages soient corrects, veuillez rechercher de l’aide dans le forum de support avant de réaliser une mauvaise manipulation qui pourrait rendre impossible toute connexion à votre forum.',
+	'AUTO_COOKIES_EXPLAIN'		=> 'Cet outil vous permet de modifier les réglages des cookies de votre forum. Les réglages qui vous sont suggérés sont corrects dans la plupart des cas. Si vous n’êtes pas certain(e) que les réglages soient corrects, veuillez rechercher de l’aide dans le forum de support avant de réaliser une mauvaise manipulation qui pourrait rendre impossible toute connexion à votre forum.',
 
-	'COOKIE_SETTINGS_UPDATED'	=> 'Les réglages des cookies ont été mis à jour avec succès.',
+	'COOKIE_SETTINGS_UPDATED'	=> 'Les réglages des cookies ont été mis à jour.',
 ));

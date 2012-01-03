@@ -2,10 +2,9 @@
 /**
 *
 * @package Support Toolkit - Profile List
-* @version 1.0.1
-* @author Maël Soucaze (Maël Soucaze) <maelsoucaze@phpbb.com> http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group, 2009 Maël Soucaze
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -47,13 +46,13 @@ $lang = array_merge($lang, array(
 
 	'LIMIT'					=> 'Limite',
 
-	'ONLY_NON_EMPTY'		=> 'Seulement remplis',
+	'ONLY_NON_EMPTY'		=> 'Remplis uniquement',
 	'ORDER_BY'				=> 'Trier par',
 
 	'PROFILE_LIST'			=> 'Liste des profils',
 	'PROFILE_LIST_EXPLAIN'	=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
 
 	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
-	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
-	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés avec succès !',
+	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés.',
 ));
