@@ -4,8 +4,7 @@
 * @package Support Toolkit - Auto Cookies
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-08
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -40,8 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'AUTO_COOKIES'				=> 'Cookies automatici',
-	'AUTO_COOKIES_EXPLAIN'		=> 'Consente di modificare le impostazioni dei cookie per il tuo forum e suggerisce ciò che (probabilmente) dovrebbe essere impostato.',
+	'AUTO_COOKIES'				=> 'Cookie automatici',
+	'AUTO_COOKIES_EXPLAIN'		=> 'Questo strumento permette di cambiare le impostazioni dei cookie del tuo forum. Le impostazioni suggerite dovrebbero essere corrette nella maggior parte dei casi. Se non sei sicuro delle corrette impostazioni, cerca la guida nel forum di supporto prima di cambiarle, perché le impostazioni errate possono impedirti di accedere al tuo Forum.',
 
-	'COOKIE_SETTINGS_UPDATED'	=> 'Configurazione cookie aggiornata.',
+	'COOKIE_SETTINGS_UPDATED'	=> 'Le impostazioni dei cookie sono state aggiornate con successo.',
 ));

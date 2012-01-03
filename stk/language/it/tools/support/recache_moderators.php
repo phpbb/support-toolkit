@@ -4,8 +4,7 @@
 * @package Support Toolkit - Recache moderators
 * @version $Id$
 * @copyright (c) 2010 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -43,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RECACHE_MODERATORS'				=> 'Cache moderatori',
-	'RECACHE_MODERATORS_COMPLETE'		=> 'I moderatori sono stati cachati con successo.',
-	'RECACHE_MODERATORS_CONFIRM'		=> 'Sei sicuro di voler cachare i moderatori?',
+	'RECACHE_MODERATORS'				=> 'Re-cache dei moderatori',
+	'RECACHE_MODERATORS_COMPLETE'		=> 'La cache dei moderatori è stata ricostruita con successo.',
+	'RECACHE_MODERATORS_CONFIRM'		=> 'Sei sicuro di voler ricostruire la cache dei moderatori?',
 ));

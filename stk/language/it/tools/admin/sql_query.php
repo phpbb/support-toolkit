@@ -4,10 +4,9 @@
 * @package Support Toolkit - SQL Query
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/06/12
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**
@@ -40,18 +39,17 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ERROR_QUERY'					=> 'La query contiene errori',
+	'ERROR_QUERY'					=> 'Query contenenti errori',
 
 	'NO_RESULTS'					=> 'Nessun risultato',
-	'NO_SQL_QUERY'					=> 'Devi inserire una query per l’esecuzione.',
+	'NO_SQL_QUERY'					=> 'Devi inserire una query da eseguire.',
 
-	'QUERY_RESULT'					=> 'Risultato query',
-
+	'QUERY_RESULT'					=> 'Risultati query',
 
 	'SHOW_RESULTS'					=> 'Mostra risultati',
 	'SQL_QUERY'						=> 'Esegui query SQL',
-	'SQL_QUERY_EXPLAIN'				=> 'Inserisci la query SQL da eseguire. Se il tuo prefisso non è phpbb_ verrà automaticamente cambiato nel prefisso utilizzato da questa installazione.<br />Se il pulsante “Mostra risultati” è selezionato lo strumento visualizza i risultati <em>(se esistono)</em> della query.',
-	
+	'SQL_QUERY_EXPLAIN'				=> 'Inserisci la query SQL che vuoi eseguire. L’opzione sostituirà il prefisso "phpbb_" con il prefisso delle tue tabelle.<br />Se "Mostra risultati" è selezionato, l’opzione mostrerà, <em>se ce ne sono</em>, i risultati della query.',
+
 	'SQL_QUERY_LEGEND'				=> 'Query SQL',
-	'SQL_QUERY_SUCCESS'				=> 'La query SQL è stata eseguita con successo.',
+	'SQL_QUERY_SUCCESS'				=> 'La query SQL è stata eseguita con successo!',
 ));

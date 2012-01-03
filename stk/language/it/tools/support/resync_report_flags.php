@@ -3,8 +3,8 @@
  *
  * @package Support Toolkit - Resynchronise report flags
  * @copyright (c) 2011 phpBB Group
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright (c) 2011 portalxl.eu - translate on 2011/04/06
  *
  */
 
@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_REPORT_FLAGS'			=> 'Sincronizzazione segnalazioni pendenti',
-	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Questo strumento sincronizza le segnalazioni pendenti per messaggi, argomenti e messaggi privati.',
-	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tutte le segnalazioni pendenti sono state sincronizzate con successo!',
-	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Sincronizzazione segnalazioni pendenti in esecuzione. Non interrompere il processo',
+	'RESYNC_REPORT_FLAGS'			=> 'Risincronizza le segnalazioni in sospeso',
+	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Questo strumento risincronizzerà le segnalazioni in sospeso per tutti i messaggi, argomenti e messaggi privati.',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tutte le segnalazioni in sospeso sono state risincronizzate con successo!',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Risincronizzazione segnalazioni in sospeso in esecuzione... Non interrompere il processo.',
 ));

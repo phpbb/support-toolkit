@@ -4,8 +4,7 @@
 * @package Support Toolkit - Anonymous group check
 * @version $Id: sanitize_anonymous_user.php 155 2009-06-13 20:06:09Z marshalrusty $
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -40,19 +39,19 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ANONYMOUS_CLEANED'					=> 'L’utente anonimo è stato ripulito.',
-	'ANONYMOUS_CORRECT'					=> 'L’utente anonimo esiste e tutti i suoi dati sono impostati correttamente!',
-	'ANONYMOUS_CREATED'					=> 'L’utente anonimo è stato ricreato con successo.',
-	'ANONYMOUS_CREATION_FAILED'			=> 'Non è possibile ricreare l’utente anonimo. Sei pregato di chiedere assistenza sul Forum di Supporto di phpBB.com',
-	'ANONYMOUS_GROUPS_REMOVED'			=> 'L’utente anonimo è stato eliminato dall’accesso dei gruppi.',
-	'ANONYMOUS_MISSING'					=> 'L’utente anonimo è mancante.',
-	'ANONYMOUS_MISSING_CONFIRM'			=> 'L’utente anonimo è mancante nel tuo database. L’utente è usato per permettere agli ospiti di visitare la tua board. Vuoi crearne uno nuovo?',
-	'ANONYMOUS_WRONG_DATA'				=> 'I dati dell’utente anonimo non sono corretti.',
-	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'Il profilo dell’utente anonimo è parzialmente corretto. Vuoi ripararlo?',
-	'ANONYMOUS_WRONG_GROUPS'			=> 'L’utente anonimo appartiene in modo improprio ai gruppi utenti multipli.',
-	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utente anonimo appartiene in modo improprio ai gruppi utenti multipli. Vuoi eliminare l’utente anonimo per impostarlo nel gruppo "OSPITI"?',
+	'ANONYMOUS_CLEANED'					=> 'I dati del profilo dell’utente Anonymous sono stati corretti con successo.',
+	'ANONYMOUS_CORRECT'					=> 'L’utente Anonymous esiste ed è configurato correttamente.',
+	'ANONYMOUS_CREATED'					=> 'L’utente Anonymous è stato ricreato con successo.',
+	'ANONYMOUS_CREATION_FAILED'			=> 'Non è stato possibile ricreare l’utente Anonymous. Chiedere ulteriore assistenza sul Forum di phpBB.com.',
+	'ANONYMOUS_GROUPS_REMOVED'			=> 'L’utente Anonymous è stato rimosso con successo da tutti i gruppi di accesso.',
+	'ANONYMOUS_MISSING'					=> 'L’utente Anonymous non è più presente.',
+	'ANONYMOUS_MISSING_CONFIRM'			=> 'L’utente Anonymous non è presente nel database. Questo utente viene utilizzato per consentire agli ospiti di visitare la Board. Vuoi crearne uno nuovo?',
+	'ANONYMOUS_WRONG_DATA'				=> 'I dati del profilo dell’utente Anonymous non sono corretti.',
+	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'I dati del profilo dell’utente Anonymous sono parzialmente inesatti. Vuoi correggere la cosa?',
+	'ANONYMOUS_WRONG_GROUPS'			=> 'L’utente Anonymous impropriamente appartiene a gruppi di utenti multipli.',
+	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utente Anonymous  impropriamente appartiene a gruppi di utenti multipli. Vuoi rimuovere l’utente Anonymous di tutti i gruppi ma non dal gruppo "Ospiti"?',
 
 	'REDIRECT_NEXT_STEP'				=> 'Stai per essere reindirizzato alla fase successiva.',
 
-	'SANITISE_ANONYMOUS_USER'			=> 'Pulizia utente anonimo',
+	'SANITISE_ANONYMOUS_USER'			=> 'Correzione utente Anonymous',
 ));

@@ -3,7 +3,7 @@
  *
  * @package Support Toolkit - Resynchronise Registered users groups
  * @copyright (c) 2009 phpBB Group
- * @copyright (c) 2011 portalxl.eu - translated on 2011/04/06 
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-01
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -38,18 +38,18 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_USER_GROUPS'			=> 'Sincronizza gruppi utente',
-	'RESYNC_USER_GROUPS_EXPLAIN'	=> 'Questo strumento è progettato per verificare se tutti gli utenti fanno parte di gruppi predefiniti e corretti <em>(utenti registrati, utenti registrati COPPA e nuovi utenti registrati)</em>',
+	'RESYNC_USER_GROUPS'			=> 'Risincronizza gruppi utente',
+	'RESYNC_USER_GROUPS_EXPLAIN'	=> 'Questo strumento è progettato per verificare se tutti gli utenti fanno parte correttamente dei gruppi predefiniti <em>(Utenti Registrati, Utenti COPPA, Registrati e Nuovi utenti registrati)</em>',
 	'RESYNC_USER_GROUPS_NO_RUN'		=> 'Tutti i gruppi risultano aggiornati!',
-	'RESYNC_USER_GROUPS_SETTINGS'	=> 'Opzioni sincronizzazione',
-	'RUN_BOTH_FINISHED'				=> 'Tutti i gruppi risultano sincronizzati con successo!',
-	'RUN_RNR'						=> 'Sincronizza nuovi utenti regiastrati',
-	'RUN_RNR_EXPLAIN'				=> 'Questo aggiornerà il gruppo "nuovi utenti registrati" in modo che contenga tutti gli utenti che soddisfano i criteri specificati in ACP.',
-	'RUN_RNR_FINISHED'				=> 'Il gruppo nuovi utenti registrati è stato sincronizzato con successo!',
-	'RUN_RNR_NOT_FINISHED'			=> 'Il gruppo nuovi utenti registrati è attualmente in fase di sincronizzazione. Non interrompere il processo',
+	'RESYNC_USER_GROUPS_SETTINGS'	=> 'Opzioni di risincronizzazione',
+	'RUN_BOTH_FINISHED'				=> 'Tutti i gruppi utente sono stati risincronizzati con successo!',
+	'RUN_RNR'						=> 'Risincronizza i nuovi utenti registrati',
+	'RUN_RNR_EXPLAIN'				=> 'Questa azione aggiornerà il gruppo "Nuovi Utenti Registrati" affinché contenga tutti gli utenti che rispondono ai criteri specificati nel PCA.',
+	'RUN_RNR_FINISHED'				=> 'Il gruppo Nuovi utenti registrati è stato risincronizzato con successo!',
+	'RUN_RNR_NOT_FINISHED'			=> 'Il gruppo Nuovi utenti registrati è attualmente in fase di risincronizzazione. Si prega di non interrompere questo processo',
 	'RUN_RR'						=> 'Sincronizzazione utenti',
-	'RUN_RR_EXPLAIN'				=> 'Questo strumento determina se non tutti gli utenti della tua board fanno parte del gruppo "utenti registrati <em>(COPPA)</em>". Vuoi sincronizzare questo gruppo?<br /><strong>Nota:</strong> Se la tua board ha COPPA abilitato e gli utenti hanno inserito la data di nascita gli utenti potranno essere inseriti nel gruppo "utenti registrati COPPA"!',
-	'RUN_RR_FINISHED'				=> 'Gli utenti sono stati sincronizzati con successo!',
+	'RUN_RR_EXPLAIN'				=> 'Lo strumento ha controllato che tutti gli utenti della Board non facciano parte del gruppo "Utenti <em>(COPPA)</em>". Vuoi risincronizzare questi gruppi?<br /><strong>Nota:</strong> Se la tua Board ha utenti COPPA abilitati e un utente non ha inserito la sua data di nascita, l’utente verrà inserito nel gruppo "Utenti COPPA Registrati"!',
+	'RUN_RR_FINISHED'				=> 'Gli utenti sono stati risincronizzati con successo!',
 
-	'SELECT_RUN_GROUP'	=> 'Select at least one group type that will be resynchronised.',
+	'SELECT_RUN_GROUP'	=> 'Seleziona almeno un tipo di gruppo che verrà risincronizzato.',
 ));

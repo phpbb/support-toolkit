@@ -4,10 +4,9 @@
 * @package Support Toolkit - Purge Cache
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/06/12
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**

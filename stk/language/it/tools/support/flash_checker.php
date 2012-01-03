@@ -3,7 +3,7 @@
  *
  * @package Support Toolkit - Flash checker
  * @copyright (c) 2009 phpBB Group
- * @copyright (c) 2011 portalxl.eu - translated on 2011/04/06
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-08
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'FLASH_CHECKER'				=> 'Controllo flash',
-	'FLASH_CHECKER_CONFIRM'		=> 'In phpBB 3.0.7-pl1, una possibile vulnerabilità XSS è stata trovato nel BBCode flash. Questo problema è stato risolto in phpBB 3.0.8. Questo strumento controlla tutti i messaggi, messaggi privati, e le firme per questo BBCode e se è vulnerabile. Sarà così possibile riparare rapidamente questi messaggi ed assicurarti che il forum è sicuro. Controlla <a href="http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068">l’annuncio della versione di phpBB 3.0.8</a> per altre informazioni su questo bug.',
-	'FLASH_CHECKER_FOUND'		=> 'Il controllo flash ha trovato alcuni BBCodes flash potenzialmente pericolosi per il vostro forum. Clicca <a href="%s">qui</a> per riparare i messaggi e i messaggi privati che contengono il BBCode flash.',
-	'FLASH_CHECKER_NO_FOUND'	=> 'Nessun BBCodes flash potenzialmente pericoloso trovato.',
+	'FLASH_CHECKER'				=> 'Controllo Flash',
+	'FLASH_CHECKER_CONFIRM'		=> 'In phpBB 3.0.7-PL1, una possibile vulnerabilità XSS è stata individuata nel flash incorporato nel BBCode Flash. Questo problema è stato risolto con la versione phpBB 3.0.8. Questo strumento controlla tutti i messaggi, messaggi privati, e le firme per questo BBCode vulnerabile. Se rilevati, permette di riparare rapidamente questi messaggi per assicurarsi che la Board sia sicura. Controlla <a href="http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068">l’annuncio di rilascio del phpBB 3.0.8</a> per maggiori informazioni sul problema.',
+	'FLASH_CHECKER_FOUND'		=> 'Il controllo Flash ha trovato alcuni Flash BBCode potenzialmente pericolosi sulla tua Board. Clicca <a href="%s">qui</a> per riparare i messaggi e i messaggi privati che contengono il Flash BBCode.',
+	'FLASH_CHECKER_NO_FOUND'	=> 'Non è stato trovato nessun potenziale Flash BBCode pericoloso.',
 ));

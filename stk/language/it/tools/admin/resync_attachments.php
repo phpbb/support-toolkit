@@ -3,7 +3,7 @@
  *
  * @package Support Toolkit - Resync Attachments
  * @copyright (c) 2009 phpBB Group
- * @copyright (c) 2011 portalxl.eu - translation on 2011/04/06
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_ATTACHMENTS'			=> 'Sincronizza allegati',
-	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Questo strumento ti assicura che tutti gli allegati archiviati nel database in realtà hanno un loro file sul server. Se il file è mancante, questo strumento farà eliminare l’allegato dal database. Sei sicuro che di voler continuare?',
-	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Allegati sincronizzati con successo!',
-	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'La sincronizzazione degli allegati è in progresso. Si prega di non interrompere il processo.',
+	'RESYNC_ATTACHMENTS'			=> 'Risincronizza gli allegati',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Questa opzione assicura che ad ogni allegato salvato nel database corrisponda un file sul server. Se il file è mancante, questa opzione rimuove l’allegato dal database. Sei sicuro di voler continuare?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Allegati risincronizzati con successo!',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Risincronizzamento allegati in corso. Non interrompere l’operazione!',
 ));
