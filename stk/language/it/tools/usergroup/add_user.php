@@ -4,8 +4,7 @@
 * @package Support Toolkit - Add User
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-01
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -44,12 +43,12 @@ $lang = array_merge($lang, array(
 	'ADD_USER_GROUP'		=> 'Aggiungi utente a gruppi',
 
 	'DEFAULT_GROUP'			=> 'Gruppo predefinito',
-	'DEFAULT_GROUP_EXPLAIN'	=> 'Il gruppo predefinito per questo utente.',
+	'DEFAULT_GROUP_EXPLAIN'	=> 'Gruppo predefinito per questo utente.',
 
 	'GROUP_LEADER'			=> 'Leader gruppo',
-	'GROUP_LEADER_EXPLAIN'	=> 'Rendi questo utente il leader del gruppo selezionato.',
+	'GROUP_LEADER_EXPLAIN'	=> 'Rendi questo utente leader del gruppo dei gruppi selezionati.',
 
 	'USER_ADDED'			=> 'L’utente è stato creato con successo!',
 	'USER_GROUPS'			=> 'Gruppi utente',
-	'USER_GROUPS_EXPLAIN'	=> 'Rendi questo utente un membro del gruppo selezionato.',
+	'USER_GROUPS_EXPLAIN'	=> 'Rendi questo utente un membro dei gruppi selezionati.',
 ));

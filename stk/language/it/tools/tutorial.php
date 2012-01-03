@@ -4,8 +4,7 @@
 * @package Support Toolkit - Tutorial
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-02
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -50,5 +49,5 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'TUTORIAL'			=> 'Questo è un tutorial',
-	'TUTORIAL_EXPLAIN'	=> 'Questa è la spiegazione per il tutorial',
+	'TUTORIAL_EXPLAIN'	=> 'Questa è una spiegazione per il tutorial',
 ));

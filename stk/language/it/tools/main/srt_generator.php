@@ -4,7 +4,7 @@
  * @package Support Toolkit
  * @version $Id$
  * @copyright (c) 2010 phpBB Group
- * @copyright (c) 2011 portalxl.eu - translated on 2011/04/06 
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-21
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -35,16 +35,16 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ » " " …
 //
 
 $lang = array_merge($lang, array(
-	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Qui di seguito c’è la copia del modello della richiesta di supporto. Clicca qui sotto per copiarlo negli appunti, quindi creare un nuovo messaggio nel <a href="http://www.phpbb.com/community/viewforum.php?f=46">Forum di supporto</a> con queste informazioni. Se il tuo argomento è già esistente nel forum, copia il modello in una risposta nell’argomento esistente anziché crearne uno nuovo.',
-	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Il generatore di template non ha potuto caricare le risposte. Assicurati di aver correttamente avviato lo strumento.',
-	'SRT_GENERATOR'					=> 'Generatore di richiesta di supporto',
-	'SRT_GENERATOR_LANDING'			=> 'Generatore di richiesta di supporto',
-	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Benvenuto nel generatore di richiesta supporto Team. Questo è il modo più rapido ed efficiente per completare il nostro modello di richiesta supporto. Il generatore farà una serie di otto-dieci domande che sono utili per la diagnosi della maggior parte dei problemi. Successivamente dovrai compilare le tue risposte in un elenco che può essere copiato e incollato nell’argomento di supporto.<br />Questo strumento STK fa la stessa cosa come il <a href="http://www.phpbb.com/support/stk/">generatore SRT disponibile su www.phpbb.com</a> ma con alcuni tentativi di domande pre-compliate.<br /><br />Vuoi eseguire il generatore SRT?',
-	'SRT_NO_CACHE'					=> 'Il generatore richiesta di supporto fa utilizzo del sistema cache per memorizzare le informazioni mentre passa attraverso tutti i passaggi. Si sta utilizzando la cache null che non è compatibile con questo strumento. Devi utilizzare un altro tipo di cache per usare questo strumento o utilizzare il <a href="http://www.phpbb.com/support/srt/">generatore online SRT</a>',
+	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Di seguito la copia del modello di richiesta di supporto. Clicca qui sotto per copiarlo negli appunti, quindi crea un nuovo argomento nel <a href="http://www.phpbb.com/community/viewforum.php?f=46">Forum di supporto</a> con queste informazioni. Se l’argomento di supporto è già esistente in riferimento al problema, copia il tuo modello in una risposta nell’argomento esistente invece di crearne uno nuovo.',
+	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Il Generatore di modello richiesta supporto non è riuscito a caricare le risposte. Assicurati di avviare correttamente lo strumento.',
+	'SRT_GENERATOR'					=> 'Generatore del modello di richiesta supporto (in seguito abbreviamo in SRT, Support Request Template)',
+	'SRT_GENERATOR_LANDING'			=> 'Generatore del modello di richiesta di supporto',
+	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Benvenuto nel team di supporto del Generatore del modello di richiesta supporto. Questo è il modo più rapido ed efficiente per completare il nostro Generatore del modello di richiesta supporto. Il Generatore ti chiederà una serie di domande da otto a dieci  che saranno utili per diagnosticare la maggior parte dei problemi. Quindi le tue risposte saranno compilate in un elenco che potrà essere copiato e incollato nell’argomento di supporto.<br /> Questo strumento STK fa la stessa cosa come il <a href="http://www.phpbb.com/support/stk/">SRT Generator su www.phpbb.com</a> ma tentando di precompliare alcune domande.<br /><br />Vuoi eseguire il Generatore SRT? ',
+	'SRT_NO_CACHE'					=> 'Il Generatore di modello richiesta di supporto utilizza il sistema cache di phpBB per memorizzare le informazioni mentre esegue tutti i passaggi. Stai usando la cache null di phpBB che non è compatibile con questo strumento. Si prega di utilizzare altri tipi di sistemi di cache per usare questo strumento o utilizza il <a href="http://www.phpbb.com/support/srt/">Generatore SRT on line</a>',
 	'START_OVER'					=> 'Ricomincia',
 ));
 
@@ -52,12 +52,12 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 //	'STEP1_CONVERT'			=> '',
 //	'STEP1_CONVERT_EXPLAIN'	=> '',
-	'STEP1_MOD'				=> 'Il tuo problema è relativo ad una MOD?',
-	'STEP1_MOD_EXPLAIN'		=> 'Ha avuto inizio questa problema dopo l’installazione o l’eliminazione di una MOD?',
-	'STEP1_MOD_ERROR'		=> 'Domande di supporto per le problematiche connesse alle MOD (es., se hai installato una MOD e ora hai nuovi errori) devi scrivere nell’argomento dove hai scaricato la MOD. Se la MOD è stata scaricata su un altro sito devi chiedere supporto su quel sito.<br /><br /><a href="http://www.phpbb.com/community/viewforum.php?f=81">Vai al forum delle MOD</a>',
-	'STEP1_HACKED'			=> 'La tua board è stata hackerata?',
-	'STEP1_HACKED_EXPLAIN'	=> 'Seleziona “Sì” per questa opzione se vuoi chiedere supporto in seguito alla deturpazione, quindi compromessa della tua board.',
-	'STEP1_HACKED_ERROR'	=> 'Se la tua board è stata hackerata, ti chiediamo di presentare una relazione con l’indagine sugli incidenti nel tracker invece di postare nel forum di supporto in modo che non siano divulgate informazioni private.<br /><br />Vedi <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">questo argomento</a> per leggere le istruzioni.',
+	'STEP1_MOD'				=> 'Il tuo problema è legato a una MOD?',
+	'STEP1_MOD_EXPLAIN'		=> 'Questo problema si è verificato dopo l’installazione o la rimozione della MOD?',
+	'STEP1_MOD_ERROR'		=> 'Le domande di supporto per le questioni legate alla MOD (per es., se hai appena installato una MOD e ora sono presenti errori) dovrebbero essere pubblicate nell’argomento da cui hai scaricato la MOD. Se la MOD è stata scaricata da un altro sito, lì devi chiedere supporto.<br /><br /><a bref="http://www.phpbb.com/community/viewforum.php?f=81">Vai ai forum delle MOD</a>',
+	'STEP1_HACKED'			=> 'La tua Board è stata violata?',
+	'STEP1_HACKED_EXPLAIN'	=> 'Seleziona "Sì" per questa opzione se sei alla ricerca di supporto, perché la Board è stata alterata o compromessa.',
+	'STEP1_HACKED_ERROR'	=> 'Se la Board è stata violata, ti chiediamo di presentare una relazione con il Tracker Incident Investigation invece di segnalare la cosa nel forum di supporto in modo che non siano divulgate informazioni private.<br /><br />Vedi <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">questo messaggio</a> per avere le istruzioni su come farlo.',
 ));
 
 // The questions
@@ -65,24 +65,24 @@ $lang = array_merge($lang, array(
 	'SRT_QUESTIONS'			=> array(
 		'step2'	=> array(
 			'phpbb_version'		=> 'Quale versione di phpBB stai usando?',
-			'board_url'			=> 'Qual’è l’URL della tua board?',
+			'board_url'			=> 'Qual è l’URL della tua Board?',
 			'dbms'				=> 'Che tipo/versione di database stai usando?',
 			'php'				=> 'Quale versione di PHP stai usando?',
-			'host_name'			=> 'Qual’è il nome del tuo host?',
-			'install_type'		=> 'Che tipo di installazione hai fatto sulla tua board?',
-			'inst_converse'		=> 'La tua, è una nuova installazione o una conversione?',
+			'host_name'			=> 'In quale Host è opitata la tua Board?',
+			'install_type'		=> 'Come hai installato la tua Board?',
+			'inst_converse'		=> 'La tua Board è una installazione nuova o una conversione?',
 			'mods_installed'	=> 'Hai altre MOD installate?',
-			'registration_req'	=> 'E’ necessaria la registrazione per riprodurre l’errore?',
+			'registration_req'	=> 'È richiesta la registrazione per riprodurre il problema?',
 		),
 		'step3'	=> array(
-			'installed_styles'		=> 'Quali stili sono attualmente installati?',
-			'installed_languages'	=> 'Quali lingue sono attualmente installate sulla tua board e quale usi?',
-			'xp_level'				=> 'Qual’è il tuo livello di esperienza?',
-			'problem_started'		=> 'Come è cominciato il tuo problema?',
-			'problem_description'	=> 'Descrivi il tuo problema.',
+			'installed_styles'		=> 'Quali stili hai attualmente installato?',
+			'installed_languages'	=> 'Quale lingua/e la Board ha attualmente in uso?',
+			'xp_level'				=> 'Qual è il tuo livello di esperienza?',
+			'problem_started'		=> 'Quando è iniziato il tuo problema?',
+			'problem_description'	=> 'Prego descrivi il tuo problema.',
 			'installed_mods'		=> 'Quali MOD hai installato?',
-			'test_username'			=> 'Quale nome utente può essere usata per testare il problema?',
-			'test_password'			=> 'Quale password può essere usata per vedere il problema?',
+			'test_username'			=> 'Quale nome utente può essere utilizzato per testare il problema?',
+			'test_password'			=> 'Quale password può essere utilizzata per visualizzare questo problema?',
 		),
 	),
 ));
@@ -91,25 +91,25 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'SRT_QUESTIONS_EXPLAIN'	=> array(
 		'step2'	=> array(
-			'phpbb_version'		=> 'Il generatore SRT non può determinare la tua versione di phpBB, seleziona quindi la tua attuale versione. Per trovare questa informazione, loggati sulla tua board e clicca sul link a fondo pagina. Clicca su “Pannello di Controllo Amministratore”. Clicca sulla scheda “Sistema”.',
-			'board_url'			=> 'L’URL è l’indirizzo internet della tua board. La maggior parte dei problemi sono più facilmente risolvibili quando si può visualizzare la tua board. Se non vuoi dare queste informazioni, scrivi “n/a”.',
-			'dbms'				=> 'Determina la versione database e il tipo che attualmente stai usando, vai nel Pannello di Controllo Amministratore. Nella scheda “Generale”, individua “Server Database:” nella tabella statistica.',
-			'php'				=> 'Determina quale versione di PHP stai usando, trovi questa informazione nel Pannello di Controllo Amministratore. Nella scheda “Generale”, clicca su “Informazione PHP”, e trova la “Versione di PHP x.y.z”',
-			'host_name'			=> 'Alcuni problemi riscontrati con le board phpBB possono essere attribuiti a determinati host. Questo spazio deve essere riempito con la società che fornisce il pacchetto di web hosting (come GoDaddy, Yahoo, 1 & 1, ecc.). Allo stesso modo, se sei a conoscenza su quale host la tua board è ospitata, indica anche questo.',
-			'install_type'		=> 'Se si è installato la board scaricando i file phpBB, caricandoli sul tuo host, quindi con la navigazione al programma di installazione, selezionare “Ho installato la board personalmente”. Se invece qualcuno altro ha fatto l’installazione per te, seleziona “Qualcun altro ha installato per me”. Se è stato utilizzato uno strumento automatico come Fantastico, selezionare “ho utilizzato uno strumento fornito dal mio host”.',
-			'inst_converse'		=> 'Se la tua board è una nuova installazione questo significa che la board non esisteva prima di installare phpBB. Se hai recentemente aggiornato la tua board da una versione precedente di phpBB3 devi selezionate “Aggiornamento da una versione precedente di phpBB3”. Se si tratta di una conversione, questo significa che la tua board è stato installato in precedenza con un altro software, quindi, successivamente convertito in phpBB.',
+			'phpbb_version'		=> 'Il Generatore SRT non può determinare quale versione di phpBB stai utilizzando; seleziona la corretta versione. Per trovare questa informazione, autenticati sulla Board e vai in fondo alla pagina. Clicca su "Pannello di Controllo Amministratore". Clicca sulla scheda "Sistema".',
+			'board_url'			=> 'L’URL della tua Board è l’indirizzo internet della Board. La maggior parte dei problemi sono più facilmente risolvibili quando si può visualizzare la Board. Se non vuoi dare queste informazioni, si prega inserire "n/d".',
+			'dbms'				=> 'Per determinare il tipo e la versione che stai usando, vai nel "Pannello di Controllo Amministratore". Nella scheda "Generale", individua "Server Database:" nella tabella "Statistiche".',
+			'php'				=> 'Per determinare quale versione di PHP stai usando, vai nel "Pannello di Controllo Amministratore".  Nella scheda "Generale", clicca su "Informazione PHP", qui troverai la "Versione di PHP x.y.z"',
+			'host_name'			=> 'Alcuni problemi riscontrati con le Board phpBB possono essere attribuiti a particolari Host. Questo campo deve essere riempito con la società che fornisce il pacchetto di webhosting (come GoDaddy, Yahoo!, etc.). Se provvedi tu stesso all’Hosting per la Board, specificalo. Allo stesso modo, se non conosci l’Hosting della tua Board, specificalo.',
+			'install_type'		=> 'Se hai installato la tua Board scaricando i file phpBB, caricandoli sul tuo Host, quindi utilizzando l’installer, seleziona "Ho installato la Board da solo". Se hai avuto qualcuno che ha installato per te, seleziona "Qualcun altro ha installato la mia Board per me". Se utilizzi uno strumento automatico come Fantastico, seleziona "Ho usato uno strumento fornito dal mio Host."',
+			'inst_converse'		=> 'Se la tua Board è una nuova installazione questo vuol dire che la Board non esisteva prima di installare phpBB. Se hai recentemente aggiornato la tua Board da una versione precedente di phpBB3 prima che il problema iniziasse, seleziona “Aggiornamento da una versione precedente di phpBB3”. Se si tratta di una conversione, questo significa che la tua Board è stata installata in precedenza con un altro software, quindi, successivamente convertita in phpBB.',
 			'mods_installed'	=> 'Le MOD sono spesso la causa di molti problemi con phpBB. Queste informazioni possono aiutare a determinare la causa esatta del problema.',
-			'registration_req'	=> 'Seleziona “Sì” se occorre essere registrato e autenticato per verificare questo problema.',
+			'registration_req'	=> 'Seleziona “Sì” se si deve essere registrati e autenticati per verificare questo problema.',
 		),
 		'step3'	=> array(
-			'installed_styles'		=> 'Uno stile non aggiornato è la causa di molti problemi. Se non conosci quali stili hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda “Stili”.',
-			'installed_languages'	=> 'Un pacchetto li lingua è la causa di molti problemi. Se non conosci quale pacchetto di lingua hai installato, vai al Pannello di Controllo Amministratore, quindi vai alla scheda “Sistema”. Seleziona “Pacchetti di lingua” dalla lista delle pagine sulla sinistra.',
-			'xp_level'				=> 'Seleziona l’opzione che ti descrive.',
-			'problem_started'		=> 'Descrivi l’azione che descrive il problema e come è iniziato (aggiornamento della board, installando una MOD, etc.), queste notizie sono prioritarie.',
-			'problem_description'	=> 'Quando descrivi il problema cerca di essere il più dettagliato possibile. Includi le informazioni riguardanti il problema e quando è iniziato, come riprodurre il problema, e qualsiasi altra informazione che ritieni utile.',
-			'installed_mods'		=> 'Cerca di essere il più dettagliato possibile sulle MOD installate. Queste informazioni ci aiutano molto nel determinare la causa del problema.',
-			'test_username'			=> 'Comunica un nome utente per testare il problema. <strong>Non</strong> comunicare un nome utente esistente ma un nome utente test con normali privileggi.',
-			'test_password'			=> 'Comunica una password per il nome utente affinchè possiamo testare il problema. <strong>Non</strong> comunicare una password di un nome utente esistente ma una password di un nome utente test con normali privileggi.',
+			'installed_styles'		=> 'Uno stile non aggiornato è la causa di molti problemi. Se non sai quali stili hai installato, vai al "Pannello di  Controllo Amminstrazione", dopo vai alla scheda "Stili".',
+			'installed_languages'	=> 'Un pacchetto lingua non aggiornato è la causa di molti problemi. Se non sai quale pacchetto lingua hai installato, vai al "Pannello di Controllo Amministratore", quindi vai alla scheda "Sistema". Seleziona "Pacchetti lingua" dalla lista delle pagine sulla sinistra.',
+			'xp_level'				=> 'Seleziona l’opzione più descrittiva.',
+			'problem_started'		=> 'Descrivi le azioni eseguite prima che il problema diventasse evidente (aggiornando la Board, installando una MOD, etc.).',
+			'problem_description'	=> 'Nel descrivere il problema, cerca di essere il più dettagliato possibile. Includi le informazioni relative a quando il problema è iniziato, riportando il problema in pochi passi, e qualsiasi altra informazione che ritieni utile.',
+			'installed_mods'		=> 'Per favore cerca di essere il più dettagliato possibile quando elenchi le MOD installate. Queste informazioni ci aiuteranno molto nel determinare la causa del problema.',
+			'test_username'			=> 'Fornisci il nome utente di un account di prova che può essere utilizzato per visualizzare questo problema. <strong>Non</strong> fornire questa informazione se l’utente ha privilegi maggiori di un "regolare utente" .',
+			'test_password'			=> 'Si prega di fornire la password di un account di prova che può essere utilizzato per visualizzare questo argomento. <strong>Non</strong> fornire questa informazione se l’utente ha privilegi maggiori di un "regolare utente".',
 		),
 	),
 ));
@@ -121,8 +121,8 @@ $lang = array_merge($lang, array(
 			'install_type'	=> array(
 				'myself'		=> 'Ho usato il pacchetto di download da phpBB.com',
 				'third'			=> 'Ho usato il pacchetto di download da un altro sito',
-				'someone_else'	=> 'Qualcun altro ha installato la board per me',
-				'automated'		=> 'Ho usato uno strumento automatico fornito dal mio host',
+				'someone_else'	=> 'Qualcun altro ha installato la mia Board per me',
+				'automated'		=> 'Ho usato uno strumento automatico fornito dal mio Host',
 			),
 			'inst_converse'	=> array(
 				'fresh'				=> 'Nuova installazione',
@@ -136,7 +136,7 @@ $lang = array_merge($lang, array(
 				'new_both'		=> 'Nuovo a PHP e phpBB',
 				'new_phpbb'		=> 'Nuovo a phpBB ma non a PHP',
 				'new_php'		=> 'Nuovo a PHP ma non a phpBB',
-				'comfort'		=> 'Sufficiente a PHP e phpBB',
+				'comfort'		=> 'Sciolto con PHP e phpBB',
 				'experienced'	=> 'Esperto con PHP e phpBB',
 			),
 		),

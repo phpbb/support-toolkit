@@ -4,8 +4,7 @@
 * @package Support Toolkit - Fix Left/Right ID's
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-08
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -40,9 +39,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'FIX_LEFT_RIGHT_IDS'			=> 'Fissa ID delle righe di sinistra/destra',
-	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Sei sicuro di voler fissare gli ID delle righe di sinistra e destra?<br /><br /><strong>Esegui un backup del tuo database prima di eseguire questo strumento!</strong>',
+	'FIX_LEFT_RIGHT_IDS'			=> 'Fissa ID di sinistra/destra',
+	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Sei sicuro di voler fissare gli ID sinistra e destra?<br /><br /><strong>Esegui un backup del tuo database prima di eseguire questo strumento!</strong>',
 
-	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'Gli ID di sinistra e destra sono stati fissati.',
-	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'Lo strumento ha terminato il processo percorrendo gli ID le righe di sinistra e destra, non sono state apportate modifiche, perché le righe risultano tutte corrette.',
+	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'Gli ID di sinistra/destra sono stati fissati con successo.',
+	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'Lo strumento ha terminato passando attraverso tutti gli ID destra e sinistra e tutte le righe sono già corrette, quindi non sono state apportate modifiche.',
 ));
