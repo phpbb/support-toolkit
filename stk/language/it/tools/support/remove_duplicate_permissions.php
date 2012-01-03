@@ -4,8 +4,7 @@
 * @package Support Toolkit - Duplicate Permission Remover
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -43,10 +42,10 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'DUPLICATES_FOUND'						=> 'Lo strumento ha trovato e cancellato i permessi duplicati.',
+	'DUPLICATES_FOUND'						=> 'Lo strumento ha trovato e rimosso tutti i permessi duplicati.',
 
-	'NO_DUPLICATES_FOUND'					=> 'Lo strumento ha terminato il controllo senza trovare permessi duplicati.',
+	'NO_DUPLICATES_FOUND'					=> 'Lo strumento ha terminato la verifica dei permessi duplicati e non ha trovato niente.',
 
-	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Elimina permessi duplicati',
-	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Sei sicuro di voler eliminare i permessi duplicati?',
+	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Rimuovi permessi duplicati',
+	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Sei sicuro di voler rimuovere i permessi duplicati?',
 ));

@@ -4,10 +4,9 @@
 * @package Support Toolkit - Profile List
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/06/12
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**
@@ -40,15 +39,21 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ALL'					=> 'Tutto',
+	'ALL'					=> 'Tutti',
+
+	'CLICK_TO_DELETE'		=> 'Cancella tutti gli utenti selezionati cliccando su questo bottone. <em>(Operazione irreversibile!)</em>',
 
 	'FILTER'				=> 'Filtra',
 
-	'LIMIT'					=> 'Limite',
+	'LIMIT'					=> 'Limita',
 
 	'ONLY_NON_EMPTY'		=> 'Solo non vuoti',
 	'ORDER_BY'				=> 'Ordina per',
 
 	'PROFILE_LIST'			=> 'Lista profili',
-	'PROFILE_LIST_EXPLAIN'	=> 'La lista profili è uno strumento per la visualizzazione delle informazioni sul profilo degli utenti. Questo strumento può aiutare a individuare i profili spam.',
+	'PROFILE_LIST_EXPLAIN'	=> 'Questa opzione visualizza le informazioni del profilo per più utenti. Può essere utile anche per identificare account di spam.',
+
+	'USERS_DELETE'				=> 'Elimina gli utenti selezionati',
+	'USERS_DELETE_CONFIRM'		=> 'Sei sicuro di voler eliminare gli utenti selezionati? La rimozione attraverso questa opzione <strong>cancellerà</strong> anche i relativi messaggi!',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Utenti selezionati eliminati con successo!',
 ));

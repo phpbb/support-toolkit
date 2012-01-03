@@ -4,8 +4,7 @@
 * @package Support Toolkit - Update email hashes
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -40,8 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'UPDATE_EMAIL_HASHES'				=> 'Aggiornamento hashes email',
-	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Nelle installazioni di phpBB precedenti a phpBB 3.0.7, il passaggio da un sistema operativo da 32 bit a 64 bit creano il danneggiamento degli hash e-mail. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Vedi questa segnalazione di bug</a>)</em><br />Questo strumento consente di aggiornare gli hash nel database in modo che funzionino correttamente.',
-	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tutte le email hashes sono state aggiornate con successo!',
-	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Aggiornamento hashes email in progresso.',
+	'UPDATE_EMAIL_HASHES'				=> 'Aggiornamento email in hash',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Nelle installazioni phpBB precedenti a phpBB 3.0.7, il passaggio da un sistema operativo a 32 bit per sistemi operativi a 64 danneggiava parzialmente le email in hash. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072"> Vedi la relativa segnalazione del bug</a>)</em><br />Questo strumento consente di aggiornare le email in hash nel database in modo che funzionino correttamente.',
+	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tutte le email in hash sono state aggiornate con successo!',
+	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Aggiornamento email in hash in corso.',
 ));

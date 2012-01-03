@@ -3,7 +3,7 @@
  *
  * @package Support Toolkit - Resync Avatars
  * @copyright (c) 2009 phpBB Group
- * @copyright (c) 2011 portalxl.eu - translation on 2011/04/06
+ * @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -38,9 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_AVATARS'			=> 'Sincronizzazione avatars',
-	'RESYNC_AVATARS_CONFIRM'	=> 'Questo strumento verifica che tutti gli avatar utilizzati nei profili realmente esiste sul server. Se i relativi file risulteranno gli avatar saranno eliminati dal profilo degli utenti. Sei sicuro di voler continuare?',
-	'RESYNC_AVATARS_FINISHED'	=> 'Sincronizzazione avatar eseguita con successo!',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Sincronizzazione gruppo avatars, non interrompere il processo!',
-	'RESYNC_AVATARS_PROGRESS'	=> 'Sincronizzazione avatars, non interrompere il processo!',
+	'RESYNC_AVATARS'			=> 'Risincronizza avatar',
+	'RESYNC_AVATARS_CONFIRM'	=> 'Questa opzione assicura che ad ogni avatar utilizzato nella Board corrisponda un file sul server. Se il file è mancante, questa opzione rimuove l’avatar dal profilo utente. Sei sicuro di voler continuare?',
+	'RESYNC_AVATARS_FINISHED'	=> 'Avatar risincronizzati con successo!',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Passaggio al gruppo avatar, non interrompere l’operazione!',
+	'RESYNC_AVATARS_PROGRESS'	=> 'Risincronizzamento avatar in corso. Non interrompere l’operazione!',
 ));

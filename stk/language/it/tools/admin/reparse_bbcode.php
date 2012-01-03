@@ -4,10 +4,9 @@
 * @package Support Toolkit - Reparse BBCode
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/06/12
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-30
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**
@@ -43,19 +42,19 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'REPARSE_ALL'				=> 'Analizza tutti i BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Quando si effettua il controllo dei BBCode viene analizzato tutto il contenuto della board; per impostazione predefinita, lo strumento analizza messaggi/messaggi privati/firme che sono stati precedentemente analizzati da phpBB.',
-	'REPARSE_BBCODE'			=> 'Analizza BBCode',
-	'REPARSE_BBCODE_COMPLETE'	=> 'I BBCodes sono stati analizzati.',
-	'REPARSE_BBCODE_CONFIRM'	=> 'Sei sicuro di voler analizzare tutti i BBCodes? Questo potrebbe richiedere del tempo.',
-	'REPARSE_BBCODE_PROGRESS'	=> 'Fase %1$d completata. Vai alla fase %2$d in un momento...',
+	'REPARSE_ALL'				=> 'Ricontrolla tutti i BBCode',
+	'REPARSE_ALL_EXPLAIN'		=> 'Se selezionato, saranno ricontrollati tutti i BBCode della Board; per impostazione predefinita, l’opzione ricontrolla solo messaggi/messaggi privati/firme che sono stati già controllati da phpBB. Questa opzione ignora i messaggi/messaggi privati specificati sotto.',
+	'REPARSE_BBCODE'			=> 'Ricontrolla BBCode',
+	'REPARSE_BBCODE_COMPLETE'	=> 'I BBCode sono stati ricontrollati.',
+	'REPARSE_BBCODE_CONFIRM'	=> 'Sei sicuro di voler ricontrollare tutti i BBCode? Fai attezione, questa opzione può potenzialmente danneggiare il tuo database in maniera irreversibile. Quindi, <strong>assicurati di aver fatto un backup dei dati prima di procedere</strong>. L’operazione potrebbe richiedere un po’ di tempo per essere completata.',
+	'REPARSE_BBCODE_PROGRESS'	=> 'Passo %1$d completato. Passo %2$d a breve...',
 	'REPARSE_BBCODE_SWITCH_MODE'	=> array(
-		1	=> 'Analisi messaggi terminata, spostamento ai messaggi privati.',
-		2	=> 'Analisi messaggi privati terminata, spostamento sulle firme.',
+		1	=> 'Finito controllo messaggi, passo ai messaggi privati.',
+		2	=> 'Finito controllo messaggi privati, passo alle firme.',
 	),
-	'REPARSE_IDS_INVALID'			=> 'Gli ID che hai inviato non erano validi, si prega di assicurarsi che gli ID post sono elencati come un elenco separato da virgole (es. 1,2,3,5,8,13).',
-	'REPARSE_POST_IDS'				=> 'Ripara messaggi specifici',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'Per i messaggi specifici devi specificare gli ID dei messaggi in un elenco separato da virgole.',
-	'REPARSE_PM_IDS'				=> 'Ripara messaggi privati specifici',
-	'REPARSE_PM_IDS_EXPLAIN'		=> 'Per riparare i messaggi privati specifici devi specificare gli ID dei messaggi in un elenco separato da virgole. (es. 1,2,3,5,8,13).',
+	'REPARSE_IDS_INVALID'			=> 'L’ID che hai inserito non è valido; assicurati che gli ID dei messaggi siano scritti in una lista e separati da virgola (es.: 1,2,3,5,8,13).',
+	'REPARSE_POST_IDS'				=> 'Ricontrolla uno specifico messaggio',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Per ricontrollare specifici messaggi, indica gli ID dei messaggi in una lista, separati da virgola.',
+	'REPARSE_PM_IDS'				=> 'Ricontrolla specifici messaggi privati',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'Per ricontrollare solamente specifici messaggi privati, indicali in una lista, separati da virgola (es.: 1,2,3,5,8,13).',
 ));

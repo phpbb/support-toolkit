@@ -4,8 +4,7 @@
 * @package Support Toolkit - Reset Styles
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-09
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -41,9 +40,9 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESET_STYLES'			=> 'Ripristina stili',
-	'RESET_STYLES_EXPLAIN'	=> 'Ti permette di cambiare lo stile della tua board predefinita e reimpostare lo stile di ogni utente.',
-	'RESET_STYLE_COMPLETE'	=> 'Lo stile è stato configurato con successo.',
+	'RESET_STYLES_EXPLAIN'	=> 'Questo strumento ti permette di cambiare lo stile predefinito della tua Board.',
+	'RESET_STYLE_COMPLETE'	=> 'Lo stile predefinito è stato modificato con successo.',
 
 	'STYLE'					=> 'Stile',
-	'STYLE_EXPLAIN'			=> 'Seleziona lo stile che vuoi usare come predefinito.',
+	'STYLE_EXPLAIN'			=> 'Seleziona lo stile che si desidera impostare come predefinito.',
 ));

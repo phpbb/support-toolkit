@@ -4,8 +4,7 @@
 * @package Support Toolkit - Readd Module Management
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2010 phpBB.it - translated on 2010/05/16
-* @copyright (c) 2011 portalxl.eu - update translation on 2011/04/06
+* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-08
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -40,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'READD_MODULE_MANAGEMENT'			=> 'Ricrea la gestione moduli',
-	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Sei sicuro di voler ricreare la gestione moduli in ACP?',
+	'READD_MODULE_MANAGEMENT'			=> 'Ricrea Modulo di Gestione moduli',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Sei sicuro di voler ricreare il Modulo di Gestione moduli nel PCA?',
 	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'I moduli sono stati ricreati con successo!',
 ));
