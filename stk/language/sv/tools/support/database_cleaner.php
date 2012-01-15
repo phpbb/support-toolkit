@@ -113,6 +113,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Rapportanledningarna har blivit återställda!',
 	'RESET_ROLE_DATA'				=> 'Återställ rolldata',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Detta steget kommer att återställa phpBBs system roller tillbaka till deras orginal, det är väldigt rekommenderat att köra detta utifall du gjorde ändringar i det föregående steget.',
+	'ROLE_SETTINGS'					=> 'Rollinställningar',
 	'ROWS'							=> 'Rader',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
