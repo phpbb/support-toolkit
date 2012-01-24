@@ -179,7 +179,7 @@ class add_user
 	*/
 	function validate_data($data, &$error)
 	{
-		global $config;
+		global $config, $user;
 
 		if (!function_exists('validate_data'))
 		{
