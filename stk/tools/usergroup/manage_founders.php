@@ -68,8 +68,7 @@ class manage_founders
 
 		if (!check_form_key('manage_founders'))
 		{
-			$error[] = 'FORM_INVALID';
-			return;
+			trigger_error('FORM_INVALID');
 		}
 
 		// Lets do something
@@ -80,8 +79,7 @@ class manage_founders
 				$req_founders	= request_var('founders', array(0 => ''));
 				if (!sizeof($req_founders))
 				{
-					$error[] = 'NO_USER';
-					return;
+					trigger_error('NO_USER');
 				}
 
 				// Make sure we only have users that do exist
@@ -122,8 +120,7 @@ class manage_founders
 				// Check that at least one field is filled in.
 				if (!$req_username && empty($req_user_id))
 				{
-					$error[] = 'NO_USER';
-					return;
+					trigger_error('NO_USER');
 				}
 
 				// Not allowed to have both username and user_id filled.
@@ -157,8 +154,7 @@ class manage_founders
 				// Was a user_id found?
 				if (!sizeof($user_id) || $result !== false)
 				{
-					$error[] = 'NO_USER';
-					return;
+					trigger_error('NO_USER');
 				}
 
 				// Drop the arrays
@@ -189,8 +185,7 @@ class manage_founders
 			break;
 
 			default :
-				$error[] = 'NO_MODE';
-				return;
+				trigger_error('NO_MODE');
 		}
 	}
 }
