@@ -52,6 +52,7 @@ update!
 * [Fix] Properly differentiate between user names and user id's in Merge Users (Bug #63056, Patch by Dicky)
 * [Fix] Handle `E_DEPRECATED` errors. (Bug #63001)
 * [Fix] Properly handle adding users to the Newly Registered Users group (Bug #63011, Patch by Noxwizard)
+* [Fix] Manage Board Founders - Find a member not working. (Bug #63064)
 
 == Changes since 1.0.5-rc1 ==
 * [Fix] Correctly handle empty module data when resetting the boards modules. (Bug #62958)
