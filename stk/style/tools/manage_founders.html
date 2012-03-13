@@ -32,9 +32,13 @@
     <fieldset>
 	<legend>{L_MAKE_FOUNDER}</legend>
 	<dl>
-	    <dt><label for="user">{L_USER_TO_FOUNDER}:</label><br /><span>{L_USER_TO_FOUNDER_EXPLAIN}</span></dt>
-	    <dd><input id="user" type="text" size="40" maxlength="255" name="user" value="" /></dd>
+	    <dt><label for="username">{L_USER_NAME_TO_FOUNDER}:</label><br /><span>{L_USER_NAME_TO_FOUNDER_EXPLAIN}</span></dt>
+	    <dd><input id="username" type="text" size="40" maxlength="255" name="username" value="" /></dd>
 	    <dd>[ <a href="{U_FIND_USER}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a> ]</dd>
+	</dl>
+	<dl>
+	    <dt><label for="user_id">{L_USER_ID_TO_FOUNDER}:</label><br /><span>{L_USER_ID_TO_FOUNDER_EXPLAIN}</span></dt>
+	    <dd><input id="user_id" type="text" size="10" maxlength="50" name="user_id" value="" /></dd>
 	</dl>
 
 	<p class="submit-buttons">
