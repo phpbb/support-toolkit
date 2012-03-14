@@ -116,10 +116,20 @@ class manage_founders
 			break;
 
 			case 'promote' :
-				$req_user = utf8_normalize_nfc(request_var('user', '', true));
-				if (!sizeof($req_user))
+				$req_username = utf8_normalize_nfc(request_var('username', '', true));
+				$req_user_id = utf8_normalize_nfc(request_var('user_id', 0));
+
+				// Check that at least one field is filled in.
+				if (!$req_username && empty($req_user_id))
 				{
 					$error[] = 'NO_USER';
+					return;
+				}
+
+				// Not allowed to have both username and user_id filled.
+				if ($req_username && $req_user_id)
+				{
+					$error[] = 'BOTH_FIELDS_FILLED';
 					return;
 				}
 
@@ -129,27 +139,38 @@ class manage_founders
 					include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 				}
 
-				$user_id = $username = array();
-				if (ctype_digit($req_user))
-				{
-					$user_id[] = $req_user;
-				}
-				else
-				{
-					$username[] = $req_user;
-				}
-				user_get_id_name($user_id, $username, USER_NORMAL);
+				$user_id = $username = $user_type = array();
 
-				// No user found
-				if (!sizeof($user_id))
+				if (!empty($req_user_id))
+				{
+					$user_id[] = $req_user_id;
+				}
+				if (!empty($req_username))
+				{
+					$username[] = $req_username;
+				}
+				$user_type[] = USER_NORMAL;
+
+				// Get user_id
+				$result = user_get_id_name($user_id, $username, $user_type);
+
+				// Was a user_id found?
+				if (!sizeof($user_id) || $result !== false)
 				{
 					$error[] = 'NO_USER';
 					return;
 				}
 
 				// Drop the arrays
-				$user_id	= array_shift($user_id);
-				$username	= array_shift($username);
+				$user_id = array_shift($user_id); 
+				$username = array_shift($username);
+
+				// No user found
+				if (!$user_id)
+				{
+					$error[] = 'NO_USER';
+					return;
+				}
 
 				// Now promote the guy
 				$sql = 'UPDATE ' . USERS_TABLE . '
