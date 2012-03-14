@@ -49,6 +49,15 @@ class stk_toolbox_category
 		}
 	}
 
+	public function createOverview()
+	{
+		global $user;
+		$user->stk_add_lang("categories/{$this->name}");
+
+		stk_includes_utilities::page_header();
+		stk_includes_utilities::page_footer('category_overview.html');
+	}
+
 	public function isActive()
 	{
 		return $this->active;

@@ -72,15 +72,17 @@ $config = new stk_includes_phpbb_mock_config($phpbb_config);
 set_config(null, null, null, $config);
 set_config_count(null, null, null, $config);
 
+// Initialise the phpBB user object
+$user = new stk_core_user();
+
 // Setup template object
 $phpbb_template_locator = new phpbb_template_locator();
 $phpbb_template_path_provider = new phpbb_template_path_provider();
 $template = new phpbb_template($phpbb_root_path, $phpEx, $config, $user, $phpbb_template_locator, $phpbb_template_path_provider);
 
-// Initialise the phpBB user object
-$user = new stk_core_user();
+// Setup user
 $user->session_begin(false);
-$user->setup();
+$user->setup(array('acp/common'));
 $user->stk_add_lang('common');
 
 // Use the STK template directory

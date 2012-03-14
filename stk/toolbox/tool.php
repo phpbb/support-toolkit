@@ -74,6 +74,29 @@ class stk_toolbox_tool
 		}
 	}
 
+	public function createOverview()
+	{
+		$options = $this->tool->displayOptions();
+
+		// Various options
+		if (is_string($options))
+		{
+			$this->createStringOverview($options);
+		}
+	}
+
+	private function createStringOverview($options)
+	{
+		if (stk_includes_utilities::confirm_box(true))
+		{
+			// Run the tool
+		}
+		else
+		{
+			stk_includes_utilities::confirm_box(false, $options, '', 'confirm_body.html', $this->getToolURL());
+		}
+	}
+
 	public function isActive()
 	{
 		return $this->active;
@@ -105,6 +128,6 @@ class stk_toolbox_tool
 		$params['c'] = $this->category;
 		$params['t'] = $this->id;
 
-		return append_sid(STK_WEB_PATH . '/index.php', $params);
+		return reapply_sid(STK_WEB_PATH . '/index.php', $params);
 	}
 }
