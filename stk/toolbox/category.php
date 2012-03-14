@@ -1,5 +1,18 @@
 <?php
+/**
+ *
+ * @package SupportToolkit
+ * @copyright (c) 2012 phpBB Group
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
+ */
 
+/**
+ * Category object
+ *
+ * The category object represents a support toolkit category and contains
+ * all tools and their information that belong to this category.
+ */
 class stk_toolbox_category
 {
 	private $active;

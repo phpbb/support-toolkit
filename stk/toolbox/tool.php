@@ -1,8 +1,23 @@
 <?php
+/**
+ *
+ * @package SupportToolkit
+ * @copyright (c) 2012 phpBB Group
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
+ */
 
+/**
+ * Support Toolkit tool
+ *
+ * An wrapper for STK tools, provides various common methods and holds the
+ * actual tool object.
+ */
 class stk_toolbox_tool
 {
 	private $active;
+	private $category;
+	private $id;
 	private $tool;
 
 	/**

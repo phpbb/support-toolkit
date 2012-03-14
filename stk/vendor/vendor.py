@@ -1,4 +1,11 @@
-"""
+"""Support Toolkit vender.py
+@package SupportToolkit
+@copyright (c) 2012 phpBB Group
+@license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+
+This utility copies all vendor files that are required by the Support Toolkit
+into their correct locations. This tool expects that the vendor repositories
+are already checked out.
 """
 from os import makedirs
 from os.path import dirname, exists, isdir
