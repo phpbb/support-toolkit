@@ -67,7 +67,11 @@ class stk_toolbox_tool
 		$this->tool		= $tool;
 
 		// Include this tools language file
-		$user->stk_add_lang("tools/{$this->category}/{$this->id}");
+		// @todo figure out a better way to handle this when running the test suite
+		if ($user instanceof user)
+		{
+			$user->stk_add_lang("tools/{$this->category}/{$this->id}");
+		}
 	}
 
 	public function isActive()
@@ -87,8 +91,7 @@ class stk_toolbox_tool
 
 	public function getToolLanguageString()
 	{
-		global $user;
-		return $user->lang(strtoupper("TOOL_{$this->category}_{$this->id}"));
+		return strtoupper("TOOL_{$this->category}_{$this->id}");
 	}
 
 	public function getTool()
