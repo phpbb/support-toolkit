@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'Both User Name field and User ID field may not be filled in.',
+
 	'DEMOTE_FAILED'				=> 'Couldn’t remove Founder status of all users!',
 	'DEMOTE_FOUNDERS'			=> 'Demote Founders',
 	'DEMOTE_SUCCESSFULL'		=> 'Successfully removed the Founder status of %d users!',
@@ -54,6 +56,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Promote to Founder',
 
-	'USER_TO_FOUNDER'			=> 'User to make Founder',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Enter the username or user ID of the user you would like to make a Board Founder.',
+	'USER_NAME_TO_FOUNDER'			=> 'User name to make Founder',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Enter the User Name of the user you would like to make a Board Founder.',
+	'USER_ID_TO_FOUNDER'			=> 'User ID to make Founder',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Enter the User ID of the user you would like to make a Board Founder.',
 ));
