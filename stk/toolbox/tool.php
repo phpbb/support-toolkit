@@ -59,10 +59,15 @@ class stk_toolbox_tool
 
 	final private function __construct(stk_toolbox_toolInterface $tool, $categoryName = '', $toolName = '')
 	{
+		global $user;
+
 		$this->active	= false;
 		$this->category	= $categoryName;
 		$this->id		= $toolName;
 		$this->tool		= $tool;
+
+		// Include this tools language file
+		$user->stk_add_lang("tools/{$this->category}/{$this->id}");
 	}
 
 	public function isActive()
@@ -78,6 +83,12 @@ class stk_toolbox_tool
 	public function getID()
 	{
 		return $this->id;
+	}
+
+	public function getToolLanguageString()
+	{
+		global $user;
+		return $user->lang(strtoupper("TOOL_{$this->category}_{$this->id}"));
 	}
 
 	public function getTool()

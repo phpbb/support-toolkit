@@ -38,6 +38,5 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
-	// Category language strings
-	'CAT_MAIN'	=> 'Main',
+	'TOOL_MAIN_HOME'	=> 'Support Toolkit Home',
 ));

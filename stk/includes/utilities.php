@@ -55,7 +55,7 @@ abstract class stk_includes_utilities
 		foreach ($toolbox->getToolboxCategories() as $category)
 		{
 			$template->assign_block_vars('t_block1', array(
-				'L_TITLE'		=> $category->getName(),
+				'L_TITLE'		=> $user->lang('CAT_' . strtoupper($category->getName())),
 				'U_TITLE'		=> $category->getCategoryURL(),
 				'S_SELECTED'	=> $category->isActive(),
 			));
@@ -67,7 +67,7 @@ abstract class stk_includes_utilities
 			foreach ($toolbox->getActiveCategory()->getToolList() as $tool)
 			{
 				$template->assign_block_vars('l_block1', array(
-					'L_TITLE'		=> $tool->getTool()->getName(),
+					'L_TITLE'		=> $tool->getToolLanguageString(),
 					'U_TITLE'		=> $tool->getToolURL(),
 					'S_SELECTED'	=> $tool->isActive(),
 				));
