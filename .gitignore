@@ -1,0 +1,14 @@
+# Local phpunit config
+phpunit.local.xml
+
+# phpBB files
+stk/phpBB/*
+stk/view/theme/admin.css
+!stk/phpBB/.gitkeep
+
+# phpBB theme images. Whitelist the STK ones!
+stk/view/images/*.gif
+
+# STK files
+stk/local_config.php
+

@@ -1,0 +1,39 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgres
+
+matrix:
+  exclude:
+    - php: 5.4
+      env: DB=sqlite
+
+before_script:
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS stk_tests;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database stk_tests;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS stk_tests;'; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.3' ]; then pyrus install --force phpunit/DbUnit; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then pyrus install --force phpunit/DbUnit; fi"
+  - phpenv rehash
+  - git submodule update --init
+  - python ./stk/vendor/vendor.py
+
+script:
+  - phpunit --configuration test/travis/$DB.travis.xml
+
+notifications:
+  email:
+    recipients:
+      - erikfrerejean@phpbb.com
+    on_success: always
+    on_faillure: always
+
+branches:
+  only:
+    stk/ascraeus
+

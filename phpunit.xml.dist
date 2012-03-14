@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="true"
+         backupStaticAttributes="true"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+		 strict="true"
+         bootstrap="test/bootstrap.php">
+    <testsuites>
+        <testsuite name="phpBB Support Toolkit Test Suite">
+            <directory suffix="_test.php">./test/tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./stk/</directory>
+            <exclude>
+                <file>./stk/index.php</file>
+				<file>./stk/bootstrap.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+
+	<!-- Update to match your local environment.
+		 Accepts the normal phpBB configuration options. -->
+	<php>
+		<const name="dbms" value=""/>
+		<const name="dbhost" value="" />
+		<const name="dbport" value="" />
+		<const name="dbname" value="" />
+		<const name="dbuser" value="" />
+		<const name="dbpasswd" value="" />
+		<const name="table_prefix" value="" />
+	</php>
+</phpunit>

@@ -1,0 +1,174 @@
+							</div>
+						</div>
+					<span class="corners-bottom"><span></span></span>
+					<div class="clear"></div>
+				</div>
+				</div>
+			</div>
+
+			<div id="page-footer">
+				Powered by <a href="http://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+				<!-- IF TRANSLATION_INFO --><br />{TRANSLATION_INFO}<!-- ENDIF -->
+
+				<br />
+				{DEBUG_OUTPUT}
+			</div>
+		</div>
+
+<script type="text/javascript" src="{T_JQUERY_LINK}"></script>
+
+<script type="text/javascript">
+// <![CDATA[
+var jump_page = '{LA_JUMP_PAGE}:';
+var on_page = '{ON_PAGE}';
+var per_page = '{PER_PAGE}';
+var base_url = '{A_BASE_URL}';
+
+var menu_state = 'shown';
+
+
+/**
+* Jump to page
+*/
+function jumpto()
+{
+	var page = prompt(jump_page, on_page);
+
+	if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
+	{
+		if (base_url.indexOf('?') == -1)
+		{
+			document.location.href = base_url + '?start=' + ((page - 1) * per_page);
+		}
+		else
+		{
+			document.location.href = base_url.replace(/&amp;/g, '&') + '&start=' + ((page - 1) * per_page);
+		}
+	}
+}
+
+/**
+* Set display of page element
+* s[-1,0,1] = hide,toggle display,show
+*/
+function dE(n, s, type)
+{
+	if (!type)
+	{
+		type = 'block';
+	}
+
+	var e = document.getElementById(n);
+	if (!s)
+	{
+		s = (e.style.display == '') ? -1 : 1;
+	}
+	e.style.display = (s == 1) ? type : 'none';
+}
+
+/**
+* Mark/unmark checkboxes
+* id = ID of parent container, name = name prefix, state = state [true/false]
+*/
+function marklist(id, name, state)
+{
+	var parent = document.getElementById(id);
+	if (!parent)
+	{
+		eval('parent = document.' + id);
+	}
+
+	if (!parent)
+	{
+		return;
+	}
+
+	var rb = parent.getElementsByTagName('input');
+
+	for (var r = 0; r < rb.length; r++)
+	{
+		if (rb[r].name.substr(0, name.length) == name)
+		{
+			rb[r].checked = state;
+		}
+	}
+}
+
+/**
+* Find a member
+*/
+function find_username(url)
+{
+	popup(url, 760, 570, '_usersearch');
+	return false;
+}
+
+/**
+* Window popup
+*/
+function popup(url, width, height, name)
+{
+	if (!name)
+	{
+		name = '_popup';
+	}
+
+	window.open(url.replace(/&amp;/g, '&'), name, 'height=' + height + ',resizable=yes,scrollbars=yes, width=' + width);
+	return false;
+}
+
+/**
+* Hiding/Showing the side menu
+*/
+function switch_menu()
+{
+	var menu = document.getElementById('menu');
+	var main = document.getElementById('main');
+	var toggle = document.getElementById('toggle');
+	var handle = document.getElementById('toggle-handle');
+
+	switch (menu_state)
+	{
+		// hide
+		case 'shown':
+			main.style.width = '93%';
+			menu_state = 'hidden';
+			menu.style.display = 'none';
+			toggle.style.width = '20px';
+			handle.style.backgroundImage = 'url(images/toggle.gif)';
+			handle.style.backgroundRepeat = 'no-repeat';
+
+			<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+				handle.style.backgroundPosition = '0% 50%';
+				toggle.style.left = '96%';
+			<!-- ELSE -->
+				handle.style.backgroundPosition = '100% 50%';
+				toggle.style.left = '0';
+			<!-- ENDIF -->
+		break;
+
+		// show
+		case 'hidden':
+			main.style.width = '76%';
+			menu_state = 'shown';
+			menu.style.display = 'block';
+			toggle.style.width = '5%';
+			handle.style.backgroundImage = 'url(images/toggle.gif)';
+			handle.style.backgroundRepeat = 'no-repeat';
+
+			<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+				handle.style.backgroundPosition = '100% 50%';
+				toggle.style.left = '75%';
+			<!-- ELSE -->
+				handle.style.backgroundPosition = '0% 50%';
+				toggle.style.left = '15%';
+			<!-- ENDIF -->
+		break;
+	}
+}
+
+// ]]>
+</script>
+
+	</body>
+</html>
