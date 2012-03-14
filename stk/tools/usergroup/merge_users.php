@@ -32,10 +32,12 @@ class merge_users
 			'title'		=> 'MERGE_USERS',
 			'explain'	=> true,
 			'vars'		=> array(
-				'legend1'	=> 'MERGE_USERS',
-				'source'	=> array('lang' => 'MERGE_USERS_USER_SOURCE', 'type' => 'text:40:255', 'explain' => true, 'select_user' => true),
-				'target'	=> array('lang' => 'MERGE_USERS_USER_TARGET', 'type' => 'text:40:255', 'explain' => false, 'select_user' => true),
-				'delete'	=> array('lang' => 'MERGE_USERS_REMOVE_SOURCE', 'type' => 'checkbox', 'explain' => true, 'default' => true),
+				'legend1'		=> 'MERGE_USERS',
+				'source_name'	=> array('lang' => 'MERGE_USERS_USER_SOURCE_NAME', 'type' => 'text:40:255', 'explain' => true, 'select_user' => true),
+				'source_id'		=> array('lang' => 'MERGE_USERS_USER_SOURCE_ID', 'type' => 'text:10:50', 'explain' => false, 'select_user' => false),
+				'target_name'	=> array('lang' => 'MERGE_USERS_USER_TARGET_NAME', 'type' => 'text:40:255', 'explain' => false, 'select_user' => true),
+				'target_id'		=> array('lang' => 'MERGE_USERS_USER_TARGET_ID', 'type' => 'text:10:50', 'explain' => false, 'select_user' => false),
+				'delete'		=> array('lang' => 'MERGE_USERS_REMOVE_SOURCE', 'type' => 'checkbox', 'explain' => true, 'default' => true),
 			),
 		);
 	}
@@ -57,31 +59,50 @@ class merge_users
 			return;
 		}
 
-		$source = ($source = request_var('source', 0)) ? $source : utf8_normalize_nfc(request_var('source', '', true));
-		$target = ($target = request_var('target', 0)) ? $target : utf8_normalize_nfc(request_var('target', '', true));
+		$source_name = utf8_normalize_nfc(request_var('source_name', '', true));
+		$source_id = utf8_normalize_nfc(request_var('source_id', 0));
+		$target_name = utf8_normalize_nfc(request_var('target_name', '', true));
+		$target_id = utf8_normalize_nfc(request_var('target_id', 0));
 		$delete = request_var('delete', false);
 
-		if (!$source || !$target)
+		// Check that one source field and one target field is filled in.
+		if ((!$source_name && empty($source_id)) || (!$target_name && empty($target_id)))
 		{
-			$error[] = 'NO_USER';
+			if (!$source_name && !$source_id)
+			{
+				$error[] = 'NO_SOURCE_USER';
+			}
+			if (!$target_name && !$target_id)
+			{
+				$error[] = 'NO_TARGET_USER';
+			}
 			return;
 		}
 
-		$sql = 'SELECT user_id, user_type
+		// Check if both source fields or both target fields are filled in.
+		if (($source_name && $source_id) || ($target_name && $target_id))
+		{
+			if ($source_name && $source_id)
+			{
+				$error[] = 'BOTH_SOURCE_USER';
+			}
+			if ($target_name && $target_id)
+			{
+				$error[] = 'BOTH_TARGET_USER';
+			}
+			return;
+		}
+
+		$sql = 'SELECT user_id, user_type 
 			FROM ' . USERS_TABLE . '
-			WHERE ';
-
-		$sql .= (is_int($source)) ? "user_id = $source" : "username_clean = '" . $db->sql_escape(utf8_clean_string($source)) . "'";
-
+			WHERE ' . (($source_name) ? 'username_clean = \'' . $db->sql_escape(utf8_clean_string($source_name)) . '\'' : 'user_id = ' . (int) $source_id);
 		$result = $db->sql_query($sql);
 		$source = $db->sql_fetchrow($result);
 		$db->sql_freeresult($result);
 
-		$sql = 'SELECT user_id, user_type
+		$sql = 'SELECT user_id, user_type 
 			FROM ' . USERS_TABLE . '
-			WHERE ';
-
-		$sql .= (is_int($target)) ? "user_id = $target" : "username_clean = '" . $db->sql_escape(utf8_clean_string($target)) . "'";
+			WHERE ' . (($target_name) ? 'username_clean = \'' . $db->sql_escape(utf8_clean_string($target_name)) . '\'' : 'user_id = ' . (int) $target_id);
 
 		$result = $db->sql_query($sql);
 		$target = $db->sql_fetchrow($result);
@@ -89,7 +110,14 @@ class merge_users
 
 		if (!$source || !$target)
 		{
-			$error[] = 'NO_USER';
+			if (!$source)
+			{
+				$error[] = 'NO_SOURCE_USER';
+			}
+			if (!$target)
+			{
+				$error[] = 'NO_TARGET_USER';
+			}
 			return;
 		}
 
