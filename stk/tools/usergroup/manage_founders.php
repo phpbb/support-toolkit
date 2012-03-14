@@ -45,7 +45,7 @@ class manage_founders
 		// Additional template stuff
 		$template->assign_vars(array(
 			'U_DEMOTE_FOUNDERS'	=> append_sid(STK_INDEX, array('c' => 'user_group', 't' => 'manage_founders', 'mode' => 'demote', 'submit' => 1)),
-			'U_FIND_USER'		=> append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'stk_promote_founder', 'field' => 'user')),
+			'U_FIND_USER'		=> append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'stk_promote_founder', 'field' => 'username')),
 			'U_PROMOTE_FOUNDER'	=> append_sid(STK_INDEX, array('c' => 'user_group', 't' => 'manage_founders', 'mode' => 'promote', 'submit' => 1)),
 		));
 
