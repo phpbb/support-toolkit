@@ -18,6 +18,7 @@ class stk_toolbox_tool
 	private $active;
 	private $category;
 	private $id;
+	private $outdated;
 	private $tool;
 
 	/**
@@ -61,17 +62,19 @@ class stk_toolbox_tool
 		{
 			return ($vcr == stk_toolbox_version_check::TOOL_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'TOOL_DISABLED';
 		}
+		$outdated = ($vcr != stk_toolbox_version_check::TOOL_OK) ? true : false;
 
-		return new static($rc->newInstanceArgs(), $category, $file);
+		return new static($rc->newInstanceArgs(), $category, $file, $outdated);
 	}
 
-	final private function __construct(stk_toolbox_toolInterface $tool, $categoryName = '', $toolName = '')
+	final private function __construct(stk_toolbox_toolInterface $tool, $categoryName = '', $toolName = '', $outdated = false)
 	{
 		global $user;
 
 		$this->active	= false;
 		$this->category	= $categoryName;
 		$this->id		= $toolName;
+		$this->outdated	= $outdated;
 		$this->tool		= $tool;
 
 		// Include this tools language file
@@ -84,7 +87,18 @@ class stk_toolbox_tool
 
 	public function createOverview()
 	{
+		global $template, $user;
+
 		$options = $this->tool->displayOptions();
+
+		// Show outdated notice
+		if ($this->outdated)
+		{
+			$template->assign_block_vars('notices', array(
+				'TITLE'			=> $user->lang('TOOL_OUTDATED_TITLE'),
+				'DESCRIPTION'	=> $user->lang('TOOL_OUTDATED_DESCRIPTION')
+			));
+		}
 
 		// Various options
 		if (is_string($options))
