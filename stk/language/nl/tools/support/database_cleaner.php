@@ -96,6 +96,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'De rapporteer redens zijn succesvol hersteld!',
 	'RESET_ROLE_DATA'				=> 'Reset rol gegevens',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Deze stap zal de phpBB systeem rollen herstellen naar hun originele staat, dit wordt enorm  aangeraden als je wijzigingen hebt uitgevoerd in de vorige stap.',
+	'ROLE_SETTINGS'					=> 'Rol instellingen',
 	'ROWS'							=> 'Rijen',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
