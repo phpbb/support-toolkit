@@ -9,6 +9,8 @@
 
 class stktool_foo_foobar extends stk_toolbox_toolBase
 {
+	const TOOL_VERSION = '1.0.0-rc1';
+
 	public function __construct()
 	{
 		$this->toolName = 'testtool';

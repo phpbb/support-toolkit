@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
-	'CATEGORY_TITLE'		=> 'Support Toolkit Home',
-	'CATEGORY_DESCRIPTION'	=> 'The Support Toolkit (STK) may be used to fix common issues within a working installation of phpBB 3.0.x.
-								It serves as a second Administration Control Panel, providing an administrator with a set of tools to
-								resolve common problems that may prevent a phpBB3 installation from functioning properly.',
+	'MAIN_TITLE'		=> 'Support Toolkit Home',
+	'MAIN_DESCRIPTION'	=> 'The Support Toolkit (STK) may be used to fix common issues within a working installation of phpBB 3.0.x.
+							It serves as a second Administration Control Panel, providing an administrator with a set of tools to
+							resolve common problems that may prevent a phpBB3 installation from functioning properly.',
 ));

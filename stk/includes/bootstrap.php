@@ -14,6 +14,9 @@ if (!defined('STK_ROOT')) define('STK_ROOT', __DIR__ . '/../');
 if (!defined('PHPBB_FILES')) define('PHPBB_FILES', STK_ROOT . 'phpBB/');
 if (!defined('IN_PHPBB')) define('IN_PHPBB', true);
 
+// Enforce the usage of the SID
+define('NEED_SID', true);
+
 // Setup the class loaders
 require PHPBB_FILES . 'includes/class_loader.php';
 $stk_class_loader = new phpbb_class_loader('stk_', STK_ROOT, '.php');
@@ -59,8 +62,11 @@ unset($dbpasswd);
 
 // set up caching
 // The support toolkit doesn't cache any phpBB related information!
+// Although a second cacheing object is used to cache STK related information
 $cache_factory = new phpbb_cache_factory('null');
 $cache = $cache_factory->get_service();
+$stk_cache_factory = new stk_core_cache_factory('file');
+$stk_cache = $stk_cache_factory->get_service();
 
 // Get the actual phpBB config array
 $phpbb_config = new phpbb_config_db($db, $cache->get_driver(), CONFIG_TABLE);
@@ -90,6 +96,9 @@ $template->set_custom_template(STK_ROOT . 'view/template/', 'supporttoolkit');
 
 // Include some STK files that can't be auto loaded
 require STK_ROOT . 'includes/constants.php';
+
+// Initialise the version check controller
+$vc = stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check.json', $stk_cache);
 
 // Initialise the toolkit
 $toolbox = new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools/'));

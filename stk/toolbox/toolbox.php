@@ -35,6 +35,19 @@ class stk_toolbox
 
 			$this->categories[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()));
 		}
+
+		uksort($this->categories, array($this, 'categorysSort'));
+	}
+
+	public function categorysSort($a, $b)
+	{
+		// Main is always the first
+		if ($a == 'main' || $b == 'main')
+		{
+			return ($a == 'main') ? -1 : 1;
+		}
+
+		return strcasecmp($a, $b);
 	}
 
 	/**

@@ -55,7 +55,7 @@ abstract class stk_includes_utilities
 		foreach ($toolbox->getToolboxCategories() as $category)
 		{
 			$template->assign_block_vars('t_block1', array(
-				'L_TITLE'		=> $user->lang('CAT_' . strtoupper($category->getName())),
+				'L_TITLE'		=> $user->lang(strtoupper($category->getName() . '_TITLE')),
 				'U_TITLE'		=> $category->getCategoryURL(),
 				'S_SELECTED'	=> $category->isActive(),
 			));

@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * common [English]
+ * reclean_usernames [English]
  *
  * @package language
  * @copyright (c) 2012 phpBB Group
@@ -38,5 +38,5 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
-	'TOOL_MAIN_HOME'	=> 'Support Toolkit Home',
+	'TOOL_SUPPORT_RECLEAN_USERNAMES'	=> 'Reclean usernames',
 ));

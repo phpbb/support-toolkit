@@ -13,7 +13,8 @@ define('PHPBB_FILES', STK_ROOT . 'phpBB/');
 define('IN_TEST', true);
 
 // Some to make phpBB files accessable in the first place
-$phpbb_root_path = STK_ROOT . '../';
+$phpbb_root_path = STK_ROOT . 'vendor/phpBB/phpBB/';
+define('PHPBB_ROOT_PATH', $phpbb_root_path);
 $phpEx = 'php';
 define('IN_PHPBB', true);
 
@@ -30,7 +31,7 @@ if (!defined('dbms'))
 }
 $dbms = dbms;
 
-$phpbb_tests_path = STK_ROOT . 'vendor/phpBB/tests/';
+$phpbb_tests_path = $phpbb_root_path . '../tests/';
 $phpEx = 'php';
 
 $table_prefix = (!defined('table_prefix')) ? 'phpbb_' : table_prefix;
@@ -44,8 +45,25 @@ require_once __DIR__ . '/test_framework/stk_database_test_case.php';
 require_once __DIR__ . '/test_framework/stk_database_test_connection_manager.php';
 require_once __DIR__ . '/test_framework/stk_test_case.php';
 
-require_once PHPBB_FILES . 'includes/class_loader.' . $phpEx;
-$stk_class_loader = new phpbb_class_loader('stk_', STK_ROOT);
+// Fetch some phpBB files
+require_once $phpbb_root_path . 'includes/class_loader.php';
+require_once $phpbb_root_path . 'includes/constants.php';
+require_once $phpbb_root_path . 'includes/functions.php';
+require PHPBB_FILES . 'includes/utf/utf_tools.php';
+
+// Fetch some STK Files
+require_once STK_ROOT . 'core/class_loader.php';
+
+// Initialise class loaders
+$stk_class_loader = new stk_core_class_loader('stk_', STK_ROOT);
 $stk_class_loader->register();
-$phpbb_class_loader = new phpbb_class_loader('phpbb_', PHPBB_FILES . 'includes/');
+$phpbb_class_loader = new stk_core_class_loader('phpbb_', $phpbb_root_path . 'includes/');
 $phpbb_class_loader->register();
+
+// Setup mock cache
+require_once $phpbb_tests_path . 'mock/cache.php';
+$cache = new phpbb_mock_cache();
+
+// Setup lang mock
+require_once $phpbb_tests_path . 'mock/lang.php';
+$lang = new phpbb_mock_lang();

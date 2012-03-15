@@ -34,7 +34,6 @@ def getFileList():
 		["adm/style/admin.css", "view/theme/admin.css"],
 		["includes/",
 					[
-						"class_loader.php",
 						"constants.php",
 						"functions.php",
 						"session.php",
@@ -53,6 +52,7 @@ def getFileList():
 		["includes/cache/driver/",
 					[
 						"base.php",
+						"file.php",
 						"interface.php",
 						"null.php",
 					],

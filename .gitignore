@@ -7,6 +7,7 @@ stk/view/theme/admin.css
 !stk/phpBB/.gitkeep
 
 # phpBB theme images. Whitelist the STK ones!
+stk/cache/*.php
 stk/view/images/*.gif
 
 # STK files

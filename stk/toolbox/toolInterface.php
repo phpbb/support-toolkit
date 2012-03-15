@@ -9,6 +9,8 @@
 
 interface stk_toolbox_toolInterface
 {
+	const TOOL_VERSION = '1.0.1';
+
 	public function getName();
 	public function displayOptions();
 }

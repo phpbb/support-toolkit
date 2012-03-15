@@ -54,6 +54,14 @@ class stk_toolbox_tool
 			return 'TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE';
 		}
 
+		// Tool version check
+		$vc = stk_toolbox_version_check::getInstance();
+		$vcr = $vc->testVersion($category, $file);
+		if ($vcr == stk_toolbox_version_check::TOOL_BLOCKING || $vcr == stk_toolbox_version_check::TOOL_DISABLED)
+		{
+			return ($vcr == stk_toolbox_version_check::TOOL_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'TOOL_DISABLED';
+		}
+
 		return new static($rc->newInstanceArgs(), $category, $file);
 	}
 
@@ -128,6 +136,6 @@ class stk_toolbox_tool
 		$params['c'] = $this->category;
 		$params['t'] = $this->id;
 
-		return reapply_sid(STK_WEB_PATH . '/index.php', $params);
+		return append_sid(STK_WEB_PATH . '/index.php', $params);
 	}
 }

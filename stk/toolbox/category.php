@@ -22,10 +22,18 @@ class stk_toolbox_category
 
 	public function __construct(SplFileInfo $path)
 	{
+		global $user;
+
 		$this->active	= false;
 		$this->name		= $path->getBasename();
 		$this->path		= $path;
 		$this->toolList	= array();
+
+		// @todo, better way to handle test compatibility
+		if ($user instanceof user)
+		{
+			$user->stk_add_lang("categories/{$this->name}");
+		}
 	}
 
 	public function loadTools()
@@ -47,12 +55,18 @@ class stk_toolbox_category
 				$this->toolList[$tool->getID()] = $tool;
 			}
 		}
+
+		ksort($this->toolList);
 	}
 
 	public function createOverview()
 	{
-		global $user;
-		$user->stk_add_lang("categories/{$this->name}");
+		global $template, $user;
+
+		$template->assign_vars(array(
+			'CATEGORY_TITLE'		=> $user->lang(strtoupper($this->name . '_TITLE')),
+			'CATEGORY_DESCRIPTION'	=> $user->lang(strtoupper($this->name . '_DESCRIPTION')),
+		));
 
 		stk_includes_utilities::page_header();
 		stk_includes_utilities::page_footer('category_overview.html');

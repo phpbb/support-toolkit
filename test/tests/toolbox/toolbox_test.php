@@ -14,6 +14,7 @@ class toolbox_test extends stk_test_case
 	protected function setUp()
 	{
 		$this->path = __DIR__ . '/tools/';
+		stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
 	}
 
 	public function test_loadToolboxCategories()
@@ -38,25 +39,25 @@ class toolbox_test extends stk_test_case
 
 		// Verify off
 		$this->assertFalse($tb->getToolboxCategory('foo')->isActive());
-		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('bar')->isActive());
+		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('barfoo')->isActive());
 		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('foobar')->isActive());
 
 		// Toggle just the category
 		$tb->setActiveTool('foo');
 		$this->assertTrue($tb->getToolboxCategory('foo')->isActive());
-		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('bar')->isActive());
+		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('barfoo')->isActive());
 		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('foobar')->isActive());
 
 		// Toggle also the tool
 		$tb->setActiveTool('foo', 'foobar');
 		$this->assertTrue($tb->getToolboxCategory('foo')->isActive());
-		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('bar')->isActive());
+		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('barfoo')->isActive());
 		$this->assertTrue($tb->getToolboxCategory('foo')->getTool('foobar')->isActive());
 
 		// Toggle an other tool
-		$tb->setActiveTool('foo', 'bar');
+		$tb->setActiveTool('foo', 'barfoo');
 		$this->assertTrue($tb->getToolboxCategory('foo')->isActive());
-		$this->assertTrue($tb->getToolboxCategory('foo')->getTool('bar')->isActive());
+		$this->assertTrue($tb->getToolboxCategory('foo')->getTool('barfoo')->isActive());
 		$this->assertFalse($tb->getToolboxCategory('foo')->getTool('foobar')->isActive());
 	}
 
