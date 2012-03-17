@@ -74,7 +74,7 @@ $phpbb_config = new phpbb_config_db($db, $cache->get_driver(), CONFIG_TABLE);
 // Some phpBB code relies on the phpBB config data, to control the behavior
 // of this we will use an mock cache object containing static settings whenever
 // possible
-$config = new stk_includes_phpbb_mock_config($phpbb_config);
+$config = new stk_wrapper_config($phpbb_config);
 set_config(null, null, null, $config);
 set_config_count(null, null, null, $config);
 

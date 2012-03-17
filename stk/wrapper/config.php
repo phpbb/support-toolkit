@@ -15,7 +15,7 @@
  * in an unexpected manner. In most cases this information is used when
  * phpbb interacts with its configuration array.
  */
-class stk_includes_phpbb_mock_config extends phpbb_config
+class stk_wrapper_config extends phpbb_config
 {
 	/**
 	 * The phpBB actual config object
