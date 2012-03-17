@@ -45,12 +45,6 @@ abstract class stk_includes_utilities
 			'S_CONTENT_FLOW_END'	=> ($user->lang['DIRECTION'] == 'ltr') ? 'right' : 'left',
 		));
 
-		// @todo remove. Only for development purpose
-		$template->assign_vars(array(
-			'S_CONTENT_DIRECTION'	=> 'ltr',
-			'S_USER_LANG'			=> 'en',
-		));
-
 		// Assign the categories to the template
 		foreach ($toolbox->getToolboxCategories() as $category)
 		{

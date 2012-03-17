@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
+	'S_CONTENT_DIRECTION'		=> 'ltr',
+	'S_USER_LANG'				=> 'en',
+
 	'TOOL_OUTDATED_TITLE'		=> 'Tool is outdated',
 	'TOOL_OUTDATED_DESCRIPTION'	=> 'This tool appears to be outdated, please update before continueing.',
 ));
