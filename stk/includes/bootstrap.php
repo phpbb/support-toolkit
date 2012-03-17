@@ -94,6 +94,12 @@ $user->stk_add_lang('common');
 // Use the STK template directory
 $template->set_custom_template(STK_ROOT . 'view/template/', 'supporttoolkit');
 
+// Set notice when the cache can't be used
+if (!is_writable($stk_cache->get_driver()->getCacheDir()))
+{
+	$template->addNotice('STK_CACHE_NOT_WRITABLE', 'STK_CACHE_NOT_WRITABLE_DESCRIPTION', true);
+}
+
 // Include some STK files that can't be auto loaded
 require STK_ROOT . 'includes/constants.php';
 

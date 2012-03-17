@@ -37,9 +37,11 @@ class stk_wrapper_template extends phpbb_template
 	 * @param type $noticeTitle
 	 * @param type $noticeDescription
 	 */
-	public function addNotice($noticeTitle, $noticeDescription)
+	public function addNotice($noticeTitle, $noticeDescription, $global = false)
 	{
-		$this->assign_block_vars('notices', array(
+		$block = ($global === true) ? 'globalnotices' : 'toolnotices';
+
+		$this->assign_block_vars($block, array(
 			'TITLE'			=> $this->user->lang($noticeTitle),
 			'DESCRIPTION'	=> $this->user->lang($noticeDescription),
 		));

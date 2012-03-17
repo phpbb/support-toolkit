@@ -26,7 +26,7 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 	/**
 	 * Get saved cache object
 	 */
-	function get($var_name)
+	public function get($var_name)
 	{
 		global $_SID;
 
@@ -58,7 +58,7 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 	/**
 	 * Put data into cache
 	 */
-	function put($var_name, $var, $ttl = 31536000)
+	public function put($var_name, $var, $ttl = 31536000)
 	{
 		// Inject some information
 		global $user;
@@ -78,5 +78,10 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 			$this->var_expires[$var_name] = time() + $ttl;
 			$this->is_modified = true;
 		}
+	}
+
+	public function getCacheDir()
+	{
+		return $this->cache_dir;
 	}
 }
