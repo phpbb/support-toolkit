@@ -44,4 +44,52 @@ class stk_wrapper_template extends phpbb_template
 			'DESCRIPTION'	=> $this->user->lang($noticeDescription),
 		));
 	}
+
+	/**
+	 * Assign navigation
+	 *
+	 * Correctly display the navigation for the current page.
+	 *
+	 * @param stk_toolbox $toolbox
+	 */
+	public function assignNavigation(stk_toolbox $toolbox)
+	{
+		$categories = $toolbox->getToolboxCategories();
+		$activeCategory = null;
+
+		foreach ($categories as $category)
+		{
+			$active = false;
+			if ($category->isActive())
+			{
+				$active = true;
+				$activeCategory = $category;
+			}
+
+			$this->assign_block_vars('t_block1', array(
+				'L_TITLE'	=> $this->user->lang(strtoupper($category->getName() . '_TITLE')),
+				'U_TITLE'	=> $category->getCategoryURL(),
+				'S_ACTIVE'	=> $active,
+			));
+		}
+
+		if ($activeCategory && $activeCategory->getToolCount() > 0)
+		{
+			$tools = $activeCategory->getToolList();
+			foreach ($tools as $tool)
+			{
+				$active = false;
+				if ($tool->isActive())
+				{
+					$active = true;
+				}
+
+				$this->assign_block_vars('l_block1', array(
+					'L_TITLE'	=> $this->user->lang($tool->getToolLanguageString()),
+					'U_TITLE'	=> $tool->getToolURL(),
+					'S_ACTIVE'	=> $active,
+				));
+			}
+		}
+	}
 }

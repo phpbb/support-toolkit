@@ -46,27 +46,7 @@ abstract class stk_includes_utilities
 		));
 
 		// Assign the categories to the template
-		foreach ($toolbox->getToolboxCategories() as $category)
-		{
-			$template->assign_block_vars('t_block1', array(
-				'L_TITLE'		=> $user->lang(strtoupper($category->getName() . '_TITLE')),
-				'U_TITLE'		=> $category->getCategoryURL(),
-				'S_SELECTED'	=> $category->isActive(),
-			));
-		}
-
-		// Assign the left navigation
-		if ($toolbox->getActiveCategory()->getToolCount() > 0)
-		{
-			foreach ($toolbox->getActiveCategory()->getToolList() as $tool)
-			{
-				$template->assign_block_vars('l_block1', array(
-					'L_TITLE'		=> $user->lang($tool->getToolLanguageString()),
-					'U_TITLE'		=> $tool->getToolURL(),
-					'S_SELECTED'	=> $tool->isActive(),
-				));
-			}
-		}
+		$template->assignNavigation($toolbox);
 
 		// application/xhtml+xml not used because of IE
 		header('Content-type: text/html; charset=UTF-8');
