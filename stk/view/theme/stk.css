@@ -9,3 +9,9 @@
 	height: 50px;
 	background: url("../images/support_toolkit_logo_trans.png") top left no-repeat;
 }
+
+.errorbox, .successbox {
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
