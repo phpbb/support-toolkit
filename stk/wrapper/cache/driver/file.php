@@ -13,7 +13,7 @@
  * Suppor toolkit file cache service.
  * Based upon the phpBB file cache but enables session timed caching
  */
-class stk_core_cache_driver_file extends phpbb_cache_driver_file
+class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 {
 	/**
 	 * Set cache path

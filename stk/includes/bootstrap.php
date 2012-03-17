@@ -65,7 +65,7 @@ unset($dbpasswd);
 // Although a second cacheing object is used to cache STK related information
 $cache_factory = new phpbb_cache_factory('null');
 $cache = $cache_factory->get_service();
-$stk_cache_factory = new stk_core_cache_factory('file');
+$stk_cache_factory = new stk_wrapper_cache_factory('file');
 $stk_cache = $stk_cache_factory->get_service();
 
 // Get the actual phpBB config array
@@ -79,12 +79,12 @@ set_config(null, null, null, $config);
 set_config_count(null, null, null, $config);
 
 // Initialise the phpBB user object
-$user = new stk_core_user();
+$user = new stk_wrapper_user();
 
 // Setup template object
 $phpbb_template_locator = new phpbb_template_locator();
 $phpbb_template_path_provider = new phpbb_template_path_provider();
-$template = new stk_core_template($phpbb_root_path, $phpEx, $config, $user, $phpbb_template_locator, $phpbb_template_path_provider);
+$template = new stk_wrapper_template($phpbb_root_path, $phpEx, $config, $user, $phpbb_template_locator, $phpbb_template_path_provider);
 
 // Setup user
 $user->session_begin(false);

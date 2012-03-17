@@ -12,7 +12,7 @@
  *
  * Suppor toolkit cache factory class
  */
-class stk_core_cache_factory extends phpbb_cache_factory
+class stk_wrapper_cache_factory extends phpbb_cache_factory
 {
 	private $acm_type;
 
@@ -23,7 +23,14 @@ class stk_core_cache_factory extends phpbb_cache_factory
 
 	public function get_driver()
 	{
-		$class_name = 'stk_core_cache_driver_' . $this->acm_type;
+		$class_name = 'stk_wrapper_cache_driver_' . $this->acm_type;
 		return new $class_name();
+	}
+
+	public function get_service()
+	{
+		$driver = $this->get_driver();
+		$service = new stk_wrapper_cache_service($driver);
+		return $service;
 	}
 }

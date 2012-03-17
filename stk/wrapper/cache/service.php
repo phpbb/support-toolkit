@@ -12,7 +12,7 @@
  *
  * Suppor toolkit cache service, extends the phpBB cache service
  */
-class stk_core_cache_service extends phpbb_cache_service
+class stk_wrapper_cache_service extends phpbb_cache_service
 {
 
 }
