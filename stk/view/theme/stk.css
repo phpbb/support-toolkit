@@ -5,3 +5,7 @@
 	Adds/edits styling rules
 */
 
+#page-header, .rtl #page-header {
+	height: 50px;
+	background: url("../images/support_toolkit_logo_trans.png") top left no-repeat;
+}
