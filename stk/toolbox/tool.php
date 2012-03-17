@@ -87,17 +87,14 @@ class stk_toolbox_tool
 
 	public function createOverview()
 	{
-		global $template, $user;
+		global $template;
 
 		$options = $this->tool->displayOptions();
 
 		// Show outdated notice
 		if ($this->outdated)
 		{
-			$template->assign_block_vars('notices', array(
-				'TITLE'			=> $user->lang('TOOL_OUTDATED_TITLE'),
-				'DESCRIPTION'	=> $user->lang('TOOL_OUTDATED_DESCRIPTION')
-			));
+			$template->addNotice('TOOL_OUTDATED_TITLE', 'TOOL_OUTDATED_DESCRIPTION');
 		}
 
 		// Various options

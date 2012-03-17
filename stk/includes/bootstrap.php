@@ -84,7 +84,7 @@ $user = new stk_core_user();
 // Setup template object
 $phpbb_template_locator = new phpbb_template_locator();
 $phpbb_template_path_provider = new phpbb_template_path_provider();
-$template = new phpbb_template($phpbb_root_path, $phpEx, $config, $user, $phpbb_template_locator, $phpbb_template_path_provider);
+$template = new stk_core_template($phpbb_root_path, $phpEx, $config, $user, $phpbb_template_locator, $phpbb_template_path_provider);
 
 // Setup user
 $user->session_begin(false);
