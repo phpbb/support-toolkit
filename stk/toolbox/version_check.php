@@ -17,10 +17,10 @@ class stk_toolbox_version_check
 	/**#@+
 	 * Status constants
 	 */
-	const TOOL_OK = 1;
-	const TOOL_WARNING = 2;
-	const TOOL_BLOCKING = 3;
-	const TOOL_DISABLED = 4;
+	const VERSION_OK = 1;
+	const VERSION_WARNING = 2;
+	const VERSION_BLOCKING = 3;
+	const VERSION_DISABLED = 4;
 	/**#@-*/
 
 	/**
@@ -33,7 +33,7 @@ class stk_toolbox_version_check
 	 * Array holding the version information as fetched from the version check file
 	 * @var array
 	 */
-	private $versionInfo = false;
+	private $versionData = false;
 
 	/**
 	 * Initialise the version check object
@@ -45,28 +45,28 @@ class stk_toolbox_version_check
 		if (!is_null($cache))
 		{
 			$cache_driver = $cache->get_driver();
-			$this->versionInfo = $cache_driver->get('_stk_tool_version');
+			$this->versionData = $cache_driver->get('_stk_versionData');
 		}
 
-		if ($this->versionInfo === false)
+		if ($this->versionData === false)
 		{
 			$opts = array(
 				'http' => array(
 					'method'		=> 'GET',
 					'max_redirects' => '10',
-					'user_agent'	=> 'phpBB Support Toolkit',
+					'user_agent'	=> 'phpBB Support Toolkit version checker',
 				),
 			);
 
-			$context	= stream_context_create($opts);
-			$stream		= fopen($versionCheckFile, 'r', false, $context);
-			$responce	= json_decode(stream_get_contents($stream));
-			$this->versionInfo = $responce->_versions;
+			$context			= stream_context_create($opts);
+			$stream				= fopen($versionCheckFile, 'r', false, $context);
+			$responce			= stream_get_contents($stream);
+			$this->versionData	= json_decode($responce);
 			fclose($stream);
 
 			if (!is_null($cache))
 			{
-				$cache_driver->put('_stk_tool_version', $this->versionInfo);
+				$cache_driver->put('_stk_versionData', $this->versionData);
 			}
 		}
 	}
@@ -87,6 +87,16 @@ class stk_toolbox_version_check
 		}
 
 		return self::$instance;
+	}
+
+	public function testToolVersion($toolCategory, $toolName)
+	{
+		// Get the tool version
+		$rc = new ReflectionClass("stktool_{$toolCategory}_{$toolName}");
+		$toolVersion = $rc->getConstant('TOOL_VERSION');
+
+		$versionCode = $this->getVersionResponce($toolCategory, $toolName, $toolVersion);
+		return $versionCode;
 	}
 
 	/**
@@ -111,43 +121,41 @@ class stk_toolbox_version_check
 	 * @param  string  $toolName     The name of the requested tool
 	 * @return integer
 	 */
-	public function testVersion($toolCategory, $toolName)
+	private function getVersionResponce($toolCategory, $toolName, $currentVersion)
 	{
-		// Get the tool version
-		$rc = new ReflectionClass("stktool_{$toolCategory}_{$toolName}");
-		$toolVersion = $rc->getConstant('TOOL_VERSION');
+		$_versionData = $this->getVersionData($toolCategory, $toolName);
 
 		// No version information
-		if (empty($this->versionInfo->$toolCategory->$toolName))
+		if (empty($_versionData))
 		{
-			return self::TOOL_OK;
+			return self::VERSION_OK;
 		}
 
 		// This tool is "hard disabled"
-		if (!empty($this->versionInfo->$toolCategory->$toolName->disabled))
+		if (!empty($_versionData->disabled) && $_versionData->disabled === true)
 		{
-			return self::TOOL_DISABLED;
+			return self::VERSION_DISABLED;
 		}
 
 		// There are blocking entries
-		if (!empty($this->versionInfo->$toolCategory->$toolName->blocking))
+		if (!empty($_versionData->blocking))
 		{
-			$lastBlocking = reset($this->versionInfo->$toolCategory->$toolName->blocking);
+			$lastBlocking = reset($_versionData->blocking);
 
-			if (version_compare($toolVersion, $lastBlocking, '<='))
+			if (version_compare($currentVersion, $lastBlocking, '<='))
 			{
-				return self::TOOL_BLOCKING;
+				return self::VERSION_BLOCKING;
 			}
 		}
 
 		// Our tool is outdated but isn't blocked so trigger an waring about that
-		if (version_compare($toolVersion, $this->versionInfo->$toolCategory->$toolName->latest, '<'))
+		if (version_compare($currentVersion, $_versionData->latest, '<'))
 		{
-			return self::TOOL_WARNING;
+			return self::VERSION_WARNING;
 		}
 
 		// We're good
-		return self::TOOL_OK;
+		return self::VERSION_OK;
 	}
 
 	/**
@@ -157,21 +165,25 @@ class stk_toolbox_version_check
 	 * @param  string   $toolName     The name of the requested tool
 	 * @return stdClass               stdClass containing the requested version information
 	 */
-	public function getVersionInfo($toolCategory = '', $toolName = '')
+	public function getVersionData($toolCategory = '', $toolName = '')
 	{
 		$return = null;
 
 		if (!empty($toolCategory) && !empty($toolName))
 		{
-			$return = $this->versionInfo->$toolCategory->$toolName;
+			$return = (!empty($this->versionData->_tools->$toolCategory->$toolName)) ? $this->versionData->_tools->$toolCategory->$toolName : null;
+		}
+		else if (!empty($toolCategory) && $toolCategory == 'stk_')
+		{
+			$return = $this->versionData->_stk;
 		}
 		else if (!empty($toolCategory))
 		{
-			$return = $this->versionInfo->$toolCategory;
+			$return = (!empty($this->versionData->_tools->$toolCategory)) ? $this->versionData->_tools->$toolCategory : null;
 		}
 		else
 		{
-			$return = $this->versionInfo;
+			$return = (!empty($this->versionData)) ? $this->versionData : null;
 		}
 
 		return $return;

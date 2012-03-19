@@ -57,12 +57,12 @@ class stk_toolbox_tool
 
 		// Tool version check
 		$vc = stk_toolbox_version_check::getInstance();
-		$vcr = $vc->testVersion($category, $file);
-		if ($vcr == stk_toolbox_version_check::TOOL_BLOCKING || $vcr == stk_toolbox_version_check::TOOL_DISABLED)
+		$vcr = $vc->testToolVersion($category, $file);
+		if ($vcr == stk_toolbox_version_check::VERSION_BLOCKING || $vcr == stk_toolbox_version_check::VERSION_DISABLED)
 		{
-			return ($vcr == stk_toolbox_version_check::TOOL_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'TOOL_DISABLED';
+			return ($vcr == stk_toolbox_version_check::VERSION_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'VERSION_DISABLED';
 		}
-		$outdated = ($vcr != stk_toolbox_version_check::TOOL_OK) ? true : false;
+		$outdated = ($vcr != stk_toolbox_version_check::VERSION_OK) ? true : false;
 
 		return new static($rc->newInstanceArgs(), $category, $file, $outdated);
 	}
