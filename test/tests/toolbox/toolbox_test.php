@@ -14,7 +14,7 @@ class toolbox_test extends stk_test_case
 	protected function setUp()
 	{
 		$this->path = __DIR__ . '/tools/';
-		stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
 	}
 
 	public function test_loadToolboxCategories()

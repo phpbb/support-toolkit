@@ -12,7 +12,7 @@
  *
  *
  */
-class stk_toolbox_version_check
+class stk_core_version_controller
 {
 	/**#@+
 	 * Status constants
@@ -25,7 +25,7 @@ class stk_toolbox_version_check
 
 	/**
 	 * Instance of this object.
-	 * @var stk_toolbox_version_check
+	 * @var stk_core_version_controller
 	 */
 	static private $instance = null;
 
@@ -77,7 +77,7 @@ class stk_toolbox_version_check
 	 * A singleton wrapper to assure only one instance is created
 	 *
 	 * @param string $versionCheckFile URL to the versioncheck file
-	 * @return stk_toolbox_version_check Instance
+	 * @return stk_core_version_controller Instance
 	 */
 	static public function getInstance($versionCheckFile = '', phpbb_cache_service $cache = null)
 	{

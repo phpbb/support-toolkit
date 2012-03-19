@@ -104,7 +104,7 @@ if (!is_writable($stk_cache->get_driver()->getCacheDir()))
 require STK_ROOT . 'includes/constants.php';
 
 // Initialise the version check controller
-$vc = stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check.json', $stk_cache);
+$vc = stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check.json', $stk_cache);
 
 // Initialise the toolkit
 $toolbox = new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools/'));

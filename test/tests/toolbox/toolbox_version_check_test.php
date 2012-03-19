@@ -13,7 +13,7 @@ class toolbox_version_check_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$this->versionCheck = stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		$this->versionCheck = stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
 	}
 
 	public function test_getVersionInfo()
@@ -36,22 +36,22 @@ class toolbox_version_check_test extends stk_test_case
 
 	public function test_no_version_entry()
 	{
-		$this->assertSame(stk_toolbox_version_check::VERSION_OK, $this->versionCheck->testToolVersion('foo', 'barfoo'));
+		$this->assertSame(stk_core_version_controller::VERSION_OK, $this->versionCheck->testToolVersion('foo', 'barfoo'));
 	}
 
 	public function test_version_warning()
 	{
-		$this->assertSame(stk_toolbox_version_check::VERSION_WARNING, $this->versionCheck->testToolVersion('foo', 'foobar'));
+		$this->assertSame(stk_core_version_controller::VERSION_WARNING, $this->versionCheck->testToolVersion('foo', 'foobar'));
 	}
 
 	public function test_version_blocking()
 	{
-		$this->assertSame(stk_toolbox_version_check::VERSION_BLOCKING, $this->versionCheck->testToolVersion('foo', 'bar'));
+		$this->assertSame(stk_core_version_controller::VERSION_BLOCKING, $this->versionCheck->testToolVersion('foo', 'bar'));
 	}
 
 	public function test_version_disabled()
 	{
-		$this->assertSame(stk_toolbox_version_check::VERSION_DISABLED, $this->versionCheck->testToolVersion('foo', 'disabled'));
+		$this->assertSame(stk_core_version_controller::VERSION_DISABLED, $this->versionCheck->testToolVersion('foo', 'disabled'));
 	}
 
 	public function test_stk_blocked()

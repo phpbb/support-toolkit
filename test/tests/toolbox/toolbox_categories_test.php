@@ -16,7 +16,7 @@ class toolbox_categories_test extends stk_test_case
 	{
 		$this->path		= __DIR__ . '/tools/foo/';
 		$this->toolBox	= new stk_toolbox(new SplFileInfo(__DIR__ . '/tools/'));
-		stk_toolbox_version_check::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
 	}
 
 	/**
