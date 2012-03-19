@@ -98,6 +98,20 @@ class stk_toolbox_version_check
 		$versionCode = $this->getVersionResponce($toolCategory, $toolName, $toolVersion);
 		return $versionCode;
 	}
+	
+	public function testSTKVersion()
+	{
+		$versionCode = $this->getVersionResponce('stk_', '', STK_VERSION);
+
+		// Throw error when disabled
+		if ($versionCode == self::VERSION_DISABLED)
+		{
+			$_versionData = $this->getVersionData('stk_');
+
+			$reason = (!empty($_versionData->reason)) ? $_versionData->reason : 'STK_HARD_DISABLED';
+			throw new stk_exceptions_version($reason);
+		}
+	}
 
 	/**
 	 * Validate tool by version

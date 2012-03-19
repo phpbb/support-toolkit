@@ -7,9 +7,7 @@
  *
  */
 
-// Version constants
-define('STK_VERSION', '2.0.0-dev');
-define('STK_QA', true);
+class stk_exceptions_version extends RuntimeException
+{
 
-// The web path
-define('STK_WEB_PATH', generate_board_url(true));
+}
