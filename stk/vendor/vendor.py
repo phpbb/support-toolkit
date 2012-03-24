@@ -106,7 +106,7 @@ def _copy(src, dest, update=False):
 	else:
 		if not exists(dirname(dest)):
 			makedirs(dirname(dest))
-		elif update == True:
+		elif (exists(dest) and update == True):
 			remove(dest)
 
 		copy2(src, dest)
