@@ -7,9 +7,10 @@ This utility copies all vendor files that are required by the Support Toolkit
 into their correct locations. This tool expects that the vendor repositories
 are already checked out.
 """
-from os import makedirs
+import argparse
+from os import makedirs, remove
 from os.path import dirname, exists, isdir
-from shutil import copy2, copytree
+from shutil import copy2, copytree, rmtree
 import types
 
 def getFileList():
@@ -91,29 +92,39 @@ def getFileList():
 		["includes/utf/data/", "phpBB/includes/utf/data/"]
 	];
 
-def _copy(src, dest):
-	if exists(dest):
+def _copy(src, dest, update=False):
+	if (exists(dest) and update == False):
 		print 'Skipping: ' + src + ' (destination already exists)'
 		return
 
-	print 'Copying: ' + src + ' to: ' + dest
+	print ('Copying: ' if update == False else 'Overwriting: ') + src + ' to: ' + dest
 	if isdir(src):
+		if (exists(dirname(dest)) and update == True):
+			rmtree(dest)
+
 		copytree(src, dest)
 	else:
 		if not exists(dirname(dest)):
 			makedirs(dirname(dest))
+		elif update == True:
+			remove(dest)
+
 		copy2(src, dest)
 
 def main():
+	parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.')
+	parser.add_argument("-u", "--update", dest="update", action="store_true", help="Update files, setting this parameter will force the script to overwrite the files if they already exist")
+	args = parser.parse_args()
+
 	basesrc		= './stk/vendor/phpBB/phpBB/'
 	basedest	= './stk/'
 
 	for file in getFileList():
 		if isinstance(file[1], types.ListType):
 			for f in file[1]:
-				_copy(basesrc + file[0] + f, basedest + file[2] + f);
+				_copy(basesrc + file[0] + f, basedest + file[2] + f, args.update);
 		else:
-			_copy(basesrc + file[0], basedest + file[1]);
+			_copy(basesrc + file[0], basedest + file[1], args.update);
 
 
 if __name__ == "__main__":

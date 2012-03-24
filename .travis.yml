@@ -23,7 +23,7 @@ before_script:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then pyrus install --force phpunit/DbUnit; fi"
   - phpenv rehash
   - git submodule update --init
-  - python ./stk/vendor/vendor.py
+  - python ./stk/vendor/vendor.py -u
 
 script:
   - phpunit --configuration test/travis/$DB.travis.xml
