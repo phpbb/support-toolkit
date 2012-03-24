@@ -86,6 +86,8 @@ class stk_wrapper_template extends phpbb_template
 					$active = true;
 				}
 
+				$tool->loadToolLanguageFile();
+
 				$this->assign_block_vars('l_block1', array(
 					'L_TITLE'	=> $this->user->lang($tool->getToolLanguageString()),
 					'U_TITLE'	=> $tool->getToolURL(),

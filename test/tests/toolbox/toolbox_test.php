@@ -9,20 +9,24 @@
 
 class toolbox_test extends stk_test_case
 {
+	private $cache;
 	private $path;
 
 	protected function setUp()
 	{
-		$this->path = __DIR__ . '/tools/';
-		stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		global $stk_cache;
+
+		$this->cache	= $stk_cache;
+		$this->path		= __DIR__ . '/tools/';
+		stk_core_version_controller::getInstance();
 	}
 
 	public function test_loadToolboxCategories()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path));
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
 		$tb->loadToolboxCategories();
 
-		$expected = new stk_toolbox_category(new SplFileInfo($this->path . 'foo'));
+		$expected = new stk_toolbox_category(new SplFileInfo($this->path . 'foo'), $this->cache);
 
 		$this->assertEquals($expected, $tb->getToolboxCategory('foo'));
 		$this->assertNull($tb->getToolboxCategory('notfound'));
@@ -33,7 +37,7 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_switchActive()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path));
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
 		$tb->loadToolboxCategories();
 		$tb->getToolboxCategory('foo')->loadTools();
 
@@ -66,7 +70,7 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_getActiveTool()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path));
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
 		$tb->loadToolboxCategories();
 		$tb->getToolboxCategory('foo')->loadTools();
 

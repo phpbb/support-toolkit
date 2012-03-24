@@ -21,10 +21,8 @@ class stk_toolbox_category implements Serializable
 	private $path;
 	private $toolList;
 
-	public function __construct(SplFileInfo $path, phpbb_cache_service $cache = null)
+	public function __construct(SplFileInfo $path, phpbb_cache_service $cache)
 	{
-		global $user;
-
 		$this->active	= false;
 		$this->cache	= $cache;
 		$this->name		= $path->getBasename();
@@ -36,33 +34,7 @@ class stk_toolbox_category implements Serializable
 
 	public function loadTools()
 	{
-		if (is_null($this->cache) || false === ($this->toolList = $this->cache->get_driver()->get('_toollist_' . $this->name)))
-		{
-			$it = new DirectoryIterator($this->path->getPathname());
-			foreach ($it as $file)
-			{
-				// Skip any directory
-				if ($file->isDir())
-				{
-					continue;
-				}
-
-				// A string is returned when an tool isn't loadable. For the category
-				// listing we simply skip those cases
-				$tool = stk_toolbox_tool::createTool($file->getFileInfo());
-				if (false === is_string($tool))
-				{
-					$this->toolList[$tool->getID()] = $tool;
-				}
-			}
-
-			ksort($this->toolList);
-
-			if (!is_null($this->cache))
-			{
-				$this->cache->get_driver()->put('_toollist_' . $this->name, $this->toolList);
-			}
-		}
+		$this->toolList = $this->cache->obtainSTKCategoryTools($this->path);
 	}
 
 	public function createOverview()
@@ -147,5 +119,8 @@ class stk_toolbox_category implements Serializable
 		$this->toolList	= $data['toolList'];
 
 		$this->loadCategoryLanguageFile();
+
+		global $stk_cache;
+		$this->cache = $stk_cache;
 	}
 }

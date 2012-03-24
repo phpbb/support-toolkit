@@ -13,7 +13,7 @@ class stk_toolbox
 	private $categories;
 	private $toolsPath;
 
-	public function __construct(SplFileInfo $toolsPath, phpbb_cache_service $cache = null)
+	public function __construct(SplFileInfo $toolsPath, phpbb_cache_service $cache)
 	{
 		$this->cache		= $cache;
 		$this->categories	= array();
@@ -26,27 +26,7 @@ class stk_toolbox
 
 	public function loadToolboxCategories()
 	{
-		if (is_null($this->cache) || false === ($this->categories = $this->cache->get_driver()->get('_categories')))
-		{
-			$it = new DirectoryIterator($this->toolsPath->getPathname());
-			foreach ($it as $dir)
-			{
-				// Skip what we don't need
-				if ($dir->isDot() || !$dir->isDir())
-				{
-					continue;
-				}
-
-				$this->categories[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()), $this->cache);
-			}
-
-			uksort($this->categories, array($this, 'categorysSort'));
-
-			if (!is_null($this->cache))
-			{
-				$this->cache->get_driver()->put('_categories', $this->categories);
-			}
-		}
+		$this->categories = $this->cache->obtainSTKCategories($this->toolsPath, $this);
 	}
 
 	public function categorysSort($a, $b)

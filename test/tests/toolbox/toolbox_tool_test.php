@@ -9,15 +9,19 @@
 
 class toolbox_tool_test extends stk_test_case
 {
+	private $cache;
 	private $catName;
 	private $path;
 	private $toolbox;
 
 	protected function setUp()
 	{
+		global $stk_cache;
+
+		$this->cache	= $stk_cache;
 		$this->catName	= 'classformat';
 		$this->path		= __DIR__ . '/tools/classformat/';
-		$this->toolbox	= new stk_toolbox(new SplFileInfo($this->path));
+		$this->toolbox	= new stk_toolbox(new SplFileInfo($this->path), $this->cache);
 	}
 
 	public function test_incorrectly_formatted_class()

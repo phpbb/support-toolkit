@@ -42,6 +42,8 @@ class stk_core_version_controller
 	 */
 	final private function __construct($versionCheckFile, phpbb_cache_service $cache = null)
 	{
+		$this->versionData = $cache->obtainSTKVersionData($versionCheckFile);
+/*
 		if (!is_null($cache))
 		{
 			$cache_driver = $cache->get_driver();
@@ -69,6 +71,8 @@ class stk_core_version_controller
 				$cache_driver->put('_stk_versionData', $this->versionData);
 			}
 		}
+ *
+ */
 	}
 
 	/**

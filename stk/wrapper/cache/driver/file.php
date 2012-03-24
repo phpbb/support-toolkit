@@ -8,10 +8,11 @@
  */
 
 /**
- * STK User class
+ * STK File cache
  *
- * Suppor toolkit file cache service.
- * Based upon the phpBB file cache but enables session timed caching
+ * An extension to the phpBB file cache, this class adds session based
+ * caching to the phpBB cache. Meaning that data is cached until the
+ * `SID` changes.
  */
 class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 {

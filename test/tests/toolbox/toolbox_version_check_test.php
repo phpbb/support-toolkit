@@ -13,7 +13,7 @@ class toolbox_version_check_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$this->versionCheck = stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		$this->versionCheck = stk_core_version_controller::getInstance();
 	}
 
 	public function test_getVersionInfo()

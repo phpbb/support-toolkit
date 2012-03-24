@@ -69,20 +69,11 @@ class stk_toolbox_tool
 
 	final private function __construct(stk_toolbox_toolInterface $tool, $categoryName = '', $toolName = '', $outdated = false)
 	{
-		global $user;
-
 		$this->active	= false;
 		$this->category	= $categoryName;
 		$this->id		= $toolName;
 		$this->outdated	= $outdated;
 		$this->tool		= $tool;
-
-		// Include this tools language file
-		// @todo figure out a better way to handle this when running the test suite
-		if ($user instanceof user)
-		{
-			$user->stk_add_lang("tools/{$this->category}/{$this->id}");
-		}
 	}
 
 	public function createOverview()
@@ -124,6 +115,12 @@ class stk_toolbox_tool
 			$displayHandler->display();
 //			stk_includes_utilities::confirm_box(false, strtoupper($this->id), '', 'tool_confirm.html', $this->getToolURL());
 		}
+	}
+
+	public function loadToolLanguageFile()
+	{
+		global $user;
+		$user->stk_add_lang("tools/{$this->category}/{$this->id}");
 	}
 
 	public function isActive()

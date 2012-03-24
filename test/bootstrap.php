@@ -64,6 +64,13 @@ $phpbb_class_loader->register();
 require_once $phpbb_tests_path . 'mock/cache.php';
 $cache = new phpbb_mock_cache();
 
+// Setup stk cache
+$stk_cache_factory = new stk_wrapper_cache_factory('null');
+$stk_cache = $stk_cache_factory->get_service();
+
+// Initialise version check controller for global use
+$vc = stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json', $stk_cache);
+
 // Setup lang mock
 require_once $phpbb_tests_path . 'mock/lang.php';
 $lang = new phpbb_mock_lang();

@@ -9,14 +9,18 @@
 
 class toolbox_categories_test extends stk_test_case
 {
+	private $cache;
 	private $path;
 	private $toolBox;
 
 	protected function setUp()
 	{
+		global $stk_cache;
+
+		$this->cache	= $stk_cache;
 		$this->path		= __DIR__ . '/tools/foo/';
-		$this->toolBox	= new stk_toolbox(new SplFileInfo(__DIR__ . '/tools/'));
-		stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check_test.json');
+		$this->toolBox	= new stk_toolbox(new SplFileInfo(__DIR__ . '/tools/'), $this->cache);
+		stk_core_version_controller::getInstance();
 	}
 
 	/**
@@ -24,7 +28,7 @@ class toolbox_categories_test extends stk_test_case
 	 */
 	public function test_createCategory()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
 
 		$this->assertSame('foo', $cat->getName());
 		$this->assertSame(0, $cat->getToolCount());
@@ -35,7 +39,7 @@ class toolbox_categories_test extends stk_test_case
 	 */
 	public function test_loadTools()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
 		$cat->loadTools();
 
 		$expected = stk_toolbox_tool::createTool(new SplFileInfo($this->path . 'foobar.php'));
@@ -47,14 +51,14 @@ class toolbox_categories_test extends stk_test_case
 
 	public function test_serialize()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
 		$serialized = serialize($cat);
 		$this->assertEquals($cat, unserialize($serialized));
 	}
 
 	public function test_serializeToolsLoaded()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
 		$cat->loadTools();
 
 		$serialized = serialize($cat);
