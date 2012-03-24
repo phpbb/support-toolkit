@@ -30,7 +30,7 @@ abstract class stk_includes_utilities
 		define('HEADER_INC', true);
 
 		$template->assign_vars(array(
-			'PAGE_TITLE'			=> $page_title,
+			'PAGE_TITLE'			=> $user->lang($page_title),
 			'USERNAME'				=> $user->data['username'],
 
 			'SID'					=> $SID,
