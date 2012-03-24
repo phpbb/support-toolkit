@@ -15,4 +15,9 @@ abstract class stk_toolbox_toolBase implements stk_toolbox_toolInterface
 	{
 		return $this->toolName;
 	}
+
+	public function run()
+	{
+		throw new RuntimeException('Tool not yet implemented!');
+	}
 }

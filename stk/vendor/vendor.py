@@ -50,14 +50,7 @@ def getFileList():
 					],
 					"phpBB/includes/cache/"
 		],
-		["includes/cache/driver/",
-					[
-						"base.php",
-						"file.php",
-						"interface.php",
-						"null.php",
-					],
-					"phpBB/includes/cache/driver/"
+		["includes/cache/driver/", "phpBB/includes/cache/driver/"
 		],
 		["includes/config/",
 					[

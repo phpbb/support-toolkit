@@ -46,4 +46,5 @@ $lang = array_merge($lang, array(
 
 	'TOOL_OUTDATED_TITLE'		=> 'Tool is outdated',
 	'TOOL_OUTDATED_DESCRIPTION'	=> 'This tool appears to be outdated, please update before continueing.',
+	'TOOL_SUCCESS'				=> 'Tool ran successfull',
 ));

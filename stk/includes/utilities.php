@@ -111,7 +111,7 @@ abstract class stk_includes_utilities
 	{
 		global $user, $template, $db, $request;
 
-		if (isset($_POST['cancel']))
+		if ($request->is_set('cancel'))
 		{
 			return false;
 		}
@@ -122,7 +122,7 @@ abstract class stk_includes_utilities
 		{
 			$user_id = $request->variable('confirm_uid', 0, false, phpbb_request_interface::POST);
 			$session_id = $request->variable('sess', '', false, phpbb_request_interface::POST);
-			$confirm_key = $request->variable('confirm_key', '', false, phpbb_request_interface::POST);
+			$confirm_key = $request->variable('confirm_key', '', false, phpbb_request_interface::GET);
 
 			if ($user_id != $user->data['user_id'] || $session_id != $user->session_id || !$confirm_key || !$user->data['user_last_confirm_key'] || $confirm_key != $user->data['user_last_confirm_key'])
 			{

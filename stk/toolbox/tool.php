@@ -104,19 +104,38 @@ class stk_toolbox_tool
 		}
 	}
 
+	private function runTool()
+	{
+		global $template, $user;
+
+		if ($this->tool->run() === true)
+		{
+			$template->assign_vars(array(
+				'L_TOOL_TITLE'		=> $user->lang(strtoupper($this->id . '_TITLE')),
+				'L_TOOL_SUCCESS'	=> $user->lang(strtoupper($this->id . '_SUCCESS')),
+			));
+
+			stk_includes_utilities::page_header('TOOL_SUCCESS');
+			stk_includes_utilities::page_footer('tool_success');
+		}
+		else
+		{
+			// Something went wrong
+		}
+	}
+
 	private function createStringOverview()
 	{
 		$displayHandler = new stk_toolbox_display_trigger($this);
 
 		if ($displayHandler->isConfirmed())
 		{
-			// Run the tool
+			$this->runTool();
 		}
 		else
 		{
 			$displayHandler->setNotice(strtoupper($this->id));
 			$displayHandler->display();
-//			stk_includes_utilities::confirm_box(false, strtoupper($this->id), '', 'tool_confirm.html', $this->getToolURL());
 		}
 	}
 
