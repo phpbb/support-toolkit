@@ -31,6 +31,13 @@ class stk_wrapper_user extends user
 		// Internally cache some data
 		static $lang_data	= array();
 		static $lang_dirs	= array();
+		static $loaded		= array();
+
+		// Only include a language file once
+		if (in_array($lang_file, $loaded))
+		{
+			return;
+		}
 
 		// Store current phpBB data
 		if (empty($lang_data))
@@ -84,6 +91,7 @@ class stk_wrapper_user extends user
 
 		// Add the file
 		parent::add_lang($lang_file, $use_db, $use_help, $ext_name);
+		$loaded[] = $lang_file;
 
 		// Now reset the paths so phpBB can continue to operate as usual
 		$this->lang_path = $lang_data['lang_path'];
