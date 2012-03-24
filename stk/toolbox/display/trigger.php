@@ -15,7 +15,7 @@ class stk_toolbox_display_trigger
 	private $notice;
 	private $tool;
 
-	public function __construct(stk_toolbox_tool $tool = null, $notice = '')
+	public function __construct(stk_toolbox_tool $tool, $notice = '')
 	{
 		$this->notice	= $notice;
 		$this->tool		= $tool;

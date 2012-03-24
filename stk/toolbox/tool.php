@@ -80,6 +80,9 @@ class stk_toolbox_tool
 	{
 		global $template, $user;
 
+		// Make sure the language file is loaded
+		$this->loadToolLanguageFile();
+
 		// Show some normal information, tool title and description
 		$template->assign_vars(array(
 			'L_TOOL_TITLE'			=> $user->lang(strtoupper($this->id . '_TITLE')),
