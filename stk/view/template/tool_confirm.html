@@ -3,14 +3,17 @@
 <form id="confirm" method="post" action="{S_CONFIRM_ACTION}">
 
 <fieldset>
-	<h1>{MESSAGE_TITLE}</h1>
-	<p>{MESSAGE_TEXT}</p>
+	<h1>{L_TOOL_TITLE}</h1>
+	<p>{L_TOOL_DESCRIPTION}</p>
+</fieldset>
 
-	{S_HIDDEN_FIELDS}
+<fieldset>
+	<p>{MESSAGE_TEXT}</p>
 
 	<div style="text-align: center;">
 		<input type="submit" name="confirm" value="{L_YES}" class="button2" />&nbsp;
 		<input type="submit" name="cancel" value="{L_NO}" class="button2" />
+		{S_HIDDEN_FIELDS}
 	</div>
 
 </fieldset>

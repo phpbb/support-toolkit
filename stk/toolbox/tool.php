@@ -87,7 +87,13 @@ class stk_toolbox_tool
 
 	public function createOverview()
 	{
-		global $template;
+		global $template, $user;
+
+		// Show some normal information, tool title and description
+		$template->assign_vars(array(
+			'L_TOOL_TITLE'			=> $user->lang(strtoupper($this->id . '_TITLE')),
+			'L_TOOL_DESCRIPTION'	=> $user->lang(strtoupper($this->id . '_DESCRIPTION')),
+		));
 
 		$options = $this->tool->displayOptions();
 
@@ -98,21 +104,25 @@ class stk_toolbox_tool
 		}
 
 		// Various options
-		if (is_string($options))
+		if ($options === TOOL_OVERVIEW_TRIGGER)
 		{
-			$this->createStringOverview($options);
+			$this->createStringOverview();
 		}
 	}
 
-	private function createStringOverview($options)
+	private function createStringOverview()
 	{
-		if (stk_includes_utilities::confirm_box(true))
+		$displayHandler = new stk_toolbox_display_trigger($this);
+
+		if ($displayHandler->isConfirmed())
 		{
 			// Run the tool
 		}
 		else
 		{
-			stk_includes_utilities::confirm_box(false, $options, '', 'confirm_body.html', $this->getToolURL());
+			$displayHandler->setNotice(strtoupper($this->id));
+			$displayHandler->display();
+//			stk_includes_utilities::confirm_box(false, strtoupper($this->id), '', 'tool_confirm.html', $this->getToolURL());
 		}
 	}
 

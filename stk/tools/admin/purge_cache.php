@@ -9,5 +9,8 @@
 
 class stktool_admin_purge_cache extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		return TOOL_OVERVIEW_TRIGGER;
+	}
 }

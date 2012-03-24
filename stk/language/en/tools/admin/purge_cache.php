@@ -39,4 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 $lang = array_merge($lang, array(
 	'TOOL_ADMIN_PURGE_CACHE'	=> 'Purge cache',
+
+	'PURGE_CACHE_CONFIRM'		=> 'Are you sure that you want to purge the board’s cache?',
+	'PURGE_CACHE_TITLE'			=> 'Purge cache',
+	'PURGE_CACHE_DESCRIPTION'	=> 'This tool allows you to purge the board’s cache. When ran any cached information will be removed.'
 ));

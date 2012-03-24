@@ -107,7 +107,7 @@ abstract class stk_includes_utilities
 	 *
 	 * @author phpBB group
 	 */
-	function confirm_box($check, $title = '', $hidden = '', $html_body = 'confirm_body.html', $u_action = '')
+	static public function confirm_box($check, $title = '', $hidden = '', $html_body = 'confirm_body.html', $u_action = '')
 	{
 		global $user, $template, $db, $request;
 
