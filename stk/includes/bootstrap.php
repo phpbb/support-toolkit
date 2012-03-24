@@ -18,10 +18,10 @@ if (!defined('IN_PHPBB')) define('IN_PHPBB', true);
 define('NEED_SID', true);
 
 // Setup the class loaders
-require PHPBB_FILES . 'includes/class_loader.php';
-$stk_class_loader = new phpbb_class_loader('stk_', STK_ROOT, '.php');
+require STK_ROOT . 'core/class_loader.php';
+$stk_class_loader = new stk_core_class_loader('stk_', STK_ROOT, '.php');
 $stk_class_loader->register();
-$phpbb_class_loader = new phpbb_class_loader('phpbb_', PHPBB_FILES . 'includes/', '.php');
+$phpbb_class_loader = new stk_core_class_loader('phpbb_', PHPBB_FILES . 'includes/', '.php');
 $phpbb_class_loader->register();
 
 // Include our own configuration data

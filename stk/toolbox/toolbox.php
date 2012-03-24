@@ -18,7 +18,7 @@ class stk_toolbox
 		$this->toolsPath	= $toolsPath;
 
 		// Bind a toolbox specific classloader
-		$toolbox_class_loader = new phpbb_class_loader('stktool_', $this->toolsPath->getPathname() . '/');
+		$toolbox_class_loader = new stk_core_class_loader('stktool_', $this->toolsPath->getPathname() . '/');
 		$toolbox_class_loader->register();
 	}
 
