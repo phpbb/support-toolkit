@@ -44,4 +44,20 @@ class toolbox_categories_test extends stk_test_case
 		$this->assertEquals($expected, $cat->getTool('foobar'));
 		$this->assertNull($cat->getTool('notdefined'));
 	}
+
+	public function test_serialize()
+	{
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$serialized = serialize($cat);
+		$this->assertEquals($cat, unserialize($serialized));
+	}
+
+	public function test_serializeToolsLoaded()
+	{
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat->loadTools();
+
+		$serialized = serialize($cat);
+		$this->assertEquals($cat, unserialize($serialized));
+	}
 }

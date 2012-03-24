@@ -9,11 +9,13 @@
 
 class stk_toolbox
 {
+	private $cache;
 	private $categories;
 	private $toolsPath;
 
-	public function __construct(SplFileInfo $toolsPath)
+	public function __construct(SplFileInfo $toolsPath, phpbb_cache_service $cache = null)
 	{
+		$this->cache		= $cache;
 		$this->categories	= array();
 		$this->toolsPath	= $toolsPath;
 
@@ -24,19 +26,27 @@ class stk_toolbox
 
 	public function loadToolboxCategories()
 	{
-		$it = new DirectoryIterator($this->toolsPath->getPathname());
-		foreach ($it as $dir)
+		if (is_null($this->cache) || false === ($this->categories = $this->cache->get_driver()->get('_categories')))
 		{
-			// Skip what we don't need
-			if ($dir->isDot() || !$dir->isDir())
+			$it = new DirectoryIterator($this->toolsPath->getPathname());
+			foreach ($it as $dir)
 			{
-				continue;
+				// Skip what we don't need
+				if ($dir->isDot() || !$dir->isDir())
+				{
+					continue;
+				}
+
+				$this->categories[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()), $this->cache);
 			}
 
-			$this->categories[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()));
-		}
+			uksort($this->categories, array($this, 'categorysSort'));
 
-		uksort($this->categories, array($this, 'categorysSort'));
+			if (!is_null($this->cache))
+			{
+				$this->cache->get_driver()->put('_categories', $this->categories);
+			}
+		}
 	}
 
 	public function categorysSort($a, $b)
@@ -117,6 +127,11 @@ class stk_toolbox
 
 	public function getToolboxCategories()
 	{
+		if (empty($this->categories))
+		{
+			$this->categories = $this->loadToolboxCategories();
+		}
+
 		return $this->categories;
 	}
 

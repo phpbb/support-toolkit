@@ -13,50 +13,56 @@
  * The category object represents a support toolkit category and contains
  * all tools and their information that belong to this category.
  */
-class stk_toolbox_category
+class stk_toolbox_category implements Serializable
 {
 	private $active;
+	private $cache;
 	private $name;
 	private $path;
 	private $toolList;
 
-	public function __construct(SplFileInfo $path)
+	public function __construct(SplFileInfo $path, phpbb_cache_service $cache = null)
 	{
 		global $user;
 
 		$this->active	= false;
+		$this->cache	= $cache;
 		$this->name		= $path->getBasename();
 		$this->path		= $path;
 		$this->toolList	= array();
 
-		// @todo, better way to handle test compatibility
-		if ($user instanceof user)
-		{
-			$user->stk_add_lang("categories/{$this->name}");
-		}
+		$this->loadCategoryLanguageFile();
 	}
 
 	public function loadTools()
 	{
-		$it = new DirectoryIterator($this->path->getPathname());
-		foreach ($it as $file)
+		if (is_null($this->cache) || false === ($this->toolList = $this->cache->get_driver()->get('_toollist_' . $this->name)))
 		{
-			// Skip any directory
-			if ($file->isDir())
+			$it = new DirectoryIterator($this->path->getPathname());
+			foreach ($it as $file)
 			{
-				continue;
+				// Skip any directory
+				if ($file->isDir())
+				{
+					continue;
+				}
+
+				// A string is returned when an tool isn't loadable. For the category
+				// listing we simply skip those cases
+				$tool = stk_toolbox_tool::createTool($file->getFileInfo());
+				if (false === is_string($tool))
+				{
+					$this->toolList[$tool->getID()] = $tool;
+				}
 			}
 
-			// A string is returned when an tool isn't loadable. For the category
-			// listing we simply skip those cases
-			$tool = stk_toolbox_tool::createTool($file->getFileInfo());
-			if (false === is_string($tool))
+			ksort($this->toolList);
+
+			if (!is_null($this->cache))
 			{
-				$this->toolList[$tool->getID()] = $tool;
+				$this->cache->get_driver()->put('_toollist_' . $this->name, $this->toolList);
 			}
 		}
-
-		ksort($this->toolList);
 	}
 
 	public function createOverview()
@@ -70,6 +76,16 @@ class stk_toolbox_category
 
 		stk_includes_utilities::page_header();
 		stk_includes_utilities::page_footer('category_overview.html');
+	}
+
+	public function loadCategoryLanguageFile()
+	{
+		// @todo, better way to handle test compatibility
+		global $user;
+		if ($user instanceof user)
+		{
+			$user->stk_add_lang("categories/{$this->name}");
+		}
 	}
 
 	public function isActive()
@@ -107,5 +123,29 @@ class stk_toolbox_category
 	public function getTool($toolName)
 	{
 		return (!empty($this->toolList[$toolName])) ? $this->toolList[$toolName] : null;
+	}
+
+	public function serialize()
+	{
+		$data = array(
+			'active'	=> $this->active,
+			'name'		=> $this->name,
+			// Needed as `SplFileInfo` can't be serialized
+			'path'		=> $this->path->getPathname(),
+			'toolList'	=> $this->toolList,
+		);
+		return serialize($data);
+	}
+
+	public function unserialize($serialized)
+	{
+		$data = unserialize($serialized);
+
+		$this->active	= $data['active'];
+		$this->name		= $data['name'];
+		$this->path		= new SplFileInfo($data['path']);
+		$this->toolList	= $data['toolList'];
+
+		$this->loadCategoryLanguageFile();
 	}
 }

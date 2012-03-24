@@ -107,4 +107,4 @@ require STK_ROOT . 'includes/constants.php';
 $vc = stk_core_version_controller::getInstance('https://raw.github.com/gist/2039820/stk_version_check.json', $stk_cache);
 
 // Initialise the toolkit
-$toolbox = new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools/'));
+$toolbox = new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools/'), $stk_cache);
