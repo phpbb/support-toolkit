@@ -32,6 +32,24 @@ class stk_wrapper_template extends phpbb_template
 	}
 
 	/**
+	 * Set custom template location (able to use directory outside of phpBB).
+	 *
+	 * Note: Templates are compiled into the STK cache directory.
+	 *
+	 * @param string $template_path Path to template directory
+	 * @param string $template_name Name of template
+	 * @param string $fallback_template_path Path to fallback template
+	 * @param string $fallback_template_name Name of fallback template
+	 */
+	public function set_custom_template($template_path, $template_name, $fallback_template_path = false, $fallback_template_name = false)
+	{
+		parent::set_custom_template($template_path, $template_name, $fallback_template_path, $fallback_template_name);
+
+		// Change the template cache path to our own
+		$this->cachepath = STK_ROOT . 'cache/tpl_';
+	}
+
+	/**
 	 * Add a notice box
 	 *
 	 * @param type $noticeTitle
