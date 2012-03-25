@@ -61,10 +61,21 @@ $db->sql_connect($dbhost, $dbuser, $dbpasswd, $dbname, $dbport, false, defined('
 unset($dbpasswd);
 
 // set up caching
-// The support toolkit doesn't cache any phpBB related information!
-// Although a second cacheing object is used to cache STK related information
+// The Support Toolkit initialises three cache objects
+// 1) `$cache`
+//		The cache object that is passed to phpBB code, this cache object
+//		is hard coded to use the "null" cache driver
+// 2) `$phpbb_cache`
+//		Cache object that uses the cache driver as defined in `config.php`
+//		this object is used when the Support Toolkit needs to interact with
+//		the board's cache
+// 3) `$stk_cache`
+//		Cache object that is used when the Support Toolkit needs to cache
+//		information. This object uses slightly changed cache drivers/services
 $cache_factory = new phpbb_cache_factory('null');
 $cache = $cache_factory->get_service();
+$phpbb_cache_factory = new phpbb_cache_factory($acm_type);
+$phpbb_cache = $phpbb_cache_factory->get_service();
 $stk_cache_factory = new stk_wrapper_cache_factory('file');
 $stk_cache = $stk_cache_factory->get_service();
 
