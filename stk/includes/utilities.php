@@ -12,14 +12,26 @@
  *
  * Class containing some utility methods
  */
-abstract class stk_includes_utilities
+class stk_includes_utilities
 {
+	private $db;
+	private $template;
+	private $toolbox;
+	private $user;
+
+	public function __construct(Pimple $stk)
+	{
+		$this->db		= $stk['phpbb']['db'];
+		$this->template	= $stk['phpbb']['template'];
+		$this->toolbox	= $stk['toolbox'];
+		$this->user		= $stk['phpbb']['user'];
+	}
+
 	/**
 	 * Replacement for the phpBB page header function
 	 */
-	static public function page_header($page_title = '')
+	public function page_header($page_title = '')
 	{
-		global $template, $toolbox, $user;
 		global $SID, $_SID;
 
 		if (defined('HEADER_INC'))
@@ -29,24 +41,24 @@ abstract class stk_includes_utilities
 
 		define('HEADER_INC', true);
 
-		$template->assign_vars(array(
-			'PAGE_TITLE'			=> $user->lang($page_title),
-			'USERNAME'				=> $user->data['username'],
+		$this->template->assign_vars(array(
+			'PAGE_TITLE'			=> $this->user->lang($page_title),
+			'USERNAME'				=> $this->user->data['username'],
 
 			'SID'					=> $SID,
 			'_SID'					=> $_SID,
-			'SESSION_ID'			=> $user->session_id,
+			'SESSION_ID'			=> $this->user->session_id,
 			'ROOT_PATH'				=> STK_WEB_PATH,
 
-			'S_USER_LANG'			=> $user->lang['USER_LANG'],
-			'S_CONTENT_DIRECTION'	=> $user->lang['DIRECTION'],
+			'S_USER_LANG'			=> $this->user->lang['USER_LANG'],
+			'S_CONTENT_DIRECTION'	=> $this->user->lang['DIRECTION'],
 			'S_CONTENT_ENCODING'	=> 'UTF-8',
-			'S_CONTENT_FLOW_BEGIN'	=> ($user->lang['DIRECTION'] == 'ltr') ? 'left' : 'right',
-			'S_CONTENT_FLOW_END'	=> ($user->lang['DIRECTION'] == 'ltr') ? 'right' : 'left',
+			'S_CONTENT_FLOW_BEGIN'	=> ($this->user->lang['DIRECTION'] == 'ltr') ? 'left' : 'right',
+			'S_CONTENT_FLOW_END'	=> ($this->user->lang['DIRECTION'] == 'ltr') ? 'right' : 'left',
 		));
 
 		// Assign the categories to the template
-		$template->assignNavigation($toolbox);
+		$this->template->assignNavigation($this->toolbox);
 
 		// application/xhtml+xml not used because of IE
 		header('Content-type: text/html; charset=UTF-8');
@@ -61,15 +73,14 @@ abstract class stk_includes_utilities
 	/**
 	 * Replacement for the phpBB page footer function
 	 */
-	static public function page_footer($tpl_file)
+	public function page_footer($tpl_file)
 	{
-		global $db, $template;
 		global $starttime;
 
 		$mtime = microtime(true);
 		$totaltime = $mtime - $starttime;
 
-		$debug_output = sprintf('Time : %.3fs | ' . $db->sql_num_queries() . ' Queries | GZIP : ' . (($config['gzip_compress']) ? 'On' : 'Off') . (($user->load) ? ' | Load : ' . $user->load : ''), $totaltime);
+		$debug_output = sprintf('Time : %.3fs | ' . $this->db->sql_num_queries() . ' Queries | ' . (($this->user->load) ? ' | Load : ' . $this->user->load : ''), $totaltime);
 
 		if (function_exists('memory_get_peak_usage'))
 		{
@@ -78,17 +89,17 @@ abstract class stk_includes_utilities
 			$debug_output .= ' | Peak Memory Usage: ' . $memory_usage;
 		}
 
-		$template->assign_vars(array(
+		$this->template->assign_vars(array(
 			'DEBUG_OUTPUT'		=> $debug_output,
-			'TRANSLATION_INFO'	=> (!empty($user->lang['TRANSLATION_INFO'])) ? $user->lang['TRANSLATION_INFO'] : '',
+			'TRANSLATION_INFO'	=> (!empty($this->user->lang['TRANSLATION_INFO'])) ? $this->user->lang['TRANSLATION_INFO'] : '',
 			'T_JQUERY_LINK'		=> PHPBB_FILES . "assets/javascript/jquery.js",
 		));
 
-		$template->set_filenames(array(
+		$this->template->set_filenames(array(
 			'body' => basename($tpl_file, '.html') . '.html',
 		));
 
-		$template->display('body');
+		$this->template->display('body');
 
 		garbage_collection();
 		exit_handler();
@@ -107,7 +118,7 @@ abstract class stk_includes_utilities
 	 *
 	 * @author phpBB group
 	 */
-	static public function confirm_box($check, $title = '', $hidden = '', $html_body = 'confirm_body.html', $u_action = '')
+	public function confirm_box($check, $title = '', $hidden = '', $html_body = 'confirm_body.html', $u_action = '')
 	{
 		global $user, $template, $db, $request;
 

@@ -181,6 +181,16 @@ $stk['vc'] = $stk->share(function($stk) {
 	return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check.json', $stk['cache']['stk']);
 });
 
+// The STK toolbox
+$stk['toolbox'] = $stk->share(function($stk) {
+	return new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools'), $stk['cache']['stk'], $stk['vc']);
+});
+
+// Utilities
+$stk['utilities'] = $stk->share(function($stk) {
+	return new stk_includes_utilities($stk);
+});
+
 // Setup user
 $stk['phpbb']['user']->session_begin(false);
 $stk['phpbb']['user']->setup(array('acp/common'));

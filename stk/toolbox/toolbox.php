@@ -9,17 +9,15 @@
 
 class stk_toolbox
 {
-	private $cache;
 	private $categories;
+	private $stk;
 	private $toolsPath;
-	private $vc;
 
-	public function __construct(SplFileInfo $toolsPath, phpbb_cache_service $cache, stk_core_version_controller $vc)
+	public function __construct(SplFileInfo $toolsPath, Pimple $stk)
 	{
-		$this->cache		= $cache;
 		$this->categories	= array();
+		$this->stk			= $stk;
 		$this->toolsPath	= $toolsPath;
-		$this->vc			= $vc;
 
 		// Bind a toolbox specific classloader
 		$toolbox_class_loader = new stk_core_class_loader('stktool_', $this->toolsPath->getPathname() . '/');
@@ -28,13 +26,12 @@ class stk_toolbox
 
 	public function loadToolboxCategories()
 	{
-		$this->categories = $this->cache->obtainSTKCategories($this->toolsPath);
+		$this->categories = $this->stk['cache']['stk']->obtainSTKCategories($this->toolsPath);
 		uksort($this->categories, array($this, 'categorysSort'));
 
 		foreach ($this->categories as $category)
 		{
-			$category->setCache($this->cache);
-			$category->setVersionController($this->vc);
+			$category->setDependencies($this->stk);
 		}
 	}
 

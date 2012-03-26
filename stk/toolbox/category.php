@@ -22,12 +22,17 @@ class stk_toolbox_category implements Serializable
 	private $toolList;
 	private $vc;
 
-	public function __construct(SplFileInfo $path)
+	public function __construct(SplFileInfo $path, Pimple $stk = null)
 	{
 		$this->active	= false;
 		$this->name		= $path->getBasename();
 		$this->path		= $path;
 		$this->toolList	= array();
+
+		if (!is_null($stk))
+		{
+			$this->setDependencies($stk);
+		}
 
 		$this->loadCategoryLanguageFile();
 	}
@@ -110,14 +115,10 @@ class stk_toolbox_category implements Serializable
 		return (!empty($this->toolList[$toolName])) ? $this->toolList[$toolName] : null;
 	}
 
-	public function setCache(phpbb_cache_service $cache)
+	public function setDependencies(Pimple $stk)
 	{
-		$this->cache = $cache;
-	}
-
-	public function setVersionController(stk_core_version_controller $vc)
-	{
-		$this->vc = $vc;
+		$this->cache	= $stk['cache']['stk'];
+		$this->vc		= $stk['vc'];
 	}
 
 	public function serialize()
