@@ -11,14 +11,15 @@ class toolbox_test extends stk_test_case
 {
 	private $cache;
 	private $path;
+	private $vc;
 
 	protected function setUp()
 	{
-		global $stk_cache;
+		$cache_factory	= new stk_wrapper_cache_factory('null');
+		$this->cache	= $cache_factory->get_service();
+		$this->vc		= new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $this->cache);
 
-		$this->cache	= $stk_cache;
 		$this->path		= __DIR__ . '/tools/';
-		stk_core_version_controller::getInstance();
 	}
 
 	public function test_loadToolboxCategories()

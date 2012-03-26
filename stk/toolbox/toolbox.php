@@ -26,7 +26,8 @@ class stk_toolbox
 
 	public function loadToolboxCategories()
 	{
-		$this->categories = $this->cache->obtainSTKCategories($this->toolsPath, $this);
+		$this->categories = $this->cache->obtainSTKCategories($this->toolsPath);
+		uksort($this->categories, array($this, 'categorysSort'));
 	}
 
 	public function categorysSort($a, $b)

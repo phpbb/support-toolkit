@@ -20,6 +20,7 @@ class stk_toolbox_tool
 	private $id;
 	private $outdated;
 	private $tool;
+	private $vc;
 
 	/**
 	 * Initialise tool object
@@ -31,16 +32,21 @@ class stk_toolbox_tool
 	 *
 	 * @param SplFileInfo $path Path to the tool file, the correct class name is
 	 *                          determined from here
+	 * @param stk_core_version_controller $vc
 	 * @return string|\static The `stk_toolbox_tool` object or a string when an
 	 *                        error occured.
 	 */
-	static public function createTool(SplFileInfo $path)
+	public function __construct(SplFileInfo $path)
 	{
-		// Determine the class name
-		$category	= substr(strrchr($path->getPath(), '/'), 1);
-		$file		= $path->getBasename('.php');
-		$className	= "stktool_{$category}_{$file}";
+		$this->active	= false;
+		$this->category	= substr(strrchr($path->getPath(), '/'), 1);
+		$this->id		= $path->getBasename('.php');
 
+	}
+
+	public function validateAndLoad()
+	{
+		$className	= "stktool_{$this->category}_{$this->id}";
 		// Test whether the class name is correctly formatted
 		if (!preg_match('#^stktool_[a-zA-Z]+_[a-zA-Z_]+$#', $className))
 		{
@@ -56,24 +62,13 @@ class stk_toolbox_tool
 		}
 
 		// Tool version check
-		$vc = stk_core_version_controller::getInstance();
-		$vcr = $vc->testToolVersion($category, $file);
+		$vcr = $this->vc->testToolVersion($this->category, $this->id);
 		if ($vcr == stk_core_version_controller::VERSION_BLOCKING || $vcr == stk_core_version_controller::VERSION_DISABLED)
 		{
 			return ($vcr == stk_core_version_controller::VERSION_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'VERSION_DISABLED';
 		}
-		$outdated = ($vcr != stk_core_version_controller::VERSION_OK) ? true : false;
-
-		return new static($rc->newInstanceArgs(), $category, $file, $outdated);
-	}
-
-	final private function __construct(stk_toolbox_toolInterface $tool, $categoryName = '', $toolName = '', $outdated = false)
-	{
-		$this->active	= false;
-		$this->category	= $categoryName;
-		$this->id		= $toolName;
-		$this->outdated	= $outdated;
-		$this->tool		= $tool;
+		$this->outdated	= ($vcr != stk_core_version_controller::VERSION_OK) ? true : false;
+		$this->tool		= $rc->newInstanceArgs();
 	}
 
 	public function createOverview()
@@ -177,5 +172,10 @@ class stk_toolbox_tool
 		$params['t'] = $this->id;
 
 		return append_sid(STK_WEB_PATH . '/index.php', $params);
+	}
+
+	public function setVersionController(stk_core_version_controller $vc)
+	{
+		$this->vc = $vc;
 	}
 }

@@ -22,7 +22,7 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 	 * @param SplFileInfo $path
 	 * @return \stk_toolbox_category
 	 */
-	public function obtainSTKCategories(SplFileInfo $path, stk_toolbox $toolbox)
+	public function obtainSTKCategories(SplFileInfo $path)
 	{
 		if (false === ($categorylist = $this->get('_STKCategories')))
 		{
@@ -35,10 +35,10 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 					continue;
 				}
 
-				$categorylist[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()), $this);
+				$category = new stk_toolbox_category(new SplFileInfo($dir->getPathname()));
+				$category->setCache($this);
+				$categorylist[$dir->getBasename()] = $category;
 			}
-
-			uksort($categorylist, array($toolbox, 'categorysSort'));
 
 			$this->get_driver()->put('_STKCategories', $categorylist);
 		}
@@ -71,7 +71,7 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 
 				// A string is returned when an tool isn't loadable. For the category
 				// listing we simply skip those cases
-				$tool = stk_toolbox_tool::createTool($file->getFileInfo());
+				$tool = new stk_toolbox_tool($file->getFileInfo());
 				if (false === is_string($tool))
 				{
 					$toollist[$tool->getID()] = $tool;

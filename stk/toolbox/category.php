@@ -21,10 +21,9 @@ class stk_toolbox_category implements Serializable
 	private $path;
 	private $toolList;
 
-	public function __construct(SplFileInfo $path, phpbb_cache_service $cache)
+	public function __construct(SplFileInfo $path)
 	{
 		$this->active	= false;
-		$this->cache	= $cache;
 		$this->name		= $path->getBasename();
 		$this->path		= $path;
 		$this->toolList	= array();
@@ -97,6 +96,11 @@ class stk_toolbox_category implements Serializable
 		return (!empty($this->toolList[$toolName])) ? $this->toolList[$toolName] : null;
 	}
 
+	public function setCache(phpbb_cache_service $cache)
+	{
+		$this->cache = $cache;
+	}
+
 	public function serialize()
 	{
 		$data = array(
@@ -117,10 +121,5 @@ class stk_toolbox_category implements Serializable
 		$this->name		= $data['name'];
 		$this->path		= new SplFileInfo($data['path']);
 		$this->toolList	= $data['toolList'];
-
-		$this->loadCategoryLanguageFile();
-
-		global $stk_cache;
-		$this->cache = $stk_cache;
 	}
 }
