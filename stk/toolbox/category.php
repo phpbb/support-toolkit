@@ -20,6 +20,7 @@ class stk_toolbox_category implements Serializable
 	private $name;
 	private $path;
 	private $toolList;
+	private $vc;
 
 	public function __construct(SplFileInfo $path)
 	{
@@ -33,7 +34,20 @@ class stk_toolbox_category implements Serializable
 
 	public function loadTools()
 	{
+		// Get all tools
 		$this->toolList = $this->cache->obtainSTKCategoryTools($this->path);
+
+		// Load the tools
+		foreach ($this->toolList as $key => $tool)
+		{
+			$tool->setVersionController($this->vc);
+			if (false === ($tool->validateAndLoad()))
+			{
+				unset($this->toolList[$key]);
+			}
+		}
+
+		ksort($this->toolList);
 	}
 
 	public function createOverview()
@@ -99,6 +113,11 @@ class stk_toolbox_category implements Serializable
 	public function setCache(phpbb_cache_service $cache)
 	{
 		$this->cache = $cache;
+	}
+
+	public function setVersionController(stk_core_version_controller $vc)
+	{
+		$this->vc = $vc;
 	}
 
 	public function serialize()

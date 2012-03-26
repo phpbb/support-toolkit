@@ -38,4 +38,5 @@ notifications:
 branches:
   only:
     stk/ascraeus
+    task/Pimple
 

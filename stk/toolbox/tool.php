@@ -18,6 +18,7 @@ class stk_toolbox_tool
 	private $active;
 	private $category;
 	private $id;
+	private $loadError;
 	private $outdated;
 	private $tool;
 	private $vc;
@@ -38,10 +39,11 @@ class stk_toolbox_tool
 	 */
 	public function __construct(SplFileInfo $path)
 	{
-		$this->active	= false;
-		$this->category	= substr(strrchr($path->getPath(), '/'), 1);
-		$this->id		= $path->getBasename('.php');
-
+		$this->active		= false;
+		$this->category		= substr(strrchr($path->getPath(), '/'), 1);
+		$this->id			= $path->getBasename('.php');
+		$this->loadError	= '';
+		$this->outdated		= false;
 	}
 
 	public function validateAndLoad()
@@ -50,7 +52,8 @@ class stk_toolbox_tool
 		// Test whether the class name is correctly formatted
 		if (!preg_match('#^stktool_[a-zA-Z]+_[a-zA-Z_]+$#', $className))
 		{
-			return 'TOOL_CLASSNAME_WRONG_FORMAT';
+			$this->loadError = 'TOOL_CLASSNAME_WRONG_FORMAT';
+			return;
 		}
 
 		$rc = new ReflectionClass($className);
@@ -58,17 +61,21 @@ class stk_toolbox_tool
 		// Must implement the interface
 		if (false === ($rc->implementsInterface('stk_toolbox_toolInterface')))
 		{
-			return 'TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE';
+			$this->loadError = 'TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE';
+			return false;
 		}
 
 		// Tool version check
 		$vcr = $this->vc->testToolVersion($this->category, $this->id);
 		if ($vcr == stk_core_version_controller::VERSION_BLOCKING || $vcr == stk_core_version_controller::VERSION_DISABLED)
 		{
-			return ($vcr == stk_core_version_controller::VERSION_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'VERSION_DISABLED';
+			$this->loadError = ($vcr == stk_core_version_controller::VERSION_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'VERSION_DISABLED';
+			return false;
 		}
 		$this->outdated	= ($vcr != stk_core_version_controller::VERSION_OK) ? true : false;
 		$this->tool		= $rc->newInstanceArgs();
+
+		return true;
 	}
 
 	public function createOverview()
@@ -153,6 +160,11 @@ class stk_toolbox_tool
 	public function getID()
 	{
 		return $this->id;
+	}
+
+	public function getLoadError()
+	{
+		return $this->loadError;
 	}
 
 	public function getToolLanguageString()

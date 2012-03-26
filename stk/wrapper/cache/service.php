@@ -36,11 +36,10 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 				}
 
 				$category = new stk_toolbox_category(new SplFileInfo($dir->getPathname()));
-				$category->setCache($this);
 				$categorylist[$dir->getBasename()] = $category;
 			}
 
-			$this->get_driver()->put('_STKCategories', $categorylist);
+			$this->put('_STKCategories', $categorylist);
 		}
 
 		return $categorylist;
@@ -78,9 +77,7 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 				}
 			}
 
-			ksort($toollist);
-
-			$this->get_driver()->put('_STKCategoryTools' . ucfirst($path->getFilename()), $toollist);
+			$this->put('_STKCategoryTools' . ucfirst($path->getFilename()), $toollist);
 		}
 
 		return $toollist;

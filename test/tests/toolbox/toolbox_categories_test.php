@@ -11,14 +11,23 @@ class toolbox_categories_test extends stk_test_case
 {
 	private $cache;
 	private $path;
-	private $toolBox;
 
 	protected function setUp()
 	{
-		$cache_factory	= new stk_wrapper_cache_factory('null');
-		$this->cache	= $cache_factory->get_service();
-		$this->path		= __DIR__ . '/tools/foo/';
-		$this->toolBox	= new stk_toolbox(new SplFileInfo(__DIR__ . '/tools/'), $this->cache);
+		$this->path = __DIR__ . '/tools/';
+
+		$cacheFactory = new stk_wrapper_cache_factory('null');
+		$this->cache = $cacheFactory->get_service();
+
+		$this->stk = new Pimple();
+		$this->stk['vc'] = $this->stk->share(function() use ($cacheFactory) {
+			return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $cacheFactory->get_service());
+		});
+
+		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
+		$tool_class_loader->register();
+
+		$this->path .= 'foo/';
 	}
 
 	/**
@@ -38,30 +47,16 @@ class toolbox_categories_test extends stk_test_case
 	public function test_loadTools()
 	{
 		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat->setVersionController($this->stk['vc']);
 		$cat->setCache($this->cache);
 		$cat->loadTools();
 
 		$expected = new stk_toolbox_tool(new SplFileInfo($this->path . 'foobar.php'));
+		$expected->setVersionController($this->stk['vc']);
+		$expected->validateAndLoad();
 
 		$this->assertCount(2, $cat->getToolList());
 		$this->assertEquals($expected, $cat->getTool('foobar'));
 		$this->assertNull($cat->getTool('notdefined'));
-	}
-
-	public function test_serialize()
-	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
-		$serialized = serialize($cat);
-		$this->assertEquals($cat, unserialize($serialized));
-	}
-
-	public function test_serializeToolsLoaded()
-	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
-		$cat->setCache($this->cache);
-		$cat->loadTools();
-
-		$serialized = serialize($cat);
-		$this->assertEquals($cat, unserialize($serialized));
 	}
 }

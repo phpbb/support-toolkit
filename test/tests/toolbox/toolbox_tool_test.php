@@ -14,7 +14,7 @@ class toolbox_tool_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$this->path = __DIR__ . '/tools/';
+		$this->path = __DIR__ . '/tools/foo/';
 
 		$cacheFactory = new stk_wrapper_cache_factory('null');
 		$cache = $cacheFactory->get_service();
@@ -33,15 +33,19 @@ class toolbox_tool_test extends stk_test_case
 	public function test_incorrectly_formatted_class()
 	{
 		$tool	= new stk_toolbox_tool(new SplFileInfo($this->path . 'unvalid_t0kens.php'));
-		$status	= $tool->validateAndLoad();
-		$this->assertSame('TOOL_CLASSNAME_WRONG_FORMAT', $status);
+		$tool->setVersionController($this->stk['vc']);
+		$tool->validateAndLoad();
+		$error	= $tool->getLoadError();
+		$this->assertSame('TOOL_CLASSNAME_WRONG_FORMAT', $error);
 	}
 
 	public function test_interface_not_implemented()
 	{
 		$tool	= new stk_toolbox_tool(new SplFileInfo($this->path . 'nonInterfaceTool.php'));
-		$status	= $tool->validateAndLoad();
-		$this->assertSame('TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE', $status);
+		$tool->setVersionController($this->stk['vc']);
+		$tool->validateAndLoad();
+		$error	= $tool->getLoadError();
+		$this->assertSame('TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE', $error);
 	}
 
 	public function test_correct()
