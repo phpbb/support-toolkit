@@ -11,7 +11,6 @@ interface stk_toolbox_toolInterface
 {
 	const TOOL_VERSION = '2.0.0-dev';
 
-	public function getName();
 	public function displayOptions();
 	public function run();
 }

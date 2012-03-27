@@ -70,7 +70,7 @@ class stk_toolbox_tool implements Serializable
 			return false;
 		}
 		$this->outdated	= ($vcr != stk_core_version_controller::VERSION_OK) ? true : false;
-		$this->tool		= $rc->newInstanceArgs();
+		$this->tool		= $rc->newInstance($this->stk);
 
 		return true;
 	}

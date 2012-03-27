@@ -50,6 +50,6 @@ class toolbox_tool_test extends stk_test_case
 		$tool->setDIContainer($this->stk);
 		$tool->setPath(new SplFileInfo($this->path . 'foo_bar.php'));
 		$tool->validateAndLoad();
-		$this->assertEquals(new stktool_classformat_foo_bar(), $tool->getTool());
+		$this->assertEquals(new stktool_classformat_foo_bar($this->stk), $tool->getTool());
 	}
 }
