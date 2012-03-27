@@ -20,12 +20,21 @@ define('NEED_SID', true);
 // Setup the DI container
 require STK_ROOT . 'core/DI/Pimple.php';
 $stk = new Pimple();
-
-// Load and register the class loaders
-require STK_ROOT . 'core/class_loader.php';
+$stk['cache'] = $stk->share(function() {
+	return new Pimple();
+});
 $stk['class_loaders'] = $stk->share(function() {
 	return new Pimple();
 });
+$stk['phpbb'] = $stk->share(function() {
+	return new Pimple();
+});
+$stk['toolbox'] = $stk->share(function() {
+	return new Pimple();
+});
+
+// Load and register the class loaders
+require STK_ROOT . 'core/class_loader.php';
 $stk['class_loaders']['stk'] = $stk->share(function() {
 	return new stk_core_class_loader('stk_', STK_ROOT);
 });
@@ -34,12 +43,6 @@ $stk['class_loaders']['phpbb'] = $stk->share(function() {
 });
 $stk['class_loaders']['stk']->register();
 $stk['class_loaders']['phpbb']->register();
-
-
-// Container storing the phpBB core objects
-$stk['phpbb'] = $stk->share(function() {
-	return new Pimple();
-});
 
 // STK Configuration data
 $stk['config'] = $stk->share(function() {
@@ -93,9 +96,6 @@ require PHPBB_FILES . 'includes/utf/utf_tools.php';
 // 3) `$stk['cache']['stk']`
 //		Cache object that is used when the Support Toolkit needs to cache
 //		information. This object uses slightly changed cache drivers/services
-$stk['cache'] = $stk->share(function() {
-	return new Pimple();
-});
 $stk['cache']['phpbb'] = $stk->share(function() {
 	$cache_factory = new phpbb_cache_factory('null');
 	return $cache_factory->get_service();
@@ -181,9 +181,6 @@ $stk['vc'] = $stk->share(function($stk) {
 });
 
 // The STK toolbox
-$stk['toolbox'] = $stk->share(function() {
-	return new Pimple();
-});
 $stk['toolbox']['box'] = $stk->share(function() use ($stk) {
 	return new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools'), $stk);
 });
