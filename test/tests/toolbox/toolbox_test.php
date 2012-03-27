@@ -14,16 +14,7 @@ class toolbox_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$stk = new Pimple();
-		$stk['cache'] = $stk->share(function() { return new Pimple(); });
-		$stk['cache']['stk'] = $stk->share(function() {
-			$cacheFactory = new stk_wrapper_cache_factory('null');
-			return $cacheFactory->get_service();
-		});
-		$stk['vc'] = $stk->share(function($stk) {
-			return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $stk['cache']['stk']);
-		});
-		$this->stk = $stk;
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
 
 		$this->path		= __DIR__ . '/tools/';
 		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
@@ -35,7 +26,8 @@ class toolbox_test extends stk_test_case
 		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
 
-		$expected = new stk_toolbox_category(new SplFileInfo($this->path . 'foo'));
+		$expected = new stk_toolbox_category();
+		$expected->setPath(new SplFileInfo($this->path . 'foo'));
 		$expected->setDIContainer($this->stk);
 
 		$this->assertEquals($expected, $tb->getToolboxCategory('foo'));

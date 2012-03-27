@@ -40,7 +40,10 @@ require_once $phpbb_tests_path . 'test_framework/phpbb_test_case_helpers.php';
 require_once $phpbb_tests_path . 'test_framework/phpbb_test_case.php';
 require_once $phpbb_tests_path . 'test_framework/phpbb_database_test_case.php';
 require_once $phpbb_tests_path . 'test_framework/phpbb_database_test_connection_manager.php';
+require_once $phpbb_tests_path . 'mock_user.php';
 
+require_once __DIR__ . '/mock/user.php';
+require_once __DIR__ . '/test_framework/stk_test_case_helpers.php';
 require_once __DIR__ . '/test_framework/stk_database_test_case.php';
 require_once __DIR__ . '/test_framework/stk_database_test_connection_manager.php';
 require_once __DIR__ . '/test_framework/stk_test_case.php';

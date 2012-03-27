@@ -16,13 +16,7 @@ class toolbox_tool_test extends stk_test_case
 	{
 		$this->path = __DIR__ . '/tools/foo/';
 
-		$cacheFactory = new stk_wrapper_cache_factory('null');
-		$cache = $cacheFactory->get_service();
-
-		$this->stk = new Pimple();
-		$this->stk['vc'] = $this->stk->share(function() use ($cache) {
-			return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $cache);
-		});
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
 
 		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
 		$tool_class_loader->register();
@@ -32,8 +26,9 @@ class toolbox_tool_test extends stk_test_case
 
 	public function test_incorrectly_formatted_class()
 	{
-		$tool	= new stk_toolbox_tool(new SplFileInfo($this->path . 'unvalid_t0kens.php'));
-		$tool->setVersionController($this->stk['vc']);
+		$tool = new stk_toolbox_tool();
+		$tool->setDIContainer($this->stk);
+		$tool->setPath(new SplFileInfo($this->path . 'unvalid_t0kens.php'));
 		$tool->validateAndLoad();
 		$error	= $tool->getLoadError();
 		$this->assertSame('TOOL_CLASSNAME_WRONG_FORMAT', $error);
@@ -41,8 +36,9 @@ class toolbox_tool_test extends stk_test_case
 
 	public function test_interface_not_implemented()
 	{
-		$tool	= new stk_toolbox_tool(new SplFileInfo($this->path . 'nonInterfaceTool.php'));
-		$tool->setVersionController($this->stk['vc']);
+		$tool = new stk_toolbox_tool();
+		$tool->setDIContainer($this->stk);
+		$tool->setPath(new SplFileInfo($this->path . 'nonInterfaceTool.php'));
 		$tool->validateAndLoad();
 		$error	= $tool->getLoadError();
 		$this->assertSame('TOOL_CLASS_NOT_IMPLEMENTS_INTERFACE', $error);
@@ -50,8 +46,9 @@ class toolbox_tool_test extends stk_test_case
 
 	public function test_correct()
 	{
-		$tool = new stk_toolbox_tool(new SplFileInfo($this->path . 'foo_bar.php'));
-		$tool->setVersionController($this->stk['vc']);
+		$tool = new stk_toolbox_tool();
+		$tool->setDIContainer($this->stk);
+		$tool->setPath(new SplFileInfo($this->path . 'foo_bar.php'));
 		$tool->validateAndLoad();
 		$this->assertEquals(new stktool_classformat_foo_bar(), $tool->getTool());
 	}

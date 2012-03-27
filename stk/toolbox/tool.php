@@ -13,15 +13,15 @@
  * An wrapper for STK tools, provides various common methods and holds the
  * actual tool object.
  */
-class stk_toolbox_tool
+class stk_toolbox_tool implements Serializable
 {
 	private $active;
 	private $category;
 	private $id;
 	private $loadError;
 	private $outdated;
+	private $stk;
 	private $tool;
-	private $vc;
 
 	/**
 	 * Initialise tool object
@@ -31,19 +31,16 @@ class stk_toolbox_tool
 	 * some initial validation on the tool and returns the `stk_toolbox_tool`
 	 * object for the requested tool
 	 *
-	 * @param SplFileInfo $path Path to the tool file, the correct class name is
-	 *                          determined from here
 	 * @param stk_core_version_controller $vc
 	 * @return string|\static The `stk_toolbox_tool` object or a string when an
 	 *                        error occured.
 	 */
-	public function __construct(SplFileInfo $path)
+	public function __construct(Pimple $stk = null)
 	{
 		$this->active		= false;
-		$this->category		= substr(strrchr($path->getPath(), '/'), 1);
-		$this->id			= $path->getBasename('.php');
 		$this->loadError	= '';
 		$this->outdated		= false;
+		$this->stk			= $stk;
 	}
 
 	public function validateAndLoad()
@@ -66,7 +63,7 @@ class stk_toolbox_tool
 		}
 
 		// Tool version check
-		$vcr = $this->vc->testToolVersion($this->category, $this->id);
+		$vcr = $this->stk['vc']->testToolVersion($this->category, $this->id);
 		if ($vcr == stk_core_version_controller::VERSION_BLOCKING || $vcr == stk_core_version_controller::VERSION_DISABLED)
 		{
 			$this->loadError = ($vcr == stk_core_version_controller::VERSION_BLOCKING) ? 'TOOL_VERSION_BLOCKED' : 'VERSION_DISABLED';
@@ -80,15 +77,13 @@ class stk_toolbox_tool
 
 	public function createOverview()
 	{
-		global $template, $user;
-
 		// Make sure the language file is loaded
 		$this->loadToolLanguageFile();
 
 		// Show some normal information, tool title and description
-		$template->assign_vars(array(
-			'L_TOOL_TITLE'			=> $user->lang(strtoupper($this->id . '_TITLE')),
-			'L_TOOL_DESCRIPTION'	=> $user->lang(strtoupper($this->id . '_DESCRIPTION')),
+		$this->stk['phpbb']['template']->assign_vars(array(
+			'L_TOOL_TITLE'			=> $this->stk['phpbb']['user']->lang(strtoupper($this->id . '_TITLE')),
+			'L_TOOL_DESCRIPTION'	=> $this->stk['phpbb']['user']->lang(strtoupper($this->id . '_DESCRIPTION')),
 		));
 
 		$options = $this->tool->displayOptions();
@@ -96,7 +91,7 @@ class stk_toolbox_tool
 		// Show outdated notice
 		if ($this->outdated)
 		{
-			$template->addNotice('TOOL_OUTDATED_TITLE', 'TOOL_OUTDATED_DESCRIPTION');
+			$this->stk['phpbb']['template']->addNotice('TOOL_OUTDATED_TITLE', 'TOOL_OUTDATED_DESCRIPTION');
 		}
 
 		// Various options
@@ -108,17 +103,15 @@ class stk_toolbox_tool
 
 	private function runTool()
 	{
-		global $template, $user;
-
 		if ($this->tool->run() === true)
 		{
-			$template->assign_vars(array(
-				'L_TOOL_TITLE'		=> $user->lang(strtoupper($this->id . '_TITLE')),
-				'L_TOOL_SUCCESS'	=> $user->lang(strtoupper($this->id . '_SUCCESS')),
+			$this->stk['phpbb']['template']->assign_vars(array(
+				'L_TOOL_TITLE'		=> $this->stk['phpbb']['user']->lang(strtoupper($this->id . '_TITLE')),
+				'L_TOOL_SUCCESS'	=> $this->stk['phpbb']['user']->lang(strtoupper($this->id . '_SUCCESS')),
 			));
 
-			stk_includes_utilities::page_header('TOOL_SUCCESS');
-			stk_includes_utilities::page_footer('tool_success');
+			$this->stk['utilities']->page_header('TOOL_SUCCESS');
+			$this->stk['utilities']->page_footer('tool_success');
 		}
 		else
 		{
@@ -143,8 +136,7 @@ class stk_toolbox_tool
 
 	public function loadToolLanguageFile()
 	{
-		global $user;
-		$user->stk_add_lang("tools/{$this->category}/{$this->id}");
+		$this->stk['phpbb']['user']->stk_add_lang("tools/{$this->category}/{$this->id}");
 	}
 
 	public function isActive()
@@ -186,8 +178,56 @@ class stk_toolbox_tool
 		return append_sid(STK_WEB_PATH . '/index.php', $params);
 	}
 
-	public function setVersionController(stk_core_version_controller $vc)
+	/*
+	 * Set the path to this tool file
+	 *
+	 * @param SplFileInfo $path Path to the tool file, the correct class name is
+	 *                          determined from here
+	 */
+	public function setPath(SplFileInfo $path)
 	{
-		$this->vc = $vc;
+		$this->category	= substr(strrchr($path->getPath(), '/'), 1);
+		$this->id		= $path->getBasename('.php');
+	}
+
+	public function setDIContainer(Pimple $stk)
+	{
+		$this->stk = $stk;
+	}
+
+	/**
+	 * Serialize this category for storage
+	 *
+	 * @return string
+	 */
+	public function serialize()
+	{
+		$data = array(
+			'active'	=> $this->active,
+			'category'	=> $this->category,
+			'id'		=> $this->id,
+			'loadError'	=> $this->loadError,
+			'outdated'	=> $this->outdated,
+			'tool'		=> $this->tool,
+		);
+
+		return serialize($data);
+	}
+
+	/**
+	 * Unserialize this catogry when retrieved from storage
+	 *
+	 * @param string $serialized
+	 */
+	public function unserialize($serialized)
+	{
+		$data = unserialize($serialized);
+
+		$this->active		= $data['active'];
+		$this->category		= $data['category'];
+		$this->id			= $data['id'];
+		$this->loadError	= $data['loadError'];
+		$this->outdated		= $data['outdated'];
+		$this->tool			= $data['tool'];
 	}
 }

@@ -104,9 +104,11 @@ $stk['cache']['board_cache'] = $stk->share(function() use ($stk) {
 	$cache_factory = new phpbb_cache_factory($stk['phpbb']['db_config']['acm_type']);
 	return $cache_factory->get_service();
 });
-$stk['cache']['stk'] = $stk->share(function() {
+$stk['cache']['stk'] = $stk->share(function() use ($stk) {
 	$cache_factory = new stk_wrapper_cache_factory('file');
-	return $cache_factory->get_service();
+	$cache_service = $cache_factory->get_service();
+	$cache_service->setDIContainer($stk);
+	return $cache_service;
 });
 $cache = $stk['cache']['phpbb'];
 
@@ -168,13 +170,10 @@ $stk['phpbb']['template_locator'] = $stk->share(function() {
 $stk['phpbb']['template_path_provider'] = $stk->share(function() {
 	return new phpbb_template_path_provider();
 });
-$stk['phpbb']['template'] = $stk->share(function($phpbb) use ($phpbb_root_path, $phpEx) {
-	return new stk_wrapper_template($phpbb_root_path, $phpEx, $phpbb['config_mock'], $phpbb['user'], $phpbb['template_locator'], $phpbb['template_path_provider']);
+$stk['phpbb']['template'] = $stk->share(function() use ($stk) {
+	return new stk_wrapper_template($stk);
 });
 $template = $stk['phpbb']['template'];
-
-// Include some STK files that can't be autoloaded
-require STK_ROOT . 'includes/constants.php';
 
 // Setup the version controller
 $stk['vc'] = $stk->share(function($stk) {
@@ -182,9 +181,18 @@ $stk['vc'] = $stk->share(function($stk) {
 });
 
 // The STK toolbox
-$stk['toolbox'] = $stk->share(function($stk) {
-	return new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools'), $stk['cache']['stk'], $stk['vc']);
+$stk['toolbox'] = $stk->share(function() {
+	return new Pimple();
 });
+$stk['toolbox']['box'] = $stk->share(function() use ($stk) {
+	return new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools'), $stk);
+});
+$stk['toolbox']['category'] = function() use ($stk) {
+	return new stk_toolbox_category($stk);
+};
+$stk['toolbox']['tool'] = function() use ($stk) {
+	return new stk_toolbox_tool($stk);
+};
 
 // Utilities
 $stk['utilities'] = $stk->share(function($stk) {
@@ -198,3 +206,6 @@ $stk['phpbb']['user']->stk_add_lang('common');
 
 // Use the STK template directory
 $stk['phpbb']['template']->set_custom_template(STK_ROOT . 'view/template/', 'supporttoolkit');
+
+// Include some STK files that can't be autoloaded
+require STK_ROOT . 'includes/constants.php';

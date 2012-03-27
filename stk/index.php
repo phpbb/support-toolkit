@@ -13,19 +13,19 @@ $requestCategory	= $stk['phpbb']['request']->variable('c', 'main', false, phpbb_
 $requestTool		= $stk['phpbb']['request']->variable('t', '', false, phpbb_request_interface::GET);
 
 // Prepare the toolbox to handle the correct category/tool
-$stk['toolbox']->loadToolboxCategories();
-$stk['toolbox']->getToolboxCategory($requestCategory)->loadTools();
-$stk['toolbox']->setActiveTool($requestCategory, $requestTool);
+$stk['toolbox']['box']->loadToolboxCategories();
+$stk['toolbox']['box']->getToolboxCategory($requestCategory)->loadTools();
+$stk['toolbox']['box']->setActiveTool($requestCategory, $requestTool);
 
 // When no tool is active show the categories overview page
-if (is_null($stk['toolbox']->getActiveTool()))
+if (is_null($stk['toolbox']['box']->getActiveTool()))
 {
-	$stk['toolbox']->getActiveCategory()->createOverview();
+	$stk['toolbox']['box']->getActiveCategory()->createOverview();
 }
 // When not submitting show the tools options
 else if ($stk['phpbb']['request']->is_set('submit') === false)
 {
-	$stk['toolbox']->getActiveTool()->createOverview();
+	$stk['toolbox']['box']->getActiveTool()->createOverview();
 }
 
 $stk['utilities']->page_header('phpBB Support Toolkit "Ascraeus"');

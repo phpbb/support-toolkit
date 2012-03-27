@@ -14,6 +14,8 @@
  */
 class stk_wrapper_cache_service extends phpbb_cache_service
 {
+	private $stk;
+	
 	/**
 	 * Get categories
 	 *
@@ -35,7 +37,9 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 					continue;
 				}
 
-				$category = new stk_toolbox_category(new SplFileInfo($dir->getPathname()));
+				$category = $this->stk['toolbox']['category'];
+				//$category->setPath(new SplFileInfo($dir->getPathname()));
+				$category->setPath($dir->getFileInfo());
 				$categorylist[$dir->getBasename()] = $category;
 			}
 
@@ -70,7 +74,8 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 
 				// A string is returned when an tool isn't loadable. For the category
 				// listing we simply skip those cases
-				$tool = new stk_toolbox_tool($file->getFileInfo());
+				$tool = $this->stk['toolbox']['tool'];
+				$tool->setPath($file->getFileInfo());
 				if (false === is_string($tool))
 				{
 					$toollist[$tool->getID()] = $tool;
@@ -108,5 +113,10 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 		}
 
 		return $versionData;
+	}
+
+	public function setDIContainer(Pimple $container)
+	{
+		$this->stk = $container;
 	}
 }

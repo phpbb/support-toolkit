@@ -16,14 +16,12 @@ class stk_includes_utilities
 {
 	private $db;
 	private $template;
-	private $toolbox;
 	private $user;
 
 	public function __construct(Pimple $stk)
 	{
 		$this->db		= $stk['phpbb']['db'];
 		$this->template	= $stk['phpbb']['template'];
-		$this->toolbox	= $stk['toolbox'];
 		$this->user		= $stk['phpbb']['user'];
 	}
 
@@ -58,7 +56,7 @@ class stk_includes_utilities
 		));
 
 		// Assign the categories to the template
-		$this->template->assignNavigation($this->toolbox);
+		$this->template->assignNavigation();
 
 		// application/xhtml+xml not used because of IE
 		header('Content-type: text/html; charset=UTF-8');

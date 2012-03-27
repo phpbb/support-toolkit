@@ -16,10 +16,7 @@ class toolbox_version_check_test extends stk_test_case
 		$cacheFactory = new stk_wrapper_cache_factory('null');
 		$cache = $cacheFactory->get_service();
 
-		$this->stk = new Pimple();
-		$this->stk['vc'] = $this->stk->share(function() use ($cache) {
-			return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $cache);
-		});
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
 
 		$tool_class_loader = new stk_core_class_loader('stktool_', __DIR__ . '/tools/');
 		$tool_class_loader->register();

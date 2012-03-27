@@ -32,6 +32,7 @@ class stk_toolbox
 		foreach ($this->categories as $category)
 		{
 			$category->setDIContainer($this->stk);
+			$category->loadCategoryLanguageFile();
 		}
 	}
 
