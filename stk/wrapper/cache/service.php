@@ -14,6 +14,8 @@
  */
 class stk_wrapper_cache_service extends phpbb_cache_service
 {
+	private $stk;
+	
 	/**
 	 * Get categories
 	 *
@@ -22,7 +24,7 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 	 * @param SplFileInfo $path
 	 * @return \stk_toolbox_category
 	 */
-	public function obtainSTKCategories(SplFileInfo $path, stk_toolbox $toolbox)
+	public function obtainSTKCategories(SplFileInfo $path)
 	{
 		if (false === ($categorylist = $this->get('_STKCategories')))
 		{
@@ -35,12 +37,13 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 					continue;
 				}
 
-				$categorylist[$dir->getBasename()] = new stk_toolbox_category(new SplFileInfo($dir->getPathname()), $this);
+				$category = $this->stk['toolbox']['category'];
+				//$category->setPath(new SplFileInfo($dir->getPathname()));
+				$category->setPath($dir->getFileInfo());
+				$categorylist[$dir->getBasename()] = $category;
 			}
 
-			uksort($categorylist, array($toolbox, 'categorysSort'));
-
-			$this->get_driver()->put('_STKCategories', $categorylist);
+			$this->put('_STKCategories', $categorylist);
 		}
 
 		return $categorylist;
@@ -71,16 +74,15 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 
 				// A string is returned when an tool isn't loadable. For the category
 				// listing we simply skip those cases
-				$tool = stk_toolbox_tool::createTool($file->getFileInfo());
+				$tool = $this->stk['toolbox']['tool'];
+				$tool->setPath($file->getFileInfo());
 				if (false === is_string($tool))
 				{
 					$toollist[$tool->getID()] = $tool;
 				}
 			}
 
-			ksort($toollist);
-
-			$this->get_driver()->put('_STKCategoryTools' . ucfirst($path->getFilename()), $toollist);
+			$this->put('_STKCategoryTools' . ucfirst($path->getFilename()), $toollist);
 		}
 
 		return $toollist;
@@ -111,5 +113,10 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 		}
 
 		return $versionData;
+	}
+
+	public function setDIContainer(Pimple $container)
+	{
+		$this->stk = $container;
 	}
 }

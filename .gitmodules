@@ -4,3 +4,6 @@
 [submodule "stk/vendor/UMIL"]
 	path = stk/vendor/UMIL
 	url = git://github.com/phpbb/umil.git
+[submodule "stk/vendor/Pimple"]
+	path = stk/vendor/Pimple
+	url = git://github.com/fabpot/Pimple.git

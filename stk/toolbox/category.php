@@ -16,60 +16,85 @@
 class stk_toolbox_category implements Serializable
 {
 	private $active;
-	private $cache;
 	private $name;
 	private $path;
+	private $stk;
 	private $toolList;
 
-	public function __construct(SplFileInfo $path, phpbb_cache_service $cache)
+	/**
+	 * Initialse the category
+	 *
+	 * @param Pimple $stk The STK DI Container
+	 */
+	public function __construct(Pimple $stk = null)
 	{
 		$this->active	= false;
-		$this->cache	= $cache;
-		$this->name		= $path->getBasename();
-		$this->path		= $path;
+		$this->stk		= $stk;
 		$this->toolList	= array();
-
-		$this->loadCategoryLanguageFile();
 	}
 
-	public function loadTools()
-	{
-		$this->toolList = $this->cache->obtainSTKCategoryTools($this->path);
-	}
-
+	/**
+	 * Create overview
+	 *
+	 * Generate the overview page of this category
+	 */
 	public function createOverview()
 	{
-		global $template, $user;
-
-		$template->assign_vars(array(
-			'CATEGORY_TITLE'		=> $user->lang(strtoupper($this->name . '_TITLE')),
-			'CATEGORY_DESCRIPTION'	=> $user->lang(strtoupper($this->name . '_DESCRIPTION')),
+		$this->stk['phpbb']['template']->assign_vars(array(
+			'CATEGORY_TITLE'		=> $this->stk['phpbb']['user']->lang(strtoupper($this->name . '_TITLE')),
+			'CATEGORY_DESCRIPTION'	=> $this->stk['phpbb']['user']->lang(strtoupper($this->name . '_DESCRIPTION')),
 		));
 
-		stk_includes_utilities::page_header();
-		stk_includes_utilities::page_footer('category_overview.html');
+		$this->stk['utilities']->page_header();
+		$this->stk['utilities']->page_footer('category_overview.html');
 	}
 
+	/**
+	 * Load the language file for this category
+	 */
 	public function loadCategoryLanguageFile()
 	{
-		// @todo, better way to handle test compatibility
-		global $user;
-		if ($user instanceof user)
-		{
-			$user->stk_add_lang("categories/{$this->name}");
-		}
+		$this->stk['phpbb']['user']->stk_add_lang("categories/{$this->name}");
 	}
 
+	/**
+	 * Load tools
+	 *
+	 * Load all the tools associated with this category
+	 */
+	public function loadTools()
+	{
+		// Get all tools
+		$this->toolList = $this->stk['cache']['stk']->obtainSTKCategoryTools($this->path);
+
+		// Load the tools
+		foreach ($this->toolList as $key => $tool)
+		{
+			$tool->setDIContainer($this->stk);
+			if (false === ($tool->validateAndLoad()))
+			{
+				unset($this->toolList[$key]);
+			}
+		}
+
+		ksort($this->toolList);
+	}
+
+	/**
+	 * Category is the current "active" category
+	 * @return bool
+	 */
 	public function isActive()
 	{
 		return $this->active;
 	}
 
-	public function setActive($active = false)
-	{
-		$this->active = $active;
-	}
-
+	/**
+	 * Build the URL pointing to this category
+	 * 
+	 * @param array $params Any additional parameters that should be set in the URL
+	 * @return string the URL
+	 */
 	public function getCategoryURL(array $params = array())
 	{
 		$params['c'] = $this->getName();
@@ -77,26 +102,84 @@ class stk_toolbox_category implements Serializable
 		return append_sid(STK_WEB_PATH . '/index.php', $params);
 	}
 
+	/**
+	 * Set active
+	 *
+	 * Change the active status of this category
+	 *
+	 * @param bool $active
+	 */
+	public function setActive($active = false)
+	{
+		$this->active = (bool) $active;
+	}
+
+	/**
+	 * Set category path
+	 *
+	 * Set the path to this category directory on the filesystem
+	 *
+	 * @param SplFileInfo $path
+	 */
+	public function setPath(SplFileInfo $path)
+	{
+		$this->name	= $path->getBasename();
+		$this->path	= $path;
+	}
+
+	/**
+	 * Get the name of this category
+	 * @return string
+	 */
 	public function getName()
 	{
 		return $this->name;
 	}
 
+	/**
+	 * Get the number of tools that belong to this category
+	 * @return integer
+	 */
 	public function getToolCount()
 	{
 		return sizeof($this->toolList);
 	}
 
+	/**
+	 * Get all the tools
+	 * @return array
+	 */
 	public function getToolList()
 	{
 		return $this->toolList;
 	}
 
+	/**
+	 * Get one specific tool
+	 *
+	 * @param string $toolName
+	 * @return stk_toolbox_tool
+	 */
 	public function getTool($toolName)
 	{
 		return (!empty($this->toolList[$toolName])) ? $this->toolList[$toolName] : null;
 	}
 
+	/**
+	 * Set the DI container for this category
+	 *
+	 * @param Pimple $stk
+	 */
+	public function setDIContainer(Pimple $stk)
+	{
+		$this->stk = $stk;
+	}
+
+	/**
+	 * Serialize this category for storage
+	 *
+	 * @return string
+	 */
 	public function serialize()
 	{
 		$data = array(
@@ -106,9 +189,15 @@ class stk_toolbox_category implements Serializable
 			'path'		=> $this->path->getPathname(),
 			'toolList'	=> $this->toolList,
 		);
+
 		return serialize($data);
 	}
 
+	/**
+	 * Unserialize this catogry when retrieved from storage
+	 *
+	 * @param string $serialized
+	 */
 	public function unserialize($serialized)
 	{
 		$data = unserialize($serialized);
@@ -117,10 +206,5 @@ class stk_toolbox_category implements Serializable
 		$this->name		= $data['name'];
 		$this->path		= new SplFileInfo($data['path']);
 		$this->toolList	= $data['toolList'];
-
-		$this->loadCategoryLanguageFile();
-
-		global $stk_cache;
-		$this->cache = $stk_cache;
 	}
 }
