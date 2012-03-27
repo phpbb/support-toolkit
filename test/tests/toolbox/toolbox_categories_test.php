@@ -38,7 +38,7 @@ class toolbox_categories_test extends stk_test_case
 	 */
 	public function test_createCategory()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
+		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->stk);
 
 		$this->assertSame('foo', $cat->getName());
 		$this->assertSame(0, $cat->getToolCount());
@@ -50,7 +50,7 @@ class toolbox_categories_test extends stk_test_case
 	public function test_loadTools()
 	{
 		$cat = new stk_toolbox_category(new SplFileInfo($this->path));
-		$cat->setDependencies($this->stk);
+		$cat->setDIContainer($this->stk);
 		$cat->loadTools();
 
 		$expected = new stk_toolbox_tool(new SplFileInfo($this->path . 'foobar.php'));

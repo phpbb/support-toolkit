@@ -36,7 +36,7 @@ class toolbox_test extends stk_test_case
 		$tb->loadToolboxCategories();
 
 		$expected = new stk_toolbox_category(new SplFileInfo($this->path . 'foo'));
-		$expected->setDependencies($this->stk);
+		$expected->setDIContainer($this->stk);
 
 		$this->assertEquals($expected, $tb->getToolboxCategory('foo'));
 		$this->assertNull($tb->getToolboxCategory('notfound'));
@@ -50,7 +50,7 @@ class toolbox_test extends stk_test_case
 		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
 		$cat = $tb->getToolboxCategory('foo');
-		$cat->setDependencies($this->stk);
+		$cat->setDIContainer($this->stk);
 		$cat->loadTools();
 
 		// Verify off
@@ -85,7 +85,7 @@ class toolbox_test extends stk_test_case
 		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
 		$cat = $tb->getToolboxCategory('foo');
-		$cat->setDependencies($this->stk);
+		$cat->setDIContainer($this->stk);
 		$cat->loadTools();
 
 		// None set

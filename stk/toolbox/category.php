@@ -16,23 +16,18 @@
 class stk_toolbox_category implements Serializable
 {
 	private $active;
-	private $cache;
 	private $name;
 	private $path;
+	private $stk;
 	private $toolList;
-	private $vc;
 
 	public function __construct(SplFileInfo $path, Pimple $stk = null)
 	{
 		$this->active	= false;
 		$this->name		= $path->getBasename();
 		$this->path		= $path;
+		$this->stk		= $stk;
 		$this->toolList	= array();
-
-		if (!is_null($stk))
-		{
-			$this->setDependencies($stk);
-		}
 
 		$this->loadCategoryLanguageFile();
 	}
@@ -40,12 +35,12 @@ class stk_toolbox_category implements Serializable
 	public function loadTools()
 	{
 		// Get all tools
-		$this->toolList = $this->cache->obtainSTKCategoryTools($this->path);
+		$this->toolList = $this->stk['cache']['stk']->obtainSTKCategoryTools($this->path);
 
 		// Load the tools
 		foreach ($this->toolList as $key => $tool)
 		{
-			$tool->setVersionController($this->vc);
+			$tool->setVersionController($this->stk['vc']);
 			if (false === ($tool->validateAndLoad()))
 			{
 				unset($this->toolList[$key]);
@@ -57,15 +52,13 @@ class stk_toolbox_category implements Serializable
 
 	public function createOverview()
 	{
-		global $template, $user;
-
-		$template->assign_vars(array(
-			'CATEGORY_TITLE'		=> $user->lang(strtoupper($this->name . '_TITLE')),
-			'CATEGORY_DESCRIPTION'	=> $user->lang(strtoupper($this->name . '_DESCRIPTION')),
+		$this['phpbb']['template']->assign_vars(array(
+			'CATEGORY_TITLE'		=> $this->stk['phpbb']['user']->lang(strtoupper($this->name . '_TITLE')),
+			'CATEGORY_DESCRIPTION'	=> $this->stk['phpbb']['user']->lang(strtoupper($this->name . '_DESCRIPTION')),
 		));
 
-		stk_includes_utilities::page_header();
-		stk_includes_utilities::page_footer('category_overview.html');
+		$this->stk['utilities']->page_header();
+		$this->stk['utilities']->page_footer('category_overview.html');
 	}
 
 	public function loadCategoryLanguageFile()
@@ -74,7 +67,7 @@ class stk_toolbox_category implements Serializable
 		global $user;
 		if ($user instanceof user)
 		{
-			$user->stk_add_lang("categories/{$this->name}");
+			$this->stk['phpbb']['user']->stk_add_lang("categories/{$this->name}");
 		}
 	}
 
@@ -115,10 +108,9 @@ class stk_toolbox_category implements Serializable
 		return (!empty($this->toolList[$toolName])) ? $this->toolList[$toolName] : null;
 	}
 
-	public function setDependencies(Pimple $stk)
+	public function setDIContainer(Pimple $stk)
 	{
-		$this->cache	= $stk['cache']['stk'];
-		$this->vc		= $stk['vc'];
+		$this->stk = $stk;
 	}
 
 	public function serialize()

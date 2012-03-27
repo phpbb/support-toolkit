@@ -31,7 +31,7 @@ class stk_toolbox
 
 		foreach ($this->categories as $category)
 		{
-			$category->setDependencies($this->stk);
+			$category->setDIContainer($this->stk);
 		}
 	}
 
