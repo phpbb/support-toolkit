@@ -44,8 +44,8 @@ class toolbox_categories_test extends stk_test_case
 	public function test_loadTools()
 	{
 		$cat = $this->stk['toolbox']['category'];
-		$cat->setPath($this->pathInfo);
 		$cat->setDIContainer($this->stk);
+		$cat->setPath($this->pathInfo);
 		$cat->loadTools();
 
 		$expected = new stk_toolbox_tool();

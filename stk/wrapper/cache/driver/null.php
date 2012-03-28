@@ -9,7 +9,7 @@
 
 class stk_wrapper_cache_driver_null extends phpbb_cache_driver_null
 {
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 	}

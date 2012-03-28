@@ -118,5 +118,9 @@ class stk_wrapper_cache_service extends phpbb_cache_service
 	public function setDIContainer(Pimple $container)
 	{
 		$this->stk = $container;
+		if (method_exists($this->get_driver(), 'setDependencies'))
+		{
+			$this->get_driver()->setDependencies($container);
+		}
 	}
 }

@@ -16,6 +16,8 @@
  */
 class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 {
+	private $user;
+
 	/**
 	 * Set cache path
 	 */
@@ -31,29 +33,20 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 	{
 		global $_SID;
 
+		$data = parent::get($var_name);
+
 		if ($var_name[0] == '_')
 		{
-			global $phpEx;
-
-			if (!$this->_exists($var_name))
-			{
-				return false;
-			}
-
-			$data = $this->_read('data' . $var_name);
-
 			// Recache if the sid has been changed
-			if ($_SID != $data['sid'])
+			if ($data === false || $_SID != $data['sid'])
 			{
 				return false;
 			}
 
-			return $data['data'];
+			$data =  $data['data'];
 		}
-		else
-		{
-			return ($this->_exists($var_name)) ? $this->vars[$var_name] : false;
-		}
+
+		return $data;
 	}
 
 	/**
@@ -61,28 +54,21 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 	 */
 	public function put($var_name, $var, $ttl = 31536000)
 	{
-		// Inject some information
-		global $user;
-
 		$var = array(
-			'sid'	=> $user->data['session_id'],
+			'sid'	=> $this->user->data['session_id'],
 			'data'	=> $var,
 		);
 
-		if ($var_name[0] == '_')
-		{
-			$this->_write('data' . $var_name, $var, time() + $ttl);
-		}
-		else
-		{
-			$this->vars[$var_name] = $var;
-			$this->var_expires[$var_name] = time() + $ttl;
-			$this->is_modified = true;
-		}
+		parent::put($var_name, $var, $ttl);
 	}
 
 	public function getCacheDir()
 	{
 		return $this->cache_dir;
+	}
+
+	public function setDependencies(Pimple $stk)
+	{
+		$this->user = $stk['phpbb']['user'];
 	}
 }
