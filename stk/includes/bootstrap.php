@@ -182,7 +182,7 @@ $stk['vc'] = $stk->share(function($stk) {
 
 // The STK toolbox
 $stk['toolbox']['box'] = $stk->share(function() use ($stk) {
-	return new stk_toolbox(new SplFileInfo(STK_ROOT . 'tools'), $stk);
+	return new stk_toolbox($stk['toolbox']['toolpath'], $stk);
 });
 $stk['toolbox']['category'] = function() use ($stk) {
 	return new stk_toolbox_category($stk);
@@ -194,6 +194,11 @@ $stk['toolbox']['tool'] = function() use ($stk) {
 // Utilities
 $stk['utilities'] = $stk->share(function($stk) {
 	return new stk_includes_utilities($stk);
+});
+
+// Some settings
+$stk['toolbox']['toolpath'] = $stk->share(function() {
+	return new SplFileInfo(STK_ROOT . 'tools');
 });
 
 // Setup user
