@@ -27,4 +27,12 @@ class wrapper_user_test extends stk_test_case
 		$this->user->stk_add_lang('common');
 		$this->assertArrayHasKey('S_CONTENT_DIRECTION', $this->user->lang);
 	}
+
+	/**
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function test_stk_add_lang_not_found()
+	{
+		$this->user->stk_add_lang('non_existing');
+	}
 }
