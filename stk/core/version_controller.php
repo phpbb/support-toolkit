@@ -24,12 +24,6 @@ class stk_core_version_controller
 	/**#@-*/
 
 	/**
-	 * Instance of this object.
-	 * @var stk_core_version_controller
-	 */
-	static private $instance = null;
-
-	/**
 	 * Array holding the version information as fetched from the version check file
 	 * @var array
 	 */
@@ -40,57 +34,9 @@ class stk_core_version_controller
 	 *
 	 * @param string $versionCheckFile URL to the versioncheck file
 	 */
-	final private function __construct($versionCheckFile, phpbb_cache_service $cache = null)
+	public function __construct($versionCheckFile, phpbb_cache_service $cache)
 	{
 		$this->versionData = $cache->obtainSTKVersionData($versionCheckFile);
-/*
-		if (!is_null($cache))
-		{
-			$cache_driver = $cache->get_driver();
-			$this->versionData = $cache_driver->get('_stk_versionData');
-		}
-
-		if ($this->versionData === false)
-		{
-			$opts = array(
-				'http' => array(
-					'method'		=> 'GET',
-					'max_redirects' => '10',
-					'user_agent'	=> 'phpBB Support Toolkit version checker',
-				),
-			);
-
-			$context			= stream_context_create($opts);
-			$stream				= fopen($versionCheckFile, 'r', false, $context);
-			$responce			= stream_get_contents($stream);
-			$this->versionData	= json_decode($responce);
-			fclose($stream);
-
-			if (!is_null($cache))
-			{
-				$cache_driver->put('_stk_versionData', $this->versionData);
-			}
-		}
- *
- */
-	}
-
-	/**
-	 * Create a new version check object
-	 *
-	 * A singleton wrapper to assure only one instance is created
-	 *
-	 * @param string $versionCheckFile URL to the versioncheck file
-	 * @return stk_core_version_controller Instance
-	 */
-	static public function getInstance($versionCheckFile = '', phpbb_cache_service $cache = null)
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new static($versionCheckFile, $cache);
-		}
-
-		return self::$instance;
 	}
 
 	public function testToolVersion($toolCategory, $toolName)

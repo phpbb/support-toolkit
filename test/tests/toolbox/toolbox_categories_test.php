@@ -9,18 +9,21 @@
 
 class toolbox_categories_test extends stk_test_case
 {
-	private $cache;
 	private $path;
-	private $toolBox;
+	private $pathInfo;
+	private $stk;
 
 	protected function setUp()
 	{
-		global $stk_cache;
+		$this->path = __DIR__ . '/tools/';
 
-		$this->cache	= $stk_cache;
-		$this->path		= __DIR__ . '/tools/foo/';
-		$this->toolBox	= new stk_toolbox(new SplFileInfo(__DIR__ . '/tools/'), $this->cache);
-		stk_core_version_controller::getInstance();
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
+
+		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
+		$tool_class_loader->register();
+
+		$this->path .= 'foo/';
+		$this->pathInfo = new SplFileInfo($this->path);
 	}
 
 	/**
@@ -28,7 +31,8 @@ class toolbox_categories_test extends stk_test_case
 	 */
 	public function test_createCategory()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
+		$cat = new stk_toolbox_category($this->stk);
+		$cat->setPath($this->pathInfo);
 
 		$this->assertSame('foo', $cat->getName());
 		$this->assertSame(0, $cat->getToolCount());
@@ -39,29 +43,18 @@ class toolbox_categories_test extends stk_test_case
 	 */
 	public function test_loadTools()
 	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
+		$cat = $this->stk['toolbox']['category'];
+		$cat->setPath($this->pathInfo);
+		$cat->setDIContainer($this->stk);
 		$cat->loadTools();
 
-		$expected = stk_toolbox_tool::createTool(new SplFileInfo($this->path . 'foobar.php'));
+		$expected = new stk_toolbox_tool();
+		$expected->setDIContainer($this->stk);
+		$expected->setPath(new SplFileInfo($this->path . 'foobar.php'));
+		$expected->validateAndLoad();
 
 		$this->assertCount(2, $cat->getToolList());
 		$this->assertEquals($expected, $cat->getTool('foobar'));
 		$this->assertNull($cat->getTool('notdefined'));
-	}
-
-	public function test_serialize()
-	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
-		$serialized = serialize($cat);
-		$this->assertEquals($cat, unserialize($serialized));
-	}
-
-	public function test_serializeToolsLoaded()
-	{
-		$cat = new stk_toolbox_category(new SplFileInfo($this->path), $this->cache);
-		$cat->loadTools();
-
-		$serialized = serialize($cat);
-		$this->assertEquals($cat, unserialize($serialized));
 	}
 }

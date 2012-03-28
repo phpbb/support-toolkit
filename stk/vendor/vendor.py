@@ -13,7 +13,7 @@ from os.path import dirname, exists, isdir
 from shutil import copy2, copytree, rmtree
 import types
 
-def getFileList():
+def getphpBBFileList():
 	return [
 		["adm/images/",
 					[
@@ -87,7 +87,7 @@ def getFileList():
 
 def _copy(src, dest, update=False):
 	if (exists(dest) and update == False):
-		print 'Skipping: ' + src + ' (destination already exists)'
+		print ('Skipping: ' + src + ' (destination already exists)')
 		return
 
 	print ('Copying: ' if update == False else 'Overwriting: ') + src + ' to: ' + dest
@@ -109,15 +109,19 @@ def main():
 	parser.add_argument("-u", "--update", dest="update", action="store_true", help="Update files, setting this parameter will force the script to overwrite the files if they already exist")
 	args = parser.parse_args()
 
+	# phpBB files
 	basesrc		= './stk/vendor/phpBB/phpBB/'
 	basedest	= './stk/'
 
-	for file in getFileList():
+	for file in getphpBBFileList():
 		if isinstance(file[1], types.ListType):
 			for f in file[1]:
 				_copy(basesrc + file[0] + f, basedest + file[2] + f, args.update);
 		else:
 			_copy(basesrc + file[0], basedest + file[1], args.update);
+
+	# Pimple
+	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php');
 
 
 if __name__ == "__main__":

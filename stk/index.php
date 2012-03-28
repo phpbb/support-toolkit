@@ -9,24 +9,24 @@
 require __DIR__ . '/includes/bootstrap.php';
 
 // Get the requested category/tool
-$requestCategory = $request->variable('c', 'main', false, phpbb_request_interface::GET);
-$requestTool = $request->variable('t', '', false, phpbb_request_interface::GET);
+$requestCategory	= $stk['phpbb']['request']->variable('c', 'main', false, phpbb_request_interface::GET);
+$requestTool		= $stk['phpbb']['request']->variable('t', '', false, phpbb_request_interface::GET);
 
 // Prepare the toolbox to handle the correct category/tool
-$toolbox->loadToolboxCategories();
-$toolbox->getToolboxCategory($requestCategory)->loadTools();
-$toolbox->setActiveTool($requestCategory, $requestTool);
+$stk['toolbox']['box']->loadToolboxCategories();
+$stk['toolbox']['box']->getToolboxCategory($requestCategory)->loadTools();
+$stk['toolbox']['box']->setActiveTool($requestCategory, $requestTool);
 
 // When no tool is active show the categories overview page
-if (is_null($toolbox->getActiveTool()))
+if (is_null($stk['toolbox']['box']->getActiveTool()))
 {
-	$toolbox->getActiveCategory()->createOverview();
+	$stk['toolbox']['box']->getActiveCategory()->createOverview();
 }
 // When not submitting show the tools options
-else if ($request->is_set('submit') === false)
+else if ($stk['phpbb']['request']->is_set('submit') === false)
 {
-	$toolbox->getActiveTool()->createOverview();
+	$stk['toolbox']['box']->getActiveTool()->createOverview();
 }
 
-stk_includes_utilities::page_header('phpBB Support Toolkit "Ascraeus"');
-stk_includes_utilities::page_footer('index_body');
+$stk['utilities']->page_header('phpBB Support Toolkit "Ascraeus"');
+$stk['utilities']->page_footer('index_body');

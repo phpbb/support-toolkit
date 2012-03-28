@@ -9,24 +9,26 @@
 
 class toolbox_test extends stk_test_case
 {
-	private $cache;
 	private $path;
+	private $stk;
 
 	protected function setUp()
 	{
-		global $stk_cache;
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
 
-		$this->cache	= $stk_cache;
 		$this->path		= __DIR__ . '/tools/';
-		stk_core_version_controller::getInstance();
+		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
+		$tool_class_loader->register();
 	}
 
 	public function test_loadToolboxCategories()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
 
-		$expected = new stk_toolbox_category(new SplFileInfo($this->path . 'foo'), $this->cache);
+		$expected = new stk_toolbox_category();
+		$expected->setPath(new SplFileInfo($this->path . 'foo'));
+		$expected->setDIContainer($this->stk);
 
 		$this->assertEquals($expected, $tb->getToolboxCategory('foo'));
 		$this->assertNull($tb->getToolboxCategory('notfound'));
@@ -37,9 +39,11 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_switchActive()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
-		$tb->getToolboxCategory('foo')->loadTools();
+		$cat = $tb->getToolboxCategory('foo');
+		$cat->setDIContainer($this->stk);
+		$cat->loadTools();
 
 		// Verify off
 		$this->assertFalse($tb->getToolboxCategory('foo')->isActive());
@@ -70,9 +74,11 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_getActiveTool()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->cache);
+		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
 		$tb->loadToolboxCategories();
-		$tb->getToolboxCategory('foo')->loadTools();
+		$cat = $tb->getToolboxCategory('foo');
+		$cat->setDIContainer($this->stk);
+		$cat->loadTools();
 
 		// None set
 		$this->assertNull($tb->getActiveCategory());

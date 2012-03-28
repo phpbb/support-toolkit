@@ -15,20 +15,26 @@
  */
 class stk_wrapper_template extends phpbb_template
 {
-	private $user;
+	private $stk;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string $phpbb_root_path phpBB root path
-	 * @param user $user current user
-	 * @param phpbb_template_locator $locator template locator
-	 * @param phpbb_template_path_provider $provider template path provider
+	 * @param Pimple $stk
 	 */
-	public function __construct($phpbb_root_path, $phpEx, $config, $user, phpbb_template_locator $locator, phpbb_template_path_provider_interface $provider)
+//	public function __construct($phpbb_root_path, $phpEx, $config, $user, phpbb_template_locator $locator, phpbb_template_path_provider_interface $provider)
+	public function __construct(Pimple $stk)
 	{
-		$this->user = $user;
-		parent::__construct($phpbb_root_path, $phpEx, $config, $user, $locator, $provider);
+		parent::__construct(
+			$stk['config']['phpbb_root_path'],
+			$stk['config']['phpEx'],
+			$stk['phpbb']['config_mock'],
+			$stk['phpbb']['user'],
+			$stk['phpbb']['template_locator'],
+			$stk['phpbb']['template_path_provider']
+		);
+
+		$this->stk = $stk;
 	}
 
 	/**
@@ -60,8 +66,8 @@ class stk_wrapper_template extends phpbb_template
 		$block = ($global === true) ? 'globalnotices' : 'toolnotices';
 
 		$this->assign_block_vars($block, array(
-			'TITLE'			=> $this->user->lang($noticeTitle),
-			'DESCRIPTION'	=> $this->user->lang($noticeDescription),
+			'TITLE'			=> $this->stk['phpbb']['user']->lang($noticeTitle),
+			'DESCRIPTION'	=> $this->stk['phpbb']['user']->lang($noticeDescription),
 		));
 	}
 
@@ -72,9 +78,9 @@ class stk_wrapper_template extends phpbb_template
 	 *
 	 * @param stk_toolbox $toolbox
 	 */
-	public function assignNavigation(stk_toolbox $toolbox)
+	public function assignNavigation()
 	{
-		$categories = $toolbox->getToolboxCategories();
+		$categories = $this->stk['toolbox']['box']->getToolboxCategories();
 		$activeCategory = null;
 
 		foreach ($categories as $category)
@@ -87,7 +93,7 @@ class stk_wrapper_template extends phpbb_template
 			}
 
 			$this->assign_block_vars('t_block1', array(
-				'L_TITLE'	=> $this->user->lang(strtoupper($category->getName() . '_TITLE')),
+				'L_TITLE'	=> $this->stk['phpbb']['user']->lang(strtoupper($category->getName() . '_TITLE')),
 				'U_TITLE'	=> $category->getCategoryURL(),
 				'S_ACTIVE'	=> $active,
 			));
@@ -107,7 +113,7 @@ class stk_wrapper_template extends phpbb_template
 				$tool->loadToolLanguageFile();
 
 				$this->assign_block_vars('l_block1', array(
-					'L_TITLE'	=> $this->user->lang($tool->getToolLanguageString()),
+					'L_TITLE'	=> $this->stk['phpbb']['user']->lang($tool->getToolLanguageString()),
 					'U_TITLE'	=> $tool->getToolURL(),
 					'S_ACTIVE'	=> $active,
 				));

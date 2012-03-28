@@ -9,11 +9,11 @@
 
 abstract class stk_toolbox_toolBase implements stk_toolbox_toolInterface
 {
-	protected $toolName = '';
+	protected $stk;
 
-	public function getName()
+	public function __construct(Pimple $stk)
 	{
-		return $this->toolName;
+		$this->stk = $stk;
 	}
 
 	public function run()
