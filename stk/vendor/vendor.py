@@ -121,7 +121,7 @@ def main():
 			_copy(basesrc + file[0], basedest + file[1], args.update);
 
 	# Pimple
-	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php');
+	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', True);
 
 
 if __name__ == "__main__":
