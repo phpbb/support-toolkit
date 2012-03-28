@@ -41,8 +41,15 @@ class stk_toolbox_tool implements Serializable
 		$this->loadError	= '';
 		$this->outdated		= false;
 		$this->stk			= $stk;
+		$this->tool			= null;
 	}
 
+	/**
+	 * Validate and load the tool
+	 *
+	 * Check whether the requested tool is valid and load an instance
+	 * of the requested tool into the wrapper
+	 */
 	public function validateAndLoad()
 	{
 		$className	= "stktool_{$this->category}_{$this->id}";
@@ -75,8 +82,18 @@ class stk_toolbox_tool implements Serializable
 		return true;
 	}
 
+	/**
+	 * Create overview
+	 *
+	 * Create the overview page for the contained tool
+	 */
 	public function createOverview()
 	{
+		if (is_null($this->tool))
+		{
+			$this->validateAndLoad();
+		}
+
 		// Make sure the language file is loaded
 		$this->loadToolLanguageFile();
 
@@ -101,8 +118,16 @@ class stk_toolbox_tool implements Serializable
 		}
 	}
 
-	private function runTool()
+	/**
+	 * Run the requested tool
+	 */
+	public function runTool()
 	{
+		if (is_null($this->tool))
+		{
+			$this->validateAndLoad();
+		}
+
 		if ($this->tool->run() === true)
 		{
 			$this->stk['phpbb']['template']->assign_vars(array(
@@ -119,6 +144,12 @@ class stk_toolbox_tool implements Serializable
 		}
 	}
 
+	/**
+	 * Create "trigger overview"
+	 *
+	 * The overview page of the requested tool only consists of a
+	 * confirmbox. Generate and handle the confirm box
+	 */
 	private function createStringOverview()
 	{
 		$displayHandler = new stk_toolbox_display_trigger($this);
@@ -134,41 +165,76 @@ class stk_toolbox_tool implements Serializable
 		}
 	}
 
+	/**
+	 * Load the main language file for this tool
+	 */
 	public function loadToolLanguageFile()
 	{
 		$this->stk['phpbb']['user']->stk_add_lang("tools/{$this->category}/{$this->id}");
 	}
 
+	/**
+	 * Tool is active
+	 */
 	public function isActive()
 	{
 		return $this->active;
 	}
 
+	/**
+	 * Switch tool active
+	 */
 	public function setActive($active = false)
 	{
 		$this->active = $active;
 	}
 
+	/**
+	 * Get the ID of this tool
+	 */
 	public function getID()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * Get load error
+	 *
+	 * The error string of the error that occured during the validation
+	 * of the requested tool
+	 */
 	public function getLoadError()
 	{
 		return $this->loadError;
 	}
 
+	/**
+	 * Get tool language string
+	 *
+	 * Create the language entry that is used to identify this tool
+	 * in the UI
+	 */
 	public function getToolLanguageString()
 	{
 		return strtoupper("TOOL_{$this->category}_{$this->id}");
 	}
 
+	/**
+	 * Get the tool
+	 */
 	public function getTool()
 	{
 		return $this->tool;
 	}
 
+	/**
+	 * Get tool URL
+	 *
+	 * Create the URL pointing to this tool
+	 *
+	 * @param  array  $params Addtional parameters to be added to the url
+	 * @return string         The URL
+	 */
 	public function getToolURL(array $params = array())
 	{
 		// Add cat/tool to the params
@@ -178,7 +244,7 @@ class stk_toolbox_tool implements Serializable
 		return append_sid(STK_WEB_PATH . '/index.php', $params);
 	}
 
-	/*
+	/**
 	 * Set the path to this tool file
 	 *
 	 * @param SplFileInfo $path Path to the tool file, the correct class name is
@@ -190,9 +256,14 @@ class stk_toolbox_tool implements Serializable
 		$this->id		= $path->getBasename('.php');
 	}
 
-	public function setDIContainer(Pimple $stk)
+	/**
+	 * Set the DI container for this tool wrapper
+	 *
+	 * @param Pimple $container The container
+	 */
+	public function setDIContainer(Pimple $container)
 	{
-		$this->stk = $stk;
+		$this->stk = $container;
 	}
 
 	/**

@@ -13,17 +13,25 @@ class stk_toolbox
 	private $stk;
 	private $toolsPath;
 
-	public function __construct(SplFileInfo $toolsPath, Pimple $stk)
+	/**
+	 * Construct the toolbox
+	 *
+	 * @param Pimple $stk The main STK object
+	 */
+	public function __construct(Pimple $stk)
 	{
 		$this->categories	= array();
 		$this->stk			= $stk;
-		$this->toolsPath	= $toolsPath;
+		$this->toolsPath	= $stk['toolbox']['toolpath'];
 
 		// Bind a toolbox specific classloader
 		$toolbox_class_loader = new stk_core_class_loader('stktool_', $this->toolsPath->getPathname() . '/');
 		$toolbox_class_loader->register();
 	}
 
+	/**
+	 * Load all categories
+	 */
 	public function loadToolboxCategories()
 	{
 		$this->categories = $this->stk['cache']['stk']->obtainSTKCategories($this->toolsPath);
@@ -36,6 +44,9 @@ class stk_toolbox
 		}
 	}
 
+	/**
+	 * Sorting method to make sure that the categories are ordered correctly
+	 */
 	public function categorysSort($a, $b)
 	{
 		// Main is always the first
@@ -112,6 +123,9 @@ class stk_toolbox
 		return null;
 	}
 
+	/**
+	 * Get all the categories
+	 */
 	public function getToolboxCategories()
 	{
 		if (empty($this->categories))
@@ -122,6 +136,9 @@ class stk_toolbox
 		return $this->categories;
 	}
 
+	/**
+	 * Get the specified category if it exists. Otherwise null
+	 */
 	public function getToolboxCategory($categoryName)
 	{
 		return (!empty($this->categories[$categoryName])) ? $this->categories[$categoryName] : null;

@@ -23,6 +23,11 @@ class stk_wrapper_config extends phpbb_config
 	 */
 	private $phpbb_config;
 
+	/**
+	 * Construct the config wrapper object
+	 *
+	 * @param phpbb_config $phpbb_config The actual phpBB config object
+	 */
 	public function __construct(phpbb_config $phpbb_config)
 	{
 		$this->phpbb_config = $phpbb_config;

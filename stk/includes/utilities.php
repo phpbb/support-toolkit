@@ -105,6 +105,7 @@ class stk_includes_utilities
 
 	/**
 	 * Build Confirm box
+	 *
 	 * @param boolean $check True for checking if confirmed (without any additional parameters) and false for displaying the confirm box
 	 * @param string $title Title/Message used for confirm box.
 	 *		message text is _CONFIRM appended to title.

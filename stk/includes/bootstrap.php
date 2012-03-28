@@ -182,7 +182,7 @@ $stk['vc'] = $stk->share(function($stk) {
 
 // The STK toolbox
 $stk['toolbox']['box'] = $stk->share(function() use ($stk) {
-	return new stk_toolbox($stk['toolbox']['toolpath'], $stk);
+	return new stk_toolbox($stk);
 });
 $stk['toolbox']['category'] = function() use ($stk) {
 	return new stk_toolbox_category($stk);

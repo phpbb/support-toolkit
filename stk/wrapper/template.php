@@ -22,7 +22,6 @@ class stk_wrapper_template extends phpbb_template
 	 *
 	 * @param Pimple $stk
 	 */
-//	public function __construct($phpbb_root_path, $phpEx, $config, $user, phpbb_template_locator $locator, phpbb_template_path_provider_interface $provider)
 	public function __construct(Pimple $stk)
 	{
 		parent::__construct(

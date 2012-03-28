@@ -39,6 +39,16 @@ class stk_core_version_controller
 		$this->versionData = $cache->obtainSTKVersionData($versionCheckFile);
 	}
 
+	/**
+	 * Test version of a given tool
+	 *
+	 * Check the version of the required tool against the corresponding
+	 * entry in the version check file
+	 *
+	 * @param  String  $toolCategory The tools category
+	 * @param  String  $toolName     The name of the requested tool
+	 * @return Integer               Status code
+	 */
 	public function testToolVersion($toolCategory, $toolName)
 	{
 		// Get the tool version
@@ -48,7 +58,10 @@ class stk_core_version_controller
 		$versionCode = $this->getVersionResponce($toolCategory, $toolName, $toolVersion);
 		return $versionCode;
 	}
-	
+
+	/**
+	 * Test the version of the Support Toolkit itself
+	 */
 	public function testSTKVersion()
 	{
 		$versionCode = $this->getVersionResponce('stk_', '', STK_VERSION);
@@ -64,7 +77,7 @@ class stk_core_version_controller
 	}
 
 	/**
-	 * Validate tool by version
+	 * Get the tools version data and validate the provided information
 	 *
 	 * Tools are by version against the version check file. The followin scenarios
 	 * are possible:
@@ -81,8 +94,9 @@ class stk_core_version_controller
 	 *  - Up to date, The version of the tool is equal to the version entry in
 	 *    the version file
 	 *
-	 * @param  string  $toolCategory The category the requested tool belongs to
-	 * @param  string  $toolName     The name of the requested tool
+	 * @param  string  $toolCategory   The category the requested tool belongs to
+	 * @param  string  $toolName       The name of the requested tool
+	 * @param  string  $currentVersion The version that is installed
 	 * @return integer
 	 */
 	private function getVersionResponce($toolCategory, $toolName, $currentVersion)
@@ -124,6 +138,8 @@ class stk_core_version_controller
 
 	/**
 	 * Fetch version information
+	 *
+	 * Get the requested selection from the version data
 	 *
 	 * @param  string   $toolCategory The category the requested tool belongs to
 	 * @param  string   $toolName     The name of the requested tool
