@@ -52,9 +52,9 @@ class stk_wrapper_user extends user
 		if (empty($lang_dirs))
 		{
 			$lang_dirs = array(
-				$this->data['user_lang'],			// User default
-				basename($config['default_lang']),	// Board default
-				'en',								// System default
+				!empty($this->data['user_lang']) ? $this->data['user_lang'] : 'en',						// User default
+				!empty($config['default_lang']) ? basename($config['default_lang']) : 'en',	// Board default
+				'en',																					// System default
 			);
 
 			// Only unique dirs
