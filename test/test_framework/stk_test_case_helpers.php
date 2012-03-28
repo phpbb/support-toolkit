@@ -31,6 +31,15 @@ class stk_test_case_helpers extends phpbb_test_case_helpers
 			return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check_test.json', $stk['cache']['stk']);
 		});
 
+		// If in a db test set the DBAL
+		if (method_exists($this->test_case, 'new_dbal'))
+		{
+			$_tc = $this->test_case;
+			$stk['phpbb']['db'] = $stk->share(function() use ($_tc) {
+				return $_tc->new_dbal();
+			});
+		}
+
 		return $stk;
 	}
 }
