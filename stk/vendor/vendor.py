@@ -114,7 +114,7 @@ def _copy(src, dest, update=False):
 		print ('Skipping: ' + src + ' (destination already exists)');
 		return False;
 
-	print (('Copying: ' if update == False else 'Overwriting: ') + src + ' to: ' + dest);
+	print (('Copying: ' if update == False else 'Force copying: ') + src + ' to: ' + dest);
 	if isdir(src):
 		if (exists(dirname(dest)) and update == True):
 			rmtree(dest);
