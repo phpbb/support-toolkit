@@ -14,16 +14,22 @@ class toolbox_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$this->stk = $this->get_test_case_helpers()->getSTKObject();
+		$path = __DIR__ . '/tools/';
 
-		$this->path		= __DIR__ . '/tools/';
+		$this->stk = $this->get_test_case_helpers()->getSTKObject();
+		$this->stk['toolbox']['toolpath'] = $this->stk->share(function() use ($path) {
+			return new SplFileInfo($path);
+		});
+
 		$tool_class_loader = new stk_core_class_loader('stktool_', $this->path);
 		$tool_class_loader->register();
+
+		$this->path = $path;
 	}
 
 	public function test_loadToolboxCategories()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
+		$tb = new stk_toolbox($this->stk);
 		$tb->loadToolboxCategories();
 
 		$expected = new stk_toolbox_category();
@@ -39,7 +45,7 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_switchActive()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
+		$tb = new stk_toolbox($this->stk);
 		$tb->loadToolboxCategories();
 		$cat = $tb->getToolboxCategory('foo');
 		$cat->setDIContainer($this->stk);
@@ -74,7 +80,7 @@ class toolbox_test extends stk_test_case
 	 */
 	public function test_getActiveTool()
 	{
-		$tb = new stk_toolbox(new SplFileInfo($this->path), $this->stk);
+		$tb = new stk_toolbox($this->stk);
 		$tb->loadToolboxCategories();
 		$cat = $tb->getToolboxCategory('foo');
 		$cat->setDIContainer($this->stk);
