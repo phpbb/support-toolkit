@@ -13,6 +13,9 @@
 # Pimple
 /stk/core/DI/Pimple.php
 
+# MODX
+/contrib/modx.prosilver.en.xsl
+
 # STK files
 /stk/local_config.php
 

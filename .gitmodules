@@ -7,3 +7,6 @@
 [submodule "stk/vendor/Pimple"]
 	path = stk/vendor/Pimple
 	url = git://github.com/fabpot/Pimple.git
+[submodule "stk/vendor/MODX"]
+	path = stk/vendor/MODX
+	url = git://github.com/phpbb/modx.git

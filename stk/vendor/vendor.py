@@ -123,6 +123,8 @@ def main():
 	# Pimple
 	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', True);
 
+	# MODX
+	_copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', True);
 
 if __name__ == "__main__":
 	main();
