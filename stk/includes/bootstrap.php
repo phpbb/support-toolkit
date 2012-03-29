@@ -157,9 +157,9 @@ $stk['phpbb']['config_mock'] = $stk->share(function($phpbb) {
 $config = $stk['phpbb']['config_mock'];
 
 // Setup the phpBB User object
-$stk['phpbb']['user'] = $stk->share(function() use ($config) {
+$stk['phpbb']['user'] = $stk->share(function() use ($config, $stk) {
 	require PHPBB_FILES . 'includes/session.php';
-	return new stk_wrapper_user();
+	return new stk_wrapper_user($stk);
 });
 $user = $stk['phpbb']['user'];
 

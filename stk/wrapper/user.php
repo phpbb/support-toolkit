@@ -12,8 +12,16 @@
  *
  * Suppor toolkit user class that extends the phpBB core user class.
  */
-class stk_wrapper_user extends user
+class stk_wrapper_user extends stk_wrapper_session
 {
+	protected $stk;
+
+	public function __construct(Pimple $stk)
+	{
+		$this->stk = $stk;
+		parent::user();
+	}
+
 	/**
 	 * Add Language Items - use_db and use_help are assigned where needed (only use them to force inclusion)
 	 *
