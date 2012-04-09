@@ -13,9 +13,9 @@ matrix:
     - env: DB=sqlite
 
 before_script:
-  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'DROP DATABASE IF EXISTS stk_tests;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database stk_tests;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS stk_tests;'; fi"
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "DROP DATABASE IF EXISTS stk_tests;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "create database stk_tests;" -U postgres; fi
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS stk_tests;" -uroot; fi
   - pyrus install --force phpunit/DbUnit;
   - phpenv rehash
   - git submodule update --init
