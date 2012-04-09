@@ -121,10 +121,10 @@ def getphpBBFileList():
 
 def _copy(src, dest, update=False):
 	if (exists(dest) and update == False):
-		print ('Skipping: ' + src + ' (destination already exists)');
+		print ('\033[91m' + 'Skipping: ' + '\033[0m' + src + ' (destination already exists)');
 		return False;
 
-	print (('Copying: ' if update == False else 'Force copying: ') + src + ' to: ' + dest);
+	print (('\033[92m' + 'Copying: ' + '\033[0m' if update == False else '\033[94m' + 'Force copying: ' + '\033[0m') + src + ' to: ' + dest);
 	if isdir(src):
 		if (exists(dirname(dest)) and update == True):
 			rmtree(dest);
@@ -145,30 +145,89 @@ def main():
 
 	parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
 	parser.add_argument(
+		"-f",
+		"--force",
+		dest="force",
+		action="store_true",
+		help="Update files, setting this parameter will force the script to overwrite the files if they already exist"
+	);
+	parser.add_argument(
+		"-s",
+		"--setup",
+		dest="setup",
+		action="store_true",
+		help="Initialise the submodules"
+	);
+	parser.add_argument(
 		"-u",
 		"--update",
 		dest="update",
 		action="store_true",
-		help="Update files, setting this parameter will force the script to overwrite the files if they already exist"
+		help="Update the submodules to point to the latest revision in the tree",
 	);
 	args = parser.parse_args();
 
+	# Update the repos
+	if args.update :
+		repos = {
+			"MODX":		"master",
+			"phpBB":	"develop",
+			"Pimple":	"master",
+			"UMIL":		"master",
+		};
+		for r, b in repos.items():
+			print("\033[91m" + "Updating /vendor/" + r + "\033[0m");
+			chdir('./stk/vendor/' + r);
+
+			p1 = Popen(['git', 'fetch'], stdout=PIPE);
+			print(p1.stdout.read());
+			p1.stdout.close();
+
+			p2 = Popen(['git', 'reset', '--hard', 'HEAD'], stdout=PIPE);
+			print(p2.stdout.read());
+			p2.stdout.close();
+
+			p3 = Popen(['git', 'checkout', b], stdout=PIPE);
+			print(p3.stdout.read());
+			p3.stdout.close();
+
+			p4 = Popen(['git', 'reset', '--hard', 'HEAD'], stdout=PIPE);
+			print(p4.stdout.read());
+			p4.stdout.close();
+
+			p5 = Popen(['git', 'merge', 'origin/' + b], stdout=PIPE);
+			print(p5.stdout.read());
+			p5.stdout.close();
+
+			chdir(cwd);
+			print("\n\n");
+
+		return;
+
+	# Setup
+	if args.setup :
+		print("\033[91m" + "Initialising vendor repositories" + "\033[0m");
+		p1 = Popen(['git', 'submodule', 'update', '--init'], stdout=PIPE);
+		print (p1.stdout.read());
+		p1.stdout.close();
+
 	# phpBB files
+	print("\033[91m" + "Copying files" + "\033[0m");
 	basesrc		= './stk/vendor/phpBB/phpBB/';
 	basedest	= './stk/';
 
 	for file in getphpBBFileList():
 		if isinstance(file[1], types.ListType):
 			for f in file[1]:
-				_copy(basesrc + file[0] + f, basedest + file[2] + f, args.update);
+				_copy(basesrc + file[0] + f, basedest + file[2] + f, args.force);
 		else:
-			_copy(basesrc + file[0], basedest + file[1], args.update);
+			_copy(basesrc + file[0], basedest + file[1], args.force);
 
 	# Pimple
-	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', args.update);
+	_copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', args.force);
 
 	# MODX
-	_copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', args.update);
+	_copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', args.force);
 
 	# Finally install and run composer in 'stk/phpBB/'
 	chdir('./stk/phpBB/');
