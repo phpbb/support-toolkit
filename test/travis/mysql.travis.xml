@@ -20,8 +20,10 @@
 		<whitelist addUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">../../stk/</directory>
 			<exclude>
-				<direcotry suffix="php">../../stk/phpBB/</direcotry>
+				<direcotry suffix=".php">../../stk/phpBB/</direcotry>
 				<directory>../../stk/vendor/</directory>
+				<file>../../stk/config.php</file>
+				<file>../../stk/index.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
