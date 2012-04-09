@@ -172,12 +172,15 @@ def main():
 
 	# Finally install and run composer in 'stk/phpBB/'
 	chdir('./stk/phpBB/');
-	p1 = Popen(['curl', '-s', 'http://getcomposer.org/installer'], stdout=PIPE);
-	p2 = Popen(['php'], stdin=p1.stdout, stdout=PIPE);
+	p1 = Popen(['curl', '-s', 'http://getcomposer.org/installer'], stdout=PIPE, stderr=PIPE);
+	p2 = Popen(['php'], stdin=p1.stdout, stdout=PIPE, stderr=PIPE);
 	p1.stdout.close();
-	p2.communicate()[0];
+	p2_stdout_value = p2.communicate();
+	print (p2_stdout_value);
+	p2.stdout.close();
 
-	p3 = Popen(['php', 'composer.phar', 'install'], stdout=PIPE);
+	p3 = Popen(['php', 'composer.phar', 'install'], stdout=PIPE, stderr=PIPE);
+	print (p3.stdout.read());
 	p3.stdout.close();
 	chdir(cwd);
 
