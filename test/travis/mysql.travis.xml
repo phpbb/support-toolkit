@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <phpunit backupGlobals="true"
          backupStaticAttributes="true"
          colors="true"
@@ -17,11 +18,13 @@
 	</testsuites>
 
 	<filter>
+		<backlist>
+			<directory suffix=".php">../../stk/phpBB/</directory>
+			<directory suffix=".php">../../stk/vendor/</directory>
+		</backlist>
 		<whitelist addUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">../../stk/</directory>
 			<exclude>
-				<direcotry suffix=".php">../../stk/phpBB/</direcotry>
-				<directory>../../stk/vendor/</directory>
 				<file>../../stk/config.php</file>
 				<file>../../stk/index.php</file>
 				<file>../../stk/includes/bootstrap.php</file>
@@ -37,6 +40,6 @@
 		<server name="PHPBB_TEST_DBNAME" value="stk_tests" />
 		<server name="PHPBB_TEST_DBUSER" value="root" />
 		<server name="PHPBB_TEST_DBPASSWD" value="" />
-		<server name="PHPBB_TEST_TABLE_PREFIX" value="phpbb_"/>
+		<server name="PHPBB_TEST_TABLE_PREFIX" value="phpbb_" />
 	</php>
 </phpunit>

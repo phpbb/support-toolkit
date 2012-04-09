@@ -17,25 +17,31 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./stk/</directory>
-            <exclude>
-                <file>./stk/index.php</file>
-				<file>./stk/bootstrap.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+	<filter>
+		<backlist>
+			<directory suffix=".php">stk/phpBB/</directory>
+			<directory suffix=".php">stk/vendor/</directory>
+		</backlist>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">stk/</directory>
+			<exclude>
+				<file>stk/config.php</file>
+				<file>stk/index.php</file>
+				<file>stk/includes/bootstrap.php</file>
+				<file>stk/includes/constants.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
 
 	<!-- Update to match your local environment.
 		 Accepts the normal phpBB configuration options. -->
 	<php>
-		<const name="dbms" value=""/>
-		<const name="dbhost" value="" />
-		<const name="dbport" value="" />
-		<const name="dbname" value="" />
-		<const name="dbuser" value="" />
-		<const name="dbpasswd" value="" />
-		<const name="table_prefix" value="" />
+		<server name="PHPBB_TEST_DBMS" value="" />
+		<server name="PHPBB_TEST_DBHOST" value="" />
+		<server name="PHPBB_TEST_DBPORT" value="" />
+		<server name="PHPBB_TEST_DBNAME" value="" />
+		<server name="PHPBB_TEST_DBUSER" value="" />
+		<server name="PHPBB_TEST_DBPASSWD" value="" />
+		<server name="PHPBB_TEST_TABLE_PREFIX" value="" />
 	</php>
 </phpunit>
