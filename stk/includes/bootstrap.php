@@ -61,13 +61,13 @@ $stk['config'] = $stk->share(function() {
 });
 
 // Load some initial phpBB files/information
-$phpbb_root_path	= $stk['config']['phpbb_root_path'];
+$phpbb_root_path	= PHPBB_FILES;
 $phpEx				= $stk['config']['phpEx'];
 
 require(PHPBB_FILES . 'includes/startup.php');
-if (file_exists($phpbb_root_path . 'config.php'))
+if (file_exists($stk['config']['phpbb_root_path'] . 'config.php'))
 {
-	require($phpbb_root_path . 'config.php');
+	require($stk['config']['phpbb_root_path'] . 'config.php');
 
 	// Store the db_config data in the DI container and unset what we don't need anymore
 	$stk['phpbb']['db_config'] = array(
@@ -167,8 +167,8 @@ $stk['phpbb']['config_mock'] = $stk->share(function($phpbb) {
 $config = $stk['phpbb']['config_mock'];
 
 // Setup the phpBB User object
-$stk['phpbb']['user'] = $stk->share(function() use ($config) {
-	return new stk_wrapper_user();
+$stk['phpbb']['user'] = $stk->share(function() use ($stk) {
+	return new stk_wrapper_user($stk);
 });
 $user = $stk['phpbb']['user'];
 

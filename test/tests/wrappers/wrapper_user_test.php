@@ -13,7 +13,8 @@ class wrapper_user_test extends stk_test_case
 
 	protected function setUp()
 	{
-		$this->user = new stk_wrapper_user();
+		$stk = $this->get_test_case_helpers()->getSTKObject();
+		$this->user = $stk['phpbb']['user'];
 	}
 
 	public function test_stk_add_lang()

@@ -15,6 +15,15 @@
 class stk_wrapper_user extends phpbb_user
 {
 	/**
+	* Constructor to set the lang path
+	*/
+	function __construct($stk)
+	{
+		// phpBB core language files are fetched from the phpBB installation
+		$this->lang_path = $stk['config']['phpbb_root_path'] . 'language/';
+	}
+
+	/**
 	 * Add Language Items - use_db and use_help are assigned where needed (only use them to force inclusion)
 	 *
 	 * @param mixed $lang_file specifies the language entries to include
