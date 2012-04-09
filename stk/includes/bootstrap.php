@@ -158,22 +158,25 @@ $config = $stk['phpbb']['config_mock'];
 
 // Setup the phpBB User object
 $stk['phpbb']['user'] = $stk->share(function() use ($config) {
-	require PHPBB_FILES . 'includes/session.php';
 	return new stk_wrapper_user();
 });
 $user = $stk['phpbb']['user'];
 
 // Setup the phpBB template object
-$stk['phpbb']['template_locator'] = $stk->share(function() {
-	return new phpbb_template_locator();
+$stk['phpbb']['style_locator'] = $stk->share(function() {
+	return new phpbb_style_resource_locator();
 });
-$stk['phpbb']['template_path_provider'] = $stk->share(function() {
-	return new phpbb_template_path_provider();
+$stk['phpbb']['style_path_provider'] = $stk->share(function() {
+	return new phpbb_style_path_provider();
 });
 $stk['phpbb']['template'] = $stk->share(function() use ($stk) {
 	return new stk_wrapper_template($stk);
 });
-$template = $stk['phpbb']['template'];
+$stk['phpbb']['style'] = $stk->share(function() use ($stk) {
+	return new stk_wrapper_style($stk);
+});
+$phpbb_style	= $stk['phpbb']['style'];
+$template		= $stk['phpbb']['template'];
 
 // Setup the version controller
 $stk['vc'] = $stk->share(function($stk) {
@@ -207,7 +210,7 @@ $stk['phpbb']['user']->setup(array('acp/common'));
 $stk['phpbb']['user']->stk_add_lang('common');
 
 // Use the STK template directory
-$stk['phpbb']['template']->set_custom_template(STK_ROOT . 'view/template/', 'supporttoolkit');
+$stk['phpbb']['style']->set_custom_style();
 
 // Include some STK files that can't be autoloaded
 require STK_ROOT . 'includes/constants.php';

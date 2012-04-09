@@ -13,11 +13,6 @@ class wrapper_user_test extends stk_test_case
 
 	protected function setUp()
 	{
-		if (!class_exists('session'))
-		{
-			require PHPBB_FILES . 'includes/session.php';
-		}
-
 		$this->user = new stk_wrapper_user();
 	}
 

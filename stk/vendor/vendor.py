@@ -44,6 +44,7 @@ def getphpBBFileList():
 				"functions.php",
 				"session.php",
 				"startup.php",
+				"user.php",
 			],
 			"phpBB/includes/"
 		],
@@ -80,20 +81,20 @@ def getphpBBFileList():
 			"phpBB/includes/request/"
 		],
 		[
-			"includes/template/",
+			"includes/style/",
 			[
-				"context.php",
-				"compile.php",
-				"filter.php",
-				"locator.php",
 				"path_provider.php",
 				"path_provider_interface.php",
-				"renderer.php",
-				"renderer_eval.php",
-				"renderer_include.php",
+				"resource_locator.php",
+				"style.php",
 				"template.php",
+				"template_compile.php",
+				"template_context.php",
+				"template_filter.php",
+				"template_renderer.php",
+				"template_renderer_include.php",
 			],
-			"phpBB/includes/template/"
+			"phpBB/includes/style/"
 		],
 		[
 			"includes/utf/",

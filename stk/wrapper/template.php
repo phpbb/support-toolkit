@@ -13,7 +13,7 @@
  * Wrapper class for the phpBB template object to easily allow additional
  * functionallity.
  */
-class stk_wrapper_template extends phpbb_template
+class stk_wrapper_template extends phpbb_style_template
 {
 	private $stk;
 
@@ -29,29 +29,11 @@ class stk_wrapper_template extends phpbb_template
 			$stk['config']['phpEx'],
 			$stk['phpbb']['config_mock'],
 			$stk['phpbb']['user'],
-			$stk['phpbb']['template_locator'],
-			$stk['phpbb']['template_path_provider']
+			$stk['phpbb']['style_locator'],
+			$stk['phpbb']['style_path_provider']
 		);
 
 		$this->stk = $stk;
-	}
-
-	/**
-	 * Set custom template location (able to use directory outside of phpBB).
-	 *
-	 * Note: Templates are compiled into the STK cache directory.
-	 *
-	 * @param string $template_path Path to template directory
-	 * @param string $template_name Name of template
-	 * @param string $fallback_template_path Path to fallback template
-	 * @param string $fallback_template_name Name of fallback template
-	 */
-	public function set_custom_template($template_path, $template_name, $fallback_template_path = false, $fallback_template_name = false)
-	{
-		parent::set_custom_template($template_path, $template_name, $fallback_template_path, $fallback_template_name);
-
-		// Change the template cache path to our own
-		$this->cachepath = STK_ROOT . 'cache/tpl_';
 	}
 
 	/**
