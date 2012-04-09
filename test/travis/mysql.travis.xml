@@ -24,6 +24,8 @@
 				<directory>../../stk/vendor/</directory>
 				<file>../../stk/config.php</file>
 				<file>../../stk/index.php</file>
+				<file>../../stk/includes/bootstrap.php</file>
+				<file>../../stk/includes/constants.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
