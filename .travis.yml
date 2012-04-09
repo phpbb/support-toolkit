@@ -22,7 +22,7 @@ before_script:
   - python ./stk/vendor/vendor.py -u
 
 script:
-  - phpunit --configuration test/travis/$DB.travis.xml --coverage-text
+  - phpunit --configuration test/travis/$DB.travis.xml
 
 notifications:
   email:
