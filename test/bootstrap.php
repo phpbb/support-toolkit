@@ -18,19 +18,6 @@ define('PHPBB_ROOT_PATH', $phpbb_root_path);
 $phpEx = 'php';
 define('IN_PHPBB', true);
 
-// Map the db constants to the phpBB vars
-if (!defined('dbms'))
-{
-	define('dbms', 'sqlite');
-	define('dbhost', __DIR__ . '/unit_tests.sqlite2'); // filename
-	define('dbuser', '');
-	define('dbpasswd', '');
-	define('dbname', '');
-	define('dbport', '');
-	define('table_prefix', '');
-}
-$dbms = dbms;
-
 $phpbb_tests_path = $phpbb_root_path . '../tests/';
 $phpEx = 'php';
 
