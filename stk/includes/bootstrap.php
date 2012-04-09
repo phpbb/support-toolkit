@@ -18,7 +18,10 @@ if (!defined('IN_PHPBB')) define('IN_PHPBB', true);
 define('NEED_SID', true);
 
 // Setup the DI container
-require STK_ROOT . 'core/DI/Pimple.php';
+if (!class_exists('Pimple'))
+{
+	require STK_ROOT . 'core/DI/Pimple.php';
+}
 $stk = new Pimple();
 $stk['cache'] = $stk->share(function() {
 	return new Pimple();
