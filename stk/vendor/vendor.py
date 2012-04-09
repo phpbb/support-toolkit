@@ -8,13 +8,22 @@ into their correct locations. This tool expects that the vendor repositories
 are already checked out.
 """
 import argparse;
-from os import makedirs, remove;
+from os import chdir, getcwd, makedirs, remove;
 from os.path import dirname, exists, isdir;
 from shutil import copy2, copytree, rmtree;
+from subprocess import PIPE, Popen;
 import types;
 
 def getphpBBFileList():
 	return [
+		[
+			"",
+			[
+				"composer.json",
+				"composer.lock",
+			],
+			"phpBB/"
+		],
 		[
 			"adm/images/",
 			[
@@ -132,7 +141,9 @@ def _copy(src, dest, update=False):
 	return True;
 
 def main():
-	parser	= argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
+	cwd = getcwd();
+
+	parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
 	parser.add_argument(
 		"-u",
 		"--update",
@@ -140,7 +151,7 @@ def main():
 		action="store_true",
 		help="Update files, setting this parameter will force the script to overwrite the files if they already exist"
 	);
-	args	= parser.parse_args();
+	args = parser.parse_args();
 
 	# phpBB files
 	basesrc		= './stk/vendor/phpBB/phpBB/';
@@ -158,6 +169,17 @@ def main():
 
 	# MODX
 	_copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', args.update);
+
+	# Finally install and run composer in 'stk/phpBB/'
+	chdir('./stk/phpBB/');
+	p1 = Popen(['curl', '-s', 'http://getcomposer.org/installer'], stdout=PIPE);
+	p2 = Popen(['php'], stdin=p1.stdout, stdout=PIPE);
+	p1.stdout.close();
+	p2.communicate()[0];
+
+	p3 = Popen(['php', 'composer.phar', 'install'], stdout=PIPE);
+	p3.stdout.close();
+	chdir(cwd);
 
 if __name__ == "__main__":
 	main();
