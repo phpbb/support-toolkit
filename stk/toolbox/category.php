@@ -54,7 +54,7 @@ class stk_toolbox_category implements Serializable
 	 */
 	public function loadCategoryLanguageFile()
 	{
-		$this->stk['phpbb']['user']->stk_add_lang("categories/{$this->name}");
+		$this->stk['phpbb']['user']->stk_add_lang("categories/{$this->name}", false, false, false, '', true);
 	}
 
 	/**

@@ -26,14 +26,15 @@ class stk_wrapper_user extends phpbb_user
 	/**
 	 * Add Language Items - use_db and use_help are assigned where needed (only use them to force inclusion)
 	 *
-	 * @param mixed $lang_file specifies the language entries to include
-	 * @param mixed $force_lang when set to a language iso code this language is used, otherwise
-	 *                          the users default language will be used.
-	 * @param bool $use_db internal variable for recursion, do not use
-	 * @param bool $use_help internal variable for recursion, do not use
-	 * @param string $ext_name The extension to load language from, or empty for core files
+	 * @param mixed  $lang_file  specifies the language entries to include
+	 * @param mixed  $force_lang when set to a language iso code this language is used, otherwise
+	 *                           the users default language will be used.
+	 * @param bool   $use_db     internal variable for recursion, do not use
+	 * @param bool   $use_help   internal variable for recursion, do not use
+	 * @param string $ext_name   The extension to load language from, or empty for core files
+	 * @param bool   $canfail    If the language file doesn't exist don't trigger an error
 	 */
-	function stk_add_lang($lang_file, $force_lang = false, $use_db = false, $use_help = false, $ext_name = '')
+	function stk_add_lang($lang_file, $force_lang = false, $use_db = false, $use_help = false, $ext_name = '', $canfail = false)
 	{
 		global $config;
 
@@ -93,14 +94,16 @@ class stk_wrapper_user extends phpbb_user
 		}
 
 		// No language file :/
-		if (empty($this->lang_name))
+		if (empty($this->lang_name) && !$canfail)
 		{
 			trigger_error("Language file: {$lang_file}.php" . ' missing!', E_USER_ERROR);
 		}
-
-		// Add the file
-		parent::add_lang($lang_file, $use_db, $use_help, $ext_name);
-		$loaded[] = $lang_file;
+		else if (!$canfail)
+		{
+			// Add the file
+			parent::add_lang($lang_file, $use_db, $use_help, $ext_name);
+			$loaded[] = $lang_file;
+		}
 
 		// Now reset the paths so phpBB can continue to operate as usual
 		$this->lang_path = $lang_data['lang_path'];

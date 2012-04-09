@@ -7,6 +7,8 @@ class stk_test_case_helpers extends phpbb_test_case_helpers
 	 */
 	public function getSTKObject()
 	{
+		global $phpbb_root_path;
+
 		$stk = new Pimple();
 		$stk['cache'] = $stk->share(function() { return new Pimple(); });
 		$stk['phpbb'] = $stk->share(function() { return new Pimple(); });
@@ -18,8 +20,13 @@ class stk_test_case_helpers extends phpbb_test_case_helpers
 			$cache_service->setDIContainer($stk);
 			return $cache_service;
 		});
-		$stk['phpbb']['user'] = $stk->share(function() {
-			return new stk_test_mock_user();
+		$stk['config'] = array(
+			'phpbb_root_path'	=> $phpbb_root_path,
+			'phpEx'				=> 'php',
+		);
+		$stk['phpbb']['user'] = $stk->share(function() use ($stk) {
+			//return new stk_test_mock_user();
+			return new stk_wrapper_user($stk);
 		});
 		$stk['toolbox']['category'] = function () use ($stk) {
 			return new stk_toolbox_category($stk);

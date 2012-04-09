@@ -19,9 +19,9 @@ class wrapper_user_test extends stk_test_case
 
 	public function test_stk_add_lang()
 	{
-		$this->assertArrayNotHasKey('S_CONTENT_DIRECTION', $this->user->lang);
+		$this->assertFalse(isset($this->user->lang['S_CONTENT_DIRECTION']));
 		$this->user->stk_add_lang('common');
-		$this->assertArrayHasKey('S_CONTENT_DIRECTION', $this->user->lang);
+		$this->assertEquals('ltr', $this->user->lang['S_CONTENT_DIRECTION']);
 	}
 
 	/**
