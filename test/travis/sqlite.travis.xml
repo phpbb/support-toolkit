@@ -28,4 +28,5 @@
 				<file>../../stk/includes/constants.php</file>
 			</exclude>
 		</whitelist>
+	</filter>
 </phpunit>

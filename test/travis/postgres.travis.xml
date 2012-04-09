@@ -28,6 +28,7 @@
 				<file>../../stk/includes/constants.php</file>
 			</exclude>
 		</whitelist>
+	</filter>
 
 	<php>
 		<server name="PHPBB_TEST_DBMS" value="postgres"/>
@@ -36,6 +37,6 @@
 		<server name="PHPBB_TEST_DBNAME" value="stk_tests" />
 		<server name="PHPBB_TEST_DBUSER" value="postgres" />
 		<server name="PHPBB_TEST_DBPASSWD" value="" />
-		<server name="PHPBB_TEST_TABLE_PREFIX" value="phpbb_"/>
+		<server name="PHPBB_TEST_TABLE_PREFIX" value="phpbb_" />
 	</php>
 </phpunit>
