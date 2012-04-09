@@ -16,6 +16,16 @@
 		</testsuite>
 	</testsuites>
 
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../../stk/</directory>
+			<exclude>
+				<direcotry suffix="php">../../stk/phpBB/</direcotry>
+				<directory>../../stk/vendor/</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+
 	<php>
 		<const name="dbms" value="postgres"/>
 		<const name="dbhost" value="localhost" />
