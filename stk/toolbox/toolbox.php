@@ -25,6 +25,10 @@ class stk_toolbox
 		$this->toolsPath	= $stk['toolbox']['toolpath'];
 
 		// Bind a toolbox specific classloader
+		if (!class_exists('stk_core_class_loader'))
+		{
+			require STK_ROOT . 'core/class_loader.php';
+		}
 		$toolbox_class_loader = new stk_core_class_loader('stktool_', $this->toolsPath->getPathname() . '/');
 		$toolbox_class_loader->register();
 	}

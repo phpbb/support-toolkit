@@ -37,11 +37,18 @@ $stk['toolbox'] = $stk->share(function() {
 });
 
 // Load and register the class loaders
-require STK_ROOT . 'core/class_loader.php';
 $stk['class_loaders']['stk'] = $stk->share(function() {
+	if (!class_exists('stk_core_class_loader'))
+	{
+		require STK_ROOT . 'core/class_loader.php';
+	}
 	return new stk_core_class_loader('stk_', STK_ROOT);
 });
 $stk['class_loaders']['phpbb'] = $stk->share(function() {
+	if (!class_exists('stk_core_class_loader'))
+	{
+		require STK_ROOT . 'core/class_loader.php';
+	}
 	return new stk_core_class_loader('phpbb_', PHPBB_FILES . 'includes/');
 });
 $stk['class_loaders']['stk']->register();
