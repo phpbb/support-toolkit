@@ -120,7 +120,7 @@ class STKVendor:
 	];
 
 	__repos = {
-		"MODX":		"master",
+		"MODX":		"v1.2.5",
 		"phpBB":	"develop",
 		"Pimple":	"master",
 		"UMIL":		"master",
@@ -231,7 +231,8 @@ class STKVendor:
 			print(p4.stdout.read());
 			p4.stdout.close();
 
-			p5 = Popen(['git', 'merge', 'origin/' + b], stdout=PIPE);
+			b = 'origin/' + b if (b[:1] != "v") else b;
+			p5 = Popen(['git', 'merge', b], stdout=PIPE);
 			print(p5.stdout.read());
 			p5.stdout.close();
 
