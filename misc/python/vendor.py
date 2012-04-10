@@ -119,8 +119,6 @@ class STKVendor:
 		]
 	];
 
-	args = [];
-
 	__repos = {
 		"MODX":		"master",
 		"phpBB":	"develop",
@@ -128,8 +126,12 @@ class STKVendor:
 		"UMIL":		"master",
 	};
 
+	args	= [];
+	cwd		= '';
+
 	def __init__(self):
-		self.args = self.getCommandLineArgs();
+		self.args	= self.getCommandLineArgs();
+		self.cwd	= getcwd();
 
 	def getCommandLineArgs(self):
 		parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
@@ -200,7 +202,7 @@ class STKVendor:
 		p3 = Popen(['php', 'composer.phar', 'install'], stdout=PIPE, stderr=PIPE);
 		print (p3.stdout.read());
 		p3.stdout.close();
-		chdir(cwd);
+		chdir(self.cwd);
 
 	def setupRepos(self):
 		print("\033[91m" + "Initialising vendor repositories" + "\033[0m");
@@ -233,12 +235,11 @@ class STKVendor:
 			print(p5.stdout.read());
 			p5.stdout.close();
 
-			chdir(cwd);
+			chdir(self.cwd);
 			print("\n\n");
 
 def main():
 	vendor	= STKVendor();
-	cwd		= getcwd();
 
 	# Update the repos
 	if vendor.args.update :
