@@ -119,7 +119,7 @@ class STKVendor:
 		]
 	];
 
-	__args = [];
+	args = [];
 
 	__repos = {
 		"MODX":		"master",
@@ -129,7 +129,7 @@ class STKVendor:
 	};
 
 	def __init__(self):
-		self.__args = self.getCommandLineArgs();
+		self.args = self.getCommandLineArgs();
 
 	def getCommandLineArgs(self):
 		parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
@@ -163,9 +163,9 @@ class STKVendor:
 		for file in self.__phpBBFiles:
 			if isinstance(file[1], types.ListType):
 				for f in file[1]:
-					self._copy(basesrc + file[0] + f, basedest + file[2] + f, self.__args.force);
+					self._copy(basesrc + file[0] + f, basedest + file[2] + f, self.args.force);
 			else:
-				self._copy(basesrc + file[0], basedest + file[1], self.__args.force);
+				self._copy(basesrc + file[0], basedest + file[1], self.args.force);
 
 	def _copy(self, src, dest, update=False):
 		if (exists(dest) and update == False):
@@ -241,11 +241,11 @@ def main():
 	cwd		= getcwd();
 
 	# Update the repos
-	if vendor.__args.update :
+	if vendor.args.update :
 		vendor.updateRepos();
 
 	# Setup
-	if vendor.__args.setup :
+	if vendor.args.setup :
 		vendor.setupRepos();
 
 	print("\033[91m" + "Copying files" + "\033[0m");
@@ -253,10 +253,10 @@ def main():
 	vendor.copyphpBBFiles();
 
 	# Pimple
-	vendor._copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', vendor.__args.force);
+	vendor._copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', vendor.args.force);
 
 	# MODX
-	vendor._copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', vendor.__args.force);
+	vendor._copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', vendor.args.force);
 
 	# Finally install and run composer in 'stk/phpBB/'
 	vendor.installComposor();
