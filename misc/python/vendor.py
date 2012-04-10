@@ -131,7 +131,7 @@ class STKVendor:
 	def __init__(self):
 		self.__args = self.getCommandLineArgs();
 
-	def getCommandLineArgs():
+	def getCommandLineArgs(self):
 		parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
 		parser.add_argument(
 			"-f",
