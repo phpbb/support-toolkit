@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 """Support Toolkit vender.py
 @package SupportToolkit
 @copyright (c) 2012 phpBB Group
