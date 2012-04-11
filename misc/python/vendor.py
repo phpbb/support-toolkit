@@ -247,6 +247,7 @@ def main():
 	# Update the repos
 	if vendor.args.update :
 		vendor.updateRepos();
+		return;
 
 	# Setup
 	if vendor.args.setup :
