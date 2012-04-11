@@ -103,6 +103,7 @@ class STKVendor:
 				"template_context.php",
 				"template_filter.php",
 				"template_renderer.php",
+				"template_renderer_eval.php",
 				"template_renderer_include.php",
 			],
 			"phpBB/includes/style/"
