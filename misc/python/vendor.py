@@ -9,14 +9,14 @@ This utility copies all vendor files that are required by the Support Toolkit
 into their correct locations. This tool expects that the vendor repositories
 are already checked out.
 """
-import argparse;
-from os import chdir, getcwd, makedirs, remove;
-from os.path import dirname, exists, isdir;
-from shutil import copy2, copytree, rmtree;
-from subprocess import PIPE, Popen;
-import types;
+import argparse
+from os import chdir, getcwd, makedirs, remove
+from os.path import dirname, exists, isdir
+from shutil import copy2, copytree, rmtree
+from subprocess import PIPE, Popen
+import types
 
-class STKVendor:
+class STKVendor :
 	__phpBBFiles = [
 		[
 			"",
@@ -120,152 +120,211 @@ class STKVendor:
 			"includes/utf/data/",
 			"phpBB/includes/utf/data/"
 		]
-	];
+	]
 
 	__repos = {
 		"MODX":		"v1.2.5",
 		"phpBB":	"develop",
 		"Pimple":	"master",
 		"UMIL":		"master",
-	};
+	}
 
-	args	= [];
-	cwd		= '';
+	args	= []
+	cwd		= ''
 
-	def __init__(self):
-		self.args	= self.getCommandLineArgs();
-		self.cwd	= getcwd();
+	""" Set of commands passed into `Popen` on various occations"""
+	commands = {
+		'php':	{
+			'curl': [
+				'curl',
+				'-s',
+				'http://getcomposer.org/installer',
+			],
+			'php': [
+				'php',
+			],
+			'composerInstall': [
+				'php',
+				'composer.phar',
+				'install',
+			],
+		},
+		'git':	{
+			'fetch': [
+				'git',
+				'fetch',
+			],
+			'init': [
+				'git',
+				'submodule',
+				'update',
+				'--init',
+			],
+			'reset': [
+				'git',
+				'reset',
+				'--hard',
+				'HEAD',
+			],
+		},
+	}
 
-	def getCommandLineArgs(self):
-		parser = argparse.ArgumentParser(description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.');
+	def __init__(self) :
+		self.args	= self.getCommandLineArgs()
+		self.cwd	= getcwd()
+
+	def getCommandLineArgs(self) :
+		parser = argparse.ArgumentParser(
+					description='Script that copies vendor files to the correct location into the Support Toolkit tree. This script assumes that the vendor submodules are already checked out.'
+		)
 		parser.add_argument(
 			"-f",
 			"--force",
 			dest="force",
 			action="store_true",
 			help="Update files, setting this parameter will force the script to overwrite the files if they already exist"
-		);
+		)
 		parser.add_argument(
 			"-s",
 			"--setup",
 			dest="setup",
 			action="store_true",
 			help="Initialise the submodules"
-		);
+		)
 		parser.add_argument(
 			"-u",
 			"--update",
 			dest="update",
 			action="store_true",
 			help="Update the submodules to point to the latest revision in the tree",
-		);
-		return parser.parse_args();
+		)
+		return parser.parse_args()
 
-	def copyphpBBFiles(self):
-		basesrc		= './stk/vendor/phpBB/phpBB/';
-		basedest	= './stk/';
+	def copyphpBBFiles(self) :
+		basesrc		= './stk/vendor/phpBB/phpBB/'
+		basedest	= './stk/'
 
-		for file in self.__phpBBFiles:
-			if isinstance(file[1], types.ListType):
+		for file in self.__phpBBFiles :
+			if isinstance(file[1], types.ListType) :
 				for f in file[1]:
-					self._copy(basesrc + file[0] + f, basedest + file[2] + f, self.args.force);
-			else:
-				self._copy(basesrc + file[0], basedest + file[1], self.args.force);
+					self._copy(
+						basesrc + file[0] + f,
+						basedest + file[2] + f,
+						self.args.force
+					)
+			else :
+				self._copy(
+					basesrc + file[0],
+					basedest + file[1],
+					self.args.force
+				)
 
-	def _copy(self, src, dest, update=False):
-		if (exists(dest) and update == False):
-			print ('\033[91m' + 'Skipping: ' + '\033[0m' + src + ' (destination already exists)');
-			return False;
+	def _copy(self, src, dest, update=False) :
+		if (exists(dest) and update == False) :
+			print ('\033[91m' + 'Skipping: ' + '\033[0m' + src + ' (destination already exists)')
+			return False
 
-		print (('\033[92m' + 'Copying: ' + '\033[0m' if update == False else '\033[94m' + 'Force copying: ' + '\033[0m') + src + ' to: ' + dest);
-		if isdir(src):
+		out = ('\033[92m' + 'Copying: ' + '\033[0m' if update == False else '\033[94m' + 'Force copying: ' + '\033[0m') + src + ' to: ' + dest
+		print (out)
+		if isdir(src) :
 			if (exists(dirname(dest)) and update == True):
-				rmtree(dest);
+				rmtree(dest)
 
-			copytree(src, dest);
-		else:
-			if not exists(dirname(dest)):
-				makedirs(dirname(dest));
+			copytree(src, dest)
+		else :
+			if not exists(dirname(dest)) :
+				makedirs(dirname(dest))
 			elif (exists(dest) and update == True):
-				remove(dest);
+				remove(dest)
 
-			copy2(src, dest);
+			copy2(src, dest)
 
-		return True;
+		return True
 
-	def installComposor(self):
-		chdir('./stk/phpBB/');
-		p1 = Popen(['curl', '-s', 'http://getcomposer.org/installer'], stdout=PIPE, stderr=PIPE);
-		p2 = Popen(['php'], stdin=p1.stdout, stdout=PIPE, stderr=PIPE);
-		p1.stdout.close();
-		p2_stdout_value = p2.communicate();
-		print (p2_stdout_value);
-		p2.stdout.close();
+	def installComposor(self) :
+		chdir('./stk/phpBB/')
+
+		p1 = Popen(self.commands.php.curl, stdout=PIPE, stderr=PIPE)
+		p2 = Popen(self.commands.php.php, stdin=p1.stdout, stdout=PIPE, stderr=PIPE)
+		p1.stdout.close()
+		p2_stdout_value = p2.communicate()
+		print (p2_stdout_value)
+		p2.stdout.close()
 	
-		p3 = Popen(['php', 'composer.phar', 'install'], stdout=PIPE, stderr=PIPE);
-		print (p3.stdout.read());
-		p3.stdout.close();
-		chdir(self.cwd);
+		p3 = Popen(self.commands.php.composerInstall, stdout=PIPE, stderr=PIPE)
+		print (p3.stdout.read())
+		p3.stdout.close()
+		chdir(self.cwd)
 
-	def setupRepos(self):
-		print("\033[91m" + "Initialising vendor repositories" + "\033[0m");
-		p1 = Popen(['git', 'submodule', 'update', '--init'], stdout=PIPE);
-		print (p1.stdout.read());
-		p1.stdout.close();
+	def setupRepos(self) :
+		print("\033[91m" + "Initialising vendor repositories" + "\033[0m")
+		p1 = Popen(self.commands.git.init, stdout=PIPE)
+		print (p1.stdout.read())
+		p1.stdout.close()
 
-	def updateRepos(self):
-		for r, b in self.__repos.items():
-			print("\033[91m" + "Updating /vendor/" + r + "\033[0m");
-			chdir('./stk/vendor/' + r);
+	def updateRepos(self) :
+		for r, b in self.__repos.items() :
+			print("\033[91m" + "Updating /vendor/" + r + "\033[0m")
+			chdir('./stk/vendor/' + r)
 
-			p1 = Popen(['git', 'fetch'], stdout=PIPE);
-			print(p1.stdout.read());
-			p1.stdout.close();
+			p1 = Popen(self.commands.git.fetch, stdout=PIPE)
+			print(p1.stdout.read())
+			p1.stdout.close()
 
-			p2 = Popen(['git', 'reset', '--hard', 'HEAD'], stdout=PIPE);
-			print(p2.stdout.read());
-			p2.stdout.close();
+			p2		= Popen(self.commands.git.reset, stdout=PIPE)
+			print(p2.stdout.read())
+			p2.stdout.close()
 
-			p3 = Popen(['git', 'checkout', b], stdout=PIPE);
-			print(p3.stdout.read());
-			p3.stdout.close();
+			com3	= ['git', 'checkout', b]
+			p3		= Popen(com3, stdout=PIPE)
+			print(p3.stdout.read())
+			p3.stdout.close()
 
-			p4 = Popen(['git', 'reset', '--hard', 'HEAD'], stdout=PIPE);
-			print(p4.stdout.read());
-			p4.stdout.close();
+			p4		= Popen(self.commands.git.reset, stdout=PIPE)
+			print(p4.stdout.read())
+			p4.stdout.close()
 
-			b = 'origin/' + b if (b[:1] != "v") else b;
-			p5 = Popen(['git', 'merge', b], stdout=PIPE);
-			print(p5.stdout.read());
-			p5.stdout.close();
+			b		= 'origin/' + b if (b[:1] != "v") else b
+			com5	= ['git', 'merge', b]
+			p5		= Popen(com5, stdout=PIPE)
+			print(p5.stdout.read())
+			p5.stdout.close()
 
-			chdir(self.cwd);
-			print("\n\n");
+			chdir(self.cwd)
+			print("\n\n")
 
 def main():
-	vendor	= STKVendor();
+	vendor	= STKVendor()
 
 	# Update the repos
 	if vendor.args.update :
-		vendor.updateRepos();
-		return;
+		vendor.updateRepos()
+		return
 
 	# Setup
 	if vendor.args.setup :
-		vendor.setupRepos();
+		vendor.setupRepos()
 
-	print("\033[91m" + "Copying files" + "\033[0m");
+	print("\033[91m" + "Copying files" + "\033[0m")
 	# phpBB files
-	vendor.copyphpBBFiles();
+	vendor.copyphpBBFiles()
 
 	# Pimple
-	vendor._copy ('./stk/vendor/Pimple/lib/Pimple.php', './stk/core/DI/Pimple.php', vendor.args.force);
+	vendor._copy (
+		'./stk/vendor/Pimple/lib/Pimple.php',
+		'./stk/core/DI/Pimple.php',
+		vendor.args.force
+	)
 
 	# MODX
-	vendor._copy ('./stk/vendor/MODX/modx.prosilver.en.xsl', './contrib/modx.prosilver.en.xsl', vendor.args.force);
+	vendor._copy (
+		'./stk/vendor/MODX/modx.prosilver.en.xsl',
+		'./contrib/modx.prosilver.en.xsl',
+		vendor.args.force
+	)
 
 	# Finally install and run composer in 'stk/phpBB/'
-	vendor.installComposor();
+	vendor.installComposor()
 
-if __name__ == "__main__":
-	main();
+if __name__ == "__main__" :
+	main()
