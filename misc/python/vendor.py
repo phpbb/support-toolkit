@@ -266,7 +266,7 @@ class STKVendor :
 
 	def setupRepos(self) :
 		print("\033[91m" + "Initialising vendor repositories" + "\033[0m")
-		p1 = Popen(self.commands.git.init, stdout=PIPE)
+		p1 = Popen(self.commands['git']['init'], stdout=PIPE)
 		print (p1.stdout.read())
 		p1.stdout.close()
 
