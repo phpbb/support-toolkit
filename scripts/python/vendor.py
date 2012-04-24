@@ -130,7 +130,7 @@ class STKVendor :
 	}
 
 	args	= []
-	cwd		= ''
+	cwd	= ''
 
 	""" Set of commands passed into `Popen` on various occations"""
 	commands = {
@@ -301,38 +301,38 @@ class STKVendor :
 			chdir(self.cwd)
 			print("\n\n")
 
-def main():
-	vendor	= STKVendor()
+	def run(self) :
+		# Update the repos
+		if self.args.update :
+			self.updateRepos()
+			return
 
-	# Update the repos
-	if vendor.args.update :
-		vendor.updateRepos()
-		return
+		# Setup
+		if self.args.setup :
+			self.setupRepos()
 
-	# Setup
-	if vendor.args.setup :
-		vendor.setupRepos()
+		print("\033[91m" + "Copying files" + "\033[0m")
+		# phpBB files
+		self.copyphpBBFiles()
 
-	print("\033[91m" + "Copying files" + "\033[0m")
-	# phpBB files
-	vendor.copyphpBBFiles()
+		# Pimple
+		self._copy (
+			'./stk/vendor/Pimple/lib/Pimple.php',
+			'./stk/core/DI/Pimple.php',
+			self.args.force
+		)
 
-	# Pimple
-	vendor._copy (
-		'./stk/vendor/Pimple/lib/Pimple.php',
-		'./stk/core/DI/Pimple.php',
-		vendor.args.force
-	)
+		# MODX
+		self._copy (
+			'./stk/vendor/MODX/modx.prosilver.en.xsl',
+			'./contrib/modx.prosilver.en.xsl',
+			self.args.force
+		)
 
-	# MODX
-	vendor._copy (
-		'./stk/vendor/MODX/modx.prosilver.en.xsl',
-		'./contrib/modx.prosilver.en.xsl',
-		vendor.args.force
-	)
-
-	# Finally install and run composer in 'stk/phpBB/'
-	vendor.installComposor()
+		# Finally install and run composer in 'stk/phpBB/'
+		self.installComposor()
 
 if __name__ == "__main__" :
-	main()
+	vendor = STKVendor()
+	vendor.run()
+
