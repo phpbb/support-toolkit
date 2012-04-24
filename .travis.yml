@@ -34,7 +34,7 @@ notifications:
     on_success: always
     on_faillure: always
 
-branches:
-  only:
-    stk/ascraeus
+# branches:
+#  only:
+#    stk/ascraeus
 
