@@ -9,5 +9,8 @@
 
 class stktool_usergroup_resync_user_groups extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

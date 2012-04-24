@@ -9,5 +9,8 @@
 
 class stktool_support_readd_module_management extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }
