@@ -64,8 +64,6 @@ class stk_includes_utilities
 		header('Cache-Control: private, no-cache="set-cookie"');
 		header('Expires: 0');
 		header('Pragma: no-cache');
-
-		return;
 	}
 
 	/**

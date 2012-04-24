@@ -140,7 +140,7 @@ class stk_toolbox_tool implements Serializable
 		}
 		else
 		{
-			// Something went wrong
+			throw new RuntimeException('Not yet implemented');
 		}
 	}
 
