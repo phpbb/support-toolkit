@@ -23,6 +23,9 @@ before_script:
 script:
   - phpunit --configuration test/travis/$DB.travis.xml
 
+after_script:
+  - phpcs -p -s --report-full --report-gitblame --standard=stkcodesniffer stk/
+
 notifications:
   email:
     recipients:
