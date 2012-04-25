@@ -98,7 +98,7 @@ class stk_wrapper_user extends phpbb_user
 		{
 			trigger_error("Language file: {$lang_file}.php" . ' missing!', E_USER_ERROR);
 		}
-		else if (!$canfail)
+		else if (!empty($this->lang_name))
 		{
 			// Add the file
 			parent::add_lang($lang_file, $use_db, $use_help, $ext_name);
