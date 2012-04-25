@@ -31,4 +31,12 @@ class wrapper_user_test extends stk_test_case
 	{
 		$this->user->stk_add_lang('non_existing');
 	}
+
+	public function test_stk_add_lang_not_found_can_fail()
+	{
+		$this->user->stk_add_lang('non_fail', false, false, false, '', true);
+
+		// Little hackish but if we get here the test passes
+		$this->assertTrue(true);
+	}
 }
