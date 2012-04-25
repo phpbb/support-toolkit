@@ -17,7 +17,7 @@ class stk_wrapper_user extends phpbb_user
 	/**
 	* Constructor to set the lang path
 	*/
-	function __construct($stk)
+	public function __construct($stk)
 	{
 		// phpBB core language files are fetched from the phpBB installation
 		$this->lang_path = $stk['config']['phpbb_root_path'] . 'language/';
@@ -34,7 +34,7 @@ class stk_wrapper_user extends phpbb_user
 	 * @param string $ext_name   The extension to load language from, or empty for core files
 	 * @param bool   $canfail    If the language file doesn't exist don't trigger an error
 	 */
-	function stk_add_lang($lang_file, $force_lang = false, $use_db = false, $use_help = false, $ext_name = '', $canfail = false)
+	public function stk_add_lang($lang_file, $force_lang = false, $use_db = false, $use_help = false, $ext_name = '', $canfail = false)
 	{
 		global $config;
 
