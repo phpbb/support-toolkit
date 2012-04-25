@@ -98,15 +98,22 @@ class STKVendor :
 				"path_provider_interface.php",
 				"resource_locator.php",
 				"style.php",
-				"template.php",
-				"template_compile.php",
-				"template_context.php",
-				"template_filter.php",
-				"template_renderer.php",
-				"template_renderer_eval.php",
-				"template_renderer_include.php",
 			],
 			"phpBB/includes/style/"
+		],
+		[
+			"includes/template/",
+			[
+				"template.php",
+				"compile.php",
+				"context.php",
+				"filter.php",
+				"locator.php",
+				"renderer.php",
+				"renderer_eval.php",
+				"renderer_include.php",
+			],
+			"phpBB/includes/template/"
 		],
 		[
 			"includes/utf/",
