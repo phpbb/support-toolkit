@@ -40,7 +40,7 @@ $stk['class_loaders'] = $stk->share(function() {
 $stk['phpbb'] = $stk->share(function() {
 	return new Pimple();
 });
-$stk['toolbox'] = $stk->share(function() {
+$stk['plugin'] = $stk->share(function() {
 	return new Pimple();
 });
 
@@ -58,6 +58,13 @@ $stk['class_loaders']['phpbb'] = $stk->share(function() {
 		require STK_ROOT . 'core/class_loader.php';
 	}
 	return new stk_core_class_loader('phpbb_', PHPBB_FILES . 'includes/');
+});
+$stk['class_loaders']['plugin'] = $stk->share(function() use ($stk) {
+	if (!class_exists('stk_core_class_loader'))
+	{
+		require STK_ROOT . 'core/class_loader.php';
+	}
+	return new stk_core_class_loader('plugin_', $stk['plugin']['tool_path']);
 });
 $stk['class_loaders']['stk']->register();
 $stk['class_loaders']['phpbb']->register();
@@ -122,10 +129,9 @@ $stk['cache']['board_cache'] = $stk->share(function() use ($stk) {
 	$cache_factory = new phpbb_cache_factory($stk['phpbb']['db_config']['acm_type']);
 	return $cache_factory->get_service();
 });
-$stk['cache']['stk'] = $stk->share(function() use ($stk) {
+$stk['cache']['stk'] = $stk->share(function() {
 	$cache_factory = new stk_wrapper_cache_factory('file');
 	$cache_service = $cache_factory->get_service();
-	$cache_service->setDIContainer($stk);
 	return $cache_service;
 });
 $cache = $stk['cache']['phpbb'];
@@ -196,21 +202,16 @@ $stk['phpbb']['style'] = $stk->share(function() use ($stk) {
 $phpbb_style	= $stk['phpbb']['style'];
 $template		= $stk['phpbb']['template'];
 
-// Setup the version controller
-$stk['vc'] = $stk->share(function($stk) {
-	return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check.json', $stk['cache']['stk']);
+// The STK plugins
+$stk['plugin']['manager'] = $stk->share(function($plugin) use ($stk) {
+	$stk['class_loaders']['plugin']->register();
+	return new stk_plugin_manager($plugin['sniffer']);
 });
-
-// The STK toolbox
-$stk['toolbox']['box'] = $stk->share(function() use ($stk) {
-	return new stk_toolbox($stk);
+$stk['plugin']['sniffer'] = $stk->share(function() use ($stk) {
+	$sniffer = new stk_plugin_sniffer($stk, $stk['plugin']['tool_path']);
+	$sniffer->sniff();
+	return $sniffer;
 });
-$stk['toolbox']['category'] = function() use ($stk) {
-	return new stk_toolbox_category($stk);
-};
-$stk['toolbox']['tool'] = function() use ($stk) {
-	return new stk_toolbox_tool($stk);
-};
 
 // Utilities
 $stk['utilities'] = $stk->share(function($stk) {
@@ -218,9 +219,7 @@ $stk['utilities'] = $stk->share(function($stk) {
 });
 
 // Some settings
-$stk['toolbox']['toolpath'] = $stk->share(function() {
-	return new SplFileInfo(STK_ROOT . 'tools');
-});
+$stk['plugin']['tool_path'] = STK_ROOT . 'tools/';
 
 // Setup user
 $stk['phpbb']['user']->session_begin(false);

@@ -10,8 +10,16 @@ require __DIR__ . '/includes/bootstrap.php';
 
 // Get the requested category/tool
 $requestCategory	= $stk['phpbb']['request']->variable('c', 'main', false, phpbb_request_interface::GET);
-$requestTool		= $stk['phpbb']['request']->variable('t', '', false, phpbb_request_interface::GET);
+$requestTool		= $stk['phpbb']['request']->variable('t', 'home', false, phpbb_request_interface::GET);
 
+
+
+
+echo'<pre>';
+var_export($stk['plugin']['manager']);
+exit;
+
+/*
 // Prepare the toolbox to handle the correct category/tool
 $stk['toolbox']['box']->loadToolboxCategories();
 $stk['toolbox']['box']->getToolboxCategory($requestCategory)->loadTools();
@@ -30,3 +38,4 @@ else if ($stk['phpbb']['request']->is_set('submit') === false)
 
 $stk['utilities']->page_header('phpBB Support Toolkit "Ascraeus"');
 $stk['utilities']->page_footer('index_body');
+*/

@@ -15,8 +15,13 @@
  */
 class stk_wrapper_style extends phpbb_style
 {
-	protected $stk;
+	protected $_template;
 
+	/**
+	 * Construct the style wrapper
+	 *
+	 * @param Pimple $stk
+	 */
 	public function __construct(Pimple $stk)
 	{
 		parent::__construct(
@@ -29,7 +34,7 @@ class stk_wrapper_style extends phpbb_style
 			$stk['phpbb']['template']
 		);
 
-		$this->stk = $stk;
+		$this->_template = $stk['phpbb']['template'];
 	}
 
 	/**
@@ -38,6 +43,6 @@ class stk_wrapper_style extends phpbb_style
 	public function set_custom_style()
 	{
 		parent::set_custom_style('supporttoolkit', STK_ROOT . 'view/');//, STK_ROOT);
-		$this->stk['phpbb']['template']->cachepath = $this->cachepath = STK_ROOT . 'cache/tpl_';
+		$this->_template->cachepath = $this->cachepath = STK_ROOT . 'cache/tpl_';
 	}
 }

@@ -14,113 +14,72 @@
  */
 class stk_wrapper_cache_service extends phpbb_cache_service
 {
-	private $stk;
-	
 	/**
-	 * Get categories
+	 * Get a plugin tree
 	 *
-	 * Load all the STK categories
+	 * Read the requested plugin tree from the cache or otherwise generate
+	 * the tree based upon the path that is provided.
 	 *
-	 * @param SplFileInfo $path
-	 * @return \stk_toolbox_category
+	 * @param type $path
+	 * @param type $regex
+	 * @param stk_plugin_version_controller $vc
+	 * @return stk_plugin_category
 	 */
-	public function obtainSTKCategories(SplFileInfo $path)
+	public function obtain_plugin_tree($path, $regex, stk_plugin_version_controller $vc = null)
 	{
-		if (false === ($categorylist = $this->get('_STKCategories')))
+		// Try to get from the cache
+		$plugin_tree = $this->get('_stk_plugin_sniffer_' . md5($path));
+		if ($plugin_tree === false)
 		{
-			$it = new DirectoryIterator($path->getPathname());
-			foreach ($it as $dir)
+			$plugin_tree		= array();
+
+			$directory_iterator	= new RecursiveDirectoryIterator($path);
+			$regex_iterator		= new stk_plugin_recursive_regex_iterator($directory_iterator, $regex);
+			$iterator_iterator	= new RecursiveIteratorIterator($regex_iterator);
+
+			$category = null;
+
+			foreach ($iterator_iterator as $current)
 			{
-				// Skip what we don't need
-				if ($dir->isDot() || !$dir->isDir())
+				$matches = array();
+				preg_match($regex, $current->getPathname(), $matches);
+
+				if (!is_null($vc))
 				{
-					continue;
+					$validated = $vc->validate($matches['category'], $matches['plugin']);
+					if (in_array($validated, array(stk_plugin_version_controller::BLOCKED, stk_plugin_version_controller::DISABLED)))
+					{
+						continue;
+					}
 				}
 
-				$category = $this->stk['toolbox']['category'];
-				//$category->setPath(new SplFileInfo($dir->getPathname()));
-				$category->setPath($dir->getFileInfo());
-				$categorylist[$dir->getBasename()] = $category;
+				if (is_null($category) || $category->get_name() != $matches['category'])
+				{
+					// see whether there is already one
+					foreach ($plugin_tree as $c)
+					{
+						if ($c->get_name() == $matches['category'])
+						{
+							$category = $c;
+							break;
+						}
+
+						$category = null;
+					}
+
+					if (is_null($category))
+					{
+						$category = new stk_plugin_category($matches['category']);
+						$plugin_tree[] = $category;
+					}
+				}
+
+				$category->add_plugin($matches['plugin']);
 			}
 
-			$this->put('_STKCategories', $categorylist);
+			$this->put('_stk_plugin_sniffer_' . md5($path), $plugin_tree);
 		}
 
-		return $categorylist;
-	}
-
-	/**
-	 * Get category tools
-	 *
-	 * Get all the tools associated with a given category
-	 *
-	 * @param SplFileInfo $path
-	 * @return type
-	 */
-	public function obtainSTKCategoryTools(SplFileInfo $path)
-	{
-		if (false === ($toollist = $this->get('_STKCategoryTools' . ucfirst($path->getFilename()))))
-		{
-			$toollist = array();
-
-			$it = new DirectoryIterator($path->getPathname());
-			foreach ($it as $file)
-			{
-				// Skip any directory
-				if ($file->isDir())
-				{
-					continue;
-				}
-
-				// A string is returned when an tool isn't loadable. For the category
-				// listing we simply skip those cases
-				$tool = $this->stk['toolbox']['tool'];
-				$tool->setPath($file->getFileInfo());
-				if (false === is_string($tool))
-				{
-					$toollist[$tool->getID()] = $tool;
-				}
-			}
-
-			$this->put('_STKCategoryTools' . ucfirst($path->getFilename()), $toollist);
-		}
-
-		return $toollist;
-	}
-
-	/**
-	 * Retrieve version information
-	 */
-	public function obtainSTKVersionData($versionCheckFile)
-	{
-		if (false === ($versionData = $this->get('_STKVersionData')))
-		{
-			$opts = array(
-				'http' => array(
-					'method'		=> 'GET',
-					'max_redirects' => '10',
-					'user_agent'	=> 'phpBB Support Toolkit version checker',
-				),
-			);
-
-			$context		= stream_context_create($opts);
-			$stream			= fopen($versionCheckFile, 'r', false, $context);
-			$responce		= stream_get_contents($stream);
-			$versionData	= json_decode($responce);
-			fclose($stream);
-
-			$this->put('_STKVersionData', $versionData);
-		}
-
-		return $versionData;
-	}
-
-	public function setDIContainer(Pimple $container)
-	{
-		$this->stk = $container;
-		if (method_exists($this->get_driver(), 'setDependencies'))
-		{
-			$this->get_driver()->setDependencies($container);
-		}
+		return $plugin_tree;
 	}
 }
