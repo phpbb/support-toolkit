@@ -48,6 +48,7 @@ else
 // Init critical repair and run the tools that *must* be ran before initing anything else
 include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
 $critical_repair = new critical_repair();
+$critical_repair->initialise();
 $critical_repair->run_tool('bom_sniffer');
 $critical_repair->run_tool('config_repair');
 

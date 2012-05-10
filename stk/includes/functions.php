@@ -541,7 +541,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
 	// First and foremost handle the case where phpBB calls trigger error
 	// but the STK really needs to continue.
-	global $stk_no_error;
+	global $critical_repair, $stk_no_error;
 	if ($stk_no_error === true)
 	{
 		return true;
@@ -587,12 +587,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		}
 	}
 
-	if (!class_exists('critical_repair'))
-	{
-		include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
-	}
-	$cr = new critical_repair();
-	$cr->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
+	$critical_repair->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
 }
 
 //-- Wrappers for functions that only exist in newer php version
