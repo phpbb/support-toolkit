@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.5 ==
+* [Fix] Incorrect language packages. (Bug #62995, Path by Noxwizard)
 * [Fix] Handle `E_DEPRECATED` errors. (Bug #63001)
 * [Fix] Properly handle adding users to the Newly Registered Users group (Bug #63011, Patch by Noxwizard)
 * [Fix] Properly differentiate between user names and user id's in Change Password (Bug #63058, Patch by Dicky)
