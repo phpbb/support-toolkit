@@ -22,10 +22,8 @@ before_script:
   - ./scripts/python/vendor.py -f -s
 
 script:
-  - phpunit --configuration test/travis/$DB.travis.xml
-
-after_script:
   - phpcs -p -s --report-full --report-gitblame --standard=codesniffer stk/
+  - phpunit --configuration test/travis/$DB.travis.xml
 
 notifications:
   email:
