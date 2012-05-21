@@ -6,7 +6,7 @@ installation or to solve commonly encountered problems with the software.
 
 == Version ==
 Support Toolkit 1.0.6-dev
-Supported phpBB versions 3.0.0 - 3.0.11-dev
+Supported phpBB versions 3.0.0 - 3.0.11-RC1
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -47,6 +47,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.5 ==
+* [Add] Added support for phpBB 3.0.11.
 * [Fix] Incorrect language packages. (Bug #62995, Path by Noxwizard)
 * [Fix] Handle `E_DEPRECATED` errors. (Bug #63001)
 * [Fix] Properly handle adding users to the Newly Registered Users group (Bug #63011, Patch by Noxwizard)
