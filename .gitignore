@@ -11,7 +11,7 @@
 /stk/view/images/*.gif
 
 # Pimple
-/stk/core/DI/Pimple.php
+/stk/core/Pimple.php
 
 # MODX
 /contrib/modx.prosilver.en.xsl

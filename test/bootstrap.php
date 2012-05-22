@@ -38,7 +38,7 @@ require_once __DIR__ . '/test_framework/stk_database_test_connection_manager.php
 require_once __DIR__ . '/test_framework/stk_test_case.php';
 
 // Include the DI container
-require STK_ROOT . 'core/DI/Pimple.php';
+require STK_ROOT . 'core/Pimple.php';
 
 // Initialise class loaders
 require_once STK_ROOT . 'core/class_loader.php';
