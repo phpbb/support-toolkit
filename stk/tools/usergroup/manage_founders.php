@@ -9,5 +9,8 @@
 
 class stktool_usergroup_manage_founders extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

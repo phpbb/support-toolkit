@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ruleset name="phpBBSTK">
+	<description>The phpBB Support Toolkit coding standard.</description>
+
+	<exclude-pattern>core/DI/Pimple.php</exclude-pattern>
+	<exclude-pattern>phpBB/*</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<!-- Include some sniffs from the Generic standard -->
+	<rule ref="Generic.Classes.DuplicateClassName" />
+	<rule ref="Generic.CodeAnalysis.EmptyStatement" />
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
+	<rule ref="Generic.Commenting.Todo" />
+	<rule ref="Generic.Files.ByteOrderMark" />
+	<rule ref="Generic.Files.LineEndings" />
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
+	<rule ref="Generic.Formatting.SpaceAfterCast" />
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+	<rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman" />
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
+	<rule ref="Generic.PHP.DeprecatedFunctions" />
+	<rule ref="Generic.PHP.DisallowShortOpenTag" />
+	<rule ref="Generic.PHP.LowerCaseConstant" />
+	<rule ref="Generic.Strings.UnnecessaryStringConcat" />
+
+	<!-- Inline control stuctures are allowed but discouraged -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure">
+		<properties>
+			<property name="error" value="false" />
+		</properties>
+	</rule>
+
+	<!-- Notify about supressed errors -->
+	<rule ref="Generic.PHP.NoSilencedErrors">
+		<properties>
+			<property name="error" value="false" />
+		</properties>
+	</rule>
+
+	<!-- Include some sniffs from the PEAR standard -->
+	<rule ref="PEAR.Functions.ValidDefaultValue" />
+
+	<!-- Include some sniffs from the Squiz standard -->
+	<rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops" />
+	<rule ref="Squiz.PHP.Eval" />
+	<rule ref="Squiz.PHP.LowercasePHPFunctions" />
+	<rule ref="Squiz.PHP.NonExecutableCode" />
+
+	<!-- Include some sniffs from the Zend standard -->
+	<rule ref="Zend.Files.ClosingTag" />
+</ruleset>

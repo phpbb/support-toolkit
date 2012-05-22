@@ -10,9 +10,20 @@
 $starttime = microtime(true);
 
 // Define some initial constants
-if (!defined('STK_ROOT')) define('STK_ROOT', __DIR__ . '/../');
-if (!defined('PHPBB_FILES')) define('PHPBB_FILES', STK_ROOT . 'phpBB/');
-if (!defined('IN_PHPBB')) define('IN_PHPBB', true);
+if (!defined('STK_ROOT'))
+{
+	define('STK_ROOT', __DIR__ . '/../');
+}
+
+if (!defined('PHPBB_FILES'))
+{
+	define('PHPBB_FILES', STK_ROOT . 'phpBB/');
+}
+
+if (!defined('IN_PHPBB'))
+{
+	define('IN_PHPBB', true);
+}
 
 // Enforce the usage of the SID
 define('NEED_SID', true);

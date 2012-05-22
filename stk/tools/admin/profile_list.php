@@ -11,5 +11,8 @@ class stktool_admin_profile_list extends stk_toolbox_toolBase
 {
 	const TOOL_VERSION = '1.0.0-dev';
 
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

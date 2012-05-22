@@ -13,7 +13,7 @@
  * Wrapper class for the phpBB template object to easily allow additional
  * functionallity.
  */
-class stk_wrapper_template extends phpbb_style_template
+class stk_wrapper_template extends phpbb_template
 {
 	private $stk;
 

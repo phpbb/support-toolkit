@@ -9,5 +9,8 @@
 
 class stktool_support_remove_duplicate_permissions extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

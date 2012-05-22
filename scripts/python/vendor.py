@@ -98,15 +98,22 @@ class STKVendor :
 				"path_provider_interface.php",
 				"resource_locator.php",
 				"style.php",
-				"template.php",
-				"template_compile.php",
-				"template_context.php",
-				"template_filter.php",
-				"template_renderer.php",
-				"template_renderer_eval.php",
-				"template_renderer_include.php",
 			],
 			"phpBB/includes/style/"
+		],
+		[
+			"includes/template/",
+			[
+				"template.php",
+				"compile.php",
+				"context.php",
+				"filter.php",
+				"locator.php",
+				"renderer.php",
+				"renderer_eval.php",
+				"renderer_include.php",
+			],
+			"phpBB/includes/template/"
 		],
 		[
 			"includes/utf/",
@@ -130,7 +137,7 @@ class STKVendor :
 	}
 
 	args	= []
-	cwd		= ''
+	cwd	= ''
 
 	""" Set of commands passed into `Popen` on various occations"""
 	commands = {
@@ -150,6 +157,10 @@ class STKVendor :
 			],
 		},
 		'git':	{
+			'checkout': [
+				'git',
+				'checkout',
+			],
 			'fetch': [
 				'git',
 				'fetch',
@@ -159,6 +170,10 @@ class STKVendor :
 				'submodule',
 				'update',
 				'--init',
+			],
+			'merge': [
+				'git',
+				'merge',
 			],
 			'reset': [
 				'git',
@@ -244,21 +259,21 @@ class STKVendor :
 	def installComposor(self) :
 		chdir('./stk/phpBB/')
 
-		p1 = Popen(self.commands.php.curl, stdout=PIPE, stderr=PIPE)
-		p2 = Popen(self.commands.php.php, stdin=p1.stdout, stdout=PIPE, stderr=PIPE)
+		p1 = Popen(self.commands['php']['curl'], stdout=PIPE, stderr=PIPE)
+		p2 = Popen(self.commands['php']['php'], stdin=p1.stdout, stdout=PIPE, stderr=PIPE)
 		p1.stdout.close()
 		p2_stdout_value = p2.communicate()
 		print (p2_stdout_value)
 		p2.stdout.close()
 	
-		p3 = Popen(self.commands.php.composerInstall, stdout=PIPE, stderr=PIPE)
+		p3 = Popen(self.commands['php']['composerInstall'], stdout=PIPE, stderr=PIPE)
 		print (p3.stdout.read())
 		p3.stdout.close()
 		chdir(self.cwd)
 
 	def setupRepos(self) :
 		print("\033[91m" + "Initialising vendor repositories" + "\033[0m")
-		p1 = Popen(self.commands.git.init, stdout=PIPE)
+		p1 = Popen(self.commands['git']['init'], stdout=PIPE)
 		print (p1.stdout.read())
 		p1.stdout.close()
 
@@ -267,64 +282,64 @@ class STKVendor :
 			print("\033[91m" + "Updating /vendor/" + r + "\033[0m")
 			chdir('./stk/vendor/' + r)
 
-			p1 = Popen(self.commands.git.fetch, stdout=PIPE)
+			p1 = Popen(self.commands['git']['fetch'], stdout=PIPE)
 			print(p1.stdout.read())
 			p1.stdout.close()
 
-			p2		= Popen(self.commands.git.reset, stdout=PIPE)
+			p2 = Popen(self.commands['git']['reset'], stdout=PIPE)
 			print(p2.stdout.read())
 			p2.stdout.close()
 
-			com3	= ['git', 'checkout', b]
-			p3		= Popen(com3, stdout=PIPE)
+			co = self.commands['git']['checkout'] + [b]
+			p3 = Popen(co, stdout=PIPE)
 			print(p3.stdout.read())
 			p3.stdout.close()
 
-			p4		= Popen(self.commands.git.reset, stdout=PIPE)
+			p4 = Popen(self.commands['git']['reset'], stdout=PIPE)
 			print(p4.stdout.read())
 			p4.stdout.close()
 
-			b		= 'origin/' + b if (b[:1] != "v") else b
-			com5	= ['git', 'merge', b]
-			p5		= Popen(com5, stdout=PIPE)
+			b  = 'origin/' + b if (b[:1] != "v") else b
+			co = self.commands['git']['merge'] + [b]
+			p5 = Popen(co, stdout=PIPE)
 			print(p5.stdout.read())
 			p5.stdout.close()
 
 			chdir(self.cwd)
 			print("\n\n")
 
-def main():
-	vendor	= STKVendor()
+	def run(self) :
+		# Update the repos
+		if self.args.update :
+			self.updateRepos()
+			return
 
-	# Update the repos
-	if vendor.args.update :
-		vendor.updateRepos()
-		return
+		# Setup
+		if self.args.setup :
+			self.setupRepos()
 
-	# Setup
-	if vendor.args.setup :
-		vendor.setupRepos()
+		print("\033[91m" + "Copying files" + "\033[0m")
+		# phpBB files
+		self.copyphpBBFiles()
 
-	print("\033[91m" + "Copying files" + "\033[0m")
-	# phpBB files
-	vendor.copyphpBBFiles()
+		# Pimple
+		self._copy (
+			'./stk/vendor/Pimple/lib/Pimple.php',
+			'./stk/core/DI/Pimple.php',
+			self.args.force
+		)
 
-	# Pimple
-	vendor._copy (
-		'./stk/vendor/Pimple/lib/Pimple.php',
-		'./stk/core/DI/Pimple.php',
-		vendor.args.force
-	)
+		# MODX
+		self._copy (
+			'./stk/vendor/MODX/modx.prosilver.en.xsl',
+			'./contrib/modx.prosilver.en.xsl',
+			self.args.force
+		)
 
-	# MODX
-	vendor._copy (
-		'./stk/vendor/MODX/modx.prosilver.en.xsl',
-		'./contrib/modx.prosilver.en.xsl',
-		vendor.args.force
-	)
-
-	# Finally install and run composer in 'stk/phpBB/'
-	vendor.installComposor()
+		# Finally install and run composer in 'stk/phpBB/'
+		self.installComposor()
 
 if __name__ == "__main__" :
-	main()
+	vendor = STKVendor()
+	vendor.run()
+

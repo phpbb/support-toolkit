@@ -9,5 +9,8 @@
 
 class stktool_support_fix_left_right_ids extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

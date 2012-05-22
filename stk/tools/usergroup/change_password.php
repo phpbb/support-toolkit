@@ -9,5 +9,8 @@
 
 class stktool_usergroup_change_password extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }

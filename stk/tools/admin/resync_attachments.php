@@ -9,5 +9,8 @@
 
 class stktool_admin_resync_attachments extends stk_toolbox_toolBase
 {
-	public function displayOptions() {}
+	public function displayOptions()
+	{
+		
+	}
 }
