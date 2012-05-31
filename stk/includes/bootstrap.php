@@ -161,11 +161,10 @@ $stk['phpbb']['db'] = $stk->share(function($phpbb) use ($dbms, $phpbb_root_path,
 
 	return $db;
 });
-$db = $stk['phpbb']['db'];
 
 // Get the actual phpBB configuration object
-$stk['phpbb']['config'] = $stk->share(function() use ($db, $cache) {
-	return new phpbb_config_db($db, $cache->get_driver(), CONFIG_TABLE);
+$stk['phpbb']['config'] = $stk->share(function($phpbb) use ($stk) {
+	return new phpbb_config_db($phpbb['db'], $stk['cache']['phpbb']->get_driver(), CONFIG_TABLE);
 });
 
 // Some phpBB code relies on the phpBB config data, to control the behavior
@@ -178,13 +177,11 @@ $stk['phpbb']['config_mock'] = $stk->share(function($phpbb) {
 
 	return $config;
 });
-$config = $stk['phpbb']['config_mock'];
 
 // Setup the phpBB User object
 $stk['phpbb']['user'] = $stk->share(function() use ($stk) {
 	return new stk_wrapper_user($stk);
 });
-$user = $stk['phpbb']['user'];
 
 // Setup the phpBB template object
 $stk['phpbb']['style_locator'] = $stk->share(function() {
@@ -199,8 +196,6 @@ $stk['phpbb']['template'] = $stk->share(function() use ($stk) {
 $stk['phpbb']['style'] = $stk->share(function() use ($stk) {
 	return new stk_wrapper_style($stk);
 });
-$phpbb_style	= $stk['phpbb']['style'];
-$template		= $stk['phpbb']['template'];
 
 // The STK plugins
 $stk['plugin']['manager'] = $stk->share(function($plugin) use ($stk) {
@@ -212,14 +207,19 @@ $stk['plugin']['sniffer'] = $stk->share(function() use ($stk) {
 	$sniffer->sniff();
 	return $sniffer;
 });
+$stk['plugin']['tool_path'] = STK_ROOT . 'tools/';
 
 // Utilities
 $stk['utilities'] = $stk->share(function($stk) {
 	return new stk_includes_utilities($stk);
 });
 
-// Some settings
-$stk['plugin']['tool_path'] = STK_ROOT . 'tools/';
+// phpBB requires some global vars
+$db				= $stk['phpbb']['db'];
+$config			= $stk['phpbb']['config_mock'];
+$phpbb_style	= $stk['phpbb']['style'];
+$template		= $stk['phpbb']['template'];
+$user			= $stk['phpbb']['user'];
 
 // Setup user
 $stk['phpbb']['user']->session_begin(false);
