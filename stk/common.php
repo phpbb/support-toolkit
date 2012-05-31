@@ -17,7 +17,7 @@ if (!defined('IN_PHPBB'))
 }
 
 // What version are we using?
-define('STK_VERSION', '1.0.6-dev');
+define('STK_VERSION', '1.0.6-RC1');
 define('STK_QA', true);
 
 define('ADMIN_START', true);
