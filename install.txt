@@ -55,6 +55,7 @@ update!
 * [Fix] Properly differentiate between user names and user id's in Manage Board Founders (Bug #63062, Patch by Dicky)
 * [Fix] Manage Board Founders - Errors not displaying. (Bug #63063)
 * [Fix] Manage Board Founders - Find a member not working. (Bug #63064)
+* [Fix] Nested class declaration error. (Bug #63119)
 
 == Changes since 1.0.5-rc1 ==
 * [Fix] Correctly handle empty module data when resetting the boards modules. (Bug #62958)

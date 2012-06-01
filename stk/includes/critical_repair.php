@@ -40,11 +40,11 @@ class critical_repair
 	var $tool_path;
 
 	/**
-	* Construct critical repair.
+	* Initialise critical repair.
 	* This method loads all critical repair tools
 	* @return void
 	*/
-	function critical_repair()
+	function initialise()
 	{
 		$this->tool_path = STK_ROOT_PATH . 'includes/critical_repair/';
 		$filelist = filelist($this->tool_path, '', PHP_EXT);
