@@ -107,6 +107,7 @@ if (!defined('PHPBB_INSTALLED'))
 // Include some phpBB files that can't be auto loaded
 require PHPBB_FILES . 'includes/constants.php';
 require PHPBB_FILES . 'includes/functions.php';
+require PHPBB_FILES . 'includes/hooks/index.php';
 require PHPBB_FILES . 'includes/utf/utf_tools.php';
 
 // set up caching
@@ -220,6 +221,21 @@ $config			= $stk['phpbb']['config_mock'];
 $phpbb_style	= $stk['phpbb']['style'];
 $template		= $stk['phpbb']['template'];
 $user			= $stk['phpbb']['user'];
+
+// Register hooks
+$stk_hooks = array(
+	'append_sid'	=> array(
+		'function'	=> 'stk_append_sid',
+		'location'	=> 'append_sid',
+	),
+);
+$phpbb_hook = new phpbb_hook(array('exit_handler', 'phpbb_user_session_handler', 'append_sid', array('template', 'display')));
+
+foreach ($stk_hooks as $hook => $call)
+{
+	require STK_ROOT . "hooks/{$hook}.php";
+	$phpbb_hook->register($call['location'], $call['function'], 'standalone');
+}
 
 // Setup user
 $stk['phpbb']['user']->session_begin(false);

@@ -64,6 +64,29 @@ class plugin_category_test extends stk_test_case
 		$this->assertTrue($category->is_active());
 	}
 
+	public function test_build_url()
+	{
+		// Prepare the append_sid hook
+		global $phpbb_hook, $request, $user;
+
+		// Setup the hook
+		require_once PHPBB_FILES . 'includes/hooks/index.php';
+		require_once STK_ROOT . 'hooks/append_sid.php';
+		$phpbb_hook = new phpbb_hook(array('append_sid'));
+		$phpbb_hook->register('append_sid', 'stk_append_sid');
+
+		$request = new phpbb_request(null, false);
+		$user = new stk_test_mock_user();
+
+		$board_url = generate_board_url();
+
+		// Create a new category
+		$category = new stk_plugin_category('test');
+
+		// Validate the url
+		$this->assertSame("{$board_url}/index.php?c=test&amp;t=", $category->build_url());
+	}
+
 	public function test__call()
 	{
 		$plugin = new stk_plugin('main_home');

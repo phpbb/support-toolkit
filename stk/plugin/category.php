@@ -67,6 +67,14 @@ class stk_plugin_category implements Iterator
 	}
 
 	/**
+	 * Build the correct URL pointing to this category
+	 */
+	public function build_url()
+	{
+		return append_sid(array($this->name));
+	}
+
+	/**
 	 * Get the name of this category
 	 *
 	 * @return string

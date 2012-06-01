@@ -88,6 +88,10 @@ class STKVendor :
 			"phpBB/includes/db/"
 		],
 		[
+			"includes/hooks/",
+			"phpBB/includes/hooks/",
+		],
+		[
 			"includes/request/",
 			"phpBB/includes/request/"
 		],

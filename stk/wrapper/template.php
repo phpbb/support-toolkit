@@ -77,7 +77,7 @@ class stk_wrapper_template extends phpbb_template
 
 			$this->assign_block_vars('t_block1', array(
 				'L_TITLE'	=> $this->user->lang(strtoupper($category->get_name() . '_TITLE')),
-//				'U_TITLE'	=> $category->getCategoryURL(),
+				'U_TITLE'	=> $category->build_url(),
 				'S_ACTIVE'	=> $active,
 			));
 		}
@@ -97,7 +97,7 @@ class stk_wrapper_template extends phpbb_template
 
 				$this->assign_block_vars('l_block1', array(
 					'L_TITLE'	=> $tool->get_identifier(),
-//					'U_TITLE'	=> $tool->getToolURL(),
+					'U_TITLE'	=> $tool->build_url(),
 					'S_ACTIVE'	=> $active,
 				));
 			}

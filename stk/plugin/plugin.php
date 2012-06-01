@@ -56,6 +56,14 @@ class stk_plugin
 	}
 
 	/**
+	 * Build an URL pointing to this tool
+	 */
+	public function build_url()
+	{
+		return append_sid(explode('_', $this->identifier));
+	}
+
+	/**
 	 * Checks whether this plugin is active
 	 *
 	 * @return bool
