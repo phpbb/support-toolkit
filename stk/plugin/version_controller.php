@@ -47,7 +47,7 @@ class stk_plugin_version_controller
 	{
 		$this->cache		= $cache;
 		$this->plugin_path	= $plugin_path;
-		$this->responces	= ($cache) ? $cache->get('stk_version_responces_' . md5($version_file)) : false;
+		$this->responces	= ($cache) ? $cache->get('_stk_version_responces_' . md5($version_file)) : false;
 		$this->version_file	= $version_file;
 	}
 
@@ -75,13 +75,13 @@ class stk_plugin_version_controller
 	 */
 	public function validate($group, $plugin)
 	{
-		if (empty($this->version_data))
-		{
-			$this->get_version_data(false);
-		}
-
 		if (empty($this->responces[$group][$plugin]))
 		{
+			if (empty($this->version_data))
+			{
+				$this->get_version_data(false);
+			}
+
 			$this->responces[$group][$plugin] = self::OK;
 
 			$version_data = array();
@@ -122,9 +122,6 @@ class stk_plugin_version_controller
 						}
 					}
 			}
-
-			// Make sure we recache
-			$this->write_cache = true;
 		}
 
 		return $this->responces[$group][$plugin];
@@ -174,12 +171,12 @@ class stk_plugin_version_controller
 		return ($raw) ? $this->version_data_raw : $this->version_data;
 	}
 
-	/**
-	 * @todo when events are here, write data through event on garbage collect
-	 *
+	// @todo call from garbage_collect event
+	public function cache_responces()
+	{
 		if ($this->cache && $this->write_cache)
 		{
 			$this->cache->put('stk_version_responces_' . md5($this->version_file), $this->responces);
 		}
-	 */
+	}
 }

@@ -55,7 +55,7 @@ class stk_plugin_sniffer implements Iterator
 
 		// Get plugin config
 		$this->config = json_decode(file_get_contents($this->path . '/plugin.json'), true);
-		$this->version_controller = new stk_plugin_version_controller($this->config['version_check'], $this->path . '/');
+		$this->version_controller = new stk_plugin_version_controller($this->config['version_check'], $this->path . '/', $stk['cache']['stk']);
 	}
 
 	/**
@@ -102,6 +102,11 @@ class stk_plugin_sniffer implements Iterator
 		// More complicated than it probably should, but we need to make sure that all directories
 		// between the path and the plugin file are matched, otherwise it is dropped
 		return '~^' . preg_quote($this->path) . '/(?<category>[a-z]+)(/(?<plugin>[a-z]+)(/(\3)\.php){0,1}){0,1}$~';
+	}
+
+	public function get_version_controller()
+	{
+		return $this->version_controller;
 	}
 
 	//-- Iterator implementation
