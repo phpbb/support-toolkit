@@ -1,22 +1,24 @@
 <?php
 /**
- *
- * remove_duplicate_permissions [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Duplicate Permission Remover
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
+/**
+* DO NOT CHANGE
+*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -37,6 +39,12 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_REMOVE_DUPLICATE_PERMISSIONS'	=> 'Remove duplicate permissions',
+	'DUPLICATES_FOUND'						=> 'The tool has found and removed all duplicate permissions.',
+
+	'NO_DUPLICATES_FOUND'					=> 'The tool has finished checking for duplicate permissions and has found none.',
+
+	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Remove duplicate permissions',
+	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Are you sure you want to remove the duplicate permissions?',
 ));

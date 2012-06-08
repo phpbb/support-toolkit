@@ -1,11 +1,9 @@
 <?php
 /**
  *
- * flash_checker [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * @package Support Toolkit - Flash checker
+ * @copyright (c) 2009 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
 
@@ -37,6 +35,10 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_FLASH_CHECKER'	=> 'Flash checker',
+	'FLASH_CHECKER'				=> 'Flash checker',
+	'FLASH_CHECKER_CONFIRM'		=> 'In phpBB 3.0.7-pl1, a possible XSS vulnerability was found in the built-in flash BBCode. This issue was resolved in phpBB 3.0.8. This tool will check all posts, private messages, and signatures for this vulnerable BBCode. If found it allows you to quickly reparse these posts to make sure that your board is safe. Check <a href="http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068">the phpBB 3.0.8 release announcement</a> for more information about the issue.',
+	'FLASH_CHECKER_FOUND'		=> 'The flash checker found some potentially dangerous flash BBCodes on your board. Click <a href="%s">here</a> to reparse the posts and private messages that contain this flash BBCode.',
+	'FLASH_CHECKER_NO_FOUND'	=> 'No potentially dangerous flash BBCodes found.',
 ));

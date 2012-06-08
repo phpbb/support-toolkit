@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * update_email_hasehs [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Update email hashes
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,10 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_UPDATE_EMAIL_HASHES'	=> 'Update email hashes',
+	'UPDATE_EMAIL_HASHES'				=> 'Update email hashes',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'In phpBB installations prior to phpBB 3.0.7, a switch from a 32 bit OS to a 64 bit OS would break email hashes. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">See the related bug report</a>)</em><br />This tool allows you update the hashes in the database so that they function properly.',
+	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'All email hashes have been updated successfully!',
+	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Updating email hashes in progress.',
 ));

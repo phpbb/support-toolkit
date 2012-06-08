@@ -1,16 +1,49 @@
 <?php
 /**
- *
- * @package SupportToolkit
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Recache moderators
+* @version $Id$
+* @copyright (c) 2010 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
-class stktool_support_recache_moderators extends stk_toolbox_toolBase
+/**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
 {
-	public function displayOptions()
+	exit;
+}
+
+class recache_moderators
+{
+	/**
+	* Display Options
+	*
+	* Output the options available
+	*/
+	function display_options()
 	{
-		
+		return 'RECACHE_MODERATORS';
+	}
+
+	/**
+	* Run Tool
+	*
+	* Does the actual stuff we want the tool to do after submission
+	*/
+	function run_tool()
+	{
+		if (!function_exists('cache_moderators'))
+		{
+			global $phpbb_root_path, $phpEx;
+
+			include("{$phpbb_root_path}includes/functions_admin.$phpEx");
+		}
+
+		cache_moderators();
+
+		trigger_error('RECACHE_MODERATORS_COMPLETE');
 	}
 }

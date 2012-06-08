@@ -1,22 +1,24 @@
 <?php
 /**
- *
- * reparse_bbcode [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Reparse BBCode
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
+/**
+* DO NOT CHANGE
+*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -35,8 +37,23 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// í ª ì î Ö
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_ADMIN_REPARSE_BBCODE'	=> 'Reparse BBCode',
+	'REPARSE_ALL'				=> 'Reparse all BBCodes',
+	'REPARSE_ALL_EXPLAIN'		=> 'When checked the BBCode reparse will reparse all content on the board; by default, the tool will only reparse posts/private messages/signatures that have been previously parsed by phpBB. This option will be ignored if specific posts or PMs are specified above.',
+	'REPARSE_BBCODE'			=> 'Reparse BBCode',
+	'REPARSE_BBCODE_COMPLETE'	=> 'BBCodes have been reparsed.',
+	'REPARSE_BBCODE_CONFIRM'	=> 'Are you sure you want to reparse all BBCodes? Please note that this tool has the potential to damage your database beyond repair; therefore, <strong>be sure to backup your database before proceeding</strong>. Moreover, note that this tool may take some time to complete.',
+	'REPARSE_BBCODE_PROGRESS'	=> 'Step %1$d completed. Moving on to step %2$d in a moment...',
+	'REPARSE_BBCODE_SWITCH_MODE'	=> array(
+		1	=> 'Finished reparsing the posts, moving on to private messages.',
+		2	=> 'Finished reparsing private messages, moving on to signatures.',
+	),
+	'REPARSE_IDS_INVALID'			=> 'The IDs you submitted were not valid; please ensure that post IDs are listed as a comma separated list (e.g. 1,2,3,5,8,13).',
+	'REPARSE_POST_IDS'				=> 'Reparse Specific Posts',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'To reparse specific posts only, specify post IDs in a comma-separated list.',
+	'REPARSE_PM_IDS'				=> 'Reparse Specific PMs',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'To reparse specific PMs only, specifiy PM IDs in a comma-separated list (e.g. 1,2,3,5,8,13).',
 ));

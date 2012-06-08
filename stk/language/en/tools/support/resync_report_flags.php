@@ -1,11 +1,9 @@
 <?php
 /**
  *
- * resync_report_flags [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * @package Support Toolkit - Resynchronise report flags
+ * @copyright (c) 2011 phpBB Group
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
 
@@ -37,6 +35,10 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_RESYNC_REPORT_FLAGS'	=> 'Resynchronise report flags',
+	'RESYNC_REPORT_FLAGS'			=> 'Resynchronise report flags',
+	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'This tool will resynchronise the report flags for all posts, topics and private messages.',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'All report flags have successfully been resynchronised!',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronising report flags in progress. Please do not interrupt this process',
 ));

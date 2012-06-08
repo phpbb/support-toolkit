@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * fix_left_right_ids [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Fix Left/Right ID's
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,11 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_FIX_LEFT_RIGHT_IDS'	=> 'Fix Left/Right IDs',
+	'FIX_LEFT_RIGHT_IDS'			=> 'Fix Left/Right IDs',
+	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Are you sure you want to fix the left and right IDs?<br /><br /><strong>Backup your database before running this tool!</strong>',
+
+	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'The left/right IDs have been successfully fixed.',
+	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'The tool has finished going through all of the left and right IDs and all rows are already correct so no changes were made.',
 ));

@@ -1,0 +1,69 @@
+<!-- INCLUDE overall_header.html -->
+<h2>{L_SRT_GENERATOR}</h2>
+
+<!-- IF S_STEP1 -->
+<form action="{U_ACTION}" name="support-toolkit-srt-generator" method="post">
+	<fieldset>
+		<legend>{L_LEGEND}</legend>
+
+		<dl>
+			<dt><label for="srt[mod_related]">{L_STEP1_MOD}:</label><br /><span>{L_STEP1_MOD_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" name="srt[mod_related]" value="1" class="radio" /> {L_YES}</label>
+				<label><input type="radio" name="srt[mod_related]" value="0" class="radio" checked="checked" /> No</label></dd>
+		</dl>
+<!--
+		<dl>
+			<dt><label for="convert_related">{L_STEP1_CONVERT}:</label><br /><span>{L_STEP1_MOD_RELATED_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" name="srt[convert_related]" value="1" class="radio" /> {L_YES}</label>
+				<label><input type="radio" name="srt[convert_related]" value="0" class="radio" checked="checked"/> {L_NO}</label></dd>
+		</dl>
+-->
+		<dl>
+			<dt><label for="srt[hacked]">{L_STEP1_HACKED}:</label><br /><span>{L_STEP1_HACKED_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" name="srt[hacked]" value="1" class="radio" /> {L_YES}</label>
+				<label><input type="radio" name="srt[hacked]" value="0" class="radio" checked="checked"  /> {L_NO}</label></dd>
+		</dl>
+	</fieldset>
+
+	<div style="text-align: center;">
+		<input type="submit" class="button2" name="submit" value="{L_NEXT_STEP}" />
+	</div>
+</form>
+<!-- ELSEIF COMPILED_TEMPLATE -->
+<p>{L_COMPILED_TEMPLATE_EXPLAIN}</p>
+<dl class="codebox">
+	<dt>{L_CODE}: <a href="#" onclick="selectCode(this); return false;">{L_SELECT_ALL_CODE}</a></dt>
+	<dd><code>{COMPILED_TEMPLATE}</code></dd>
+</dl>
+<!-- ELSE -->
+<form action="{U_ACTION}" name="support-toolkit-srt-generator" method="post">
+	<fieldset>
+		<legend>{L_LEGEND}</legend>
+	<!-- BEGIN questionrow -->
+		<dl>
+			<dt><label for="{questionrow.NAME}">{questionrow.QUESTION}</label><!-- IF questionrow.EXPLAIN --><br /><span>{questionrow.EXPLAIN}</span><!-- ENDIF --></dt>
+			<dd>
+				<!-- IF questionrow.TYPE == 'boolean' -->
+				<label for="{questionrow.NAME}1"><input type="radio" id="{questionrow.NAME}1" name="{questionrow.NAME}" value="yes" />{L_YES}</label> &nbsp;
+				<label for="{questionrow.NAME}2"><input type="radio" id="{questionrow.NAME}2" name="{questionrow.NAME}" value="no" checked="checked" />{L_NO}</label>
+				<!-- ELSEIF questionrow.TYPE == 'dropdown' -->
+				<select name="{questionrow.NAME}" id="{questionrow.NAME}">{questionrow.OPTIONS}</select>
+				<!-- ELSEIF questionrow.TYPE == 'text' -->
+				<input name="{questionrow.NAME}" id="{questionrow.NAME}" type="text" size="40" maxlength="255" value="" />
+				<!-- ELSEIF questionrow.TYPE == 'textarea' -->
+				<textarea rows="6" class="inputbox" style="width: 94%;" name="{questionrow.NAME}"><!-- IF questionrow.PREFILL -->{questionrow.PREFILL}<!-- ENDIF --></textarea>
+				<!-- ENDIF -->
+			</dd>
+		</dl>
+	<!-- END questionrow -->
+	</fieldset>
+
+	<div style="text-align: center;">
+		<input type="hidden" name="prefill" value="{S_PREFILL}" />
+		<input type="submit" class="button2" name="reset" value="{L_START_OVER}" />
+		<input type="submit" class="button2" name="submit" value="{L_NEXT_STEP}" />
+	</div>
+</form>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

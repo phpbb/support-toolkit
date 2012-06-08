@@ -1,0 +1,99 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_PROFILE_LIST}</h1>
+
+<p>{L_PROFILE_LIST_EXPLAIN}</p>
+
+<form method="post" id="display_form" action="{U_DISPLAY_ACTION}">
+	<fieldset class="jumpbox">
+		<label for="display">{L_FILTER}:</label>
+		<select name="display" id="display" onchange="document.forms['display_form'].submit()">
+			<option value="all">{L_ALL}</option>
+		<!-- BEGIN options -->
+			<option value="{options.OPTION}"<!-- IF options.SELECTED --> selected="selected"<!-- ENDIF -->>{options.LANG}</option>
+		<!-- END options -->
+		</select>
+		&nbsp;
+		<label for="empty_only">{L_ONLY_NON_EMPTY}:</label>
+		<input name="empty_only" type="checkbox" class="checkbox"<!-- IF S_EMPTY_CHECKED --> checked="checked"<!-- ENDIF --> onclick="document.forms['display_form'].submit()" />
+		&nbsp;
+		<label for="order">{L_ORDER_BY}:</label>
+		<select name="order" id="order" onchange="document.forms['display_form'].submit()">
+		<!-- BEGIN order -->
+			<option value="{order.OPTION}"<!-- IF order.SELECTED --> selected="selected"<!-- ENDIF -->>{order.LANG}</option>
+		<!-- END order -->
+		</select>
+		<select name="dir" id="dir" onchange="document.forms['display_form'].submit()">
+			<option value="DESC"<!-- IF S_DESC --> selected="selected"<!-- ENDIF -->>{L_DESCENDING}</option>
+			<option value="ASC"<!-- IF not S_DESC --> selected="selected"<!-- ENDIF -->>{L_ASCENDING}</option>
+		</select>
+		&nbsp;
+		<label for="limit">{L_LIMIT}:</label>
+		<input name="limit" type="text" size="3" value="{LIMIT}" />
+		&nbsp;
+		<input type="submit" value="{L_GO}" class="button2" />
+	</fieldset>
+</form>
+
+<!-- IF PAGINATION -->
+<div class="pagination" style="margin-bottom: 3px;">
+	<span>{PAGINATION}</span>
+</div>
+<!-- ENDIF -->
+
+<form method="post" id="user_select_action" action="{U_SELECTED_ACTION}">
+<table cellspacing="1">
+	<tr>
+		<th>{L_USERNAME}</th>
+		<th class="mark">{L_MARK}</th>
+	</tr>
+	<!-- BEGIN users -->
+		<tr class="<!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+			<td style="font-weight: bold;">{users.USERNAME} [ <a href="{users.U_USER_ADMIN}">{L_USER_ADMIN}</a> ]</td>
+			<td class="mark"><input type="checkbox" name="marked_user_id[]" value="{users.USERID}" /></dd>
+		</tr>
+		<!-- IF S_DISPLAY_ALL || S_DISPLAY_SIG -->
+		<tr class="row3">
+			<td colspan="3">
+				<!-- IF S_DISPLAY_ALL -->
+					<div class="column1">
+						<!-- IF users.S_USER_INACTIVE --><strong>{L_USER_IS_INACTIVE}:</strong> {users.USER_INACTIVE_REASON}<br /><!-- ENDIF -->
+						<strong>{L_JOINED}:</strong> {users.JOINED}<br />
+						<!-- IF users.VISITED --><strong>{L_VISITED}:</strong> {users.VISITED}<br /><!-- ENDIF -->
+						<strong>{L_TOTAL_POSTS}:</strong> {users.POSTS}<br />
+						<!-- IF users.WARNINGS --><strong>{L_WARNINGS}:</strong> {users.WARNINGS}<br /><!-- ENDIF -->
+						<!-- IF users.LOCATION --><strong>{L_LOCATION}:</strong> {users.LOCATION}<br /><!-- ENDIF -->
+						<!-- IF users.OCCUPATION --><strong>{L_OCCUPATION}:</strong> {users.OCCUPATION}<br /><!-- ENDIF -->
+						<!-- IF users.INTERESTS --><strong>{L_INTERESTS}:</strong> {users.INTERESTS}<br /><!-- ENDIF -->
+					</div>
+
+					<div class="column2">
+						<!-- IF users.EMAIL --><strong>{L_EMAIL_ADDRESS}:</strong> {users.EMAIL}<br /><!-- ENDIF -->
+						<!-- IF users.WEBSITE --><strong>{L_WEBSITE}:</strong> {users.WEBSITE}<br /><!-- ENDIF -->
+						<!-- IF users.MSNM --><strong>{L_MSNM}:</strong> {users.MSNM}<br /><!-- ENDIF -->
+						<!-- IF users.YIM --><strong>{L_YIM}:</strong> {users.YIM}<br /><!-- ENDIF -->
+						<!-- IF users.AIM --><strong>{L_AIM}:</strong> {users.AIM}<br /><!-- ENDIF -->
+						<!-- IF users.ICQ --><strong>{L_ICQ}:</strong> {users.ICQ}<br /><!-- ENDIF -->
+						<!-- IF users.JABBER --><strong>{L_JABBER}:</strong> {users.JABBER}<br /><!-- ENDIF -->
+					</div>
+				<!-- IF users.SIGNATURE --><br style="clear: both;" /><br /><hr /><!-- ENDIF -->
+				<!-- ENDIF -->
+				{users.SIGNATURE}
+			</td>
+		</tr>
+		<!-- ENDIF -->
+	<!-- END users -->
+</table>
+
+	<fieldset class="jumpbox" style="text-align: right;">
+		<label for="c2d">{L_CLICK_TO_DELETE}:</label> <input type="submit" name="c2d" class="button2" value="{L_DELETE}" />
+	</fieldset>
+</form>
+
+<!-- IF PAGINATION -->
+<div class="pagination">
+	<span>{PAGINATION}</span>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

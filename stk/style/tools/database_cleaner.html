@@ -1,0 +1,80 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF ERROR_MESSAGE -->
+	<div class="errorbox">
+		<h3><!-- IF ERROR_TITLE -->{ERROR_TITLE}<!-- ELSE -->{L_ERROR}<!-- ENDIF --></h3>
+		<p><strong>{ERROR_MESSAGE}</strong></p>
+	</div>
+<!-- ENDIF -->
+
+<!-- IF SUCCESS_MESSAGE -->
+	<div class="successbox">
+		<h3><!-- IF SUCCESS_TITLE -->{SUCCESS_TITLE}<!-- ELSE -->{L_SUCCESS}<!-- ENDIF --></h3>
+		<p>
+			{SUCCESS_MESSAGE}
+		</p>
+	</div>
+<!-- ENDIF -->
+
+<form id="database_cleaner" method="post" action="{U_NEXT_STEP}">
+	<!-- IF .section -->
+	<fieldset>
+		<legend>{L_INSTRUCTIONS}</legend>
+		<p class="missing" style="padding: 5px 10px;">{L_DATABASE_CLEANER_MISSING}</p><br />
+		<p class="extra" style="padding: 5px 10px;">{L_DATABASE_CLEANER_EXTRA}</p>
+	</fieldset>
+
+		<!-- BEGIN section -->
+		<fieldset>
+			<legend>{section.NAME}</legend>
+
+			<table cellspacing="1">
+				<tr>
+					<th>{section.TITLE}</th>
+					<th width="150px">{L_TYPE}</th>
+					<th width="75px">{L_ACTION}</th>
+					<th width="75px"></th>
+				</tr>
+				<!-- BEGIN items -->
+					<tr class="<!-- IF items.MISSING -->missing<!-- ELSE --><!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF --><!-- ENDIF -->">
+						<td style="font-weight: bold;">{items.NAME}</td>
+						<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
+						<td><!-- IF items.MISSING -->{L_ADD}<!-- ELSE -->{L_REMOVE}<!-- ENDIF --></td>
+						<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
+					</tr>
+				<!-- END items -->
+			</table>
+		</fieldset>
+		<!-- END section -->
+
+		<div class="rightside pagination"><a href="#" onclick="marklist('database_cleaner', 'items', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('database_cleaner', 'items', false); return false;">{L_UNMARK_ALL}</a></div>
+	<!-- ENDIF -->
+
+	<!-- IF NO_CHANGES_TITLE and not .section -->
+	<fieldset>
+		<legend>{NO_CHANGES_TITLE}</legend>
+		<p>{NO_CHANGES_TEXT}</p>
+	</fieldset>
+	<!-- ENDIF -->
+
+	<fieldset>
+	<!-- IF S_CONFIRM_BOX -->
+		<legend>{L_CONFIRM_TITLE}</legend>
+		<p style="padding: 5px 10px;">{L_CONFIRM_EXPLAIN}</p>
+
+		<div style="text-align: center;">
+			<input type="submit" name="yes" value="{L_YES}" class="button1" />
+			&nbsp; <input type="submit" name="no" value="{L_NO}" class="button2" />
+		</div>
+	<!-- ELSE -->
+		<div style="text-align: center;">
+			<input type="submit" name="continue" value="{L_CONTINUE}" class="button1" />
+		</div>
+	<!-- ENDIF -->
+	</fieldset>
+
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
+</form>
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,6 @@
+/**
+ * ERK stylesheet, overwrites the header image
+ */
+#page-header {
+    background: url("../images/erk_logo_trans.png") top left no-repeat;
+}
