@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * profile_list [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Profile List
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,23 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_ADMIN_PROFILE_LIST'	=> 'Profile list',
+	'ALL'					=> 'All',
+
+	'CLICK_TO_DELETE'		=> 'Delete all selected users by clicking on this button. <em>(Can’t be undone!)</em>',
+
+	'FILTER'				=> 'Filter',
+
+	'LIMIT'					=> 'Limit',
+
+	'ONLY_NON_EMPTY'		=> 'Only Non-Empty',
+	'ORDER_BY'				=> 'Order By',
+
+	'PROFILE_LIST'			=> 'Profile List',
+	'PROFILE_LIST_EXPLAIN'	=> 'This tool displays profile information for multiple users. It may also be used to aid in identifying spam accounts.',
+
+	'USERS_DELETE'				=> 'Delete selected users',
+	'USERS_DELETE_CONFIRM'		=> 'Are you sure that you want to delete the selected users? Deleting users through this tool <strong>will</strong> remove all their posts as well!',
+	'USERS_DELETE_SUCCESSFULL'	=> 'All selected users where deleted successfully!',
 ));

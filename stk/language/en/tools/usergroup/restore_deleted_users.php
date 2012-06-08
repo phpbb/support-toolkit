@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * restore_deleted_users [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Restore Delted Users
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,18 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_USERGROUP_RESTORE_DELETED_USERS'	=> 'Restore deleted users',
+	'NO_DELETED_USERS'	=> 'There are no deleted users that can be restored',
+	'NO_USER_SELECTED'	=> 'No users selected!',
+
+	'RESTORE_DELETED_USERS'						=> 'Restore Deleted Users',
+	'RESTORE_DELETED_USERS_CONFLICT'			=> 'Restore Deleted Users :: Conflicted',
+	'RESTORE_DELETED_USERS_CONFLICT_EXPLAIN'	=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has been run; this tool does <b>not</b> provide a list of these generated passwords.<br /><br />During the last run this tool found some usernames that already exist on this board. Please provide a new name for these users.',
+	'RESTORE_DELETED_USERS_EXPLAIN'				=> 'This tool allows you to restore users that are deleted from the board but still have "guest" posts on the board.<br />These users will be assigned a random password that you must reset manually after the tool has been run; this tool does <b>not</b> provide a list of these generated passwords.',
+
+	'SELECT_USERS'	=> 'Select users to restore',
+
+	'USER_RESTORED_SUCCESSFULLY'	=> 'The selected user has been restored successfully.',
+	'USERS_RESTORED_SUCCESSFULLY'	=> 'The selected users have been restored successfully.',
 ));

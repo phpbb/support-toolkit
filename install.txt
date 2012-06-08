@@ -1,0 +1,244 @@
+= The Support Toolkit =
+The Support Toolkit (STK) was developed by the phpBB.com Support Team in
+cooperation with EXreaction. The STK provides a second "Administration Control
+Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
+installation or to solve commonly encountered problems with the software.
+
+== Version ==
+Support Toolkit 1.0.5
+Supported phpBB versions 3.0.0 - 3.0.10
+
+== Authors ==
+Erik Frèrejean	(Erik Frèrejean)
+EXreaction	(Nathan Guse)
+Phil		(Phil Crumm)
+
+== Contributors ==
+Marshalrusty	(Yuriy Rusko)
+stevemaury	(Steve Atkinson)
+Tom		(Tom Catullo)
+
+
+= Installation Instructions =
+To install the Support Toolkit, upload the complete "stk" directory into your
+forum's root directory on your server (the one containing a file named
+"config.php"). Once you have uploaded the directory into the correct place,
+point your browser towards the toolkit to access it (http://www.example.com/phpBB/stk/).
+In the "contrib" folder you will find some additional installation instructions
+(in the MODX format) which will allow you to better integrate the STK with your
+phpBB installation.
+
+
+= Translations =
+The Support Toolkit is also available in multiple languages, to install your own
+language pack first download the appropriate package from the STK page on
+phpbb.com (http://www.phpbb.com/support/stk/). After that simply upload the
+language folder to "stk/language/"
+
+
+= Upgrade Instructions=
+== Upgrade to 1.0.5 ==
+To upgrade a previous version of the STK to 1.0.5, remove your previous
+installation by deleting the stk/ directory, then follow the Installation
+instructions above.
+If you had any translations installed you'll have to reinstall these after the
+update!
+
+
+= Changelog =
+== Changes since 1.0.5-rc1 ==
+* [Fix] Correctly handle empty module data when resetting the boards modules. (Bug #62958)
+* [Fix] The "ERK" now correctly handles strict/deprecated errors. (Bug #62976)
+
+== Changes since 1.0.4 ==
+* [Add] Added support for phpBB 3.0.10.
+* [Fix] Added missing language entry. (Bug #62856)
+* [Fix] Reparse bbcode changes topic poster to guest (Bug #62889, Patch by Dicky)
+* [Fix] STK password variable incorrectly unset when not logged in. (Bug #62946)
+* [Fix] Correct version handling in the database cleaner. (Bug #62961)
+
+== Changes since 1.0.4-rc2 ==
+* [Add] Added support for phpBB 3.0.9.
+* [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
+* [Fix] Database cleaner doesn't continue. (Bug #62801)
+* [Fix] Restore Deleted Users tool uses invalid grouping. (Bug #62818, Patch by Noxwizard)
+* [Fix] Profile List fails on MSSQL. (Bug #62819)
+* [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
+* [Fix] All tables and columns marked missing in Firebird and Oracle. (Bug #62821)
+* [Fix] Reparse All BBCodes enters infinite loop for MSSQL. (Bug #62822)
+
+== Changes since 1.0.4-rc1 ==
+* [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
+* [Change] Some changes to the database cleaner to correctly support all the phpBB DBMS.
+* [Fix] Resolve "500 Server errors" on IIS. (Bug #62679)
+* [Fix] Unexpected return while running database cleaner. (Bug #62799)
+* [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
+* [Fix] Stricter HTTPS check in the auto cookie tool. (Bug #62814, Patch by Noxwizard)
+
+== Changes since 1.0.3 ==
+* [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
+* [Change] Revert to use the phpBB common.php. (Bug #62658)
+* [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
+* [Fix] Correctly package the translation packages. (Bug #62651)
+* [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
+* [Fix] In some cases the database cleaner is loaded twice, causing blank pages. (Bug #62660, Patch by D¡cky)
+* [Fix] Depricated error in PHP 5.3.x. (Bug #62662)
+* [Fix] Remove unused button from the database cleaner. (Bug #62663)
+* [Fix] Undefined index error in the resync user groups tool. (Bug #62687)
+* [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
+* [Fix] BBCode reparser doesn't keep "reparseall" flag. (Bug #62725)
+* [Fix] Allow multibyte characters in the SRT generator. (Bug #62744)
+* [Fix] Allow disallowed user names in the "add user" tool. (Bug #62685)
+* [Fix] Resolve SQL error when resynchronising PM report flags. (Bug #62783)
+* [Fix] Resolve an postgreSQL error in the resync. report flags tool. (Bug #62788)
+
+== Changes since 1.0.3-rc2 ==
+* [Change] Some tweaks to the build script.
+* [Fix] Some language issues. (Bug #62635, #62647)
+* [Fix] Prevent the creation of a ghost whitelist file. (Bug #62636)
+* [Fix] "Non-static errors" in the ERK. (Bug #62649)
+
+== Changes since 1.0.3-rc1 ==
+* [Change] MySQL Upgrader allows for selecting both options. (Bug #62623)
+* [Fix] BOM Sniffer call to phpbb_realpath fails. (Bug #62620)
+* [Fix] Blank messages when running the database cleaner. (Bug #62621)
+* [Fix] Reset Roles doesn't restore data. (Bug #62622)
+* [Fix] Problem with text files in archive. (Bug #62627)
+
+== Changes since 1.0.2.1-pl1 ==
+* [Add] Re-sync attachments and a re-sync avatars tool. (Bug #52815)
+* [Add] MySQL Upgrader tool. (Bug #62477)
+* [Add] Re-sync registered users group. (Bug #62538)
+* [Add] A tool that resynchronises the report topic flags. (Bug #62601)
+* [Change] Migrated the versioncheck files to http://version.phpbb.com/stk/
+* [Change] Made the database cleaner user interface a bit more user friendly.
+* [Change] Added a better build script. (Bug #62471)
+* [Change] The BOM Sniffer now also handles UMIL and AutoMOD if installed. (Bug #62474)
+* [Change] Remove closing php tags from the php files. (Bug #62478)
+* [Change] Dynamic BOM Sniffer white list. (Bug #62481)
+* [Change] Remove the phpBB < 3.0.7 limitation from the Update email hashes tool. (Bug #62546)
+* [Change] Database cleaner now also validates roles, extensions and report reasons. (Bug #62475)
+* [Change] Merge the two system group resync tools into one. (Bug #62576)
+* [Change] Changed the way the BOM Sniffer handles non-english language files. (Bug #62581)
+* [Fix] SQL error handling. (Bug #51225)
+* [Fix] Correctly handle configuration values that were removed from phpBB. (Bug #62189, Patch by Noxwizard)
+* [Fix] Hooks potentially break STK. (Bug #62352)
+* [Fix] BOM Sniffer white list uses hard file extensions. (Bug 62473)
+* [Fix] Merge users tool in some cases incorrectly sets PM to and bcc addresses. (Bug #62486, Patch by D¡cky)
+* [Fix] Hardcoded path to the STK. (Bug #62493)
+* [Fix] Allow the database cleaner to work correctly when no table prefix is set. (Bug #62537)
+* [Fix] BOM Sniffer critical repair files not sniffed correctly. (Bug #62541)
+* [Fix] ERK breaks when style files are missing. (Bug #62557)
+* [Fix] Update UMIL to 1.0.4. (Bug #62568)
+* [Fix] Some language changes. (Bug #62585, Patch by Unknown Bliss; #62594 Patch by Noxwizard; Bug #62480; Bug #62615)
+* [Fix] Correctly sanitise all queries. (Bug #62606)
+
+== Changes since 1.0.2.1
+* [Fix] Wrong constant in the flash checker. (Bug #62497)
+
+== Changes since 1.0.2 ==
+* [Add] Added a tool to find potential dangerous flash BBCodes in posts, PMs and signatures.
+* [Change] Add support for phpBB 3.0.8.
+* [Feature] Modify Reparse BBCode tool to allow user to specify post IDs and PM IDs to reparse.
+* [Fix] Database cleaner file 3_0_6.php corrupted. (Bug #62484)
+
+== Changes since 1.0.2-rc2 ==
+* [Fix] Maintain the user signature options when reparsing signatures. (Bug #62451)
+* [Fix] Remove PHP 5 only code from the Merge users tool. (Bug #62458)
+
+== Changes since 1.0.2-rc1 ==
+* [Change] Remove the ability to translate the SRT Generator. (Bug #62410)
+* [Change] Try to overwrite the PHP time and memory limits, this might prevent some issues.
+* [Fix] Correct a few language issues in the new STK tool (Bug #62407, #62409)
+* [Fix] Correctly re-add all modules when "reset modules" in the database cleaner is ran. (Bug #62429)
+* [Fix] Make sure that the STK is able to run when the user has UMIL < 1.0.3 installed. (Bug #62430)
+* [Fix] Prevent bots from being buplicated in the user groups table when the database cleaner is ran. (Bug #62434)
+
+== Changes since 1.0.1-PL1 ==
+* [Add] Added a way to force the BOM sniffer to check all files within the phpBB path. (Bug #62186)
+* [Add] Added Emergency Repair Kit. (Bug #62202)
+* [Add] Added a SRT generator, which tries to pre-fill some important pieces of information. (Bug #62280)
+* [Change] Use a whitelist of files that will be ran through the BOM sniffer. (Bug #62183)
+* [Change] The BOM sniffer will create a backup the files in which it found issues.
+* [Change] Database won't run the same check twice when no changes where detected for a given step.
+* [Fix] The style dir critical repair tool doesn't recognise non-installed styles. (Bug #62130)
+* [Fix] In some environments the database cleaner breaks when no changes are found. (Bug #62180, Patch by VSE)
+* [Fix] Force sorting when loading database cleaner data files. (Bug #62180, Patch by Noxwizard)
+* [Fix] Correctly handle the restore deleted users tool when there are no deleted users. (Bug #62181)
+* [Fix] Removed some php ≥ 5.0.0 code.
+* [Fix] Automatic critical repair tools wheren't ran. (Bug #62194)
+* [Fix] Reparse all BBCodes fail. (Bug #62203)
+* [Fix] Private message senders get changed after merge users tool has merged PMs. (Bug #62247, Patch by ToonArmy)
+* [Fix] A couple of language related issues.
+* [Fix] Log the user out when using the STK logout method and using the phpBB buildin login method.
+* [Fix] Fixed an issue that broke backward compatibility with phpBB versions prior to 3.0.3.
+
+== Changes since 1.0.1 ==
+* [Fix] Database cleaner displays only "array" instead of appropriate options (Bug #62177)
+* [Change] STK emergency passwords no longer contain 'O' and '0' characters.
+
+== Changes since 1.0.1-rc1 ==
+* [Fix] Let the BOM sniffer correctly handle the install/ directory when re-named. (Bug #62142)
+* [Fix] Provide a more usefull message when the BOM sniffer couldn't remove the store/bom_sniffer directory. (Bug #62143)
+* [Fix] Correctly handle directories that shouldn't be checked by the BOM sniffer. (Bug #62145)
+
+== Changes since 1.0.0 ==
+* [Add] Critical repair tool that validates all phpBB files for any content outside the php tags. (Bug #47435)
+* [Add] Merge users tool. (Tool by toonarmy)
+* [Add] Tool to recalculate email hashes. (Bug #56425)
+* [Add] Tool to re-add deleted users and link them to the new profile. (Bug #56465)
+* [Change] If there is a UMIL installation available in phpBB use that one over the included version.
+* [Change] Rewrote the database cleaner to be more flexible/easier to maintain.
+* [Change] The BBCode reparser now no longer reparses only posts with the bbcode_bitfield set.
+* [Change] Rewrote critical repair tools system to be pluggable. (Bug #59725)
+* [Change] The reparse BBCode tool now reparses BBCodes in PMs and signatures (Bug #60645)
+* [Fix] Corrected some language related issues. (Bug #58625, #58635)
+* [Fix] Sql query tool doesn't decode htmlspecialchars when running a query. (Bug #59755)
+* [Fix] Redirect to the correct page after logging in if phpBB > 3.0.6.
+* [Fix] Manage founders tool unusable when there are no founders. (Bug #60155, patch by D¡cky)
+* [Fix] Properly insert poll expiration times when reparsing BBCode. (Bug #60275)
+* [Fix] Properly insert topic time length when reparsing BBCode. (Bug #61155, patch by D¡cky)
+* [Fix] Removed some phpBB version dependant code.
+
+== Changes since 1.0.0-rc3 ==
+* [Add] Re-cache moderators tool to repopulate the moderators_cache table. (Bug #51625)
+* [Fix] Corrected some language related issues. (Bug #53725, #53835, #53845, #56865, #57815)
+* [Fix] Display the correct "old" version number when triggering the outdated message after a STK update due to cached information.
+* [Fix] Allow the use of a non default language pack. (Bug #54785)
+* [Fix] Database cleaner removes non phpBB related tables. (Bug #55355)
+* [Fix] Users added to the "Newly Registered Users Group" won't be automatically removed. (Bug #55695)
+* [Fix] STK shouldn't remove "old" config entries for backwards compatibility. (Bug #55375)
+* [Fix] Database cleaner removes feed related items from the database. (Bug #54765)
+* [Fix] Reparse BBCode empties some posts. (Bug #55765, patch by D¡cky)
+* [Fix] Database cleaner removes the Q/A captcha tables. (Bug #56605)
+* [Fix] Correct error when attempting to remove groups. (Bug #56065)
+* [Fix] SQL error on attempting to replace previously removed default bots. (Bug #56065)
+* [Fix] Rename user_group section to usergroup to avoid triggering mod_security. (Bug #48225)
+* [Fix] Select the "registered users" group as default in the Add user tool.
+* [Fix] Reparse BBCode encodes some previously encoded entities. (Bug #56885, patch by D¡cky)
+* [Fix] "Database Cleaner" doesn't work with PostgreSQL. (Bug #56565, patch by we3b)
+* [Fix] Reparse BBCode does not properly handle UTF8 on PHP4. (Bug #56885, patch by D¡cky)
+* [Fix] Reparse BBCode breaks link between posts and atachments. (Bug #57325)
+* [Fix] Multiple runs of the BBCode reparser would break posts. (Bug #57245)
+* [Fix] BBCode sets all topic first posters to "Guest".
+* [Remove] URL List tool deferred until post-1.0.0 due to necessary refactoring. (Bug #50255)
+
+== Changes since 1.0.0-rc2 ==
+* [Add] Add the ability to "mass demote" founders through the list founders tool. (Bug #51435)
+* [Add] "Resync users with newly registered users group" tool. (Bug #52405)
+* [Fix] "Recreate Module Management modules" tool now also re-enables the modules if required.
+* [Fix] Set the correct language packs for phpBB <= 3.0.2. (Bug #51535)
+* [Fix] Display correct messages when fields are filled out incorrectly in the add user tool. (Bug #52385)
+* [Fix] Updates of UMIL break the Support Toolkit. (Bug #53375)
+
+== Changes since 1.0.0-rc1 ==
+* [Fix] Remove the hardcoded location of the toolkit. (Bug #47375)
+* [Fix] Make sure the menu is sorted correctly when using a translated version.
+* [Fix] Changed the message displayed when the Sanitise user tool doesn't do anything. (Bug #47405)
+* [Fix] Invalid XHTML in the profile list tool.
+* [Fix] Don't break the layout when displaying large query results.
+* [Fix] Non-existent style causes STK to not start. (Bug #47925)
+* [Fix] Version check for hosts with strange fsockopen settings. (Bug #47445)
+* [Fix] Don't disable the STK if the version check file on phpbb.com couldn't be found. (Bug #48845)
+* [Fix] Non-existent style causes STK crash. (Bug #47925)
+* [Fix] Double table prefix in the database cleaner. (Bug #49255)

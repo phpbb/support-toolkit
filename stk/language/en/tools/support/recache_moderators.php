@@ -1,22 +1,24 @@
 <?php
 /**
- *
- * recache_moderators [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Recache moderators
+* @version $Id$
+* @copyright (c) 2010 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
+/**
+* DO NOT CHANGE
+*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -37,6 +39,9 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_RECACHE_MODERATORS'	=> 'Recache forum moderators',
+	'RECACHE_MODERATORS'				=> 'Re-cache moderators',
+	'RECACHE_MODERATORS_COMPLETE'		=> 'The moderator cache has been successfully rebuilt.',
+	'RECACHE_MODERATORS_CONFIRM'		=> 'Are you sure you want to re-cache the moderators?',
 ));

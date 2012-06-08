@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * reset_styles [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Reset Styles
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,12 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_RESET_STYLES'	=> 'Reset board styles',
+	'RESET_STYLES'			=> 'Reset Styles',
+	'RESET_STYLES_EXPLAIN'	=> 'This tool allows you to change a board’s default style.',
+	'RESET_STYLE_COMPLETE'	=> 'The default style has been changed successfully.',
+
+	'STYLE'					=> 'Style',
+	'STYLE_EXPLAIN'			=> 'Select the style you want set as the default.',
 ));

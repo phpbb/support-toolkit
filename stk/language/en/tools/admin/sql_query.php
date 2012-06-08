@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * sql_query [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - SQL Query
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,19 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_ADMIN_SQL_QUERY'	=> 'SQL Query',
+	'ERROR_QUERY'					=> 'Query containing the error',
+
+	'NO_RESULTS'					=> 'No Results',
+	'NO_SQL_QUERY'					=> 'You must enter a query to run.',
+
+	'QUERY_RESULT'					=> 'Query results',
+
+	'SHOW_RESULTS'					=> 'Show Results',
+	'SQL_QUERY'						=> 'Run SQL Query',
+	'SQL_QUERY_EXPLAIN'				=> 'Enter the SQL query you wish to run. The tool will substitute "phpbb_" with your table prefix.<br />If the "Show Results" checkbox is checked the tool will display the results <em>(if any)</em> of the query.',
+
+	'SQL_QUERY_LEGEND'				=> 'SQL Query',
+	'SQL_QUERY_SUCCESS'				=> 'The SQL query has been run successfully.',
 ));

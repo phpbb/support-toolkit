@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * change_password [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Change Password
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,14 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_USERGROUP_CHANGE_PASSWORD'	=> 'Change password',
+	'CHANGE_PASSWORD'			=> 'Change Password',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Change a user’s password.',
+	'CHANGE_PASSWORD_SUCCESS'	=> 'The password for <a href="%s">%s</a> has been successfully changed.',
+
+	'PASSWORD_CONFIRM'			=> 'Re-Enter Password',
+
+	'USERNAMEID'				=> 'Username or User ID',
+	'USERNAMEID_EXPLAIN'		=> 'Enter the Username or the User ID of the user whose password you want to change.',
 ));

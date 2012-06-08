@@ -1,22 +1,24 @@
 <?php
 /**
- *
- * reclean_usernames [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Reclean Usernames
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
+/**
+* DO NOT CHANGE
+*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -37,6 +39,10 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_RECLEAN_USERNAMES'	=> 'Reclean usernames',
+	'RECLEAN_USERNAMES'					=> 'Reclean Usernames',
+	'RECLEAN_USERNAMES_COMPLETE'		=> 'All usernames have been recleaned successfully.',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Are you sure you want to reclean all usernames?',
+	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'The reclean usernames tool is currently in progress... please do not interrupt this process.',
 ));

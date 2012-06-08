@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * readd_module_mangement [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Readd Module Management
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,9 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_READD_MODULE_MANAGEMENT'	=> 'Recreate “module management” modules',
+	'READD_MODULE_MANAGEMENT'			=> 'Recreate Module Management modules',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Are you sure you want to recreate the Module Management modules in the ACP?',
+	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'The modules have been recreated successfully!',
 ));

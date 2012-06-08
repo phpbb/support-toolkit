@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * purge_cache [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Purge Cache
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,11 +36,7 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
-$lang = array_merge($lang, array(
-	'TOOL_ADMIN_PURGE_CACHE'	=> 'Purge cache',
 
-	'PURGE_CACHE_CONFIRM'		=> 'Are you sure that you want to purge the board’s cache?',
-	'PURGE_CACHE_DESCRIPTION'	=> 'This tool allows you to purge the board’s cache. When ran any cached information will be removed.',
-	'PURGE_CACHE_SUCCESS'		=> 'The board’s cache was purged successfully.',
-	'PURGE_CACHE_TITLE'			=> 'Purge cache',
+$lang = array_merge($lang, array(
+	'PURGE_CACHE_COMPLETE'	=> 'The cache has been purged successfully.',
 ));

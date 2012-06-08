@@ -8,76 +8,76 @@
 -->
 <!-- @id $Id$ -->
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
-	<header>
-		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
-		<title lang="en">Support Toolkit forum link</title>
-		<description lang="en">Adds a link in the footer (under the ACP link) that points to the Support Toolkit</description>
-	
-		<author-group>
-			<author>
-				<username>Erik Frèrerejean</username>
-				<realname>Erik Frèrerejean</realname>
-				<homepage>http://www.erikfrerejean.nl</homepage>
-				<email>erikfrerejean@phpbb.com</email>
-				<contributions-group>
-					<contributions status="current" from="2009-01-21" position="Developer" />
-				</contributions-group>
-			</author>
-			<author>
-				<username>iWisdom</username>
-				<realname>Phil Crumm</realname>
-				<homepage>http://p3net.net</homepage>
-				<email>iwisdom@phpbb.com</email>
-				<contributions-group>
-					<contributions status="current" from="2010-01-19" position="Developer" />
-				</contributions-group>
-			</author>
-			<author>
-				<username>EXreaction</username>
-				<realname>Nathan Guse</realname>
-				<homepage>http://www.lithiumstudios.org/</homepage>
-				<email>exreaction@lithiumstudios.org</email>
-				<contributions-group>
-					<contributions status="past" from="2009-01-21" to="2009-10-31" position="Developer" />
-				</contributions-group>
-			</author>
-		</author-group>
-	
-		<mod-version>2.0.0-dev</mod-version>
-	
-		<installation>
-			<level>easy</level>
-			<time>60</time>
-			<target-version>3.1.0</target-version>
-		</installation>
-	</header>
-	
-	<action-group>
-		<open src="includes/functions.php">
-			<edit>
-				<find><![CDATA['U_ACP' =>]]></find>
-				<action type="before-add"><![CDATA[		//-- Support Toolkit
-			//-- Add:
-			'U_STK' => ($user->data['user_type'] == USER_FOUNDER) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
-			//-- End Support Toolkit]]></action>
-			</edit>
-		</open>
-	
-		<open src="language/en/common.php">
-			<edit>
-				<find><![CDATA['ASCENDING']]></find>
-				<action type="after-add"><![CDATA[	//-- Support Toolkit
+<header>
+	<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+	<title lang="en">Support Toolkit forum link</title>
+	<description lang="en">Adds a link in the footer (under the ACP link) that points to the Support Toolkit</description>
+
+	<author-group>
+		<author>
+			<username>EXreaction</username>
+			<realname>Nathan Guse</realname>
+			<homepage>http://www.lithiumstudios.org/</homepage>
+			<email>exreaction@lithiumstudios.org</email>
+			<contributions-group>
+				<contributions status="current" from="2009-01-21" position="Developer" />
+			</contributions-group>
+		</author>
+		<author>
+			<username>Erik Frèrerejean</username>
+			<realname>Erik Frèrerejean</realname>
+			<homepage>http://www.erikfrerejean.nl</homepage>
+			<email>erikfrerejean@phpbb.com</email>
+			<contributions-group>
+				<contributions status="current" from="2009-01-21" position="Developer" />
+			</contributions-group>
+		</author>
+		<author>
+			<username>iWisdom</username>
+			<realname>Phil Crumm</realname>
+			<homepage>http://p3net.net</homepage>
+			<email>iwisdom@phpbb.com</email>
+			<contributions-group>
+				<contributions status="current" from="2010-01-19" position="Developer" />
+			</contributions-group>
+		</author>
+	</author-group>
+
+	<mod-version>1.0.5</mod-version>
+
+	<installation>
+		<level>easy</level>
+		<time>60</time>
+		<target-version>3.0.10</target-version>
+	</installation>
+</header>
+
+<action-group>
+	<open src="includes/functions.php">
+		<edit>
+			<find><![CDATA['U_ACP' =>]]></find>
+			<action type="before-add"><![CDATA[		//-- Support Toolkit
 		//-- Add:
-		'STK'							=> 'Support Toolkit',
+		'U_STK' => ($user->data['user_type'] == USER_FOUNDER) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
 		//-- End Support Toolkit]]></action>
-			</edit>
-		</open>
-	
-		<open src="styles/prosilver/template/overall_footer.html">
-			<edit>
-				<find><![CDATA[<!-- IF U_ACP --><br /><strong><a href="{U_ACP}">{L_ACP}</a></strong><!-- ENDIF -->]]></find>
-				<action type="after-add"><![CDATA[<!-- IF U_STK --><br /><strong><a href="{U_STK}" title="{L_STK}">{L_STK}</a></strong><!-- ENDIF -->]]></action>
-			</edit>
-		</open>
-	</action-group>
+		</edit>
+	</open>
+
+	<open src="language/en/common.php">
+		<edit>
+			<find><![CDATA['ASCENDING']]></find>
+			<action type="after-add"><![CDATA[	//-- Support Toolkit
+	//-- Add:
+	'STK'							=> 'Support Toolkit',
+	//-- End Support Toolkit]]></action>
+		</edit>
+	</open>
+
+	<open src="styles/prosilver/template/overall_footer.html">
+		<edit>
+			<find><![CDATA[<!-- IF U_ACP --><br /><strong><a href="{U_ACP}">{L_ACP}</a></strong><!-- ENDIF -->]]></find>
+			<action type="after-add"><![CDATA[<!-- IF U_STK --><br /><strong><a href="{U_STK}" title="{L_STK}">{L_STK}</a></strong><!-- ENDIF -->]]></action>
+		</edit>
+	</open>
+</action-group>
 </mod>

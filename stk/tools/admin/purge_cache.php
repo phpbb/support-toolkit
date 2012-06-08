@@ -1,29 +1,50 @@
 <?php
 /**
- *
- * @package SupportToolkit
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Purge Cache
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
-class stktool_admin_purge_cache extends stk_toolbox_toolBase
+/**
+ * @ignore
+ */
+if (!defined('IN_PHPBB'))
 {
-	public function displayOptions()
+	exit;
+}
+
+class purge_cache
+{
+	/**
+	* Display Options
+	*
+	* Output the options available
+	*/
+	function display_options()
 	{
-		return TOOL_OVERVIEW_TRIGGER;
+		return 'PURGE_CACHE';
 	}
 
-	public function run()
+	/**
+	* Run Tool
+	*
+	* Does the actual stuff we want the tool to do after submission
+	*/
+	function run_tool(&$error)
 	{
-		// Initialise the actual cache engine that is used by the board
-		global $acm_type;
-		$cache_factory	= new phpbb_cache_factory($acm_type);
-		$cache_driver	= $cache_factory->get_driver();
+		global $auth, $cache;
 
-		// Purge the cache
-		$cache_driver->purge();
+		$cache->purge();
 
-		return true;
+		// Clear permissions
+		$auth->acl_clear_prefetch();
+		cache_moderators();
+
+		add_log('admin', 'LOG_PURGE_CACHE');
+
+		trigger_error('PURGE_CACHE_COMPLETE');
 	}
 }

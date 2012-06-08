@@ -1,17 +1,16 @@
 <?php
 /**
- *
- * auto_cookies [English]
- *
- * @package language
- * @copyright (c) 2012 phpBB Group
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Support Toolkit - Auto Cookies
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,6 +36,10 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
+
 $lang = array_merge($lang, array(
-	'TOOL_SUPPORT_AUTO_COOKIES'	=> 'Auto cookies',
+	'AUTO_COOKIES'				=> 'Auto Cookies',
+	'AUTO_COOKIES_EXPLAIN'		=> 'This tool allows you to change your forum’s cookie settings. The suggested settings should be correct in most cases. If you are unsure of the correct settings, please seek guidance in the Support Forum before changing any settings as incorrect settings may prevent you from being able to log into your forum.',
+
+	'COOKIE_SETTINGS_UPDATED'	=> 'Cookie settings successfully updated.',
 ));
