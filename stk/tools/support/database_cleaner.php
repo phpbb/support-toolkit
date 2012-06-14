@@ -70,19 +70,20 @@ if (!class_exists('database_cleaner'))
 			global $config;
 
 			// Correctly format the version number. Only RC releases are in uppercase
-			$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower($config['version']));
+			$this->phpbb_version = str_replace(array('.', '-', 'rc'), array('_', '_', 'RC'), strtolower(PHPBB_VERSION));
 
 			// Unstable versions can only be used when debugging
-			if (preg_match('#^([0-9_]+)_a|b|dev|RC([0-9]*)$#i', $this->phpbb_version))
+			$matches = array();
+			if (preg_match('#^([0-9_]+)_(a|b|dev|RC([0-9]*))$#i', $this->phpbb_version, $matches))
 			{
 				if (!defined('DEBUG'))
 				{
 					return 'UNSTABLE_DEBUG_ONLY';
 				}
-				else
+				else if (!empty($matches[1]))
 				{
 					// Get rid of any unstable identifiers
-					$this->phpbb_version = substr($this->phpbb_version, 0, strrpos($this->phpbb_version, '_'));
+					$this->phpbb_version = $matches[1];
 				}
 			}
 
