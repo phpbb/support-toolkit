@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.6-rc1 ==
+* [Fix] Cannot redeclare class critical_repair in ERK. (Bug #63144)
+
 == Changes since 1.0.5 ==
 * [Add] Added support for phpBB 3.0.11.
 * [Fix] Incorrect language packages. (Bug #62995, Path by Noxwizard)

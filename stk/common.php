@@ -48,13 +48,13 @@ else
 	require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
 }
 
-include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
-$cr = new critical_repair();
-
 // When not in the ERK we setup the user at this point
 // and load UML.
 if (!defined('IN_ERK'))
 {
+	include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
+	$cr = new critical_repair();
+
 	$user->session_begin();
 	$auth->acl($user->data);
 	$user->setup('acp/common', $config['default_style']);
