@@ -553,6 +553,17 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		return;
 	}
 
+	if (!defined('E_DEPRECATED'))
+	{
+		define('E_DEPRECATED', 8192);
+	}
+
+	// php 4 compatibility
+	if ($errno == E_DEPRECATED)
+	{
+		return true;
+	}
+
 	// If we're in a fully running STK simply call the phpBB msg_handler
 	if (defined('IN_STK') && !defined('IN_ERK'))
 	{
