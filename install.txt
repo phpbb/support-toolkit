@@ -10,13 +10,13 @@ Supported phpBB versions 3.0.0 - 3.0.11-RC1
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
-EXreaction	(Nathan Guse)
-Phil		(Phil Crumm)
+EXreaction		(Nathan Guse)
+Phil			(Phil Crumm)
 
 == Contributors ==
 Marshalrusty	(Yuriy Rusko)
-stevemaury	(Steve Atkinson)
-Tom		(Tom Catullo)
+stevemaury		(Steve Atkinson)
+Tom				(Tom Catullo)
 
 
 = Installation Instructions =
