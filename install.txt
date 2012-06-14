@@ -49,6 +49,7 @@ update!
 == Changes since 1.0.6-rc1 ==
 * [Fix] Cannot redeclare recalc_nested_sets() in sql query tool. (Bug #63143)
 * [Fix] Cannot redeclare class critical_repair in ERK. (Bug #63144)
+* [Fix] Database cleaner incorrectly handles special cases on phpBB 3.0.11. (Bug #63145)
 
 == Changes since 1.0.5 ==
 * [Add] Added support for phpBB 3.0.11.
