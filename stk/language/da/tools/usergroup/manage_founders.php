@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'Kun et af felterne må udfyldes.',
+
 	'DEMOTE_FAILED'				=> 'Kunne ikke fjerne grundlæggerstatus for alle brugere!',
 	'DEMOTE_FOUNDERS'			=> 'Degrader grundlæggere',
 	'DEMOTE_SUCCESSFULL'		=> 'Grundlæggerstatus fjernet fra %d brugere!',
@@ -54,6 +56,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Forfrem til grundlægger',
 
-	'USER_TO_FOUNDER'			=> 'Bruger forfremmes til grundlægger',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Angiv brugernavn eller brugers ID for den bruger du vil forfremme til grundlægger.',
+	'USER_NAME_TO_FOUNDER'			=> 'Brugernavn forfremmes til grundlægger',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Angiv brugernavn for den bruger du vil forfremme til grundlægger.',
+	'USER_ID_TO_FOUNDER'			=> 'Bruger-ID forfremmes til grundlægger',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Angiv bruger-ID for den bruger du vil forfremme til grundlægger.',
 ));
