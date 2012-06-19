@@ -329,7 +329,7 @@ class STKVendor :
 		# Pimple
 		self._copy (
 			'./stk/vendor/Pimple/lib/Pimple.php',
-			'./stk/core/DI/Pimple.php',
+			'./stk/core/Pimple.php',
 			self.args.force
 		)
 
