@@ -40,7 +40,7 @@ $stk['class_loaders'] = $stk->share(function() {
 $stk['phpbb'] = $stk->share(function() {
 	return new Pimple();
 });
-$stk['toolbox'] = $stk->share(function() {
+$stk['plugin'] = $stk->share(function() {
 	return new Pimple();
 });
 
@@ -58,6 +58,13 @@ $stk['class_loaders']['phpbb'] = $stk->share(function() {
 		require STK_ROOT . 'core/class_loader.php';
 	}
 	return new stk_core_class_loader('phpbb_', PHPBB_FILES . 'includes/');
+});
+$stk['class_loaders']['plugin'] = $stk->share(function() use ($stk) {
+	if (!class_exists('stk_core_class_loader'))
+	{
+		require STK_ROOT . 'core/class_loader.php';
+	}
+	return new stk_core_class_loader('plugin_', $stk['plugin']['tool_path']);
 });
 $stk['class_loaders']['stk']->register();
 $stk['class_loaders']['phpbb']->register();
@@ -100,6 +107,7 @@ if (!defined('PHPBB_INSTALLED'))
 // Include some phpBB files that can't be auto loaded
 require PHPBB_FILES . 'includes/constants.php';
 require PHPBB_FILES . 'includes/functions.php';
+require PHPBB_FILES . 'includes/hooks/index.php';
 require PHPBB_FILES . 'includes/utf/utf_tools.php';
 
 // set up caching
@@ -122,10 +130,9 @@ $stk['cache']['board_cache'] = $stk->share(function() use ($stk) {
 	$cache_factory = new phpbb_cache_factory($stk['phpbb']['db_config']['acm_type']);
 	return $cache_factory->get_service();
 });
-$stk['cache']['stk'] = $stk->share(function() use ($stk) {
+$stk['cache']['stk'] = $stk->share(function() {
 	$cache_factory = new stk_wrapper_cache_factory('file');
 	$cache_service = $cache_factory->get_service();
-	$cache_service->setDIContainer($stk);
 	return $cache_service;
 });
 $cache = $stk['cache']['phpbb'];
@@ -155,11 +162,10 @@ $stk['phpbb']['db'] = $stk->share(function($phpbb) use ($dbms, $phpbb_root_path,
 
 	return $db;
 });
-$db = $stk['phpbb']['db'];
 
 // Get the actual phpBB configuration object
-$stk['phpbb']['config'] = $stk->share(function() use ($db, $cache) {
-	return new phpbb_config_db($db, $cache->get_driver(), CONFIG_TABLE);
+$stk['phpbb']['config'] = $stk->share(function($phpbb) use ($stk) {
+	return new phpbb_config_db($phpbb['db'], $stk['cache']['phpbb']->get_driver(), CONFIG_TABLE);
 });
 
 // Some phpBB code relies on the phpBB config data, to control the behavior
@@ -172,13 +178,11 @@ $stk['phpbb']['config_mock'] = $stk->share(function($phpbb) {
 
 	return $config;
 });
-$config = $stk['phpbb']['config_mock'];
 
 // Setup the phpBB User object
 $stk['phpbb']['user'] = $stk->share(function() use ($stk) {
 	return new stk_wrapper_user($stk);
 });
-$user = $stk['phpbb']['user'];
 
 // Setup the phpBB template object
 $stk['phpbb']['style_locator'] = $stk->share(function() {
@@ -193,34 +197,45 @@ $stk['phpbb']['template'] = $stk->share(function() use ($stk) {
 $stk['phpbb']['style'] = $stk->share(function() use ($stk) {
 	return new stk_wrapper_style($stk);
 });
-$phpbb_style	= $stk['phpbb']['style'];
-$template		= $stk['phpbb']['template'];
 
-// Setup the version controller
-$stk['vc'] = $stk->share(function($stk) {
-	return new stk_core_version_controller('https://raw.github.com/gist/2039820/stk_version_check.json', $stk['cache']['stk']);
+// The STK plugins
+$stk['plugin']['manager'] = $stk->share(function($plugin) use ($stk) {
+	$stk['class_loaders']['plugin']->register();
+	return new stk_plugin_manager($plugin['sniffer']);
 });
-
-// The STK toolbox
-$stk['toolbox']['box'] = $stk->share(function() use ($stk) {
-	return new stk_toolbox($stk);
+$stk['plugin']['sniffer'] = $stk->share(function() use ($stk) {
+	$sniffer = new stk_plugin_sniffer($stk, $stk['plugin']['tool_path']);
+	$sniffer->sniff();
+	return $sniffer;
 });
-$stk['toolbox']['category'] = function() use ($stk) {
-	return new stk_toolbox_category($stk);
-};
-$stk['toolbox']['tool'] = function() use ($stk) {
-	return new stk_toolbox_tool($stk);
-};
+$stk['plugin']['tool_path'] = STK_ROOT . 'tools/';
 
 // Utilities
 $stk['utilities'] = $stk->share(function($stk) {
 	return new stk_includes_utilities($stk);
 });
 
-// Some settings
-$stk['toolbox']['toolpath'] = $stk->share(function() {
-	return new SplFileInfo(STK_ROOT . 'tools');
-});
+// phpBB requires some global vars
+$db				= $stk['phpbb']['db'];
+$config			= $stk['phpbb']['config_mock'];
+$phpbb_style	= $stk['phpbb']['style'];
+$template		= $stk['phpbb']['template'];
+$user			= $stk['phpbb']['user'];
+
+// Register hooks
+$stk_hooks = array(
+	'append_sid'	=> array(
+		'function'	=> 'stk_append_sid',
+		'location'	=> 'append_sid',
+	),
+);
+$phpbb_hook = new phpbb_hook(array('exit_handler', 'phpbb_user_session_handler', 'append_sid', array('template', 'display')));
+
+foreach ($stk_hooks as $hook => $call)
+{
+	require STK_ROOT . "hooks/{$hook}.php";
+	$phpbb_hook->register($call['location'], $call['function'], 'standalone');
+}
 
 // Setup user
 $stk['phpbb']['user']->session_begin(false);

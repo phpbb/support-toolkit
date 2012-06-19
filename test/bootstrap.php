@@ -37,7 +37,8 @@ require_once __DIR__ . '/test_framework/stk_database_test_case.php';
 require_once __DIR__ . '/test_framework/stk_database_test_connection_manager.php';
 require_once __DIR__ . '/test_framework/stk_test_case.php';
 
-// Include the DI container
+// Include some other files
+require PHPBB_FILES . 'includes/utf/utf_tools.php';
 require STK_ROOT . 'core/DI/Pimple.php';
 
 // Initialise class loaders
@@ -46,3 +47,6 @@ $stk_class_loader = new stk_core_class_loader('stk_', STK_ROOT);
 $stk_class_loader->register();
 $phpbb_class_loader = new stk_core_class_loader('phpbb_', $phpbb_root_path . 'includes/');
 $phpbb_class_loader->register();
+
+// Set some global vars
+$phpbb_hook = $request = $user = null;

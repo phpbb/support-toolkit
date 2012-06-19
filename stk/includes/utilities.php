@@ -56,7 +56,7 @@ class stk_includes_utilities
 		));
 
 		// Assign the categories to the template
-		$this->template->assignNavigation();
+		$this->template->assign_navigation();
 
 		// application/xhtml+xml not used because of IE
 		header('Content-type: text/html; charset=UTF-8');

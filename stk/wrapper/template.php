@@ -15,7 +15,8 @@
  */
 class stk_wrapper_template extends phpbb_template
 {
-	private $stk;
+	private $plugin_manager;
+	private $user;
 
 	/**
 	 * Constructor.
@@ -33,7 +34,8 @@ class stk_wrapper_template extends phpbb_template
 			$stk['phpbb']['style_path_provider']
 		);
 
-		$this->stk = $stk;
+		$this->plugin_manager	= $stk['plugin']['manager'];
+		$this->user				= $stk['phpbb']['user'];
 	}
 
 	/**
@@ -42,13 +44,13 @@ class stk_wrapper_template extends phpbb_template
 	 * @param type $noticeTitle
 	 * @param type $noticeDescription
 	 */
-	public function addNotice($noticeTitle, $noticeDescription, $global = false)
+	public function add_notice($noticeTitle, $noticeDescription, $global = false)
 	{
 		$block = ($global === true) ? 'globalnotices' : 'toolnotices';
 
 		$this->assign_block_vars($block, array(
-			'TITLE'			=> $this->stk['phpbb']['user']->lang($noticeTitle),
-			'DESCRIPTION'	=> $this->stk['phpbb']['user']->lang($noticeDescription),
+			'TITLE'			=> $this->user->lang($noticeTitle),
+			'DESCRIPTION'	=> $this->user->lang($noticeDescription),
 		));
 	}
 
@@ -59,43 +61,43 @@ class stk_wrapper_template extends phpbb_template
 	 *
 	 * @param stk_toolbox $toolbox
 	 */
-	public function assignNavigation()
+	public function assign_navigation()
 	{
-		$categories = $this->stk['toolbox']['box']->getToolboxCategories();
-		$activeCategory = null;
+		$plugin_tree = $this->plugin_manager->sniffer->get_plugin_tree();
+		$active_category = null;
 
-		foreach ($categories as $category)
+		foreach ($plugin_tree as $category)
 		{
 			$active = false;
-			if ($category->isActive())
+			if ($category->is_active())
 			{
 				$active = true;
-				$activeCategory = $category;
+				$active_category = $category;
 			}
 
 			$this->assign_block_vars('t_block1', array(
-				'L_TITLE'	=> $this->stk['phpbb']['user']->lang(strtoupper($category->getName() . '_TITLE')),
-				'U_TITLE'	=> $category->getCategoryURL(),
+				'L_TITLE'	=> $this->user->lang(strtoupper($category->get_name() . '_TITLE')),
+				'U_TITLE'	=> $category->build_url(),
 				'S_ACTIVE'	=> $active,
 			));
 		}
 
-		if ($activeCategory && $activeCategory->getToolCount() > 0)
+		if ($active_category && $active_category->has_plugins())
 		{
-			$tools = $activeCategory->getToolList();
+			$tools = $active_category->get_plugins();
 			foreach ($tools as $tool)
 			{
 				$active = false;
-				if ($tool->isActive())
+				if ($tool->is_active())
 				{
 					$active = true;
 				}
 
-				$tool->loadToolLanguageFile();
+//				$tool->loadToolLanguageFile();
 
 				$this->assign_block_vars('l_block1', array(
-					'L_TITLE'	=> $this->stk['phpbb']['user']->lang($tool->getToolLanguageString()),
-					'U_TITLE'	=> $tool->getToolURL(),
+					'L_TITLE'	=> $tool->get_identifier(),
+					'U_TITLE'	=> $tool->build_url(),
 					'S_ACTIVE'	=> $active,
 				));
 			}

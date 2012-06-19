@@ -16,8 +16,6 @@
  */
 class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 {
-	private $user;
-
 	/**
 	 * Set cache path
 	 */
@@ -60,15 +58,5 @@ class stk_wrapper_cache_driver_file extends phpbb_cache_driver_file
 		);
 
 		parent::put($var_name, $var, $ttl);
-	}
-
-	public function getCacheDir()
-	{
-		return $this->cache_dir;
-	}
-
-	public function setDependencies(Pimple $stk)
-	{
-		$this->user = $stk['phpbb']['user'];
 	}
 }
