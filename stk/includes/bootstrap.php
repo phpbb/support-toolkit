@@ -9,24 +9,7 @@
 
 $starttime = microtime(true);
 
-// Define some initial constants
-if (!defined('STK_ROOT'))
-{
-	define('STK_ROOT', __DIR__ . '/../');
-}
-
-if (!defined('PHPBB_FILES'))
-{
-	define('PHPBB_FILES', STK_ROOT . 'phpBB/');
-}
-
-if (!defined('IN_PHPBB'))
-{
-	define('IN_PHPBB', true);
-}
-
-// Enforce the usage of the SID
-define('NEED_SID', true);
+require (__DIR__ . '/static_constants.php');
 
 // Setup the DI container
 require STK_ROOT . 'core/Pimple.php';
@@ -246,4 +229,4 @@ $stk['phpbb']['user']->stk_add_lang('common');
 $stk['phpbb']['style']->set_custom_style();
 
 // Include some STK files that can't be autoloaded
-require STK_ROOT . 'includes/constants.php';
+require STK_ROOT . 'includes/dynamic_constants.php';

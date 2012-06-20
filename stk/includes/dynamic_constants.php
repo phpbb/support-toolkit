@@ -7,12 +7,5 @@
  *
  */
 
-// Version constants
-define('STK_VERSION', '2.0.0-dev');
-define('STK_QA', true);
-
 // The web path
 define('STK_WEB_PATH', generate_board_url(true));
-
-// Tool options
-define('TOOL_OVERVIEW_TRIGGER', 1);
