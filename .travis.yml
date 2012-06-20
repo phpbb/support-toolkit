@@ -16,9 +16,9 @@ matrix:
 
 after_install:
   - if [[ "$DB" == "firebird" ]]; then sudo service firebird2.5-super start; fi
-  - if [[ "$DB" == "firebird" ]]; then ./scripts/python/firebird_init.py; fi
 
 before_script:
+  - if [[ "$DB" == "firebird" ]]; then ./scripts/python/firebird_init.py; fi
   - if [[ "$DB" == "firebird" ]]; then echo 'CREATE DATABASE "localhost:/tmp/stk_tests.fdb" PAGE_SIZE = 16384;' > /tmp/create.sql; fi
   - if [[ "$DB" == "firebird" ]]; then isql-fb -u SYSDBA -p masterkey -i /tmp/create.sql -q; fi
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS stk_tests;" -uroot; fi
