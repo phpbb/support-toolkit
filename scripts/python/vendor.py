@@ -346,4 +346,3 @@ class STKVendor :
 if __name__ == "__main__" :
 	vendor = STKVendor()
 	vendor.run()
-

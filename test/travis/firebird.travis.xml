@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="true"
+         backupStaticAttributes="true"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+		 strict="true"
+         bootstrap="../bootstrap.php">
+	<testsuites>
+		<testsuite name="Support Toolkit test suite">
+			<directory suffix="_test.php">./../tests/</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<backlist>
+			<directory suffix=".php">../../stk/phpBB/</directory>
+			<directory suffix=".php">../../stk/vendor/</directory>
+		</backlist>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../../stk/</directory>
+			<exclude>
+				<file>../../stk/config.php</file>
+				<file>../../stk/index.php</file>
+				<file>../../stk/includes/bootstrap.php</file>
+				<file>../../stk/includes/constants.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+
+	<php>
+		<server name="PHPBB_TEST_DBMS" value="firebird" />
+		<server name="PHPBB_TEST_DBNAME" value="/tmp/stk_tests.fdb" />
+		<server name="PHPBB_TEST_DBPORT" value="" />
+		<server name="PHPBB_TEST_DBHOST" value="localhost" />
+		<server name="PHPBB_TEST_DBUSER" value="SYSDBA" />
+		<server name="PHPBB_TEST_DBPASSWD" value="masterkey" />
+		<server name="PHPBB_TEST_TABLE_PREFIX" value="phpbb_" />
+	</php>
+</phpunit>
