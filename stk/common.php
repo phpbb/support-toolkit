@@ -53,7 +53,7 @@ else
 if (!defined('IN_ERK'))
 {
 	include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
-	$cr = new critical_repair();
+	$critical_repair = new critical_repair();
 
 	$user->session_begin();
 	$auth->acl($user->data);
