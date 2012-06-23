@@ -75,6 +75,9 @@ $lang = array_merge($lang, array(
    'NOTICE'								=> 'Notice',
    'NO_VERSION_FILE'					=> 'The Support Toolkit (STK) was not able to determine the latest version. Please go to the <a href="http://phpbb.com/support/stk">Support Toolkit section of phpBB.com</a> and verify that you are using the latest version before using the STK.',
 
+   'REQUEST_PHPBB_VERSION'				=> 'Define phpBB version',
+   'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'The Support Toolkit was unable to correctly identify which phpBB version you are running, please select the appropriate version in this form before continueing.<br />Please visit the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forums</a> to get assistance to resolve this issue.',
+
    'PASS_GENERATED'						=> 'Your STK password file was successfully generated!<br/>The password that was generated for you is: <em>%1$s</em><br />This password will expire on: <span style="text-decoration: underline;">%2$s</span>. After this time you <strong>must</strong> generate a new password file in order to keep using the emergency login feature!<br /><br />Use the following button to download the file. Once you’ve downloaded this file you must upload it to your server into the "stk" directory',
    'PASS_GENERATED_REDIRECT'			=> 'Once you have uploaded the password file to the correct location, click <a href="%s">here</a> to go back to the login page.',
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'This tool isn’t compatible with the version of phpBB that you are running',

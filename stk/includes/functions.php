@@ -352,8 +352,9 @@ function stk_add_lang($lang_file, $fore_lang = false)
  * Perform all quick tasks that has to be ran before we authenticate
  *
  * @param	String	$action	The action to perform
+ * @param   bool    $submit The form has been submitted
  */
-function perform_unauthed_quick_tasks($action)
+function perform_unauthed_quick_tasks($action, $submit = false)
 {
 	global $template, $user;
 
@@ -365,6 +366,53 @@ function perform_unauthed_quick_tasks($action)
 			$user->unset_admin();
 			meta_refresh(3, append_sid(PHPBB_ROOT_PATH . 'index.' . PHP_EXT));
 			trigger_error('STK_LOGOUT_SUCCESS');
+		break;
+
+		// Can't rely on phpBB to get the phpBB version.
+		case 'request_phpbb_version' :
+			global $cache, $config;
+
+			if ($submit)
+			{
+				if (!check_form_key('request_phpbb_version'))
+				{
+					trigger_error('FORM_INVALID');
+				}
+
+				$_version_number = request_var('version_number', $config['version']);
+				$cache->put('_stk_phpbb_version_number', $_version_number);
+			}
+			else
+			{
+				$_version_number = $cache->get('_stk_phpbb_version_number');
+				if (false === $_version_number)
+				{
+					add_form_key('request_phpbb_version');
+					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
+
+					$version_options = '';
+					for ($i = 0; $i < 12; $i++)
+					{
+						$v = "3.0.{$i}";
+						$d = ($v == $config['version']) ? " default='default'" : '';
+
+						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
+					}
+
+					$template->assign_vars(array(
+						'PROCEED_TO_STK'				=> $user->lang('PROCEED_TO_STK', '', ''),
+						'REQUEST_PHPBB_VERSION_OPTIONS'	=> $version_options,
+						'U_ACTION'						=> append_sid(STK_INDEX, array('action' => 'request_phpbb_version')),
+					));
+
+					$template->set_filenames(array(
+						'body'	=> 'request_phpbb_version.html',
+					));
+					page_footer(false);
+				}
+			}
+
+			define('PHPBB_VERSION_NUMBER', $_version_number);
 		break;
 
 		// Generate the passwd file

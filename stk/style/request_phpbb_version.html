@@ -1,0 +1,21 @@
+<!-- INCLUDE simple_header.html -->
+	<form id="stk" method="post" action="{U_ACTION}" name="download_pass">
+		<div>
+			<h3>{L_REQUEST_PHPBB_VERSION}</h3>
+			<p>
+				{L_REQUEST_PHPBB_VERSION_EXPLAIN}
+			</p>
+			<p>
+				<select name="version_number" id="version_number">{REQUEST_PHPBB_VERSION_OPTIONS}</select>
+			</p>
+			<p class="submit-buttons">
+				<input class="button1" type="submit" id="submit" name="submit" value="{PROCEED_TO_STK}" />
+			</p>
+			<p>
+				{PASS_GENERATED_REDIRECT}
+			</p>
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+		</div>
+	</form>
+<!-- INCLUDE simple_footer.html -->
