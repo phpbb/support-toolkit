@@ -72,19 +72,10 @@ class sql_query
 		}
 
 		$dbmd = get_available_dbms($dbms);
-
-		// phpBB 3.0.11 changed the way comments are stripped.
-		if (!empty($dbmd[$dbms]['COMMENTS']))
-		{
-			$remove_remarks = $dbmd[$dbms]['COMMENTS'];
-			$remove_remarks($sql_query);
-		}
-		else
-		{
-			
-		}
+		$remove_remarks = $dbmd[$dbms]['COMMENTS'];
 
 		$delimiter = $dbmd[$dbms]['DELIM'];
+		$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
 		// Return on error
