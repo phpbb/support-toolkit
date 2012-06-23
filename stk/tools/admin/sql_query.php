@@ -72,7 +72,8 @@ class sql_query
 		}
 
 		$dbmd = get_available_dbms($dbms);
-        $remove_remarks = $dbmd[$dbms]['COMMENTS'];
+		$remove_remarks = $dbmd[$dbms]['COMMENTS'];
+
 		$delimiter = $dbmd[$dbms]['DELIM'];
 		$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
