@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Reclean Usernames
-* @phpBB source: reclean_usernames.php 277 2010-01-20 01:38:28Z iwisdom $
-* @version $Id: reclean_usernames.php 118 2011-01-19 18:34:32Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

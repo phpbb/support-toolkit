@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Tutorial
-* @phpBB source Id: tutorial.php 251 2009-11-03 13:16:11Z erikfrerejean $
-* @version $Id: tutorial.php 116 2011-01-16 08:47:02Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

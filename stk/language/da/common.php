@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit
-* @phpBB source Id: common.php 482 2010-07-05 10:07:42Z erikfrerejean $
-* @version $Id: common.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team
@@ -76,6 +74,9 @@ $lang = array_merge($lang, array(
 
 	'NOTICE'							=> 'Bemærk',
 	'NO_VERSION_FILE'					=> 'Support Toolkittet kan ikke bestemme den seneste version af pakken. Besøg venligst Support Toolkits <a href="http://www.phpbb.com/support/stk/">Support Toolkit afsnittet på phpBB.com</a> og kontroller at du har seneste version installeret før du fortsætter med brugen.',
+
+	'REQUEST_PHPBB_VERSION'				=> 'Angiv phpBB-version',
+	'REQUEST_PHPBB_VERSION_EXPLAIN'	=> 'Support Toolkittet kan ikke identificere hvilken version af phpBB du anvender. Derfor bedes du her vælge den korrekte version, før der fortsættes.<br />Har du brug for hjælp til at afgøre dette, kan du få assistance i disse<a href="http://www.phpbb.com/community/viewforum.php?f=46">fora</a>.',
 
 	'PASS_GENERATED'					=> 'Din STK kodeordsfil blev dannet!<br/>Kodeordet der blev dannet til dig er: <em>%1$s</em><br />Kodeordet udløber: <span style="text-decoration: underline;">%2$s</span>. Efter udløb <strong>skal</strong> du danne en ny kodeordsfil for at fortsætte med at anvende nødloginmetoden!<br /><br />Klik på efterfølgende knap for at downloade filen. Den downloadede fil skal uploades til din servers "stk"-mappe.',
 	'PASS_GENERATED_REDIRECT'			=> 'Når du har uploadet kodeordsfilen til rette placering, klikkes <a href="%s">her</a> for at komme tilbage til log ind.',

@@ -2,7 +2,6 @@
 /**
 *
 * @package Support Toolkit - Resync Avatars
-* @version $Id: resync_avatars.php 116 2011-01-16 08:47:02Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

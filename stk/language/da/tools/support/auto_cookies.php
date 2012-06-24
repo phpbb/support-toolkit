@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Auto Cookies
-* @phpBB source: auto_cookies.php 415 2010-06-09 00:44:26Z iwisdom $
-* @version $Id: auto_cookies.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team
