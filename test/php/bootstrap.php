@@ -8,7 +8,7 @@
 */
 
 // Define some initial constants
-define('STK_ROOT', __DIR__ . '/../stk/');
+define('STK_ROOT', __DIR__ . '/../../stk/');
 define('PHPBB_FILES', STK_ROOT . 'phpBB/');
 define('IN_TEST', true);
 

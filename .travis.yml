@@ -23,7 +23,7 @@ before_script:
 
 script:
   - phpcs -p -s --report-full --report-gitblame --standard=codesniffer stk/
-  - phpunit --configuration test/travis/$DB.travis.xml
+  - phpunit --configuration test/php/travis/$DB.travis.xml
 
 notifications:
   email:

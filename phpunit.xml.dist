@@ -10,10 +10,10 @@
          stopOnFailure="false"
          syntaxCheck="true"
 		 strict="true"
-         bootstrap="test/bootstrap.php">
+		 bootstrap="test/php/bootstrap.php">
     <testsuites>
         <testsuite name="phpBB Support Toolkit Test Suite">
-            <directory suffix="_test.php">./test/tests/</directory>
+			<directory suffix="_test.php">./test/php/tests/</directory>
         </testsuite>
     </testsuites>
 
