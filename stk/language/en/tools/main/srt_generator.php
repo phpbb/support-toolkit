@@ -35,6 +35,9 @@ if (empty($lang) || !is_array($lang))
 //
 // Some characters you may want to copy&paste:
 // ’ » " " …
+// --------------------------------------------------------------------------------------------
+// For the time being this file isn't translatable. The Support Toolkit will always force the
+// English version when the "Support Request Generator" is ran.
 //
 
 $lang = array_merge($lang, array(
