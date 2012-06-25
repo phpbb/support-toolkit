@@ -2,9 +2,8 @@
 /**
 *
 * @package Support Toolkit
-* @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2011 phpBBItalia.net - translated on 2011-09-29
+* @copyright (c) 2012 phpBBItalia.net - translated on 2012-06-25
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -76,6 +75,9 @@ $lang = array_merge($lang, array(
    'NOTICE'								=> 'Notifica',
    'NO_VERSION_FILE'					=> 'Support Toolkit (STK) non è stato in grado di determinare la versione in uso. Vai sulla sezione di <a href="http://phpbb.com/support/stk">Support Toolkit</a> di phpBB.com e verifica se in effetti stai usando l’ultima versione stabile di STK',
 
+   'REQUEST_PHPBB_VERSION'				=> 'Definisci la versione di phpBB',
+   'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'Il Support Toolkit è stato in grado di identificare correttamente quale versione phpBB si esegue; seleziona la versione appropriata in questo form prima di continuare.<br />Visita il <a href="http://www.phpbb.com/community/viewforum.php?f=46">forum di supporto</a> per ricevere assistenza.'
+   
    'PASS_GENERATED'						=> 'Il tuo file delle password STK è stato generato con successo!<br />La password è stata generata per voi è!: <em>%1$s</em><br />Questa password scadrà il: <span style="text-decoration: underline;">%2$s</span>. Trascorso questo tempo <strong>dovrai</strong> generare un nuovo file di password per continuare ad usare il modulo login di emergenza!<br /><br />Utilizza il pulsante di seguito per scaricare il file. Una volta scaricato il file è necessario caricarlo sul server della cartella "stk" ',
    'PASS_GENERATED_REDIRECT'			=> 'Dopo aver caricato il file delle password nella posizione corretta, fai click <a href="%s">qui</a> per tornare alla pagina del login',
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Questo strumento non è compatibile con la versione di phpBB in uso',

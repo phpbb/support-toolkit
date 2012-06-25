@@ -2,9 +2,8 @@
 /**
  *
  * @package Support Toolkit
- * @version $Id$
  * @copyright (c) 2010 phpBB Group
- * @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-21
+ * @copyright (c) 2012 phpBBItalia.net - translated on 2012-06-25
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
@@ -119,12 +118,14 @@ $lang = array_merge($lang, array(
 	'SRT_DROPDOWN_OPTIONS'	=> array(
 		'step2'	=> array(
 			'install_type'	=> array(
+				null			=> 'Seleziona la tua risposta',
 				'myself'		=> 'Ho usato il pacchetto di download da phpBB.com',
 				'third'			=> 'Ho usato il pacchetto di download da un altro sito',
 				'someone_else'	=> 'Qualcun altro ha installato la mia Board per me',
 				'automated'		=> 'Ho usato uno strumento automatico fornito dal mio Host',
 			),
 			'inst_converse'	=> array(
+				null				=> 'Seleziona la tua risposta',
 				'fresh'				=> 'Nuova installazione',
 				'phpbb_update'		=> 'Aggiornamento da una versione precedente di phpBB3',
 				'convert_phpbb2'	=> 'Conversione da phpBB2',
@@ -133,6 +134,7 @@ $lang = array_merge($lang, array(
 		),
 		'step3'	=> array(
 			'xp_level'		=> array(
+				null			=> 'Seleziona la tua risposta',
 				'new_both'		=> 'Nuovo a PHP e phpBB',
 				'new_phpbb'		=> 'Nuovo a phpBB ma non a PHP',
 				'new_php'		=> 'Nuovo a PHP ma non a phpBB',
