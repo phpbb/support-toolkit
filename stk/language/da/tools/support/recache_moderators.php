@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Recache moderators
-* @phpBB source:?
-* @version $Id: recache_moderators.php 118 2011-01-19 18:34:32Z jan skovsgaard $
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

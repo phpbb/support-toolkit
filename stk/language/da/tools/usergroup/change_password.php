@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Change Password
-* @phpBB source: change_password.php 251 2009-11-03 13:16:11Z erikfrerejean $
-* @version $Id: change_password.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team
@@ -41,11 +39,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Ændring af kodekord',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Ændring af brugeres kodeord.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Ændring af brugeres kodeord.<br /><strong>Du kan angive enten brugernavn eller bruger-ID, ikke begge dele.</strong>',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'Kodeord for <a href="%s">%s</a> er blevet ændret.',
+
+	'FIELDS_NOT_FILLED'			=> 'Et af felterne skal udfyldes.',
+	'FIELDS_BOTH_FILLED'		=> 'Kun et af felterne må udfyldes.',
 
 	'PASSWORD_CONFIRM'			=> 'Bekræft kodeord',
 
-	'USERNAMEID'				=> 'Brugernavn eller brugers ID',
-	'USERNAMEID_EXPLAIN'		=> 'Angiv brugernavn eller brugers ID for den bruger du vil ændre kodeord for.',
+	'USERNAME_NAME'				=> 'Brugernavn',
+	'USERNAME_NAME_EXPLAIN'		=> 'Angiv brugernavn for den bruger du vil ændre kodeord for.',
+	'USERNAMEID'				=> 'Brugers ID',
+	'USERNAMEID_EXPLAIN'		=> 'Angiv bruger-ID for den bruger du vil ændre kodeord for.',
 ));

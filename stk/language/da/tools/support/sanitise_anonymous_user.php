@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Anonymous group check
-* @phpBB source: sanitize_anonymous_user.php 155 2009-06-13 20:06:09Z marshalrusty $
-* @version $Id: sanitise_anonymous_user.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

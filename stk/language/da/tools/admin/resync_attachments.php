@@ -2,7 +2,6 @@
 /**
 *
 * @package Support Toolkit - Resync Attachments
-* @version $Id: resync_attachments.php 119 2011-01-27 15:38:22Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team
