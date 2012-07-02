@@ -43,7 +43,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'MERGE_USERS'						=> 'Benutzer zusammenführen',
-	'MERGE_USERS_EXPLAIN'				=> 'Tool, um die Elemente eines Benutzers auf einen anderen Benutzer zu übertragen; die Einstellungen und Gruppenmitgliedschaften des Ursprungs-Benutzers werden kopiert. Die übertragenen Elemente umfassen benutzerspezifische Berechtigungen, Dateianhänge, Sperren, Lesezeichen, Entwürfe, Benachrichtigungen, ungelesene Beiträge, Log-Einträge, Abstimmungen, Beiträge, Private Nachrichten, Meldungen, Themen, Verwarnungen, Freunde und ignorierte Benutzer.',
+	'MERGE_USERS_EXPLAIN'				=> 'Tool, um die Elemente eines Benutzers auf einen anderen Benutzer zu übertragen; die Einstellungen und Gruppenmitgliedschaften des Ursprungs-Benutzers werden kopiert. Die übertragenen Elemente umfassen benutzerspezifische Berechtigungen, Dateianhänge, Sperren, Lesezeichen, Entwürfe, Benachrichtigungen, ungelesene Beiträge, Log-Einträge, Abstimmungen, Beiträge, Private Nachrichten, Meldungen, Themen, Verwarnungen, Freunde und ignorierte Benutzer.<br /><strong>Sie müssen entweder den Benutzernamen oder die ID des Benutzers angeben.</strong>',
 
 	'MERGE_USERS_BOTH_FOUNDERS'	=> 'Sie können keinen Gründer mit einem Nicht-Gründer zusammenführen.',
 	'MERGE_USERS_BOTH_IGNORE'	=> 'Sie können keinen Bot mit einem normalen Benutzer zusammenfürhen.',
@@ -55,8 +55,16 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_SAME_USERS'	=> 'Der Ursprungs- und der Ziel-Benutzer müssen unterschiedlich sein.',
 
-	'MERGE_USERS_USER_SOURCE'			=> 'Ursprungs-Benutzer',
-	'MERGE_USERS_USER_SOURCE_EXPLAIN'	=> 'Beiträge, Private Nachrichten, Berechtigungen, Verwarnungen usw. dieses Benutzers werden auf den Ziel-Benutzer übertragen; Gruppenmitgliedschaften und Benutzereinstellungen werden kopiert.',
+	'MERGE_USERS_USER_SOURCE_NAME'			=> 'Ursprungs-Benutzer (Benutzername)',
+	'MERGE_USERS_USER_SOURCE_ID'			=> 'Ursprungs-Benutzer (ID)',
+	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Beiträge, Private Nachrichten, Berechtigungen, Verwarnungen usw. dieses Benutzers werden auf den Ziel-Benutzer übertragen; Gruppenmitgliedschaften und Benutzereinstellungen werden kopiert.',
 
-	'MERGE_USERS_USER_TARGET'	=> 'Ziel-Benutzer',
+	'MERGE_USERS_USER_TARGET_NAME'	=> 'Ziel-Benutzer (Benutzername)',
+	'MERGE_USERS_USER_TARGET_ID'	=> 'Ziel-Benutzer (ID)',
+
+	'NO_SOURCE_USER'		=> 'Der angegebene Ursprungs-Benutzer existiert nicht',
+	'NO_TARGET_USER'		=> 'Der angegebene Ziel-Benutzer existiert nicht',
+
+	'BOTH_SOURCE_USER'		=> 'Füllen Sie nur ein Feld für den Ursprungs-Benutzer aus.',
+	'BOTH_TARGET_USER'		=> 'Füllen Sie nur ein Feld für den Ziel-Benutzer aus.',
 ));

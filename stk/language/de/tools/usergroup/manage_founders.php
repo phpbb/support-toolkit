@@ -41,6 +41,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'Es darf entweder der Benutzername oder die ID des Benutzers angegeben werden.',
+
 	'DEMOTE_FAILED'				=> 'Der Gründer-Status konnte nicht allen Benutzern entzogen werden!',
 	'DEMOTE_FOUNDERS'			=> 'Gründer-Status entziehen',
 	'DEMOTE_SUCCESSFULL'		=> 'Der Gründer-Status wurde erfolgreich %d Benutzern entzogen!',
@@ -57,6 +59,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Gründer ernennen',
 
-	'USER_TO_FOUNDER'			=> 'Zum Gründer zu ernennender Benutzer',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Gebe den Benutzernamen oder die ID des Benutzers an, der zum Gründer ernannt werden soll.',
+	'USER_NAME_TO_FOUNDER'			=> 'Benutzername des zum Gründer zu ernennenden Benutzers',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Gebe den Benutzernamen des Benutzers an, der zum Gründer ernannt werden soll.',
+	'USER_ID_TO_FOUNDER'			=> 'ID des zum Gründer zu ernennenden Benutzers',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Gebe die ID des Benutzers an, der zum Gründer ernannt werden soll.',
 ));
