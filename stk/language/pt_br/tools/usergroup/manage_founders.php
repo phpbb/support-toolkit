@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'Tanto o campo Nome de Usuário quanto o campo ID de Usuário não podem ser preenchidos.',
+
 	'DEMOTE_FAILED'				=> 'Não foi possível remover os status de Fundador de todos os usuários!',
 	'DEMOTE_FOUNDERS'			=> 'Demitir Fundadores',
 	'DEMOTE_SUCCESSFULL'		=> 'Os status de Fundador foram removidos de %d usuários com sucesso!',
@@ -54,6 +56,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Promover a Fundador',
 
-	'USER_TO_FOUNDER'			=> 'Usuário para tornar Fundador',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Escreva o nome de usuário ou o ID do usuário o qual você gostaria de transformar em um Fundador.',
+	'USER_NAME_TO_FOUNDER'			=> 'Nome de usuário para tornar Fundador',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Escreva o nome de usuário qual você gostaria de transformar em um Fundador.',
+	'USER_ID_TO_FOUNDER'			=> 'ID do usuário para tornar Fundador',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Escreva a ID do usuário qual você gostaria de transformar em um Fundador.',
 ));

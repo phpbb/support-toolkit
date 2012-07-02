@@ -75,6 +75,9 @@ $lang = array_merge($lang, array(
    'NOTICE'								=> 'Advertência',
    'NO_VERSION_FILE'					=> 'O Support Toolkit (STK) não pôde checar a última versão do pacote. Por favor, visite à <a href="http://phpbb.com/support/stk">página do STK</a> e certifique-se de estar usando a sua versão atualizada antes de prosseguir com suas operações.',
 
+   'REQUEST_PHPBB_VERSION'				=> 'Defina a versão do phpBB',
+   'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'O Support Toolkit foi incapaz de identificar corretamente qual versão do phpBB você está usando, por favor selecione a versão correta neste formulário antes de prosseguir.<br />Por favor visite o <a href="http://www.phpbb.com/community/viewforum.php?f=46">fórum de suporte</a> ou o <a href="http://www.suportephpbb.com.br/">Suporte phpBB</a> para obter ajuda para resolver este problema.',
+
    'PASS_GENERATED'						=> 'O seu arquivo de senha do STK foi criado com sucesso!<br/>A senha a qual foi gerada para você é a seguinte: <em>%1$s</em><br />Esta senha possui um prazo de expiração até: <span style="text-decoration: underline;">%2$s</span>. Após este período você <strong>deve</strong> criar um novo arquivo para que possa continuar usando o login de emergência do STK!<br /><br />Use o seguinte botão para baixar o arquivo. Uma vez que você tenha baixado este arquivo, você deve enviá-lo para dentro do diretório "stk" em seu servidor',
    'PASS_GENERATED_REDIRECT'			=> 'Uma vez que você tenha enviado o seu arquivo de senha ao destino correto, clique <a href="%s">aqui</a> para voltar à página de login.',
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Esta ferramenta não é compatível com a versão do phpBB que você está executando.',
