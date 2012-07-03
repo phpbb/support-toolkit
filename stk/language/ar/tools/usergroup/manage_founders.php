@@ -39,6 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'حقلي اسم المستخدم ورقم العضوية لا يمكن ملؤهما معا.',
+	
 	'DEMOTE_FAILED'				=> 'لم تتم إزالة صلاحيات المؤسس من جميع المستخدمين!',
 	'DEMOTE_FOUNDERS'			=> 'إزالة المؤسسين',
 	'DEMOTE_SUCCESSFULL'		=> 'تمت إزالة صلاحيات المؤسس من الأعضاء %d!',
@@ -55,6 +57,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'ترقية لمؤسس',
 
-	'USER_TO_FOUNDER'			=> 'العضو الذي تريد تعيينه مؤسس',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'أدخل اسم أو رقم العضو الذي تريد تعيينه كمؤسس.',
+	'USER_NAME_TO_FOUNDER'			=> 'اسم المستخدم لتعيينه مؤسس',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'أدخل اسم المستخدم للعضو الذي تريد تعيينه كمؤسس للمنتدى.',
+	'USER_ID_TO_FOUNDER'			=> 'رقم العضوية لتعيينه مؤسس',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'أدخل رقم العضوية للعضو الذي تريد تعيينه كمؤسس للمنتدى.',
 ));
