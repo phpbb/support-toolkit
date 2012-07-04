@@ -54,12 +54,15 @@ $lang = array_merge($lang, array(
 	'MERGE_USERS_SAME_USERS'	=> 'Gli utenti di origine e di destinazione devono essere diversi.',
 
 	'MERGE_USERS_USER_SOURCE_NAME'		=> 'Utente di origine. (Nome utente)',
- 	'MERGE_USERS_USER_SOURCE_ID'		=> 'Utente di origine. (ID utente)',
+	'MERGE_USERS_USER_SOURCE_ID'		=> 'Utente di origine. (ID utente)',
 	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Messaggi, messaggi privati, permessi, richiami, ecc., vengono spostati dall’account di questo utente all’account dell’utente di destinazione; le appartenenze ai gruppi e le impostazioni utente vengono copiate.',
 
 	'MERGE_USERS_USER_TARGET_NAME'	=> 'Utente di destinazione. (Nome utente)',
-    'MERGE_USERS_USER_TARGET_ID'	=> 'Utente di destinazione. (ID utente)',
-    'NO_SOURCE_USER'		=> 'L’utente di origine richiesto non esiste',
-    'BOTH_SOURCE_USER'		=> 'Compila un solo campo di origine.',
-    'BOTH_TARGET_USER'		=> 'Compila un solo campo di destinazione.',
+	'MERGE_USERS_USER_TARGET_ID'	=> 'Utente di destinazione. (ID utente)',
+
+	'NO_SOURCE_USER'		=> 'L’utente di origine richiesto non esiste',
+	'NO_TARGET_USER'		=> 'L’utente target richiesto non esiste',
+
+	'BOTH_SOURCE_USER'		=> 'Compila un solo campo di origine.',
+	'BOTH_TARGET_USER'		=> 'Compila un solo campo di destinazione.',
 ));
