@@ -40,11 +40,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'تغيير كلمة المرور',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'تغيير كلمة مرور عضو.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'تغيير كلمة مرور عضو.<br /><strong>يمكنك إدخال إما اسم المستخدم أو رقم العضوية، ليس كلاهما.</strong>',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'كلمة المرور الخاصة بـ <a href="%s">%s</a> تم تغييرها بنجاح.',
+	
+	'FIELDS_NOT_FILLED'			=> 'يجب أن يتم ملء حقل واحد.',
+	'FIELDS_BOTH_FILLED'		=> 'حقل واحد فقط يمكن ملؤه.',
 
 	'PASSWORD_CONFIRM'			=> 'أعد إدخال كلمة المرور',
 
-	'USERNAMEID'				=> 'اسم المستخدم أو رقمه',
-	'USERNAMEID_EXPLAIN'		=> 'أدخل اسم أو رقم المستخدم الذي تريد تغيير كلمة مروره.',
+	'USERNAME_NAME'				=> 'اسم المستخدم',
+	'USERNAME_NAME_EXPLAIN'		=> 'أدخل اسم المستخدم للعضو الذي تريد تغيير كلمة مروره.',
+	'USERNAMEID'				=> 'رقم العضوية',
+	'USERNAMEID_EXPLAIN'		=> 'أدخل رقم العضوية للعضو الذي تريد تغيير كلمة مروره.',
 ));
