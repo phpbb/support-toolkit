@@ -56,11 +56,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Ändra lösenord',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Ändra användarens lösenord.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Ändra användarens lösenord.<br /><strong>Du kan ange antingen deras Användarnamn eller Användar ID, inte båda.</strong>.',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'Lösenordet för <a href="%s">%s</a> har blivit ändrat.',
+
+	'FIELDS_NOT_FILLED'			=> 'Ett fält måste vara ifyllt.',
+	'FIELDS_BOTH_FILLED'		=> 'Endast ett fält får vara ifyllt.',
 
 	'PASSWORD_CONFIRM'			=> 'Upprepa lösenordet',
 
-	'USERNAMEID'				=> 'Användarnamn eller Användar-ID',
-	'USERNAMEID_EXPLAIN'		=> 'Skriv in användarnamnet eller  användar-IDet på den användaren vars lösenord du vill ändra.',
+	'USERNAMEID'				=> 'Användarnamn',
+	'USERNAMEID_EXPLAIN'		=> 'Skriv in användarnamnet på den användaren vars lösenord du vill ändra.',
+	'USERNAMEID'				=> 'Användar ID',
+	'USERNAMEID_EXPLAIN'		=> 'Ange de Användar ID du vill ändra lösenordet på.',
 ));
