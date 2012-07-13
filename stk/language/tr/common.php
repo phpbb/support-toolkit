@@ -74,6 +74,9 @@ $lang = array_merge($lang, array(
 
    'NOTICE'								=> 'Not',
    'NO_VERSION_FILE'					=> 'Support Toolkit (STK) son sürümü saptayamıyor. Lütfen <a href="http://phpbb.com/support/stk">phpBB.com’un Support Toolkit alanına gidin</a> ve STK’i kullanmadan önce kullandığınız son sürümü doğrulayın.',
+   
+   'REQUEST_PHPBB_VERSION'				=> 'phpBB sürümü belirleme',
+   'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'Support Toolkit, hangi phpBB sürümünü çalıştırdığınızı doğru şekilde belirleyemedi, lütfen devam etmeden önce bu form içerisindeki uygun sürümü seçin.<br />Lütfen bu sorunun nasıl çözüleceğine dair yardım almak için <a href="http://www.phpbb.com/community/viewforum.php?f=46">destek forumlarını</a> ziyaret edin.',   
 
    'PASS_GENERATED'						=> 'STK şifre dosyanız başarıyla oluşturuldu!<br/>Sizin için oluşturulan şifre: <em>%1$s</em><br />Bu şifrenin süresinin dolacağı tarih: <span style="text-decoration: underline;">%2$s</span>. Bu tarihten sonra acil giriş özelliğini kullanmaya devam edebilmek için yeni bir şifre <strong>oluşturmalısınız</strong>!<br /><br />Dosyayı indirmek için alttaki butonu kullanın. Bu dosyayı indirdikten sonra sunucunuzdaki "stk" dizinine yüklemelisiniz',
    'PASS_GENERATED_REDIRECT'			=> 'Şifre dosyasını doğru yere yükledikten sonra, giriş sayfasına geri dönmek için <a href="%s">buraya</a> tıklayın.',
