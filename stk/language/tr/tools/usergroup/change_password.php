@@ -39,11 +39,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Şifreyi Değiştir',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Bir kullanıcı’nın şifresini değiştir.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Bir kullanıcı’nın şifresini değiştir.<br /><strong>Kullanıcı adı ya da Kullanıcı ID numarasından birini girebilirsiniz.</strong>',
 	'CHANGE_PASSWORD_SUCCESS'	=> '<a href="%s">%s</a> için şifre başarıyla değiştirildi.',
 
-	'PASSWORD_CONFIRM'			=> 'Şifreyi Tekrar Gir',
+	'FIELDS_NOT_FILLED'			=> 'Bir alan doldurulmalıdır.',
+	'FIELDS_BOTH_FILLED'		=> 'Sadece bir alan doldurulabilir.',
 
-	'USERNAMEID'				=> 'Kullanıcı adı ya da Kullanıcı ID',
-	'USERNAMEID_EXPLAIN'		=> 'Şifresini değiştirmek istediğiniz Kullanıcı adını ya da Kullanıcı ID’ni girin.',
+	'PASSWORD_CONFIRM'			=> 'Şifreyi Tekrar Gir',
+	
+	'USERNAME_NAME'				=> 'Kullanıcı adı',
+	'USERNAME_NAME_EXPLAIN'		=> 'Şifresini değiştirmek istediğiniz Kullanıcı adını girin.',
+	'USERNAMEID'				=> 'Kullanıcı ID',
+	'USERNAMEID_EXPLAIN'		=> 'Şifresini değiştirmek istediğiniz Kullanıcı ID numarasını girin.',	
 ));
