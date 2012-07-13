@@ -96,11 +96,7 @@ $lang = array_merge($lang, array(
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Bildiri sebepleri başarıyla sıfırlandı!',
 	'RESET_ROLE_DATA'				=> 'Rol verilerini sıfırla',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Bu adım phpBB sistem rollerini orijinal hallerine geri döndürecektir, eğer önceki adımda değişiklikler yaptıysanız bu işlemi yapmanız yüksek derecede tavsiye edilir.',	
-<<<<<<< HEAD
 	'ROLE_SETTINGS'					=> 'Rol Ayarları',
-=======
-	'ROLE_SETTINGS'					=> 'Rol Ayarları',	
->>>>>>> c24dd57aa024ca658ea79b232d23e06224b11d70
 	'ROWS'							=> 'Satırlar',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
