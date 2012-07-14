@@ -48,8 +48,8 @@ $lang = array_merge($lang, array(
 
 	'PASSWORD_CONFIRM'			=> 'Conferma password',
 
-	'USERNAME'					=> 'Nome utente',
-	'USERNAME_EXPLAIN'			=> 'Inserisci il nome utente di cui vuoi modificare la password.',
+	'USERNAME_NAME'				=> 'Nome utente',
+	'USERNAME_NAME_EXPLAIN'		=> 'Inserisci il nome utente di cui vuoi modificare la password.',
 	'USERNAMEID'				=> 'User ID',
 	'USERNAMEID_EXPLAIN'		=> 'Inserisci l’user ID di cui vuoi modificare la password.',
 ));
