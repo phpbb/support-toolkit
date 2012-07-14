@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'MERGE_USERS'						=> 'Kullanıcıları birleştir',
-	'MERGE_USERS_EXPLAIN'				=> 'Araç, bir kullanıcının hesabını diğer bir kullanıcı üzerine taşımak içindir, kaynak kullanıcıların ayarları ve grup üyelikleri kopyalanacaktır. Kullanıcı izinleri, eklentiler, yasaklamalar, yer imleri, taslaklar, forum/başlık takipleri, forum/başlık izlemeleri, kayıt girdileri, anket oyları, mesajlar, özel mesajlar, bildiriler, başlıklar, uyarılar, arkadaşlar ve engellenenler taşınacaktır.',
+	'MERGE_USERS_EXPLAIN'				=> 'Araç, bir kullanıcının hesabını diğer bir kullanıcı üzerine taşımak içindir, kaynak kullanıcıların ayarları ve grup üyelikleri kopyalanacaktır. Kullanıcı izinleri, eklentiler, yasaklamalar, yer imleri, taslaklar, forum/başlık takipleri, forum/başlık izlemeleri, kayıt girdileri, anket oyları, mesajlar, özel mesajlar, bildiriler, başlıklar, uyarılar, arkadaşlar ve engellenenler taşınacaktır.<br /><strong>Kullanıcı Adı ya da Kullanıcı ID numarasından birini girebilirsiniz.</strong>',
 
 	'MERGE_USERS_BOTH_FOUNDERS'	=> 'Bir kurucu ile kurucu olmayan bir kullanıcıyı birleştiremezsiniz.',
 	'MERGE_USERS_BOTH_IGNORE'	=> 'Bir bot ile bir normal kullanıcıyı birleştiremezsiniz.',
@@ -52,8 +52,16 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_SAME_USERS'	=> 'Kaynak ve hedef kullanıcılar farklı olmalıdır.',
 
-	'MERGE_USERS_USER_SOURCE'			=> 'Kaynak kullanıcı',
-	'MERGE_USERS_USER_SOURCE_EXPLAIN'	=> 'Mesajlar, özel mesajlar, izinler, uyarılar, v.b. bu kullanıcıdan hedef kullanıcıya taşındı, grup üyelikleri ve kullanıcı ayarları kopyalandı.',
+	'MERGE_USERS_USER_SOURCE_NAME'			=> 'Kaynak kullanıcı. (Kullanıcı adı)',
+	'MERGE_USERS_USER_SOURCE_ID'			=> 'Kaynak kullanıcı. (Kullanıcı ID)',
+	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Mesajlar, özel mesajlar, izinler, uyarılar, v.b. bu kullanıcıdan hedef kullanıcıya taşınır, grup üyelikleri ve kullanıcı ayarları ise kopyalanır.',	
 
-	'MERGE_USERS_USER_TARGET'	=> 'Hedef kullanıcı',
+	'MERGE_USERS_USER_TARGET_NAME'	=> 'Hedef kullanıcı. (Kullanıcı adı)',
+	'MERGE_USERS_USER_TARGET_ID'	=> 'Hedef kullanıcı. (Kullanıcı ID)',
+
+	'NO_SOURCE_USER'		=> 'İstenilen kaynak kullanıcı mevcut değil',
+	'NO_TARGET_USER'		=> 'İstenilen hedef kullanıcı mevcut değil',
+
+	'BOTH_SOURCE_USER'		=> 'Sadece bir kaynak alanını doldurun.',
+	'BOTH_TARGET_USER'		=> 'Sadece bir hedef alanını doldurun.',	
 ));

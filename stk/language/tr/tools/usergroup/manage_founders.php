@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'Kullanıcı Adı alanı ya da Kullanıcı ID alanından birisi doldurulmamış olabilir.',
+
 	'DEMOTE_FAILED'				=> 'Tüm kullanıcıların kurucu statüleri kaldırılamıyor!',
 	'DEMOTE_FOUNDERS'			=> 'Kurucuların statülerini düşür',
 	'DEMOTE_SUCCESSFULL'		=> '%d kullanıcının kurucu statüsü başarıyla kaldırıldı!',
@@ -54,6 +56,8 @@ $lang = array_merge($lang, array(
 	
 	'PROMOTE_FOUNDER'			=> 'Kurucu derecesine yükselt',
 
-	'USER_TO_FOUNDER'			=> 'Kurucu yapmak için Kullanıcı',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Mesaj Panosu kurucusu yapmak istediğiniz kullanıcının kullanıcı adını ya da kullanıcı IDsini girin.',
+	'USER_NAME_TO_FOUNDER'			=> 'Kurucu yapılacak Kullanıcı adı',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Mesaj Panosu Kurucusu yapmak istediğiniz Kullanıcı adını girin.',
+	'USER_ID_TO_FOUNDER'			=> 'Kurucu yapılacak Kullanıcı ID',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Mesaj Panosu Kurucusu yapmak istediğiniz Kullanıcı ID numarasını girin.',	
 ));
