@@ -55,7 +55,7 @@ perform_unauthed_quick_tasks($action);
 /*
 * Start Login
 */
-$stk_passwd = $stk_passwd_expiration = FALSE;
+$stk_passwd = $stk_passwd_expiration = false;
 // See whether we have an emergency login file
 if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && $user->data['user_type'] != USER_FOUNDER)
 {
@@ -65,8 +65,8 @@ if (file_exists(STK_ROOT_PATH . 'passwd.' . PHP_EXT) && $user->data['user_type']
 	// Can we use trust this password
 	if ($stk_passwd_expiration === false || time() > $stk_passwd_expiration)
 	{
-		// No. Unset the password and try to remove the file
-		unset($stk_passwd);
+		// No? Invalidate the password and try to remove the file
+		$stk_passwd = false;
 		perform_authed_quick_tasks('delpasswdfile');
 	}
 }

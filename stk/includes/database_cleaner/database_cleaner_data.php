@@ -32,6 +32,12 @@ class database_cleaner_data
 	var $config = array();
 
 	/**
+	 * Instance of the phpBB DB tools
+	 * @var phpbb_db_tools
+	 */
+	var $db_tools = null;
+
+	/**
 	* @var Array Config entries that were removed by this version
 	*/
 	var $removed_config = array();
@@ -92,6 +98,16 @@ class database_cleaner_data
 	* @var Array An array containing all report reasons
 	*/
 	var $report_reasons = array();
+
+	/**
+	 * Setup the data container
+	 *
+	 * @param phpbb_db_tools $db_tools The phpBB phpbb_db_tools object
+	 */
+	function database_cleaner_data($db_tools = null)
+	{
+		$this->db_tools = $db_tools;
+	}
 
 	/**
 	* Some data needs to be adjusted in certain cases
@@ -171,6 +187,23 @@ class database_cleaner_data
 				$this->extensions[$ext_group_trans[$name]] = $data;
 				unset($this->extensions[$name]);
 			}
+		}
+
+		// Firebird and Oracle, need the table and column names in 
+		// UPPERCASE. #62821
+		switch ($this->db_tools->sql_layer)
+		{
+			case 'firebird'	:
+			case 'oracle'	:
+				// Uppercase the table names
+				stk_array_walk_keys($this->tables, 'strtoupper');
+
+				// Loop into the data structure to alter the columns
+				foreach ($this->tables as $table => $null)
+				{
+					stk_array_walk_keys($this->tables[$table]['COLUMNS'], 'strtoupper');
+				}
+			break;
 		}
 	}
 }

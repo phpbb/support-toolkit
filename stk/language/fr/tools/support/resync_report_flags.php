@@ -1,28 +1,12 @@
 <?php
 /**
-*
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Resynchronise report flags
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2011 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resynchronise report flags
+ * @version $Id$
+ * @copyright (c) 2011 phpBB Group, (c) 2011 phpBB.fr
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+ *
+ */
 
 /**
  * DO NOT CHANGE
@@ -56,6 +40,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'RESYNC_REPORT_FLAGS'			=> 'Resynchroniser les marqueurs de rapport',
 	'RESYNC_REPORT_FLAGS_CONFIRM'	=> 'Cet outil resynchronisera les marqueurs de rapport de tous les messages, sujets et messages privés.',
-	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tous les marqueurs de rapport ont été resynchronisés avec succès !',
-	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronisation des marqueurs de rapport en cours. Merci de ne pas interrompre ce processus',
+	'RESYNC_REPORT_FLAGS_FINISHED'	=> 'Tous les marqueurs de rapport ont été resynchronisés.',
+	'RESYNC_REPORT_FLAGS_NEXT'		=> 'Resynchronisation des marqueurs de rapport en cours. Veuillez ne pas interrompre cette opération.',
 ));

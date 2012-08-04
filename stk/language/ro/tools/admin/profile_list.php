@@ -40,6 +40,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Toţi',
 
+	'CLICK_TO_DELETE'		=> 'Ștergeți toți utilizatorii selectați folosind acest buton. <em>(Operația este definitivă!)</em>',
+
 	'FILTER'				=> 'Filtru',
 
 	'LIMIT'					=> 'Nr. înregistrări',
@@ -49,6 +51,10 @@ $lang = array_merge($lang, array(
 
 	'PROFILE_LIST'			=> 'Lista Profilelor',
 	'PROFILE_LIST_EXPLAIN'	=> 'Acest utilitar afişază informaţii despre profilul mai multor utilizatori. Poate fi folosit şi pentru detectarea conturilor folosite pentru spam.',
+	
+	'USERS_DELETE'				=> 'Șterge utilizatorii selectați',
+	'USERS_DELETE_CONFIRM'		=> 'Sunteți sigur că vreți să ștergeți utilizatorii selectați? Ștergând utilizatorii folosind acest utilitar <strong>va</strong> șterge, de asemenea, toate mesajele acestora!',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Toți utilizatorii selectați au fost ștersi cu succes!',
 ));
 
 ?>

@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Restore Delted Users
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Restore Delted Users
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -60,11 +43,11 @@ $lang = array_merge($lang, array(
 
 	'RESTORE_DELETED_USERS'						=> 'Restaurer les utilisateurs supprimés',
 	'RESTORE_DELETED_USERS_CONFLICT'			=> 'Restaurer les utilisateurs supprimés :: En conflit',
-	'RESTORE_DELETED_USERS_CONFLICT_EXPLAIN'	=> 'Cet outil vous permet de restaurer des utilisateurs qui ont été supprimés à partir du forum mais qui conservent des messages en “invité”.<br />Ces utilisateurs se verront assigner un mot de passe aléatoire que vous devrez réinitialiser manuellement après que l’outil ait été exécuté ; cet outil ne fournit <b>pas</b> une liste de ces mots de passe générés.<br /><br />Durant sa dernière exécution, cet outil a trouvé certains noms d’utilisateurs qui existent déjà sur ce forum. Veuillez fournir un nouveau nom concernant ces utilisateurs.',
-	'RESTORE_DELETED_USERS_EXPLAIN'				=> 'Cet outil vous permet de restaurer des utilisateurs qui ont été supprimés à partir du forum mais qui conservent des messages en “invité”.<br />Ces utilisateurs se verront assigner un mot de passe aléatoire que vous devrez réinitialiser manuellement après que l’outil ait été exécuté ; cet outil ne fournit <b>pas</b> une liste de ces mots de passe générés.',
+	'RESTORE_DELETED_USERS_CONFLICT_EXPLAIN'	=> 'Cet outil vous permet de restaurer des utilisateurs qui ont été supprimés à partir du forum mais qui conservent des messages en « invité ».<br />Ces utilisateurs se verront assigner un mot de passe aléatoire que vous devrez réinitialiser manuellement après que l’outil ait été exécuté ; cet outil ne fournit <b>pas</b> une liste de ces mots de passe générés.<br /><br />Durant sa dernière exécution, cet outil a trouvé certains noms d’utilisateurs qui existent déjà sur ce forum. Veuillez fournir un nouveau nom concernant ces utilisateurs.',
+	'RESTORE_DELETED_USERS_EXPLAIN'				=> 'Cet outil vous permet de restaurer des utilisateurs qui ont été supprimés à partir du forum mais qui conservent des messages en « invité ».<br />Ces utilisateurs se verront assigner un mot de passe aléatoire que vous devrez réinitialiser manuellement après que l’outil ait été exécuté ; cet outil ne fournit <b>pas</b> une liste de ces mots de passe générés.',
 
 	'SELECT_USERS'	=> 'Sélectionner les utilisateurs à restaurer',
 
-	'USER_RESTORED_SUCCESSFULLY'	=> 'L’utilisateur que vous avez sélectionné a été restauré avec succès.',
-	'USERS_RESTORED_SUCCESSFULLY'	=> 'Les utilisateurs que vous avez sélectionné ont été restaurés avec succès.',
+	'USER_RESTORED_SUCCESSFULLY'	=> 'L’utilisateur que vous avez sélectionné a été restauré.',
+	'USERS_RESTORED_SUCCESSFULLY'	=> 'Les utilisateurs que vous avez sélectionnés ont été restaurés.',
 ));

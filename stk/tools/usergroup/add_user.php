@@ -56,7 +56,7 @@ class add_user
 	*/
 	function run_tool(&$error)
 	{
-		global $config, $user;
+		global $cache, $config, $db, $user;
 
 		$user->add_lang(array('acp/groups', 'ucp'));
 
@@ -96,8 +96,16 @@ class add_user
 			'tz'				=> request_var('tz', (float) $timezone),
 		);
 
+		// A bit of cache hacking to get around disallowed usernames,
+		// should be rethought in future versions (#62685)
+		$cache->destroy('_disallowed_usernames');
+		$cache->put('_disallowed_usernames', array());
+
 		// Check vars
 		$this->validate_data($data, $error);
+
+		// Make sure that the username list is recached next time around
+		$cache->destroy('_disallowed_usernames');
 
 		// Something went wrong
 		if (!empty($error))
@@ -128,6 +136,25 @@ class add_user
 			'user_inactive_reason'	=> 0,
 			'user_inactive_time'	=> 0,
 		);
+
+		// Determine if the user is going to be added to the Newly Registered Users group
+		$sql = 'SELECT group_id
+			FROM ' . GROUPS_TABLE . "
+			WHERE group_name = '" . $db->sql_escape('NEWLY_REGISTERED') . "'
+				AND group_type = " . GROUP_SPECIAL;
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+
+		if (sizeof($row))
+		{
+			$nr_group_id = $row['group_id'];
+			if ($config['new_member_post_limit'] && in_array($nr_group_id, $groups['groups']))
+			{
+				$user_row['user_new'] = 1;
+			}
+		}
+
 		$user_id = user_add($user_row, false);
 
 		// Remove the default group from the groups array. Keeping it here causes an error
@@ -147,6 +174,19 @@ class add_user
 		if ($user_id === false)
 		{
 			trigger_error('NO_USER', E_USER_ERROR);
+		}
+
+		// user_add automatically adds the user to the NRU group if it was specified
+		if (isset($user_row['user_new']))
+		{
+			foreach ($groups['groups'] as $group_key => $group_id)
+			{
+				if ($group_id == $nr_group_id)
+				{
+					unset($groups['groups'][$group_key]);
+					break;
+				}
+			}
 		}
 
 		// Add the user to the selected groups
@@ -171,7 +211,7 @@ class add_user
 	*/
 	function validate_data($data, &$error)
 	{
-		global $config;
+		global $config, $user;
 
 		if (!function_exists('validate_data'))
 		{

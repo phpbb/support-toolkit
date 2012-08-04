@@ -45,7 +45,7 @@ class manage_founders
 		// Additional template stuff
 		$template->assign_vars(array(
 			'U_DEMOTE_FOUNDERS'	=> append_sid(STK_INDEX, array('c' => 'user_group', 't' => 'manage_founders', 'mode' => 'demote', 'submit' => 1)),
-			'U_FIND_USER'		=> append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'stk', 'field' => 'user_to_founder')),
+			'U_FIND_USER'		=> append_sid(PHPBB_ROOT_PATH . 'memberlist.' . PHP_EXT, array('mode' => 'searchuser', 'form' => 'select_user', 'field' => 'username', 'select_single' => 'true', 'form' => 'stk_promote_founder', 'field' => 'username')),
 			'U_PROMOTE_FOUNDER'	=> append_sid(STK_INDEX, array('c' => 'user_group', 't' => 'manage_founders', 'mode' => 'promote', 'submit' => 1)),
 		));
 
@@ -68,8 +68,7 @@ class manage_founders
 
 		if (!check_form_key('manage_founders'))
 		{
-			$error[] = 'FORM_INVALID';
-			return;
+			trigger_error('FORM_INVALID');
 		}
 
 		// Lets do something
@@ -80,8 +79,7 @@ class manage_founders
 				$req_founders	= request_var('founders', array(0 => ''));
 				if (!sizeof($req_founders))
 				{
-					$error[] = 'NO_USER';
-					return;
+					trigger_error('NO_USER');
 				}
 
 				// Make sure we only have users that do exist
@@ -116,10 +114,19 @@ class manage_founders
 			break;
 
 			case 'promote' :
-				$req_user = utf8_normalize_nfc(request_var('user', '', true));
-				if (!sizeof($req_user))
+				$req_username = utf8_normalize_nfc(request_var('username', '', true));
+				$req_user_id = utf8_normalize_nfc(request_var('user_id', 0));
+
+				// Check that at least one field is filled in.
+				if (!$req_username && empty($req_user_id))
 				{
-					$error[] = 'NO_USER';
+					trigger_error('NO_USER');
+				}
+
+				// Not allowed to have both username and user_id filled.
+				if ($req_username && $req_user_id)
+				{
+					$error[] = 'BOTH_FIELDS_FILLED';
 					return;
 				}
 
@@ -129,27 +136,37 @@ class manage_founders
 					include (PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT);
 				}
 
-				$user_id = $username = array();
-				if (ctype_digit($req_user))
+				$user_id = $username = $user_type = array();
+
+				if (!empty($req_user_id))
 				{
-					$user_id[] = $req_user;
+					$user_id[] = $req_user_id;
 				}
-				else
+				if (!empty($req_username))
 				{
-					$username[] = $req_user;
+					$username[] = $req_username;
 				}
-				user_get_id_name($user_id, $username, USER_NORMAL);
+				$user_type[] = USER_NORMAL;
+
+				// Get user_id
+				$result = user_get_id_name($user_id, $username, $user_type);
+
+				// Was a user_id found?
+				if (!sizeof($user_id) || $result !== false)
+				{
+					trigger_error('NO_USER');
+				}
+
+				// Drop the arrays
+				$user_id = array_shift($user_id); 
+				$username = array_shift($username);
 
 				// No user found
-				if (!sizeof($user_id))
+				if (!$user_id)
 				{
 					$error[] = 'NO_USER';
 					return;
 				}
-
-				// Drop the arrays
-				$user_id	= array_shift($user_id);
-				$username	= array_shift($username);
 
 				// Now promote the guy
 				$sql = 'UPDATE ' . USERS_TABLE . '
@@ -168,8 +185,7 @@ class manage_founders
 			break;
 
 			default :
-				$error[] = 'NO_MODE';
-				return;
+				trigger_error('NO_MODE');
 		}
 	}
 }

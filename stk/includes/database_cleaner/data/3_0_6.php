@@ -203,9 +203,28 @@ class datafile_3_0_6
 		{
 			global $umil;
 
-			include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+			if (!defined('CAPTCHA_QUESTIONS_TABLE'))
+			{
+				include PHPBB_ROOT_PATH . 'includes/captcha/plugins/phpbb_captcha_qa_plugin.' . PHP_EXT;
+			}
 
-			if ($umil->table_exists(CAPTCHA_QUESTIONS_TABLE) || $umil->table_exists(CAPTCHA_ANSWERS_TABLE) || $umil->table_exists(CAPTCHA_QA_CONFIRM_TABLE))
+			// Add the Q&A captcha tables to the schema if at least one of the tables
+			// is found, because in that case we assume that the user had installed
+			// that captcha.
+			// A special case if when the user is using the firebird DBMS *and* he is
+			// running phpBB < 3.0.9, because due to a bug in phpBB the Q&A captcha
+			// couldn't be correctly installed in that case thus don't include these
+			// tables in the schema so that the cleaner can delete them if needed.
+			// More info see: https://github.com/phpbb/phpbb3/blob/release-3.0.9-RC2/phpBB/install/database_update.php#L1928
+			if (
+				(
+					$umil->table_exists(CAPTCHA_QUESTIONS_TABLE) ||
+					$umil->table_exists(CAPTCHA_ANSWERS_TABLE) ||
+					$umil->table_exists(CAPTCHA_QA_CONFIRM_TABLE)) &&
+						($umil->db_tools->sql_layer != 'firebird' ||
+						version_compare(PHPBB_VERSION, '3.0.9', '>=')
+				)
+			)
 			{
 				$schema_data['phpbb_captcha_answers'] = array(
 					'COLUMNS' => array(

@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Database Cleaner
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Database Cleaner
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -55,12 +38,12 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'BOARD_DISABLE_REASON'			=> 'Le forum est actuellement désactivé car une maintenance de la base de données est en cours. Merci de revenir ultérieurement !',
-	'BOARD_DISABLE_SUCCESS'			=> 'Le forum a été désactivé avec succès !',
+	'BOARD_DISABLE_REASON'			=> 'Le forum est actuellement désactivé car une maintenance de la base de données est en cours. Veuillez revenir ultérieurement.',
+	'BOARD_DISABLE_SUCCESS'			=> 'Le forum a été désactivé.',
 
 	'COLUMNS'						=> 'Colonnes',
 	'CONFIG_SETTINGS'				=> 'Réglages de la configuration',
-	'CONFIG_UPDATE_SUCCESS'			=> 'Les réglages de la configuration ont été mis à jour avec succès !',
+	'CONFIG_UPDATE_SUCCESS'			=> 'Les réglages de la configuration ont été mis à jour.',
 	'CONTINUE'						=> 'Continuer',
 
 	'DATABASE_CLEANER'				=> 'Nettoyeur de base de données',
@@ -68,51 +51,52 @@ $lang = array_merge($lang, array(
 	'DATABASE_CLEANER_MISSING'		=> 'Tous les champs surlignés sur un fond rouge comme celui-ci sont des objets manquants qui devraient être ajoutés. <strong>Si la case est cochée, ils seront ajoutés</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'Le nettoyeur de base de données a terminé toutes ses tâches avec succès !<br /><br />Veuillez vous assurer de sauvegarder à nouveau votre base de données.',
 	'DATABASE_CLEANER_WARNING'		=> 'Cet outil n’apporte AUCUNE GARANTIE et les utilisateurs de cet outil devraient sauvegarder entièrement leur base de données en cas d’échec.<br /><br />Avant de continuer, veuillez vous assurer de détenir une sauvegarde de votre base de données !',
-	'DATABASE_CLEANER_WELCOME'		=> 'Bienvenue sur l’outil de nettoyage de la base de données !<br /><br />Cet outil a été créé afin de supprimer les colonnes, les lignes et les tables supplémentaires de votre base de données qui ne sont pas présentes par défaut dans l’installation de phpBB3, et il ajoute les éléments manquants qui peuvent être nécessaires dans la base de données.<br /><br />Lorsque vous êtes prêt à continuer, veuillez cliquer sur le bouton “continuer” afin de commencer à utiliser l’outil de nettoyage de la base de données (veuillez noter que votre forum sera désactivé le temps de l’opération).',
-	'DATABASE_COLUMNS_SUCCESS'		=> 'Les colonnes de la base de données ont été mises à jour avec succès !',
+	'DATABASE_CLEANER_WELCOME'		=> 'Bienvenue sur l’outil de nettoyage de la base de données !<br /><br />Cet outil a été créé afin de supprimer les colonnes, les lignes et les tables supplémentaires de votre base de données qui ne sont pas présentes par défaut dans l’installation de phpBB3, et il ajoute les éléments manquants qui peuvent être nécessaires dans la base de données.<br /><br />Lorsque vous êtes prêt(e) à continuer, veuillez cliquer sur le bouton « Continuer » afin de commencer à utiliser l’outil de nettoyage de la base de données (veuillez noter que votre forum sera désactivé le temps de l’opération).',
+	'DATABASE_COLUMNS_SUCCESS'		=> 'Les colonnes de la base de données ont été mises à jour.',
 	'DATABASE_TABLES'				=> 'Tables de la base de données',
-	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour avec succès !',
-	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Les rôles système de phpBB a été restauré avec succès !',
-	'DATABASE_ROLES_SUCCESS'		=> 'Les rôles ont été mis à jour avec succès !',
-	'DATAFILE_NOT_FOUND'			=> 'Le Support Toolkit n’a pas été capable de trouver le fichier de données que vous recherchez concernant votre version de phpBB !',
+	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour.',
+	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Les rôles système de phpBB a été restauré.',
+	'DATABASE_ROLES_SUCCESS'		=> 'Les rôles ont été mis à jour.',
+	'DATAFILE_NOT_FOUND'			=> 'Support Toolkit n’a pas été capable de trouver le fichier de données que vous recherchez concernant votre version de phpBB !',
 
 	'EMPTY_PREFIX'					=> 'Aucun préfixe de base de données',
-	'EMPTY_PREFIX_CONFIRM'			=> 'Le nettoyeur de base de données permet d’apporter des modifications aux tables de votre base de données, mais étant donné que vous n’utilisez pas de préfixe de table, cela peut altérer des tables n’ayant aucun rapport avec phpBB. Êtes-vous sûr de vouloir continuer ?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'Le nettoyeur de base de données a déterminé que vous n’utilisez pas de préfixe de table concernant les tables de phpBB. Le nettoyeur de base de données va devoir alors vérifier <strong>l’intégralité</strong> des tables dans votre base de données. Soyez prudent lors de son exécution et assurez-vous d’avoir exclu de la sélection toutes les tables n’ayant aucun rapport avec phpBB car elles peuvent être altérées par cet outil.<br />Si vous avez un doute sur la manipulation à suivre, demandez de l’aide dans les <a href="http://www.phpbb.com/community/viewforum.php?f=46">forums de support de phpBB</a>.',
+	'EMPTY_PREFIX_CONFIRM'			=> 'Le nettoyeur de base de données permet d’apporter des modifications aux tables de votre base de données, mais étant donné que vous n’utilisez pas de préfixe de table, cela peut altérer des tables n’ayant aucun rapport avec phpBB. Êtes-vous sûr(e) de vouloir continuer ?',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'Le nettoyeur de base de données a déterminé que vous n’utilisez pas de préfixe de table concernant les tables de phpBB. Le nettoyeur de base de données va devoir alors vérifier <strong>l’intégralité</strong> des tables dans votre base de données. Soyez prudent(e) lors de son exécution et assurez-vous d’avoir exclu de la sélection toutes les tables n’ayant aucun rapport avec phpBB car elles peuvent être altérées par cet outil.<br />Si vous avez un doute sur la manipulation à suivre, demandez de l’aide dans les <a href="http://www.phpbb.com/community/viewforum.php?f=46">forums de support de phpBB</a>.',
 	'ERROR'							=> 'Erreur',
 	'EXTRA'							=> 'Supplémentaire',
-	'EXTENSION_GROUPS_SUCCESS'		=> 'Les groupes d’extensions ont été réinitialisés avec succès',
-	'EXTENSIONS_SUCCESS'			=> 'Les extensions ont été réinitialisées avec succès',
+	'EXTENSION_GROUPS_SUCCESS'		=> 'Les groupes d’extensions ont été réinitialisés.',
+	'EXTENSIONS_SUCCESS'			=> 'Les extensions ont été réinitialisées.',
 
 	'FINAL_STEP'					=> 'Ceci est l’étape finale.<br /><br />Nous allons à présent réactiver votre forum et purger son cache.',
 
 	'INSTRUCTIONS'					=> 'Instructions',
 
 	'MISSING'						=> 'Manquant',
-	'MODULE_UPDATE_SUCCESS'			=> 'Les modules ont été mis à jour avec succès !',
+	'MODULE_UPDATE_SUCCESS'			=> 'Les modules ont été mis à jour.',
 
 	'NO_BOT_GROUP'					=> 'Impossible de réinitialiser les robots, le groupe des robots est manquant.',
 
 	'PERMISSION_SETTINGS'			=> 'Options des permissions',
-	'PERMISSION_UPDATE_SUCCESS'		=> 'Les réglages des permissions ont été mis à jour avec succès !',
-	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Votre version de phpBB3 n’est pas supportée (ou certains fichiers du Support Toolkit sont manquants).<br />phpBB 3.0.0+ devrait être supporté, mais il se peut que la mise à jour de cet outil prenne un certain temps avant d’être disponible, ce qui est souvent le cas lorsqu’une nouvelle version de phpBB 3.0 vient à peine de sortir.',
+	'PERMISSION_UPDATE_SUCCESS'		=> 'Les réglages des permissions ont été mis à jour.',
+	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Votre version de phpBB3 n’est pas supportée (ou certains fichiers de Support Toolkit sont manquants).<br />phpBB 3.0.0+ devrait être supporté, mais il se peut que la mise à jour de cet outil prenne un certain temps avant d’être disponible, ce qui est souvent le cas lorsqu’une nouvelle version de phpBB 3.0 vient à peine de sortir.',
 
 	'QUIT'							=> 'Quitter',
 
 	'RESET_BOTS'					=> 'Réinitialiser les robots',
 	'RESET_BOTS_EXPLAIN'			=> 'Souhaitez-vous réinitialiser la liste des robots avec la liste des robots présente par défaut dans phpBB3 ? Tous les robots existants seront supprimés afin d’être remplacés par les robots présents par défaut.',
 	'RESET_BOTS_SKIP'				=> 'La réinitialisation du robot a été ignorée',
-	'RESET_BOT_SUCCESS'				=> 'Les robots ont été réinitialisés avec succès !',
+	'RESET_BOT_SUCCESS'				=> 'Les robots ont été réinitialisés.',
 	'RESET_MODULES'					=> 'Réinitialiser les modules',
 	'RESET_MODULES_EXPLAIN'			=> 'Souhaitez-vous réinitialiser les modules avec les modules présents par défaut dans phpBB3 ? Tous les modules existants seront supprimés afin d’être remplacés par les modules présents par défaut.',
 	'RESET_MODULES_SKIP'			=> 'La réinitialisation du module a été ignorée',
-	'RESET_MODULE_SUCCESS'			=> 'Les modules ont été réinitialisés avec succès !',
+	'RESET_MODULE_SUCCESS'			=> 'Les modules ont été réinitialisés.',
 	'RESET_REPORT_REASONS'			=> 'Réinitialiser les raisons des rapports',
-	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajouté !',
-	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports ont été réinitialisées',
-	'RESET_REPORT_REASONS_SUCCESS'	=> 'Les raisons des rapports ont été réinitialisées avec succès !',
+	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajoutées !',
+	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports ont été réinitialisées.',
+	'RESET_REPORT_REASONS_SUCCESS'	=> 'Les raisons des rapports ont été réinitialisées.',
 	'RESET_ROLE_DATA'				=> 'Réinitialiser les données des rôles',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Cette étape réinitialisera les rôles système de phpBB avec les valeurs par défaut, il est fortement recommandé d’exécuter cela si vous avez apporté des modifications lors de l’étape précédente.',
+	'ROLE_SETTINGS'					=> 'Réglages des rôles',
 	'ROWS'							=> 'Lignes',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
@@ -138,9 +122,9 @@ $lang = array_merge($lang, array(
 		'final_step'		=> 'Cette dernière étape videra le cache et réactivera le forum.',
 	),
 	'SUCCESS'						=> 'Succès',
-	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Les groupes système ont été réinitialisés avec succès',
+	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Les groupes système ont été réinitialisés.',
 
 	'TYPE'							=> 'Type',
 
-	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque “DEBUG” est activé dans le fichier de configuration de phpBB.',
+	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque « DEBUG » est activé dans le fichier de configuration de phpBB.',
 ));

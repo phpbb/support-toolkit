@@ -1,28 +1,12 @@
 <?php
 /**
-*
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Resync Avatars
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Avatars
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+ *
+ */
 
 /**
  * DO NOT CHANGE
@@ -55,8 +39,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_AVATARS'			=> 'Resynchroniser les avatars',
-	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr de vouloir continuer ?',
-	'RESYNC_AVATARS_FINISHED'	=> 'Les avatars ont été resynchronisés avec succès !',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Commutation aux avatars de groupe, merci de ne pas interrompre ce processus !',
-	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours, merci de ne pas interrompre ce processus !',
+	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent actuellement sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr(e) de vouloir continuer ?',
+	'RESYNC_AVATARS_FINISHED'	=> 'Les avatars ont été resynchronisés.',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Commutation aux avatars de groupe. Veuillez ne pas interrompre cette opération.',
+	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours. Veuillez ne pas interrompre cette opération.',
 ));

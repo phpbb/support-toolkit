@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Anonymous group check
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Anonymous group check
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -55,19 +38,19 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ANONYMOUS_CLEANED'					=> 'Les données de profil de l’utilisateur anonyme ont été nettoyées avec succès.',
+	'ANONYMOUS_CLEANED'					=> 'Les données de profil de l’utilisateur anonyme ont été nettoyées.',
 	'ANONYMOUS_CORRECT'					=> 'L’utilisateur anonyme existe et a été configuré correctement.',
-	'ANONYMOUS_CREATED'					=> 'L’utilisateur anonyme a été recréé avec succès.',
+	'ANONYMOUS_CREATED'					=> 'L’utilisateur anonyme a été recréé.',
 	'ANONYMOUS_CREATION_FAILED'			=> 'Il n’a pas été possible de recréer l’utilisateur anonyme. Veuillez demander de l’aide sur le forum de support de phpBB.com ou de phpBB.fr.',
-	'ANONYMOUS_GROUPS_REMOVED'			=> 'L’utilisateur anonyme a été supprimé de tous les groupes d’accès avec succès.',
+	'ANONYMOUS_GROUPS_REMOVED'			=> 'L’utilisateur anonyme a été supprimé de tous les groupes d’accès.',
 	'ANONYMOUS_MISSING'					=> 'L’utilisateur anonyme est manquant.',
 	'ANONYMOUS_MISSING_CONFIRM'			=> 'L’utilisateur anonyme est manquant dans votre base de données. Cet utilisateur est utilisé afin d’autoriser les invités à visiter votre forum. Souhaitez-vous en créer un nouveau ?',
 	'ANONYMOUS_WRONG_DATA'				=> 'Les données de profil de l’utilisateur anonyme sont incorrectes.',
 	'ANONYMOUS_WRONG_DATA_CONFIRM'		=> 'Les données de profil de l’utilisateur anonyme sont partiellement incorrectes. Souhaitez-vous réparer cela ?',
 	'ANONYMOUS_WRONG_GROUPS'			=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs.',
-	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe “INVITÉS” ?',
+	'ANONYMOUS_WRONG_GROUPS_CONFIRM'	=> 'L’utilisateur anonyme appartient anormalement à plusieurs groupes d’utilisateurs. Souhaitez-vous supprimer l’utilisateur anonyme de tous les groupes, mis à part du groupe « INVITÉS » ?',
 
-	'REDIRECT_NEXT_STEP'				=> 'Vous allez être redirigé vers la prochaine étape.',
+	'REDIRECT_NEXT_STEP'				=> 'Vous allez être redirigé(e) vers la prochaine étape.',
 
 	'SANITISE_ANONYMOUS_USER'			=> 'Nettoyer l’utilisateur anonyme',
 ));

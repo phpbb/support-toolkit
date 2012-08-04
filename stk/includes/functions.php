@@ -435,6 +435,8 @@ function perform_authed_quick_tasks($action)
 {
 	global $user;
 
+	$logout = false;
+
 	switch ($action)
 	{
 		// User wants to logout and remove the password file
@@ -521,62 +523,76 @@ function stk_version_check()
 }
 
 /**
-* Wrapper function for the default phpBB msg_handler method.
-* This function will overwrite the $phpbb_root_path variable
-* if $errno == E_USER_ERROR. This way the "return to index"
-* link on the error page will point towards the STK index
-* instead of the phpBB index
-*/
+ * Support Toolkit Error handler
+ *
+ * A wrapper for the phpBB `msg_handler` function, which is mainly used
+ * to update variables before calling the actual msg_handler and is able
+ * to handle various special cases.
+ *
+ * @global type $stk_no_error
+ * @global string $phpbb_root_path
+ * @param type $errno
+ * @param string $msg_text
+ * @param type $errfile
+ * @param type $errline
+ * @return boolean
+ */
 function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
-	// Sometimes phpBB call this after finishing a certain task, this breaks the ERK!
-	// A little bit of fallback here, call the critical repair kit error handler
+	// First and foremost handle the case where phpBB calls trigger error
+	// but the STK really needs to continue.
+	global $stk_no_error;
+	if ($stk_no_error === true)
+	{
+		return true;
+	}
+
+	// Do not display notices if we suppress them via @
+	if (error_reporting() == 0 && $errno != E_USER_ERROR && $errno != E_USER_WARNING && $errno != E_USER_NOTICE)
+	{
+		return;
+	}
+
+	// If we're in a fully running STK simply call the phpBB msg_handler
+	if (defined('IN_STK') && !defined('IN_ERK'))
+	{
+		// Some magic to fix the links to the STK index rather than phpBB's
+		//global $phpbb_root_path;
+		//$phpbb_root_path = STK_ROOT_PATH;
+
+		return msg_handler($errno, $msg_text, $errfile, $errline);
+	}
+
+	// We encounter an error while in the ERK, this need some special treatment
 	if (defined('IN_ERK'))
 	{
-		global $critical_repair;
-		$critical_repair->trigger_error($msg_text, false, array($errno, $errfile, $errline));
-	}
-
-	// If the STK triggers a fatal error before IN_STK is defined we'll show a page
-	// informing the user that the ERK *might* resolve this issue.
-	if (!defined('IN_STK') && in_array($errno, array(E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE)))
-	{
-		// Trigger error through the critical repair class
-		if (!class_exists('critical_repair'))
+		// The toolkit kills itself when the ERK encounters an `E_STRICT` error,
+		// if thats the case catch the error and ignore. Otherwise call the
+		// phpBB handler
+		if (in_array($errno, array(E_STRICT, E_DEPRECATED)))
 		{
-			include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
+			return true;
 		}
-		$cr = new critical_repair();
-
+	}
+	else
+	{
+		// We're encountering an error before the STK is fully loaded
+		// Set out own message if needed
 		if ($errno == E_USER_ERROR)
 		{
-			$lines = array(
-				'The Support Toolkit encountered a fatal error.',
-				'The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning. It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
-To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>.',
-			);
-			$redirect_stk = false;
+			$msg_text = 'The Support Toolkit encountered a fatal error.<br /><br />
+						 The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning.
+						 It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
+						 To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>.';
 		}
-		else
-		{
-			$lines = array($msg_text);
-			$redirect_stk = true;
-		}
-
-		// Trigger
-		$cr->trigger_error($lines, $redirect_stk);
 	}
 
-	// This is nasty :(
-	if ($errno == E_USER_ERROR)
+	if (!class_exists('critical_repair'))
 	{
-		global $phpbb_root_path;
-
-		$phpbb_root_path = STK_ROOT_PATH;
+		include STK_ROOT_PATH . 'includes/critical_repair.' . PHP_EXT;
 	}
-
-	// Call the phpBB error message handler
-	msg_handler($errno, $msg_text, $errfile, $errline);
+	$cr = new critical_repair();
+	$cr->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
 }
 
 //-- Wrappers for functions that only exist in newer php version
@@ -674,4 +690,26 @@ function pathinfo_filename($file) { //file.name.ext, returns file.name
 	{
 		return substr($file, 0, strrpos($file, '.'));
 	}
+}
+
+/**
+ * A function that behaves like `array_walk` but instead
+ * of walking over the values this function walks
+ * over the keys
+ */
+function stk_array_walk_keys(&$array, $callback)
+{
+	if (!is_callable($callback))
+	{
+		return;
+	}
+
+	$tmp_array = array();
+	foreach ($array as $key => $null)
+	{
+		$walked_key = call_user_func($callback, $key);
+		$tmp_array[$walked_key] = $array[$key];
+		unset($array[$key]);
+	}
+	$array = $tmp_array;
 }

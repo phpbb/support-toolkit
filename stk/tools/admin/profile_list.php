@@ -24,7 +24,40 @@ class profile_list
 
 		page_header($user->lang['PROFILE_LIST']);
 
+		if (!class_exists('phpbb_db_tools'))
+		{
+			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
+		}
+		$db_tools = new phpbb_db_tools($db);
+
 		$user->add_lang('memberlist');
+
+		// Handle delete
+		if (isset($_REQUEST['sa']))
+		{
+			$uids = request_var('marked_user_id', array(0, 0));
+
+			if (confirm_box(true))
+			{
+				if (!function_exists('user_delete'))
+				{
+					require PHPBB_ROOT_PATH . 'includes/functions_user.' . PHP_EXT;
+				}
+
+				// Delete them all
+				foreach ($uids as $uid)
+				{
+					user_delete('remove', $uid);
+				}
+
+				trigger_error('USERS_DELETE_SUCCESSFULL');
+			}
+			else
+			{
+				$hidden = build_hidden_fields(array('marked_user_id' => $uids));
+				confirm_box(false, 'USERS_DELETE', $hidden, 'confirm_body.html', STK_DIR_NAME . '/index.' . PHP_EXT . '?c=admin&amp;t=profile_list&amp;sa=' . true);
+			}
+		}
 
 		$display = request_var('display', '');
 		$start = request_var('start', 0);
@@ -69,7 +102,25 @@ class profile_list
 
 			if ($empty_only)
 			{
-				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ') . $option . ' <> \'\'';
+				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
+
+				switch ($db_tools->sql_layer)
+				{
+					case 'mssql'		:
+					case 'mssqlnative'	:
+						if ($option == 'user_sig')
+						{
+							$profile_where .= "DATALENGTH({$option}) > 0";
+						}
+						else
+						{
+							$profile_where .= "{$option} <> ''";
+						}
+					break;
+
+					default:
+						$profile_where .= "{$option} <> ''";
+				}
 			}
 		}
 
@@ -166,6 +217,7 @@ class profile_list
 				'OCCUPATION'		=> $row['user_occ'],
 				'POSTS'				=> $row['user_posts'],
 				'SIGNATURE'			=> ((!isset($options[$display]) || $display == 'user_sig') && $row['user_sig']) ? generate_text_for_display($row['user_sig'], $row['user_sig_bbcode_uid'], $row['user_sig_bbcode_bitfield'], 7) : '',
+				'USERID'			=> $row['user_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'VISITED'			=> ($row['user_lastvisit']) ? $user->format_date($row['user_lastvisit']) : 0,
 				'WARNINGS'			=> $row['user_warnings'],
@@ -185,6 +237,7 @@ class profile_list
 
 		$template->assign_vars(array(
 			'U_DISPLAY_ACTION'		=> append_sid(STK_INDEX, 't=profile_list&amp;go=1'),
+			'U_SELECTED_ACTION'		=> append_sid(STK_INDEX, array('c' => 'admin', 't' => 'profile_list', 'sa' => true)),
 
 			'LIMIT'					=> $limit,
 			'OPTION_SECTION'		=> (isset($options[$display]) && $display != 'user_sig') ? $user->lang[$options[$display]] : '',

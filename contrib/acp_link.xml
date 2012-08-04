@@ -43,12 +43,12 @@
 		</author>
 	</author-group>
 
-	<mod-version>1.0.3</mod-version>
+	<mod-version>1.0.6-dev</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.8</target-version>
+		<target-version>3.0.11</target-version>
 	</installation>
 </header>
 
@@ -58,7 +58,7 @@
 			<find><![CDATA['S_CONTENT_FLOW_END'	=> ($user->]]></find>
 			<action type="after-add"><![CDATA[		//-- Support Toolkit
 		//-- Add:
-		'U_STK_INDEX'	=> append_sid("{$phpbb_root_path}stk/index.$phpEx"),
+		'U_STK_INDEX'   => ($user->data['user_type'] == USER_FOUNDER) ? append_sid("{$phpbb_root_path}stk/index.$phpEx", false, true, $user->session_id) : '',
 		//-- End Support Toolkit]]></action>
 		</edit>
 	</open>
@@ -68,7 +68,7 @@
 			<find><![CDATA[<p><a href="{U_ADM_INDEX}">{L_ADMIN_INDEX}</a>]]></find>
 			<inline-edit>
 				<inline-find><![CDATA[<p>]]></inline-find>
-				<inline-action type="after-add"><![CDATA[<a href="{U_STK_INDEX}">{L_SUPPORT_TOOL_KIT_INDEX}</a> &bull; ]]></inline-action>
+				<inline-action type="after-add"><![CDATA[<!-- IF U_STK_INDEX --><a href="{U_STK_INDEX}">{L_SUPPORT_TOOL_KIT_INDEX}</a> &bull; <!-- ENDIF -->]]></inline-action>
 			</inline-edit>
 		</edit>
 	</open>

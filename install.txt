@@ -5,8 +5,8 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.3
-Supported phpBB versions 3.0.0 - 3.0.8
+Support Toolkit 1.0.6-dev
+Supported phpBB versions 3.0.0 - 3.0.11-dev
 
 == Authors ==
 Erik Frèrejean	(Erik Frèrejean)
@@ -37,8 +37,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.3 ==
-To upgrade a previous version of the STK to 1.0.3, remove your previous
+== Upgrade to 1.0.6-dev ==
+To upgrade a previous version of the STK to 1.0.6-dev, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -46,9 +46,61 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.5 ==
+* [Fix] Incorrect language packages. (Bug #62995, Path by Noxwizard)
+* [Fix] Handle `E_DEPRECATED` errors. (Bug #63001)
+* [Fix] Properly handle adding users to the Newly Registered Users group (Bug #63011, Patch by Noxwizard)
+* [Fix] Properly differentiate between user names and user id's in Change Password (Bug #63058, Patch by Dicky)
+* [Fix] Properly differentiate between user names and user id's in Merge Users (Bug #63056, Patch by Dicky)
+* [Fix] Properly differentiate between user names and user id's in Manage Board Founders (Bug #63062, Patch by Dicky)
+* [Fix] Manage Board Founders - Errors not displaying. (Bug #63063)
+* [Fix] Manage Board Founders - Find a member not working. (Bug #63064)
+
+== Changes since 1.0.5-rc1 ==
+* [Fix] Correctly handle empty module data when resetting the boards modules. (Bug #62958)
+* [Fix] The "ERK" now correctly handles strict/deprecated errors. (Bug #62976)
+
+== Changes since 1.0.4 ==
+* [Add] Added support for phpBB 3.0.10.
+* [Fix] Added missing language entry. (Bug #62856)
+* [Fix] Reparse bbcode changes topic poster to guest (Bug #62889, Patch by Dicky)
+* [Fix] STK password variable incorrectly unset when not logged in. (Bug #62946)
+* [Fix] Correct version handling in the database cleaner. (Bug #62961)
+
+== Changes since 1.0.4-rc2 ==
+* [Add] Added support for phpBB 3.0.9.
+* [Add] Mark/Unmark all checkboxes in the restore deleted users tool. (Bug #62833)
+* [Fix] Database cleaner doesn't continue. (Bug #62801)
+* [Fix] Restore Deleted Users tool uses invalid grouping. (Bug #62818, Patch by Noxwizard)
+* [Fix] Profile List fails on MSSQL. (Bug #62819)
+* [Fix] Reparse all bbcodes fails on MSSQL Native. (Bug #62820)
+* [Fix] All tables and columns marked missing in Firebird and Oracle. (Bug #62821)
+* [Fix] Reparse All BBCodes enters infinite loop for MSSQL. (Bug #62822)
+
+== Changes since 1.0.4-rc1 ==
+* [Add] Support the mssqlnative DBAL. (Bug #62803, #62804)
+* [Change] Some changes to the database cleaner to correctly support all the phpBB DBMS.
+* [Fix] Resolve "500 Server errors" on IIS. (Bug #62679)
+* [Fix] Unexpected return while running database cleaner. (Bug #62799)
+* [Fix] Missing semicolon potentially corrupts index in mysql upgrader [ref: PHPBB3-10192]. (Bug #62800, Patch by Noxwizard)
+* [Fix] Stricter HTTPS check in the auto cookie tool. (Bug #62814, Patch by Noxwizard)
+
 == Changes since 1.0.3 ==
+* [Add] Add the ability to delete users to the profile list tool. (Bug #62727)
+* [Change] Revert to use the phpBB common.php. (Bug #62658)
+* [Change] Make the ACP link "founder only". (Bug #62682, Patch by WileCoyote)
 * [Fix] Correctly package the translation packages. (Bug #62651)
+* [Fix] Incorrect include path in the mysql_upgrader. (Bug #62653)
+* [Fix] In some cases the database cleaner is loaded twice, causing blank pages. (Bug #62660, Patch by D¡cky)
+* [Fix] Depricated error in PHP 5.3.x. (Bug #62662)
 * [Fix] Remove unused button from the database cleaner. (Bug #62663)
+* [Fix] Undefined index error in the resync user groups tool. (Bug #62687)
+* [Fix] BBCode reparser incorrectly handles guest posts. (Bug #62713)
+* [Fix] BBCode reparser doesn't keep "reparseall" flag. (Bug #62725)
+* [Fix] Allow multibyte characters in the SRT generator. (Bug #62744)
+* [Fix] Allow disallowed user names in the "add user" tool. (Bug #62685)
+* [Fix] Resolve SQL error when resynchronising PM report flags. (Bug #62783)
+* [Fix] Resolve an postgreSQL error in the resync. report flags tool. (Bug #62788)
 
 == Changes since 1.0.3-rc2 ==
 * [Change] Some tweaks to the build script.
@@ -64,7 +116,7 @@ update!
 * [Fix] Problem with text files in archive. (Bug #62627)
 
 == Changes since 1.0.2.1-pl1 ==
-* [Add] Re-sync attatars and a re-sync avatars tool. (Bug #52815)
+* [Add] Re-sync attachments and a re-sync avatars tool. (Bug #52815)
 * [Add] MySQL Upgrader tool. (Bug #62477)
 * [Add] Re-sync registered users group. (Bug #62538)
 * [Add] A tool that resynchronises the report topic flags. (Bug #62601)

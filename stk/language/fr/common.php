@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -65,7 +48,7 @@ $lang = array_merge($lang, array(
    'CAT_ERK'							=> 'Kit de réparation d’urgence',
    'CAT_ERK_EXPLAIN'					=> 'Le kit de réparation d’urgence est un outil séparé du STK vous permettant d’exécuter certaines vérifications pouvant détecter la présence de problèmes dans votre installation de phpBB qui peuvent favoriser un dysfonctionnement sur votre forum. Veuillez cliquer <a href="%s">ici</a> afin d’exécuter le KRU.',
    'CAT_MAIN'							=> 'Principal',
-   'CAT_MAIN_EXPLAIN'					=> 'Le Support Toolkit (STK) peut être utilisé afin de régler les erreurs fréquemment rencontrées dans une installation fonctionnant sous phpBB 3.0.x. Il se présente comme un second panneau de contrôle d’administration offrant à un administrateur une multitude d’outils pouvant résoudre les problèmes fréquents et ainsi servir de prévention permettant à une installation de phpBB3 de fonctionner correctement.',
+   'CAT_MAIN_EXPLAIN'					=> 'Support Toolkit (STK) peut être utilisé afin de régler les erreurs fréquemment rencontrées dans une installation fonctionnant sous phpBB 3.0.x. Il se présente comme un second panneau de contrôle d’administration offrant à un administrateur une multitude d’outils pouvant résoudre les problèmes fréquents et ainsi servir de prévention permettant à une installation de phpBB3 de fonctionner correctement.',
    'CAT_SUPPORT'						=> 'Outils de support',
    'CAT_SUPPORT_EXPLAIN'				=> 'Les outils de support peuvent être utilisés afin d’aider à restaurer une installation de phpBB 3.0.x qui ne fonctionne plus correctement.',
    'CAT_USERGROUP'						=> 'Outils pour les utilisateurs et les groupes',
@@ -87,12 +70,12 @@ $lang = array_merge($lang, array(
    'INCORRECT_PASSWORD'					=> 'Le mot de passe est incorrect',
    'INCORRECT_PHPBB_VERSION'			=> 'Votre version de phpBB n’est pas compatible avec cet outil. Votre installation de phpBB doit au moins être mise à jour vers la version %1$s ou plus avant de pouvoir exécuter cet outil.',
 
-   'LOGIN_STK_SUCCESS'					=> 'Vous avez été authentifié avec succès et allez être à présent redirigé vers le Support Toolkit.',
+   'LOGIN_STK_SUCCESS'					=> 'Vous avez été authentifié(e) et allez à présent être redirigé(e) vers Support Toolkit.',
 
    'NOTICE'								=> 'Avertissement',
    'NO_VERSION_FILE'					=> 'Le Support Toolkit (STK) n’a pas pu déterminer la dernière version. Veuillez vous rendre sur la <a href="http://phpbb.com/support/stk">section relative à Support Toolkit sur phpBB.com</a> et vérifier que vous utilisez bien la dernière version avant de continuer à utiliser le STK.',
 
-   'PASS_GENERATED'						=> 'Votre fichier de mot de passe STK a été généré avec succès !<br/>Le mot de passe qui vous a été généré est : <em>%1$s</em><br />Ce mot de passe expirera le : <span style="text-decoration: underline;">%2$s</span>. Après cette date, vous <strong>devrez</strong> générer un nouveau fichier de mot de passe avant de pouvoir continuer à utiliser la fonctionnalité de la connexion d’urgence !<br /><br />Utilisez le bouton suivant afin de télécharger le fichier. Une fois que vous avez téléchargé ce fichier, vous devrez le transférer sur votre serveur dans le répertoire “stk”',
+   'PASS_GENERATED'						=> 'Votre fichier de mot de passe STK a été généré.<br/>Le mot de passe généré est : <em>%1$s</em><br />Ce mot de passe expirera le : <span style="text-decoration: underline;">%2$s</span>. Après cette date, vous <strong>devrez</strong> générer un nouveau fichier de mot de passe avant de pouvoir continuer à utiliser la fonctionnalité de la connexion d’urgence !<br /><br />Utilisez le bouton suivant afin de télécharger le fichier. Une fois que vous avez téléchargé ce fichier, vous devrez le transférer sur votre serveur dans le répertoire « stk »',
    'PASS_GENERATED_REDIRECT'			=> 'Une fois que vous avez transféré le fichier de mot de passe au bon emplacement, cliquez <a href="%s">ici</a> afin de retourner sur la page de connexion.',
    'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Cet outil n’est pas compatible avec la version de phpBB que vous utilisez',
    'PROCEED_TO_STK'						=> '%sContinuer vers le Support Toolkit%s',
@@ -101,17 +84,17 @@ $lang = array_merge($lang, array(
    'STK_LOGIN'							=> 'Connexion au Support Toolkit',
    'STK_LOGIN_WAIT'						=> 'Vous devez patienter au moins trois secondes avant que vous puissiez réessayer de vous connecter.',
    'STK_LOGOUT'							=> 'Déconnexion du STK',
-   'STK_LOGOUT_SUCCESS'					=> 'Vous vous êtes déconnecté du Support Toolkit avec succès.',
+   'STK_LOGOUT_SUCCESS'					=> 'Vous êtes à présent déconnecté(e) du Support Toolkit.',
    'STK_NON_LOGIN'						=> 'Se connecter afin d’accéder au STK.',
    'STK_OUTDATED'						=> 'Votre installation de Support Toolkit semble être expirée. La dernière version disponible est la <strong style="color: #008000;">%1$s</strong>, alors que la version installée est la <strong style="color: #FF0000;">%2$s</strong>.<br /><br />Dû à l’impact majeur que cet outil détient sur votre installation de phpBB, celle-ci a été désactivée le temps de la mise à jour. Nous vous recommandons fortement de vous assurer que tous les logiciels fonctionnant sur votre serveur soient bien à jour. Pour plus d’informations concernant la dernière mise à jour, veuillez consulter le <a href="%3$s">sujet de sortie</a>.<br /><br /><em>Si vous obtenez cet avertissement après une mise à jour de Support Toolkit, cliquez <a href="%4$s">ici</a> afin de vider le cache concerné par la vérification de version.</em>',
    'SUPPORT_TOOL_KIT'					=> 'Support Toolkit',
    'SUPPORT_TOOL_KIT_INDEX'				=> 'Index de Support Toolkit',
    'SUPPORT_TOOL_KIT_PASSWORD'			=> 'Mot de passe',
-   'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Depuis que vous n’êtes plus connecté à phpBB3, vous devez vérifier que vous êtes le responsable du forum en saisissant le mot de passe de Support Toolkit.<br /><br /><strong>Les cookies DOIVENT être autorisés par votre navigateur, auquel cas vous ne pourrez pas rester connecté.</strong>',
+   'SUPPORT_TOOL_KIT_PASSWORD_EXPLAIN'	=> 'Depuis que vous n’êtes plus connecté(e) à phpBB3, vous devez vérifier que vous êtes le responsable du forum en saisissant le mot de passe de Support Toolkit.<br /><br /><strong>Les cookies DOIVENT être autorisés par votre navigateur, auquel cas vous ne pourrez pas rester connecté(e).</strong>',
 
    'TOOL_INCLUTION_NOT_FOUND'			=> 'Cet outil est en train d’essayer de charger un outil (%1$s) qui n’existe pas.',
    'TOOL_NAME'							=> 'Nom de l’outil',
    'TOOL_NOT_AVAILABLE'					=> 'L’outil demandé n’est pas disponible.',
 
-   'USING_STK_LOGIN'					=> 'Vous vous êtes connecté en utilisant la méthode d’authentification interne au STK. Il est recommandé d’utiliser cette méthode <strong>seulement</strong> lorsqu’il vous est impossible de vous connecter à phpBB.<br />Pour désactiver cette méthode d’authentification, cliquez <a href="%1$s">ici</a>.',
+   'USING_STK_LOGIN'					=> 'Vous vous êtes connecté(e) en utilisant la méthode d’authentification interne au STK. Il est recommandé d’utiliser cette méthode <strong>seulement</strong> lorsqu’il vous est impossible de vous connecter à phpBB.<br />Pour désactiver cette méthode d’authentification, cliquez <a href="%1$s">ici</a>.',
 ));

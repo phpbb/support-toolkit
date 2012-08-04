@@ -200,7 +200,8 @@ class erk_config_repair
 					</div>
 				</div>
 				<div id="page-footer">
-					Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>
+					Support Toolkit &copy; <a href="http://www.phpbb.com/">phpBB Group</a><br />
+					Powered by <a href="http://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
 				</div>
 			</div>
 		</body>
@@ -258,6 +259,7 @@ class erk_config_repair
 			break;
 
 			case 'mssql':
+			case 'mssqlnative':
 			case 'mssql_odbc':
 				$prefix_length = 90;
 			break;

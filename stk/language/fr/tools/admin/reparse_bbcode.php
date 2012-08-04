@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Reparse BBCode
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Reparse BBCode
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -59,16 +42,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Réanalyser tous les BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Si ceci est activé, la réanalyse du BBCode réanalysera tout le contenu sur le forum. Par défaut, l’outil rénalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.',
+	'REPARSE_ALL_EXPLAIN'		=> 'Si cette option est activée, la réanalyse du BBCode réanalysera tout le contenu sur le forum. Par défaut, l’outil rénalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.',
 	'REPARSE_BBCODE'			=> 'Réanalyser le BBCode',
 	'REPARSE_BBCODE_COMPLETE'	=> 'Les BBCodes ont été réanalysés.',
-	'REPARSE_BBCODE_CONFIRM'	=> 'Êtes-vous sûr de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
+	'REPARSE_BBCODE_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
 	'REPARSE_BBCODE_PROGRESS'	=> 'Étape %1$d terminée. Début de l’étape %2$d dans un court instant…',
 	'REPARSE_BBCODE_SWITCH_MODE'	=> array(
 		1	=> 'Réanalyse des messages terminée, début de la réanalyse des messages privés.',
 		2	=> 'Réanalyse des messages privés terminée, début de la réanalyse des signatures.',
 	),
-	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyé ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
+	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyées ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Réanalyser les messages spécifiques',
 	'REPARSE_POST_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages spécifiques. Chaque ID doit être séparée par une virgule.',
 	'REPARSE_PM_IDS'				=> 'Réanalyser les messages privés spécifiques',

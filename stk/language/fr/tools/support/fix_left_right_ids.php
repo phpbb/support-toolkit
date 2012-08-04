@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Fix Left/Right ID's
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Fix Left/Right ID's
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -56,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'FIX_LEFT_RIGHT_IDS'			=> 'Réparer les ID de droite et de gauche',
-	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Êtes-vous sûr de vouloir réparer les ID de droite et de gauche ?<br /><br /><strong>Veuillez sauvegarder votre base de données avant d’exécuter cet outil !</strong>',
+	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir réparer les ID de droite et de gauche ?<br /><br /><strong>Veuillez sauvegarder votre base de données avant d’exécuter cet outil !</strong>',
 
 	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'Les ID de droite et de gauche ont été réparées avec succès.',
 	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'L’outil a terminé le balayage de toutes les ID de droite et de gauche et toutes les lignes sont déjà correctes. Aucune modification n’a donc été apportée.',

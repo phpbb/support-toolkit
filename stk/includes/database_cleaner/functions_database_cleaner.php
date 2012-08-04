@@ -24,7 +24,14 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 	global $db;
 
 	$existing_config = array();
-	$sql = 'SELECT config_name FROM ' . CONFIG_TABLE . ' ORDER BY config_name ASC';
+	$sql_ary = array(
+		'SELECT'	=> 'c.config_name',
+		'FROM'		=> array(
+			CONFIG_TABLE => 'c',
+		),
+		'ORDER_BY'	=> 'config_name ASC',
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -44,8 +51,13 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 	global $db;
 
 	$existing_extension_groups = array();
-	$sql = 'SELECT group_name
-		FROM ' . EXTENSION_GROUPS_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'eg.group_name',
+		'FROM'		=> array(
+			EXTENSION_GROUPS_TABLE => 'eg',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -64,10 +76,16 @@ function get_extensions($group, &$group_id)
 {
 	global $db;
 
-	$sql = 'SELECT e.extension, eg.group_id
-		FROM (' . EXTENSIONS_TABLE . ' e, ' . EXTENSION_GROUPS_TABLE . ' eg)
-		WHERE e.group_id = eg.group_id
-			AND eg.group_name = \'' . $db->sql_escape($group) . '\'';
+	$sql_ary = array(
+		'SELECT'	=> 'e.extension, eg.group_id',
+		'FROM'		=> array(
+			EXTENSIONS_TABLE		=> 'e',
+			EXTENSION_GROUPS_TABLE	=> 'eg',
+		),
+		'WHERE'		=> "e.group_id = eg.group_id
+							AND eg.group_name = '" . $db->sql_escape($group) . "'",
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	$set	= array();
 	while ($row = $db->sql_fetchrow($result))
@@ -89,7 +107,13 @@ function get_permission_rows(&$permission_data, &$permission_rows, &$existing_pe
 	global $db;
 
 	$existing_permissions = array();
-	$sql = 'SELECT auth_option FROM ' . ACL_OPTIONS_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'ao.auth_option',
+		'FROM'		=> array(
+			ACL_OPTIONS_TABLE => 'ao',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -106,8 +130,13 @@ function get_role_rows(&$roles_data, &$role_rows, &$existing_roles)
 	global $db;
 	
 	$existing_roles = array();
-	$sql = 'SELECT role_name
-		FROM ' . ACL_ROLES_TABLE;
+	$sql_ary = array(
+		'SELECT'	=> 'ar.role_name',
+		'FROM'		=> array(
+			ACL_ROLES_TABLE => 'ar',
+		),
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -127,7 +156,14 @@ function get_group_rows(&$group_data, &$group_rows, &$existing_groups)
 	global $db;
 
 	$existing_groups = array();
-	$sql = 'SELECT group_name FROM ' . GROUPS_TABLE . ' WHERE group_type = 3';
+	$sql_ary = array(
+		'SELECT'	=> 'g.group_name',
+		'FROM'		=> array(
+			GROUPS_TABLE => 'g',
+		),
+		'WHERE'		=> 'group_type = 3',
+	);
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -174,7 +210,7 @@ function get_columns($table)
 			// PostgreSQL
 			case 'postgres'	:
 				$sql = "SELECT a.attname
-					FROM pg_class AS c, pg_attribute AS a
+					FROM pg_class c, pg_attribute a
 					WHERE c.relname = '%s'
 						AND a.attnum > 0
 						AND a.attrelid = c.oid";
@@ -182,11 +218,11 @@ function get_columns($table)
 			break;
 
 			// MsSQL
-			case 'mssql'	:
+			case 'mssql'		:
+			case 'mssqlnative'	:
 				$sql = "SELECT c.name
 					FROM syscolumns c
-					LEFT JOIN (sysobjects o)
-					ON (c.id = o.id)
+					LEFT JOIN sysobjects o ON c.id = o.id
 					WHERE o.name = '%s'";
 				$column_name = 'name';
 			break;
@@ -282,12 +318,15 @@ function get_phpbb_tables()
 	// Function returns all tables in the database
 	$all_tables = get_tables($db);
 
+	// @TODO: tprefix, uppercase voor firebird/oracle!
+
 	// Only get tables using the phpBB prefix
 	if (!empty($table_prefix))
 	{
 		foreach ($all_tables as $table)
 		{
-			if (strpos($table, $table_prefix) === 0)
+			// Use `stripos` for Oracle and Firebird support. (#62821)
+			if (stripos($table, $table_prefix) === 0)
 			{
 				$_tables[] = $table;
 			}
@@ -329,7 +368,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		include PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT;
 	}
 	$filelist = array_shift(filelist(STK_ROOT_PATH . 'includes/database_cleaner/', 'data/', PHP_EXT));
-	sort($filelist);
+	usort($filelist, 'version_compare');
 
 	// Add the data
 	foreach ($filelist as $file)
@@ -370,7 +409,28 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	// Perform some actions that only have to be done on given versions or on all
 	switch($phpbb_version)
 	{
-		case '3_0_9' :
+		case '3_0_10'	:
+		case '3_0_9' 	:
+			// The extension group names have been changed, remove the old ones
+			foreach ($data->extension_groups as $key => $null)
+			{
+				if (strpos($key, 'EXT_') === 0)
+				{
+					unset($data->extension_groups[$key]);
+				}
+			}
+
+			// Same for the extensions
+			foreach ($data->extensions as $key => $null)
+			{
+				if (strpos($key, 'EXT_') === 0)
+				{
+					unset($data->extensions[$key]);
+				}
+			}
+
+		// No Break;
+
 		case '3_0_8' :
 		case '3_0_7_pl1' :
 		case '3_0_7' :
@@ -385,7 +445,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			$extra_add = array('ACP_FORUM_PERMISSIONS_COPY');
 			array_splice($data->module_extras['acp']['ACP_FORUM_BASED_PERMISSIONS'], 1, 0, $extra_add);
 
-		// No Break
+		// No Break;
 
 		case '3_0_5' :
 		case '3_0_4' :

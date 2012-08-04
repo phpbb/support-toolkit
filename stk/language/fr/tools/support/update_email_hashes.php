@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Update email hashes
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Update email hashes
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -55,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'UPDATE_EMAIL_HASHES'				=> 'Mettre à jour les hachages d’e-mails',
-	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Dans les installations de phpBB, particulièrement dans phpBB 3.0.7, passer d’un système d’exploitation 32 bits à un système d’exploitation 64 bits peut provoquer un dysfonctionnement dans le hachage des e-mails. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Consultez le rapport de bogue concerné</a>)</em><br />Cet outil vous permet de mettre à jour les hachages dans la base de données afin qu’ils fonctionnent correctement.',
-	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tous les hachages d’e-mails ont été mis à jour avec succès !',
-	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Mise à jour des hachages d’e-mails en cours.',
+	'UPDATE_EMAIL_HASHES'				=> 'Mettre à jour les hachages des courriels',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'Dans les installations de phpBB, particulièrement dans phpBB 3.0.7, passer d’un système d’exploitation 32 bits à un système d’exploitation 64 bits peut provoquer un dysfonctionnement dans le hachage des courriels. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Consultez le rapport de bogue concerné</a>)</em><br />Cet outil vous permet de mettre à jour les hachages dans la base de données afin qu’ils fonctionnent correctement.',
+	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Tous les hachages des courriels ont été mis à jour.',
+	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Mise à jour des hachages des courriels en cours.',
 ));

@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - SQL Query
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - SQL Query
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -64,8 +47,8 @@ $lang = array_merge($lang, array(
 
 	'SHOW_RESULTS'					=> 'Afficher les résultats',
 	'SQL_QUERY'						=> 'Exécuter une requête SQL',
-	'SQL_QUERY_EXPLAIN'				=> 'Saisissez la requête SQL que vous souhaitez exécuter. L’outil remplacera “phpbb_” par votre préfixe de table.<br />Si vous avez coché l’affichage des résultats, l’outil affichera les résultats <em>(s’il y en a)</em> de la requête.',
+	'SQL_QUERY_EXPLAIN'				=> 'Saisissez la requête SQL que vous souhaitez exécuter. L’outil remplacera « phpbb_ » par votre préfixe de table.<br />Si vous avez coché l’affichage des résultats, l’outil affichera les résultats <em>(s’il y en a)</em> de la requête.',
 
 	'SQL_QUERY_LEGEND'				=> 'Requête SQL',
-	'SQL_QUERY_SUCCESS'				=> 'La requête SQL a été exécutée avec succès.',
+	'SQL_QUERY_SUCCESS'				=> 'La requête SQL a été exécutée.',
 ));

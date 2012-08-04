@@ -495,7 +495,7 @@ class stk_builder
 				if ($mode == 'language')
 				{
 					// When packing language files the path needs a slight adjustment
-					$dest = "{$transl}/{$dir}/{$file}";
+					$dest = "{$transl}/{$dir}{$file}";
 					$orig = "{$path}/{$dir}{$file}";
 
 					// Validate the language pack

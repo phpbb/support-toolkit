@@ -31,7 +31,9 @@ class datafile_3_0_9
 	* @var Array 3.0.8-dev config data
 	*/
 	var $config = array(
-		// No config changes 3.0.8 -> 3.0.9
+		'ip_login_limit_max'			=> array('config_value' => '50', 'is_dynamic' => '0'),
+		'ip_login_limit_time'			=> array('config_value' => '21600', 'is_dynamic' => '0'),
+		'ip_login_limit_use_forwarded'	=> array('config_value' => '0', 'is_dynamic' => '0'),
 	);
 
 	/**
@@ -63,17 +65,108 @@ class datafile_3_0_9
 	);
 
 	/**
-	* @var Array All default extension groups
+	* @var Array All default extensions
 	*/
 	var $extension_groups = array(
-		// No extension group changes 3.0.8 -> 3.0.9
+		'IMAGES'				=> array(1, 1, 1, '', 0, ''),
+		'ARCHIVES'				=> array(0, 1, 1, '', 0, ''),
+		'PLAIN_TEXT'			=> array(0, 0, 1, '', 0, ''),
+		'DOCUMENTS'				=> array(0, 0, 1, '', 0, ''),
+		'REAL_MEDIA'			=> array(3, 0, 1, '', 0, ''),
+		'WINDOWS_MEDIA'			=> array(2, 0, 1, '', 0, ''),
+		'FLASH_FILES'			=> array(5, 0, 1, '', 0, ''),
+		'QUICKTIME_MEDIA'		=> array(6, 0, 1, '', 0, ''),
+		'DOWNLOADABLE_FILES'	=> array(0, 0, 1, '', 0, ''),
 	);
 
 	/**
 	* @var Array All default extensions
 	*/
 	var $extensions = array(
-		// No extension changes 3.0.8 -> 3.0.9
+		'IMAGES'				=> array(
+			'gif',
+			'png',
+			'jpeg',
+			'jpg',
+			'tif',
+			'tiff',
+			'tga',
+		),
+		'ARCHIVES'			=> array(
+			'gtar',
+			'gz',
+			'tar',
+			'zip',
+			'rar',
+			'ace',
+			'torrent',
+			'tgz',
+			'bz2',
+			'7z',
+		),
+		'PLAIN_TEXT'			=> array(
+			'txt',
+			'c',
+			'h',
+			'cpp',
+			'hpp',
+			'diz',
+			'csv',
+			'ini',
+			'log',
+			'js',
+			'xml',
+		),
+		'DOCUMENTS'			=> array(
+			'xls',
+			'xlsx',
+			'xlsm',
+			'xlsb',
+			'doc',
+			'docx',
+			'docm',
+			'dot',
+			'dotx',
+			'dotm',
+			'pdf',
+			'ai',
+			'ps',
+			'ppt',
+			'pptx',
+			'pptm',
+			'odg',
+			'odp',
+			'ods',
+			'odt',
+			'rtf',
+		),
+		'REAL_MEDIA'			=> array(
+			'rm',
+			'ram',
+		),
+		'WINDOWS_MEDIA'		=> array(
+			'wma',
+			'wmv',
+		),
+		'FLASH_FILES'			=> array(
+			'swf',
+		),
+		'QUICKTIME_MEDIA'		=> array(
+			'mov',
+			'm4v',
+			'm4a',
+			'mp4',
+			'3gp',
+			'3g2',
+			'qt',
+		),
+		'DOWNLOADABLE_FILES'	=> array(
+			'mpeg',
+			'mpg',
+			'mp3',
+			'ogg',
+			'ogm',
+		),
 	);
 
 	/**
@@ -135,6 +228,26 @@ class datafile_3_0_9
 	*/
 	function get_schema_struct(&$schema_data)
 	{
-		// No schema changes 3.0.8 -> 3.0.9
+		// Update BBCode field
+		$schema_data['phpbb_bbcodes']['COLUMNS']['bbcode_id'] = array('USINT', 0);
+
+		// Create the login attempt table
+		$schema_data['phpbb_login_attempts'] = array(
+			'COLUMNS'			=> array(
+				'attempt_ip'			=> array('VCHAR:40', ''),
+				'attempt_browser'		=> array('VCHAR:150', ''),
+				'attempt_forwarded_for'	=> array('VCHAR:255', ''),
+				'attempt_time'			=> array('TIMESTAMP', 0),
+				'user_id'				=> array('UINT', 0),
+				'username'				=> array('VCHAR_UNI:255', 0),
+				'username_clean'		=> array('VCHAR_CI', 0),
+			),
+			'KEYS'				=> array(
+				'att_ip'		=> array('INDEX', array('attempt_ip', 'attempt_time')),
+				'att_for'		=> array('INDEX', array('attempt_forwarded_for', 'attempt_time')),
+				'att_time'		=> array('INDEX', array('attempt_time')),
+				'user_id'		=> array('INDEX', 'user_id'),
+			),
+		);
 	}
 }

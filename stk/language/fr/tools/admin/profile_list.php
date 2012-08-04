@@ -1,27 +1,10 @@
 <?php
 /**
 *
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Profile List
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-* @version   $Id$
+* @package Support Toolkit - Profile List
+* @version $Id$
+* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
 *
 */
 
@@ -57,13 +40,19 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'					=> 'Tous',
 
+	'CLICK_TO_DELETE'		=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
+
 	'FILTER'				=> 'Filtre',
 
 	'LIMIT'					=> 'Limite',
 
-	'ONLY_NON_EMPTY'		=> 'Seulement remplis',
+	'ONLY_NON_EMPTY'		=> 'Remplis uniquement',
 	'ORDER_BY'				=> 'Trier par',
 
 	'PROFILE_LIST'			=> 'Liste des profils',
 	'PROFILE_LIST_EXPLAIN'	=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
+
+	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
+	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés.',
 ));

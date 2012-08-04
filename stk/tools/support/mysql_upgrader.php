@@ -45,7 +45,7 @@ class mysql_upgrader
 		// cleaner for this tool
 		if (!class_exists('database_cleaner'))
 		{
-			require STK_INDEX . 'tools/support/database_cleaner.' . PHP_EXT;
+			require STK_ROOT_PATH . 'tools/support/database_cleaner.' . PHP_EXT;
 		}
 		$this->_db_cleaner = new database_cleaner();
 
@@ -254,7 +254,7 @@ class mysql_upgrader
 			// Do we now need to re-add the fulltext index? ;)
 			if ($table_name == ($table_prefix . 'posts') && $drop_index)
 			{
-				$this->_upgrader .= 'ALTER TABLE ' . $table_name . ' ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text)' . PHP_EOL;
+				$this->_upgrader .= 'ALTER TABLE ' . $table_name . ' ADD FULLTEXT (post_subject), ADD FULLTEXT (post_text), ADD FULLTEXT post_content (post_subject, post_text);' . PHP_EOL;
 			}
 		}
 

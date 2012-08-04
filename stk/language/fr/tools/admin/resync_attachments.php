@@ -1,28 +1,12 @@
 <?php
 /**
-*
-* This file is part of French STK translation.
-* Copyright (c) 2010 - 2011 Maël Soucaze.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* @package   Support Toolkit - Resync Attachments
-* @author    Maël Soucaze <maelsoucaze@gmail.com> (Maël Soucaze) http://mael.soucaze.com/
-* @copyright (c) 2009 phpBB Group
-* @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License
-*
-*/
+ *
+ * @package Support Toolkit - Resync Attachments
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+ *
+ */
 
 /**
  * DO NOT CHANGE
@@ -55,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_ATTACHMENTS'			=> 'Resynchroniser les pièces jointes',
-	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Cet outil vérifiera si toutes les pièces jointes stockées actuellement dans la base de données ont un fichier sur le serveur. Si le fichier est manquant, cet outil supprimera la pièce jointe de la base de données. Êtes-vous sûr de vouloir continuer ?',
-	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Les pièces jointes ont été resynchronisées avec succès !',
-	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronisation des pièces jointes en cours. Merci de ne pas interrompre ce processus.',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Cet outil vérifiera si toutes les pièces jointes stockées actuellement dans la base de données ont un fichier sur le serveur. Si le fichier est manquant, cet outil supprimera la pièce jointe de la base de données. Êtes-vous sûr(e) de vouloir continuer ?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Les pièces jointes ont été resynchronisées.',
+	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronisation des pièces jointes en cours. Veuillez ne pas interrompre cette opération.',
 ));
