@@ -92,6 +92,9 @@ $lang = array_merge($lang, array(
 	'NOTICE'							=> 'Notera',
 	'NO_VERSION_FILE'					=> 'Support Toolkit kunde inte bestämma den senaste versionen av paketet. Vänligen gå till <a href="http://phpbb.com/support/stk">Support Toolkit-avsnittet av phpBB.com</a> och verifiera att du har den senaste versionen före du fortsätter att använder STK.',
 
+	'REQUEST_PHPBB_VERSION'	=> 'Definera phpBB versionen',
+	'REQUEST_PHPBB_VERSION_EXPLAIN'	=> 'Supportverktyget kunde inte identifiera vilken version utav phpBB du använder, vänligen ange den rätta versionen i detta formulär före du fortsätter.',
+
 	'PASS_GENERATED'					=> 'Din STK-lösenordsfil är skapad!<br/>Lösenordet som skapades är: <em>%1$s</em><br />Detta lösenordet kommer att upphöra: <span style="text-decoration: underline;">%2$s</span>. Efter denna tiden <strong>måste</strong> du skapa en ny lösenordsfil för att kunna fortsätta använda nödinloggningsmetoden!<br /><br />Använd följande knapp för att ladda ner filen. Den nedladdade filen skall sedan laddas upp på din server in "stk"-mappen.',
 	'PASS_GENERATED_REDIRECT'			=> 'När du har laddat upp lösenordsfilen till rätt ställe, klicka <a href="%s">här</a> för att komma tillbaka till loginsidan.',
 	'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Detta verktyget är inte kompatibelt med den versionen av phpBB du använder.',
