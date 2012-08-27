@@ -62,6 +62,6 @@ $lang = array_merge($lang, array(
 	'NO_SOURCE_USER'		=> 'De gezochte brongebruiker bestaat niet',
 	'NO_TARGET_USER'		=> 'De gezochte doelgebruiker bestaat niet',
 
-	'BOTH_SOURCE_USER'		=> 'Vul een veld in voor bron.',
-	'BOTH_TARGET_USER'		=> 'Vul een veld in voor doel.',
+	'BOTH_SOURCE_USER'		=> 'Vul een veld in voor brongebruiker.',
+	'BOTH_TARGET_USER'		=> 'Vul een veld in voor doeldoelgebruiker.',
 ));
