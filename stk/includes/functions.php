@@ -299,7 +299,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	{
 		// There are different ways of handling language paths due to the changes
 		// made in phpBB 3.0.3 (set custom lang path)
-		if (version_compare($config['version'], '3.0.2', '<='))
+		if (version_compare(PHPBB_VERSION_NUMBER, '3.0.2', '<='))
 		{
 			$is_302 = true;
 		}

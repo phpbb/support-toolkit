@@ -35,6 +35,9 @@ if (empty($lang) || !is_array($lang))
 //
 // Some characters you may want to copy&paste:
 // ’ » " " …
+// --------------------------------------------------------------------------------------------
+// For the time being this file isn't translatable. The Support Toolkit will always force the
+// English version when the "Support Request Generator" is ran.
 //
 
 $lang = array_merge($lang, array(
@@ -118,12 +121,14 @@ $lang = array_merge($lang, array(
 	'SRT_DROPDOWN_OPTIONS'	=> array(
 		'step2'	=> array(
 			'install_type'	=> array(
+				null			=> 'Please select your answer',
 				'myself'		=> 'I used the download package from phpBB.com',
 				'third'			=> 'I used a download package provided by another website',
 				'someone_else'	=> 'Someone else installed my board for me',
 				'automated'		=> 'I used a tool provided by my host',
 			),
 			'inst_converse'	=> array(
+				null			=> 'Please select your answer',
 				'fresh'				=> 'Fresh Install',
 				'phpbb_update'		=> 'Update from a previous version of phpBB3',
 				'convert_phpbb2'	=> 'Conversion from phpBB2',
@@ -132,6 +137,7 @@ $lang = array_merge($lang, array(
 		),
 		'step3'	=> array(
 			'xp_level'		=> array(
+				null			=> 'Please select your answer',
 				'new_both'		=> 'New to PHP and phpBB',
 				'new_phpbb'		=> 'New to phpBB but not PHP',
 				'new_php'		=> 'New to PHP but not phpBB',

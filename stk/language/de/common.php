@@ -78,6 +78,9 @@ $lang = array_merge($lang, array(
 	'NOTICE'							=> 'Hinweis',
 	'NO_VERSION_FILE'					=> 'Das Support Toolkit (STK) war nicht in der Lage, die aktuelle Version zu ermitteln. Bitte besuche die <a href="http://phpbb.com/support/stk">Seiten des Support Toolkits auf phpBB.com</a> und prüfe, ob du die aktuelle Version verwendest, bevor du fortfährst.',
 
+	'REQUEST_PHPBB_VERSION'				=> 'phpBB-Version festlegen',
+	'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'Die Support-Tools waren nicht in der Lage, die verwendete phpBB-Version zu identifizieren. Bitte wähle die richtige Version aus der Liste aus, bevor du fortfährst.<br />Bitte besuche die <a href="http://www.phpbb.com/community/viewforum.php?f=46">Support-Foren</a> (<a href="http://www.phpbb.de/go/3/supportforum">deutschsprachige Foren</a>), um Unterstützung bei der Behebung des Problems zu erhalten.',
+
 	'PASS_GENERATED'					=> 'Deine STK Passwort-Datei wurde erfolgreich erstellt!<br/>Das Passwort, das für dich erstellt wurde, lautet: <em>%1$s</em><br />Dieses Passwort ist gültig bis: <span style="text-decoration: underline;">%2$s</span>. Nach Ablauf dieser Zeit <strong>musst</strong> du eine neue Passwort-Datei erstellen, um den Notfall-Zugang weiterhin nutzen zu können!<br /><br />Benutze die folgende Schaltfläche, um die Datei herunterzuladen. Anschließend musst du die Datei in das „stk“-Verzeichnis des Servers hochladen.',
 	'PASS_GENERATED_REDIRECT'			=> 'Sobald du die Datei im richtigen Verzeichnis hochgeladen hast, klicke <a href="%s">hier</a>, um zur Anmelde-Seite zurückzukehren.',
 	'PLUGIN_INCOMPATIBLE_PHPBB_VERSION'	=> 'Dieses Tool ist nicht mit der verwendeten phpBB-Version kompatibel',

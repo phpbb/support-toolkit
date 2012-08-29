@@ -39,11 +39,16 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Alterar senha',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Altera a senha de um usuário específico.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Altera a senha de um usuário específico.<br /><strong>Você pode inserir o nome de usuário ou a ID do usuário, não ambos.</strong>',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'A senha do usuário <a href="%s">%s</a> foi alterada com sucesso.',
 
-	'PASSWORD_CONFIRM'			=> 'Confirmar senha',
+	'FIELDS_NOT_FILLED'			=> 'Um campo deve ser preenchido',
+	'FIELDS_BOTH_FILLED'		=> 'Apenas um campo deve ser preenchido',
 
-	'USERNAMEID'				=> 'Nome de usuário ou ID',
-	'USERNAMEID_EXPLAIN'		=> 'Escreva o nome de usuário ou a ID do usuário o qual você deseja alterar a senha.',
+	'PASSWORD_CONFIRM'			=> 'Confirmar senha',
+	
+	'USERNAME_NAME'				=> 'Nome de usuário',
+	'USERNAME_NAME_EXPLAIN'		=> 'Escreva o nome de usuário qual você deseja alterar a senha',
+	'USERNAMEID'				=> 'ID do usuário',
+	'USERNAMEID_EXPLAIN'		=> 'Escreva a ID do usuário qual você deseja alterar a senha.',
 ));

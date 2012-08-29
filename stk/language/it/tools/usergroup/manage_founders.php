@@ -4,7 +4,7 @@
 * @package Support Toolkit - Make Founder
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
-* @copyright (c) 2011 phpBBItalia.net - translated on 2011-10-01
+* @copyright (c) 2012 phpBBItalia.net - translated on 2012-06-16
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -39,6 +39,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'I campi Nome utente e ID utente non possono essere compilati',
 	'DEMOTE_FAILED'				=> 'Non è possibile rimuovere lo status di Fondatore di tutti gli utenti!',
 	'DEMOTE_FOUNDERS'			=> 'Retrocedi i Fondatori',
 	'DEMOTE_SUCCESSFULL'		=> 'Status di Fondatore di %d utenti eliminato con successo!',
@@ -48,13 +49,15 @@ $lang = array_merge($lang, array(
 	'MAKE_FOUNDER'				=> 'Rendi Fondatore della Board un utente',
 	'MAKE_FOUNDER_CONFIRM'		=> 'Sei sicuro di voler rendere <a href="%1$s">%2$s</a> un Fondatore della Board?  Questo darà <a href="%1$s">%2$s</a> la possibilità di eliminare il tuo account, e altri poteri.',
 	'MAKE_FOUNDER_FAILED'		=> 'Non puoi promuovere questo utente come Fondatore',
-	'MAKE_FOUNDER_SUCCESS'		=> 'Promosso con successo <a href="%1$s">%2$s</a> a Fondatore della board.',
+	'MAKE_FOUNDER_SUCCESS'		=> 'Promosso con successo <a href="%1$s">%2$s</a> a Fondatore della Board.',
 	'MANAGE_FOUNDERS'			=> 'Gestione Fondatori Board',
 
 	'NO_FOUNDERS'				=> 'Nessun Fondatore trovato',
 
 	'PROMOTE_FOUNDER'			=> 'Promuovi a Fondatore',
-
-	'USER_TO_FOUNDER'			=> 'Utenti da nominare Fondatori',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Inserisci il nome utente o l’ID dell’utente che vuoi rendere Fondatore.',
+	
+	'USER_NAME_TO_FOUNDER'			=> 'Nome utente da rendere Fondatore',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Inserisci il nome utente che vuoi rendere Fondatore.',
+	'USER_ID_TO_FOUNDER'			=> 'ID dell’utente che vuoi rendere Fondatore.',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Inserisci l’ID dell’utente che vuoi rendere Fondatore.',
 ));

@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Profile List
-* @phpBB source: profile_list.php 277 2010-01-20 01:38:28Z iwisdom $
-* @version $Id: profile_list.php 136 2011-05-16 12:57:20Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

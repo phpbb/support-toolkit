@@ -2,8 +2,6 @@
 /**
 *
 * @package Support Toolkit - Update email hashes
-* @phpBB source: update_email_hashes.php 426 2010-06-11 21:27:34Z erikfrerejean $
-* @version $Id: update_email_hashes.php 115 2011-01-15 20:29:09Z jan skovsgaard $
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated by Olympus DK Team

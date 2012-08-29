@@ -68,8 +68,17 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_SAME_USERS'	=> 'Ursprungsanvändaren och målanvändaren får inte vara samma.',
 
-	'MERGE_USERS_USER_SOURCE'			=> 'Ursprungsanvändare',
-	'MERGE_USERS_USER_SOURCE_EXPLAIN'	=> 'Inlägg, privata meddelanden, rättigheter, varningar, et cetera flyttas från denna användaren till målanvändaren. Gruppmedlemskap och användarinställningar kopieras.',
+	'MERGE_USERS_USER_SOURCE_NAME'			=> 'Ursprungsanvändare. (Användarnamn)',
+	'MERGE_USERS_USER_SOURCE_ID'			=> 'Ursprungsanvändare. (Användar ID)',
+	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Inlägg, privata meddelanden, rättigheter, varningar, et cetera flyttas från denna användaren till målanvändaren. Gruppmedlemskap och användarinställningar kopieras.',
+ 
 
-	'MERGE_USERS_USER_TARGET'	=> 'Målanvändare',
+	'MERGE_USERS_USER_TARGET_NAME'	=> 'Målanvändare. (Användarnamn)',
+	'MERGE_USERS_USER_TARGET_ID'	=> 'Målanvändare. (Användar ID)',
+
+	'NO_SOURCE_USER'		=> 'Den eftersökta ursprungsanvändaren finns inte',
+	'NO_TARGET_USER'		=> 'Den eftersökta ursprungsanvändaren finns inte',
+
+	'BOTH_SOURCE_USER'		=> 'Fyll endast i ett käll-fällt.',
+	'BOTH_TARGET_USER'		=> 'Fyll endast i ett mål-fällt.',
 ));
