@@ -135,6 +135,7 @@ class datafile_3_0_11
 	*/
 	function get_schema_struct(&$schema_data)
 	{
-		// No schema changes 3.0.10 -> 3.0.11
+		// Add column
+		$schema_data['phpbb_profile_fields']['COLUMNS']['field_show_novalue'] = array('BOOL', 0);
 	}
 }
