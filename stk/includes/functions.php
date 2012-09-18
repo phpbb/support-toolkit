@@ -297,16 +297,22 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	// Which phpBB version is the user using
 	if (is_null($is_302))
 	{
-		// There are different ways of handling language paths due to the changes
-		// made in phpBB 3.0.3 (set custom lang path)
-		if (version_compare(PHPBB_VERSION_NUMBER, '3.0.2', '<='))
-		{
-			$is_302 = true;
-		}
-		else
-		{
-			$is_302 = false;
-		}
+		// Guess the version based upon behavior, at this point a version
+		// check isn't sufficient as there are cases where the version
+		// information isn't available or isn't reliable.
+		/*
+		 * // There are different ways of handling language paths due to the changes
+		 * // made in phpBB 3.0.3 (set custom lang path)
+		 * if (version_compare(PHPBB_VERSION_NUMBER, '3.0.2', '<='))
+		 * {
+		 *	$is_302 = true;
+		 * }
+		 * else
+		 * {
+		 *	$is_302 = false;
+		 * }
+		 */
+		$is_302 = (file_exists($user->lang_path . 'common.' . PHP_EXT)) ? true : false;
 	}
 
 	// Switch to the STK language dir
