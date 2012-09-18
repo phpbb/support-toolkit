@@ -390,8 +390,13 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					add_form_key('request_phpbb_version');
 					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
 
+					// Grep the latest phpBB version number
+					$info = $umil->version_check('version.phpbb.com', '/phpbb', '30x.txt'));
+					list(,, $_phpbb_version) = explode('.', $info[0]);
+
+					// Build the options
 					$version_options = '';
-					for ($i = 0; $i < 12; $i++)
+					for ($i = 0; $i <= $_phpbb_version; $i++)
 					{
 						$v = "3.0.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
