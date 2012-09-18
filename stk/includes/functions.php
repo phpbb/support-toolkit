@@ -356,7 +356,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
  */
 function perform_unauthed_quick_tasks($action, $submit = false)
 {
-	global $template, $user;
+	global $template, $umil, $user;
 
 	switch ($action)
 	{
