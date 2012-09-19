@@ -37,24 +37,6 @@ $template->set_custom_template(STK_ROOT_PATH . 'style', 'stk');
 // Work around for a bug in phpBB3.
 $user->theme['template_storedb'] = false;
 
-// Setup some variables
-$action = request_var('action', '');
-$submit = request_var('submit', false);
-
-// Try to determine the phpBB version number, we might need that down the road
-// `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
-if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
-{
-	define('PHPBB_VERSION_NUMBER', $config['version']);
-}
-// Cant correctly determine the version, let the user define it.
-// As the `perform_unauthed_quick_tasks` function is used skip this
-// if there is already an action to be performed.
-else if (empty($action))
-{
-	$action = 'request_phpbb_version';
-}
-
 // Perform some quick tasks here that don't require any authentication!
 perform_unauthed_quick_tasks($action, $submit);
 
