@@ -397,12 +397,12 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
 
 					// Grep the latest phpBB version number
-					$info = $umil->version_check('version.phpbb.com', '/phpbb', '30x.txt'));
+					$info = $umil->version_check('version.phpbb.com', '/phpbb', '30x.txt');
 					list(,, $_phpbb_version) = explode('.', $info[0]);
 
 					// Build the options
 					$version_options = '';
-					for ($i = 0; $i <= $_phpbb_version; $i++)
+					for ($i = $_phpbb_version; $i > -1; $i--)
 					{
 						$v = "3.0.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
