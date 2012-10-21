@@ -61,7 +61,7 @@ class resync_newly_registered
 	 */
 	function resync()
 	{
-		global $config;
+		global $config, $template;
 
 		// Get global variables
 		$last = request_var('last', 0); // The user_id of the last user in this batch
@@ -83,6 +83,7 @@ class resync_newly_registered
 			else
 			{
 				meta_refresh(3, append_sid(STK_ROOT_PATH, array('c' => 'user_group', 't' => 'resync_user_groups', 'step' => ++$step, 'submit' => true, 'rr' => $this->parent->run_rr, 'rnr' => $this->parent->run_rnr)));
+				$template->assign_var('U_BACK_TOOL', false);
 				trigger_error('RUN_RNR_NOT_FINISHED');
 			}
 		}
@@ -134,6 +135,7 @@ class resync_newly_registered
 
 		// Next batch
 		meta_refresh(3, append_sid(STK_ROOT_PATH, array('c' => 'usergroup', 't' => 'resync_user_groups', 'step' => $step, 'last' => array_pop($users), 'submit' => true, 'rr' => $this->parent->run_rr, 'rnr' => $this->parent->run_rnr)));
+		$template->assign_var('U_BACK_TOOL', false);
 		trigger_error('RUN_RNR_NOT_FINISHED');
 	}
 
