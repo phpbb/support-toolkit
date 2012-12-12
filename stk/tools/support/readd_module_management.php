@@ -79,7 +79,7 @@ class readd_module_management
 	*/
 	function run_tool()
 	{
-		global $db, $umil;
+		global $cache, $db, $umil;
 		
 		// Check all modules for existance
 		foreach ($this->check_modules as $module_data)
@@ -109,7 +109,8 @@ class readd_module_management
 				$db->sql_query($sql);
 			}
 		}
-		
+
+		$cache->destroy('_modules_acp');
 		trigger_error('READD_MODULE_MANAGEMENT_SUCCESS');
 	}
 }
