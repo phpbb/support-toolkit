@@ -217,7 +217,7 @@ class profile_list
 				'OCCUPATION'		=> $row['user_occ'],
 				'POSTS'				=> $row['user_posts'],
 				'SIGNATURE'			=> ((!isset($options[$display]) || $display == 'user_sig') && $row['user_sig']) ? generate_text_for_display($row['user_sig'], $row['user_sig_bbcode_uid'], $row['user_sig_bbcode_bitfield'], 7) : '',
-				'USERID'			=> $row['user_id'],
+				'USERID'			=> ($user->data['user_id'] == $row['user_id']) ? false : $row['user_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'VISITED'			=> ($row['user_lastvisit']) ? $user->format_date($row['user_lastvisit']) : 0,
 				'WARNINGS'			=> $row['user_warnings'],
