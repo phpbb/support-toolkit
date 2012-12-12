@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.6 ==
+* [Fix] Loaded hooks potentially break STK. (Bug #63274)
+
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
 * [Change] Make sure the phpBB version number is reliable.
