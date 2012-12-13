@@ -98,6 +98,12 @@ class database_cleaner_controller
 					$sql = 'DELETE FROM ' . USERS_TABLE . ' WHERE username_clean = \'' . $db->sql_escape($username_clean) . '\'';
 					$db->sql_query($sql);
 
+					// `$bot_ary` can be false, incase a bot has been removed in a certain phpBB version
+					if ($bot_ary === false)
+					{
+						continue;
+					}
+
 					$user_row = array(
 						'user_type'				=> USER_IGNORE,
 						'group_id'				=> $group_id,

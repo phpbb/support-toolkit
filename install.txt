@@ -6,7 +6,7 @@ installation or to solve commonly encountered problems with the software.
 
 == Version ==
 Support Toolkit 1.0.6
-Supported phpBB versions 3.0.0 - 3.0.11
+Supported phpBB versions 3.0.0 - 3.0.12-dev
 
 == Authors ==
 erikfrèrejean	(Erik Frèrejean)
@@ -46,6 +46,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.6 ==
+* [Add] Added support for phpBB 3.0.12
+
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
 * [Change] Make sure the phpBB version number is reliable.
