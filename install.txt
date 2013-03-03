@@ -9,7 +9,7 @@ Support Toolkit 1.0.6
 Supported phpBB versions 3.0.0 - 3.0.12-dev
 
 == Authors ==
-erikfrèrejean	(Erik Frèrejean)
+Erik Frèrejean	(Erik Frèrejean)
 EXreaction		(Nathan Guse)
 Noxwizard		(Patrick Webster)
 Phil			(Phil Crumm)
