@@ -11,6 +11,7 @@ Supported phpBB versions 3.0.0 - 3.0.11
 == Authors ==
 erikfrèrejean	(Erik Frèrejean)
 EXreaction		(Nathan Guse)
+Noxwizard		(Patrick Webster)
 Phil			(Phil Crumm)
 
 == Contributors ==
@@ -46,6 +47,9 @@ update!
 
 
 = Changelog =
+== Changes since 1.0.6 ==
+* [Add] New tool for restoring orphaned posts and topics
+
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
 * [Change] Make sure the phpBB version number is reliable.

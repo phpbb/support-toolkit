@@ -1,0 +1,150 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_EMPTY_TOPICS}</h1>
+
+<p>{L_EMPTY_TOPICS_EXPLAIN}</p>
+
+<!-- IF .topics -->
+<form id="stk_empty_topics" method="post" action="{U_EMPTY_TOPICS}">
+    <fieldset>
+	<legend>{L_EMPTY_TOPICS}</legend>
+	
+	<table cellspacing="1">
+		<tr>
+			<th width="70px">{L_TOPIC_ID}</th>
+			<th>{L_TOPIC_TITLE}</th>
+			<th width="250px">{L_AUTHOR}</th>
+			<th>{L_FORUM_NAME}</th>
+			<th width="125px" class="mark">{L_MARK}</th>
+		</tr>
+	<!-- BEGIN topics -->
+		<tr class="<!-- IF topics.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+			<td>{topics.TOPIC_ID}</td>
+			<td>{topics.TOPIC_TITLE}</td>
+			<td>{topics.USER_FULL}</td>
+			<td><a href="{topics.U_FORUM}">{topics.FORUM_NAME}</a></td>
+			<td class="mark"><input type="checkbox" name="topics[]" value="{topics.TOPIC_ID}" /></td>
+		</tr>
+	<!-- END topics -->
+	</table>
+	
+	<div class="rightside pagination">
+		<a href="#" onclick="marklist('stk_empty_topics', 'topics', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('stk_empty_topics', 'topics', false); return false;">{L_UNMARK_ALL}</a><br /><br />
+		<label for="det">{L_DELETE_EMPTY_TOPICS}:</label> <input type="submit" name="submit" id="det" class="button2" value="{L_DELETE}" />
+	</div>
+	</fieldset>
+
+    {S_HIDDEN_FIELDS}
+    {S_FORM_TOKEN}
+</form>
+<!-- ELSE -->
+<fieldset>
+    <legend>{L_EMPTY_TOPICS}</legend>
+	<dl>
+	    <dd><b>{L_NO_EMPTY_TOPICS}</b></dd>
+    </dl>
+</fieldset>
+<!-- ENDIF -->
+
+<br />
+
+<h1>{L_ORPHANED_POSTS}</h1>
+<p>{L_ORPHANED_POSTS_EXPLAIN}</p>
+
+<!-- IF .posts -->
+<form id="stk_orphan_posts" method="post" action="{U_ORPHANED_POSTS}">
+    <fieldset>
+	<legend>{L_ORPHANED_POSTS}</legend>
+	
+	<table cellspacing="1">
+		<tr>
+			<th width="70px">{L_POST_ID}</th>
+			<th>{L_POST_SUBJECT}</th>
+			<th width="250px">{L_AUTHOR}</th>
+			<th>{L_FORUM_NAME}</th>
+			<th width="125px">{L_NEW_TOPIC_ID}</th>
+			<th width="125px" class="mark">{L_MARK}</th>
+		</tr>
+	<!-- BEGIN posts -->
+		<tr class="<!-- IF posts.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+			<td>{posts.POST_ID}</td>
+			<td>{posts.POST_SUBJECT}<span style="float: right"><a href="{posts.SEARCH_URL}" target="_blank">{L_SEARCH}</a></span></td>
+			<td>{posts.USER_FULL}</td>
+			<td><a href="{posts.U_FORUM}">{posts.FORUM_NAME}</a></td>
+			<td><input type="text" name="posts[{posts.POST_ID}]" /></td>
+			<td class="mark"><input type="checkbox" name="posts_del[]" value="{posts.POST_ID}" /></td>
+		</tr>
+		<tr class="row3">
+			<td colspan="6">
+				{posts.POST_TEXT}
+			</td>
+		</tr>
+	<!-- END posts -->
+	</table>
+	
+	<div class="rightside pagination">
+		<input type="submit" name="reassign" class="button2" value="{L_REASSIGN}" />
+		<input type="submit" name="delete" class="button2" value="{L_DELETE}" />
+	</div>
+    </fieldset>
+
+    {S_HIDDEN_FIELDS}
+    {S_FORM_TOKEN}
+</form>
+<!-- ELSE -->
+<fieldset>
+    <legend>{L_ORPHANED_POSTS}</legend>
+	<dl>
+	    <dd><b>{L_NO_ORPHANED_POSTS}</b></dd>
+    </dl>
+</fieldset>
+<!-- ENDIF -->
+
+<br />
+
+<h1>{L_ORPHANED_SHADOWS}</h1>
+<p>{L_ORPHANED_SHADOWS_EXPLAIN}</p>
+
+<!-- IF .shadows -->
+<form id="stk_empty_topics" method="post" action="{U_ORPHANED_SHADOWS}">
+    <fieldset>
+	<legend>{L_ORPHANED_SHADOWS}</legend>
+	
+	<table cellspacing="1">
+		<tr>
+			<th width="70px">{L_TOPIC_ID}</th>
+			<th>{L_TOPIC_TITLE}</th>
+			<th width="250px">{L_AUTHOR}</th>
+			<th>{L_FORUM_NAME}</th>
+			<th width="125px" class="mark">{L_MARK}</th>
+		</tr>
+	<!-- BEGIN shadows -->
+		<tr class="<!-- IF shadows.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+			<td>{shadows.TOPIC_ID}</td>
+			<td>{shadows.TOPIC_TITLE}</td>
+			<td>{shadows.USER_FULL}</td>
+			<td><a href="{shadows.U_FORUM}">{shadows.FORUM_NAME}</a></td>
+			<td class="mark"><input type="checkbox" name="topics[]" value="{shadows.TOPIC_ID}" /></td>
+		</tr>
+	<!-- END shadows -->
+	</table>
+
+	<div class="rightside pagination">
+		<a href="#" onclick="marklist('stk_empty_topics', 'topics', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('stk_empty_topics', 'topics', false); return false;">{L_UNMARK_ALL}</a><br /><br />
+		<label for="dos">{L_DELETE_SHADOWS}:</label> <input type="submit" name="submit" id="dos" class="button2" value="{L_DELETE}" />
+	</div>
+    </fieldset>
+
+    {S_HIDDEN_FIELDS}
+    {S_FORM_TOKEN}
+</form>
+<!-- ELSE -->
+<fieldset>
+    <legend>{L_ORPHANED_SHADOWS}</legend>
+	<dl>
+	    <dd><b>{L_NO_ORPHANED_SHADOWS}</b></dd>
+    </dl>
+</fieldset>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->
