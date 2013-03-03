@@ -378,20 +378,20 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 		case 'request_phpbb_version' :
 			global $cache, $config;
 
-			if ($submit)
+			$_version_number = $cache->get('_stk_phpbb_version_number');
+			if ($_version_number === false)
 			{
-				if (!check_form_key('request_phpbb_version'))
+				if ($submit)
 				{
-					trigger_error('FORM_INVALID');
-				}
+					if (!check_form_key('request_phpbb_version'))
+					{
+						trigger_error('FORM_INVALID');
+					}
 
-				$_version_number = request_var('version_number', $config['version']);
-				$cache->put('_stk_phpbb_version_number', $_version_number);
-			}
-			else
-			{
-				$_version_number = $cache->get('_stk_phpbb_version_number');
-				if (false === $_version_number)
+					$_version_number = request_var('version_number', $config['version']);
+					$cache->put('_stk_phpbb_version_number', $_version_number);
+				}
+				else
 				{
 					add_form_key('request_phpbb_version');
 					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);

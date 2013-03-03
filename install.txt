@@ -54,6 +54,7 @@ update!
 * [Fix] Recreate Module Management tool does not purge the cache. (Bug #63272)
 * [Fix] Profile List allows deleting self/founder. (Bug #63268)
 * [Fix] Do not list empty usernames in the Restore Deleted User tool. (Bug #63339)
+* [Fix] Only request phpBB version once. Fixes invalid form submission errors.
 
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
