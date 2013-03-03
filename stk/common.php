@@ -47,6 +47,10 @@ else
 	require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
 }
 
+// phpBBs common.php registers hooks, these hooks tend to cause problems with the
+// support toolkit. Therefore we unset the `$phpbb_hook` object here
+unset($phpbb_hook);  
+
 // When not in the ERK we setup the user at this point
 // and load UML.
 if (!defined('IN_ERK'))
