@@ -50,6 +50,7 @@ update!
 == Changes since 1.0.6 ==
 * [Add] New tool for restoring orphaned posts and topics
 * [Fix] Loaded hooks potentially break STK. (Bug #63274)
+* [Fix] Recreate Module Management tool does not purge the cache. (Bug #63272)
 
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
