@@ -53,6 +53,15 @@ class restore_deleted_users
 		$users	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
+		// Make sure there's always a username
+		foreach ($users as $key => $data)
+		{
+			if (empty($data['post_username']))
+			{
+				unset($users[$key]);
+			}
+		}
+
 		// Nothing to do
 		if (empty($users))
 		{

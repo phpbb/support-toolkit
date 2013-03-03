@@ -48,11 +48,12 @@ update!
 
 = Changelog =
 == Changes since 1.0.6 ==
-* [Add] Added support for phpBB 3.0.12
-* [Add] New tool for restoring orphaned posts and topics
+* [Add] Added support for phpBB 3.0.12.
+* [Add] New tool for restoring orphaned posts and topics.
 * [Fix] Loaded hooks potentially break STK. (Bug #63274)
 * [Fix] Recreate Module Management tool does not purge the cache. (Bug #63272)
 * [Fix] Profile List allows deleting self/founder. (Bug #63268)
+* [Fix] Do not list empty usernames in the Restore Deleted User tool. (Bug #63339)
 
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
