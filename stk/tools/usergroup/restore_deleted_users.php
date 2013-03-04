@@ -53,38 +53,73 @@ class restore_deleted_users
 		$users	= $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
+		$damaged = array();
+
 		// Make sure there's always a username
 		foreach ($users as $key => $data)
 		{
-			if (empty($data['post_username']))
+			$cleaned_name = utf8_clean_string($data['post_username']);
+			if (empty($cleaned_name))
 			{
+				$damaged[] = $data['post_username'];
 				unset($users[$key]);
 			}
 		}
 
 		// Nothing to do
-		if (empty($users))
+		if (empty($users) && empty($damaged))
 		{
 			trigger_error('NO_DELETED_USERS');
 		}
 
-		// Build the output
-		$user_vars = array();
-		foreach ($users as $u)
+		$return = array('title'	=> $title);
+		if (!empty($users))
 		{
-			$user_vars["{$var}[{$u['post_id']}]"] = array('lang' => $u['post_username'], 'explain' => false, 'type' => $type);
+			// Build the output
+			$user_vars = array();
+			foreach ($users as $u)
+			{
+				$user_vars["{$var}[{$u['post_id']}]"] = array('lang' => $u['post_username'], 'explain' => false, 'type' => $type);
+			}
+
+			if (empty($conflicted))
+			{
+				// Add Mark/Unmark all
+				$template->assign_var('S_MARK_ALL', $var);
+			}
+
+			// Return usable data
+			$return = array_merge($return, array(
+				'vars'	=> array_merge(array(
+					'legend1'	=> 'SELECT_USERS',
+				), $user_vars),
+			));
 		}
 
-		// Add Mark/Unmark all
-		$template->assign_var('S_MARK_ALL', $var);
+		if (!empty($damaged) && empty($conflicted))
+		{
+			$sql = 'SELECT post_id
+				FROM ' . POSTS_TABLE . '
+				WHERE poster_id = ' . ANONYMOUS . '
+					AND ' . $db->sql_in_set('post_username', $damaged);
+			$result = $db->sql_query($sql);
 
-		// Return usable data
-		return array(
-			'title'	=> $title,
-			'vars'	=> array_merge(array(
-				'legend1'	=> 'SELECT_USERS',
-			), $user_vars),
-		);
+			$post_ids = array();
+			while($row = $db->sql_fetchrow($result))
+			{
+				$post_ids[] = (int)$row['post_id'];
+			}
+			
+			$return['vars']['legend2'] = 'DAMAGED_POSTS';
+			$return['vars']['damaged_posts'] = array('lang' => 'DAMAGED_POSTS', 'default' => implode(', ', $post_ids), 'explain' => true, 'type' => 'text:40:255');
+		}
+
+		if (!empty($users))
+		{
+			$return['vars']['legend3'] = 'SUBMIT';
+		}
+
+		return $return;
 	}
 
 	/**
@@ -99,6 +134,12 @@ class restore_deleted_users
 		if (!check_form_key('restore_deleted_users'))
 		{
 			$error[] = 'FORM_INVALID';
+			return;
+		}
+
+		if (!isset($_REQUEST['post']) && !isset($_REQUEST['conflicted']))
+		{
+			$error[] = 'NO_USER_SELECTED';
 			return;
 		}
 
@@ -124,20 +165,19 @@ class restore_deleted_users
 			}
 			$db->sql_freeresult($result);
 
-			// Get conflicted users
-			$selected_clean = $selected;
-			array_walk($selected_clean, 'utf8_clean_string');
+			$selected_clean = array_map('utf8_clean_string', $selected);
 			$non_conflicted = $this->_conflicted($selected_clean);
 
-			foreach ($non_conflicted as $user)
+			foreach ($non_conflicted as $post_id => $user)
 			{
-				$this->_add_user_and_update_data($user, $user);
+				$this->_add_user_and_update_data($selected[$post_id], $selected[$post_id]);
 			}
 
 			// If there are conflicted names kick the user back to step 1
+			$conflicted = array_diff($selected_clean, $non_conflicted);
 			if (!empty($conflicted))
 			{
-				$this->_redirect_conflicted($users, $conflicted);
+				$this->_redirect_conflicted($conflicted);
 			}
 		}
 		else
@@ -157,23 +197,20 @@ class restore_deleted_users
 			$db->sql_freeresult($result);
 
 			// Test for any conflicts
-			$conflicted_clean = $conflicted;
-			array_walk($conflicted_clean, 'utf8_clean_string');
-			$conflicted_names = $this->_conflicted($conflicted_clean);
-
-			// Go through the non-users and add them
-			$non_conflicted = array_diff($conflicted, $conflicted_names);
+			$conflicted_clean = array_map('utf8_clean_string', $conflicted);
+			$non_conflicted = $this->_conflicted($conflicted_clean);
 
 			// Fix all non conflicted
 			foreach ($non_conflicted as $post_id => $newname)
 			{
-				$this->_add_user_and_update_data($original[$post_id], $newname);
+				$this->_add_user_and_update_data($original[$post_id], $conflicted[$post_id]);
 			}
 
 			// Still conflicts?
+			$conflicted_names = array_diff($conflicted_clean, $non_conflicted);
 			if (sizeof($conflicted_names))
 			{
-				$this->_redirect_conflicted($conflicted, $conflicted_names);
+				$this->_redirect_conflicted($conflicted_names);
 			}
 		}
 
@@ -197,13 +234,13 @@ class restore_deleted_users
 		global $db;
 
 		$conflicted = array();
-		$sql = 'SELECT username
+		$sql = 'SELECT username_clean
 			FROM ' . USERS_TABLE . '
 			WHERE ' . $db->sql_in_set('username_clean', $users);
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$conflicted[] = $row['username'];
+			$conflicted[] = $row['username_clean'];
 		}
 		$db->sql_freeresult($result);
 
@@ -290,15 +327,9 @@ class restore_deleted_users
 	* @return	void
 	* @access	private
 	*/
-	function _redirect_conflicted($selected, $conflicted)
+	function _redirect_conflicted($conflicted)
 	{
-		$selected = array_flip($selected);
-		$conflicted_params = array();
-
-		foreach ($conflicted as $conflict)
-		{
-			$conflicted_params[] = $selected[$conflict];
-		}
+		$conflicted_params = array_flip($conflicted);
 		$conflicted_params = implode('&amp;conflicted%5B%5D', $conflicted_params);
 
 		redirect(append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'c=usergroup&amp;t=restore_deleted_users&amp;conflicted%5B%5D=' . $conflicted_params));

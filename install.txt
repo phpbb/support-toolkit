@@ -50,11 +50,13 @@ update!
 == Changes since 1.0.6 ==
 * [Add] Added support for phpBB 3.0.12.
 * [Add] New tool for restoring orphaned posts and topics.
+* [Change] Restore Deleted User tool now shows post IDs that cannot be restored due to inconsistencies.
 * [Fix] Loaded hooks potentially break STK. (Bug #63274)
 * [Fix] Recreate Module Management tool does not purge the cache. (Bug #63272)
 * [Fix] Profile List allows deleting self/founder. (Bug #63268)
 * [Fix] Do not list empty usernames in the Restore Deleted User tool. (Bug #63339)
 * [Fix] Only request phpBB version once. Fixes invalid form submission errors.
+* [Fix] Username conflict resolution in Restore Deleted User tool does not work.
 
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.

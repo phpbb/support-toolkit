@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'DAMAGED_POSTS'			=> 'Damaged Posts',
+	'DAMAGED_POSTS_EXPLAIN'	=> 'The following post IDs contain user information that is too damaged to restore. Please visit the <a href="https://www.phpbb.com/community/viewforum.php?f=46">support forums</a> to receive assistance to resolve this issue.',
+
 	'NO_DELETED_USERS'	=> 'There are no deleted users that can be restored',
 	'NO_USER_SELECTED'	=> 'No users selected!',
 
