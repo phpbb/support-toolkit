@@ -641,6 +641,27 @@ class database_cleaner_controller
 					}
 				}
 
+				// In versions prior to 3.0.10, the ACP used a hardcoded module ID of 1 for the version check module
+				// So the main module (General) needs to have its ID manually set 
+				if (version_compare(PHPBB_VERSION, '3.0.10', '<'))
+				{
+					$sql = 'SELECT module_id
+						FROM ' . MODULES_TABLE . "
+						WHERE module_langname = 'ACP_CAT_GENERAL'
+							AND module_class = 'acp'";
+					$result = $db->sql_query($sql);
+					$old_id = (int)$db->sql_fetchfield('module_id', false, $result);
+					$db->sql_freeresult($result);
+
+					// Update the GENERAL module first
+					$sql = 'UPDATE ' . MODULES_TABLE . " SET module_id = 1 WHERE module_id = $old_id";
+					$db->sql_query($sql);
+
+					// Update parent IDs
+					$sql = 'UPDATE ' . MODULES_TABLE . " SET parent_id = 1 WHERE parent_id = $old_id";
+					$db->sql_query($sql);
+				}
+
 				$_module->remove_cache_file();
 			}
 		}
