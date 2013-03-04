@@ -50,6 +50,7 @@ update!
 == Changes since 1.0.6 ==
 * [Add] Added support for phpBB 3.0.12.
 * [Add] New tool for restoring orphaned posts and topics.
+* [Add] New tool for purging sessions. (Bug #63142)
 * [Change] Restore Deleted User tool now shows post IDs that cannot be restored due to inconsistencies.
 * [Fix] Loaded hooks potentially break STK. (Bug #63274)
 * [Fix] Recreate Module Management tool does not purge the cache. (Bug #63272)
