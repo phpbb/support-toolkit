@@ -670,8 +670,8 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 
 			if (strpos($errfile, 'cache') === false && strpos($errfile, 'template.') === false)
 			{
-				$errfile = phpbb_filter_root_path($errfile);
-				$msg_text = phpbb_filter_root_path($msg_text);
+				$errfile = stk_filter_root_path($errfile);
+				$msg_text = stk_filter_root_path($msg_text);
 				$error_name = ($errno === E_WARNING) ? 'PHP Warning' : 'PHP Notice';
 				echo '<b>[phpBB Debug] ' . $error_name . '</b>: in file <b>' . $errfile . '</b> on line <b>' . $errline . '</b>: <b>' . $msg_text . '</b><br />' . "\n";
 
@@ -893,30 +893,27 @@ if (!function_exists('adm_back_link'))
 	}
 }
 
-if (!function_exists('phpbb_filter_root_path'))
+/**
+* Removes absolute path to phpBB root directory from error messages
+* and converts backslashes to forward slashes.
+*
+* @param string $errfile	Absolute file path
+*							(e.g. /var/www/phpbb3/phpBB/includes/functions.php)
+*							Please note that if $errfile is outside of the phpBB root,
+*							the root path will not be found and can not be filtered.
+* @return string			Relative file path
+*							(e.g. /includes/functions.php)
+*/
+function stk_filter_root_path($errfile)
 {
-	/**
-	* Removes absolute path to phpBB root directory from error messages
-	* and converts backslashes to forward slashes.
-	*
-	* @param string $errfile	Absolute file path
-	*							(e.g. /var/www/phpbb3/phpBB/includes/functions.php)
-	*							Please note that if $errfile is outside of the phpBB root,
-	*							the root path will not be found and can not be filtered.
-	* @return string			Relative file path
-	*							(e.g. /includes/functions.php)
-	*/
-	function phpbb_filter_root_path($errfile)
+	static $root_path;
+
+	if (empty($root_path))
 	{
-		static $root_path;
-
-		if (empty($root_path))
-		{
-			$root_path = phpbb_realpath(dirname(__FILE__) . '/../');
-		}
-
-		return str_replace(array($root_path, '\\'), array('[ROOT]', '/'), $errfile);
+		$root_path = phpbb_realpath(dirname(__FILE__) . '/../');
 	}
+
+	return str_replace(array($root_path, '\\'), array('[ROOT]', '/'), $errfile);
 }
 
 // php.net, laurynas dot butkus at gmail dot com, http://us.php.net/manual/en/function.html-entity-decode.php#75153
