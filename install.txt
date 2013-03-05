@@ -59,6 +59,7 @@ update!
 * [Fix] Only request phpBB version once. Fixes invalid form submission errors.
 * [Fix] Username conflict resolution in Restore Deleted User tool does not work.
 * [Fix] Hardcoded module ID in older phpBB versions broken by Database Cleaner. (Bug #62863)
+* [Fix] Update UMIL to 1.0.5.
 
 == Changes since 1.0.6-rc1 ==
 * [Change] Some small tweaks to the error handler.
