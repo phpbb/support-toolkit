@@ -45,7 +45,8 @@ class restore_deleted_users
 			$var = 'conflicted';
 			$sql = 'SELECT MAX(post_id) AS post_id, post_username
 				FROM ' . POSTS_TABLE . '
-				WHERE ' . $db->sql_in_set('post_id', $conflicted);
+				WHERE ' . $db->sql_in_set('post_id', $conflicted) . '
+					GROUP BY post_username';
 			$title = 'RESTORE_DELETED_USERS_CONFLICT';
 			$type = 'text:40:255';
 		}
