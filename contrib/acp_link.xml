@@ -44,12 +44,12 @@
 		</author>
 	</author-group>
 
-	<mod-version>1.0.6</mod-version>
+	<mod-version>1.0.7-RC1</mod-version>
 
 	<installation>
 		<level>easy</level>
 		<time>60</time>
-		<target-version>3.0.11</target-version>
+		<target-version>3.0.12</target-version>
 	</installation>
 </header>
 
