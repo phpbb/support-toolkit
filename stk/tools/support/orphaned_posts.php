@@ -25,29 +25,45 @@ class orphaned_posts
 		//
 		// Empty topics
 		//
-		$sql = 'SELECT t.topic_id, t.topic_title, t.topic_poster, t.forum_id, count(p.post_id) as num_posts, f.forum_name, u.user_id, u.username, u.user_colour
+		$sql = 'SELECT t.topic_id
 			FROM ' . TOPICS_TABLE . ' t
 			LEFT JOIN ' . POSTS_TABLE . ' p ON (p.topic_id = t.topic_id)
-			JOIN ' . USERS_TABLE . ' u ON (u.user_id = topic_poster)
-			JOIN ' . FORUMS_TABLE . ' f ON (f.forum_id = t.forum_id)
 			WHERE t.topic_moved_id = 0
 			GROUP BY t.topic_id
-			HAVING num_posts = 0';
+			HAVING COUNT(p.post_id) = 0';
 		$result = $db->sql_query($sql);
 
+		$topic_ids = array();
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$template->assign_block_vars('topics', array(
-				'FORUM_ID'		=> $row['forum_id'],
-				'FORUM_NAME'	=> $row['forum_name'],
-				'U_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']),
-				'TOPIC_ID'		=> $row['topic_id'],
-				'TOPIC_TITLE'	=> $row['topic_title'],
-				'USER_FULL'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'USER_ID'		=> $row['user_id'],
-			));
+			$topic_ids[] = (int) $row['topic_id'];
 		}
 		$db->sql_freeresult($result);
+
+		if (sizeof($topic_ids))
+		{
+			// Fetch information related to the topics
+			$sql = 'SELECT t.topic_id, t.topic_title, t.topic_poster, t.forum_id, f.forum_name, u.user_id, u.username, u.user_colour
+				FROM ' . TOPICS_TABLE . ' t
+				JOIN ' . USERS_TABLE . ' u ON (u.user_id = topic_poster)
+				JOIN ' . FORUMS_TABLE . ' f ON (f.forum_id = t.forum_id)
+				WHERE ' . $db->sql_in_set('t.topic_id', $topic_ids);
+			$result = $db->sql_query($sql);
+
+			while ($row = $db->sql_fetchrow($result))
+			{
+				$template->assign_block_vars('topics', array(
+					'FORUM_ID'		=> $row['forum_id'],
+					'FORUM_NAME'	=> $row['forum_name'],
+					'U_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']),
+					'TOPIC_ID'		=> $row['topic_id'],
+					'TOPIC_TITLE'	=> $row['topic_title'],
+					'USER_FULL'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+					'USER_ID'		=> $row['user_id'],
+				));
+			}
+			$db->sql_freeresult($result);
+		}
 
 		//
 		// Orphaned posts
