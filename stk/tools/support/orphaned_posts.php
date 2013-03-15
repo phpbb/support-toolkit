@@ -188,6 +188,23 @@ class orphaned_posts
 						trigger_error('NO_TOPIC_IDS');
 					}
 
+					// Make sure the specified topic IDs exist
+					$sql = 'SELECT topic_id FROM ' . TOPICS_TABLE . ' WHERE ' . $db->sql_in_set('topic_id', $topic_ids);
+					$result = $db->sql_query($sql);
+
+					$existing_topics = array();
+					while ($row = $db->sql_fetchrow($result))
+					{
+						$existing_topics[] = (int) $row['topic_id'];
+					}
+
+					$missing_topics = array_diff($topic_ids, $existing_topics);
+					if (sizeof($missing_topics))
+					{
+						trigger_error(sprintf($user->lang['NONEXISTENT_TOPIC_IDS'], implode(', ', $missing_topics)));
+					}
+
+					// Update the topics with their new IDs
 					foreach ($post_map as $post_id => $topic_id)
 					{
 						$sql = 'UPDATE ' . POSTS_TABLE . ' SET topic_id = ' . (int) $topic_id . ' WHERE post_id = ' . (int) $post_id;
