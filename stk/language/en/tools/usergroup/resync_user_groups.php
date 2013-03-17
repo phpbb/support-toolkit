@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_USER_GROUPS'			=> 'Resynchronise user groups',
-	'RESYNC_USER_GROUPS_EXPLAIN'	=> 'This tool is designed to check whether all users are part of the correct default groups <em>(Registered Users and Newly Registered Users)</em>.',
+	'RESYNC_USER_GROUPS_EXPLAIN'	=> 'This tool is designed to check whether all users are part of the correct default groups <em>(Registered Users, Registered COPPA Users and Newly Registered Users)</em>.',
 	'RESYNC_USER_GROUPS_NO_RUN'		=> 'All groups seem to be up to date!',
 	'RESYNC_USER_GROUPS_SETTINGS'	=> 'Resynchronise options',
 	'RUN_BOTH_FINISHED'				=> 'All user groups have been resynchronised successfully!',
