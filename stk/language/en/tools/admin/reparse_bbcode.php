@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	),
 	'REPARSE_IDS_INVALID'			=> 'The IDs you submitted were not valid; please ensure that post IDs are listed as a comma separated list (e.g. 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Reparse Specific Posts',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'To reparse specific posts only, specify post IDs in a comma-separated list.',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'To reparse specific posts only, specify post IDs in a comma-separated list (e.g. 1,2,3,5,8,13).',
 	'REPARSE_PM_IDS'				=> 'Reparse Specific PMs',
 	'REPARSE_PM_IDS_EXPLAIN'		=> 'To reparse specific PMs only, specifiy PM IDs in a comma-separated list (e.g. 1,2,3,5,8,13).',
 ));
