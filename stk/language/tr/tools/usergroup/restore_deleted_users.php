@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'DAMAGED_POSTS'			=> 'Hasarlı Mesajlar',
+	'DAMAGED_POSTS_EXPLAIN'	=> 'Aşağıdaki kullanıcı bilgisi içeren mesaj ID numaraları geri getirmek için çok fazla hasarlı. Lütfen bu sorunun nasıl çözüleceğine dair yardım almak için <a href="https://www.phpbb.com/community/viewforum.php?f=46">destek forumlarını</a> ziyaret edin.',
+
 	'NO_DELETED_USERS'	=> 'Geri getirilebilecek hiç bir silinmiş kullanıcı yok',
 	'NO_USER_SELECTED'	=> 'Hiç bir kullanıcı seçilmedi!',
 
