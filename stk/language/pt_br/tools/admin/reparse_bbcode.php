@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	),
 	'REPARSE_IDS_INVALID'			=> 'Os IDs que você enviou eram inválidos; por favor, certifique-se que os IDs das mensagens estejam listados como em uma lista separados por vírgulas (exemplo: 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Re-analisar Mensagens Específicas',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'Para re-analisar apenas mensagens específicas, especifique os IDs das mensagens em uma separada por vírgulas.',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Para re-analisar apenas mensagens específicas, especifique os IDs das mensagens em uma separada por vírgulas (exemplo: 1,2,3,5,8,13).',
 	'REPARSE_PM_IDS'				=> 'Re-analisar MPs Específicas',
 	'REPARSE_PM_IDS_EXPLAIN'		=> 'Para re-analisar apenas MPs específicas, especifique os IDs das MPs em uma separada por vírgulas (exemplo: 1,2,3,5,8,13).',
 ));
