@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'DAMAGED_POSTS'			=> 'Mensagens danificadas',
+	'DAMAGED_POSTS_EXPLAIN'	=> 'As seguintes IDs das mensagens contém informação de usuário que estão muito danificado para restaurar. Por favor visite o <a href="https://www.phpbb.com/community/viewforum.php?f=46">fórum de suporte</a> ou o <a href="http://www.suportephpbb.com.br/">Suporte phpBB</a> para obter ajuda para resolver este problema.',
+
 	'NO_DELETED_USERS'	=> 'Não há usuários excluídos que possam ser restaurados',
 	'NO_USER_SELECTED'	=> 'Nenhum usuário selecionado!',
 
