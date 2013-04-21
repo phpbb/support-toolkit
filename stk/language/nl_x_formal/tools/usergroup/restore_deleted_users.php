@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Restore Delted Users
-* @version $Id: restore_deleted_users.php 327 2010-10-17 21:01:58Z Raimon $
-* @copyright (c) 2009 phpBB Group
+ * @version $Id$
+ * @copyright (c) 2009 phpBB Group , 2013 www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
