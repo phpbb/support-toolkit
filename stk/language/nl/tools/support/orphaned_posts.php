@@ -42,13 +42,13 @@ $lang = array_merge($lang, array(
 	'FORUM_NAME'				=> 'Forum Naam',
 	'NEW_TOPIC_ID'				=> 'Nieuw Topic ID',
 	'POST_ID'					=> 'Bericht ID',
-	'TOPIC_ID'					=> 'Topic ID',
+	'TOPIC_ID'					=> 'Onderwerp ID',
 
-	'DELETE_EMPTY_TOPICS'		=> 'Verwijder de geselecteerde topics. (Dit kan niet ongedaan worden gemaakt!)',
-	'EMPTY_TOPICS'				=> 'Verwijder Topics',
-	'EMPTY_TOPICS_EXPLAIN'		=> 'Berichtloze topics.',
-	'NO_EMPTY_TOPICS'			=> 'Geen berichtloze topics gevonden',
-	'NO_TOPICS_SELECTED'		=> 'Geen topics geselecteerd',
+	'DELETE_EMPTY_TOPICS'		=> 'Verwijder de geselecteerde onderwerpen. (Dit kan niet ongedaan worden gemaakt!)',
+	'EMPTY_TOPICS'				=> 'Verwijder onderwerpen',
+	'EMPTY_TOPICS_EXPLAIN'		=> 'Berichtloze onderwerpen.',
+	'NO_EMPTY_TOPICS'			=> 'Geen berichtloze onderwerpen gevonden',
+	'NO_TOPICS_SELECTED'		=> 'Geen onderwerpen geselecteerd',
 
 	'ORPHANED_POSTS'			=> 'Niet toegewezen berichten',
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Dit zijn berichten welke niet toegewezen zijn aan een topic. Selecteer een topic ID om de berichten te verplaatsen naar het geselecteerde topic.',
@@ -57,12 +57,12 @@ $lang = array_merge($lang, array(
 	'NONEXISTENT_TOPIC_IDS'		=> 'Het volgende doel topic ID bestaat niet: %s.<br />Controleer de opgegeven topic IDs.',
 	'REASSIGN'					=> 'Verplaats',
 
-	'DELETE_SHADOWS'			=> 'Verwijder alle geselecteerde gekopieerde topics. (Kan niet ongedaan worden gemaakt!)',
-	'ORPHANED_SHADOWS'			=> 'Niet toegewezen Topics',
-	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Dit zijn niet toegewezen topics waarvan het doeltopicc niet langer bestaat.',
-	'NO_ORPHANED_SHADOWS'		=> 'Geen berichtloze gekopieerde topics gevonden',
+	'DELETE_SHADOWS'			=> 'Verwijder alle geselecteerde gekopieerde onderwerpen. (Kan niet ongedaan worden gemaakt!)',
+	'ORPHANED_SHADOWS'			=> 'Niet toegewezen onderwerpen',
+	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Dit zijn niet toegewezen onderwerpen waarvan het doelonderwerp niet langer bestaat.',
+	'NO_ORPHANED_SHADOWS'		=> 'Geen berichtloze gekopieerde onderwerpen gevonden',
 
 	'POSTS_DELETED'				=> '%d berichten verwijderd',
 	'POSTS_REASSIGNED'			=> '%d berichten verplaatst',
-	'TOPICS_DELETED'			=> '%d topics verwijderd',
+	'TOPICS_DELETED'			=> '%d onderwerpen verwijderd',
 ));

@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	),
 	'REPARSE_IDS_INVALID'			=> 'De door jou opgegeven IDs zijn niet geldig; zorg er voor dat bericht IDs worden genoteerd als een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Herpars specifieke berichten',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'Om enkel de specifieke berichten te herparsen, moet je de bericht IDs opgeven in een door komma’s gescheiden lijst.',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Om enkel de specifieke berichten te herparsen, moet je de bericht IDs opgeven in een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 	'REPARSE_PM_IDS'				=> 'Herpars specifieke privéberichten',
-	'REPARSE_PM_IDS_EXPLAIN'		=> 'Om enkel de specifieke privéberichten te herparsen, moet je de privébericht IDs opgeven in een door komma’s gescheiden lijst (bijv 1,2,3,5,8,13).',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'Om enkel de specifieke privéberichten te herparsen, moet je de privébericht IDs opgeven in een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 ));

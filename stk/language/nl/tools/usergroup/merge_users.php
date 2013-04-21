@@ -54,7 +54,7 @@ $lang = array_merge($lang, array(
 
 	'MERGE_USERS_USER_SOURCE_NAME'			=> 'Brongebruiker. (Gebruikersnaam)',
 	'MERGE_USERS_USER_SOURCE_ID'			=> 'Brongebruiker. (Gebruikers-ID)',
-	'MERGE_USERS_USER_SOURCE_EXPLAIN'	=> 'Berichten, privéberichten, permissies, waarschuwingen, etc. zijn gekopieerd naar de doelgebruiker. Groepslidmaatschappen en instellingen zijn gekopieerd.',
+	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Berichten, privéberichten, permissies, waarschuwingen, etc. zijn gekopieerd naar de doelgebruiker. Groepslidmaatschappen en instellingen zijn gekopieerd.',
 
 	'MERGE_USERS_USER_TARGET_NAME'		=> 'Doelgebruiker. (Gebruikersnaam)',
 	'MERGE_USERS_USER_TARGET_ID'		=> 'Doelgebruiker. (Gebruikers-ID)',
