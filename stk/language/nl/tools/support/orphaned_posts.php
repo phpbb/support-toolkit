@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'AUTHOR'					=> 'Auteur',
 	'FORUM_NAME'				=> 'Forum Naam',
-	'NEW_TOPIC_ID'				=> 'Nieuw Topic ID',
+	'NEW_TOPIC_ID'				=> 'Nieuw onderwerp ID',
 	'POST_ID'					=> 'Bericht ID',
 	'TOPIC_ID'					=> 'Onderwerp ID',
 
@@ -53,8 +53,8 @@ $lang = array_merge($lang, array(
 	'ORPHANED_POSTS'			=> 'Niet toegewezen berichten',
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Dit zijn berichten welke niet toegewezen zijn aan een topic. Selecteer een topic ID om de berichten te verplaatsen naar het geselecteerde topic.',
 	'NO_ORPHANED_POSTS'			=> 'Geen niet toegewezen berichten gevonden',
-	'NO_TOPIC_IDS'				=> 'Geen topic IDs opgegeven',
-	'NONEXISTENT_TOPIC_IDS'		=> 'Het volgende doel topic ID bestaat niet: %s.<br />Controleer de opgegeven topic IDs.',
+	'NO_TOPIC_IDS'				=> 'Geen onderwerp IDs opgegeven',
+	'NONEXISTENT_TOPIC_IDS'		=> 'Het volgende doel onderwerp ID bestaat niet: %s.<br />Controleer de opgegeven onderwerp IDs.',
 	'REASSIGN'					=> 'Verplaats',
 
 	'DELETE_SHADOWS'			=> 'Verwijder alle geselecteerde gekopieerde onderwerpen. (Kan niet ongedaan worden gemaakt!)',
