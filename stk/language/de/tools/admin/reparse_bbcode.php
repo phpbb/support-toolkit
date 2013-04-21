@@ -1,13 +1,12 @@
 <?php
 /**
 *
-* @package Support Toolkit - Reparse BBCode
-* @version $Id: reparse_bbcode.php 545 2011-01-30 19:20:59Z philippk $
+* @package Support Toolkit - Reparse BBCode [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/AUTHORS und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
 *
 */
 
@@ -19,9 +18,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();

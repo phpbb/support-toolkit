@@ -1,12 +1,13 @@
 <?php
 /**
 *
-* @package Support Toolkit - MySQL Upgrader
+* @package Support Toolkit - MySQL Upgrader [Deutsch — Sie]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/AUTHORS und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+*
 */
 
 /**
