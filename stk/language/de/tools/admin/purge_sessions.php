@@ -1,17 +1,11 @@
 <?php
 /**
 *
-* @package Support Toolkit - Tutorial
-* @version $Id: tutorial.php 544 2011-01-30 16:52:26Z philippk $
+* @package Support Toolkit - Purge Sessions
+* @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
-*/
-
-/*
-* This will be a tutorial page for how to build a new tool to be used with the Support Toolkit.
-*
-* Before you ask why this tool does not show in the Tools list in the Support Toolkit, that is because the Support Toolkit is setup to ignore the file named tutorial.php.
 */
 
 /**
@@ -22,9 +16,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -47,6 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'TUTORIAL'      => 'Das ist ein Tutorial',
-	'TUTORIAL_EXPLAIN'  => 'Das ist eine Beschreibung für das Tutorial', 
+	'PURGE_SESSIONS'			=> 'Sitzungsdaten löschen',
+	'PURGE_SESSIONS_COMPLETE'	=> 'Die Sitzungsdaten wurden erfolgreich gelöscht.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Bist du dir sicher, dass du alle Sitzungsdaten löschen möchtest? Dies wird alle Benutzer abmelden.',
 ));
