@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+    'DAMAGED_POSTS'							=> 'Beschadigde berichten',
+	'DAMAGED_POSTS_EXPLAIN'					=> 'De volgende bericht IDs kunnen niet worden hersteld. Bezoek de <a href="https://www.phpbb.com/community/viewforum.php?f=46">support forums</a> om hulp te krijgen om dit probleem op te lossen.',
+
 	'NO_DELETED_USERS'						=> 'Er zijn geen verwijderd gebruikers die hersteld kunnen worden',
 	'NO_USER_SELECTED'						=> 'Geen gebruikers geselecteerd!',
 
