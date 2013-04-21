@@ -1,12 +1,14 @@
 <?php
 /**
- *
- * @package Support Toolkit
- * @version $Id$
- * @copyright (c) 2010 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- */
+*
+* @package Support Toolkit - Purge Cache [Deutsch — Du]
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+*
+*/
 
 /**
  * @ignore

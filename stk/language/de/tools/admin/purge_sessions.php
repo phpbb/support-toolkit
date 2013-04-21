@@ -1,10 +1,12 @@
 <?php
 /**
 *
-* @package Support Toolkit - Purge Sessions
-* @version $Id$
+* @package Support Toolkit - Purge Cache [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
 *
 */
 
