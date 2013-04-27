@@ -1,16 +1,19 @@
 <?php
 /**
- *
- * @package Support Toolkit - Resync Avatars
- * @version $Id$
- * @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
- *
- */
+*
+* [french]
+*
+* @package Support Toolkit - Resync Avatars
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -34,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
