@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Purge Cache [Deutsch — Du]
+* @package Support Toolkit - Purge Sessions [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -42,5 +42,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'PURGE_SESSIONS'			=> 'Sitzungsdaten löschen',
 	'PURGE_SESSIONS_COMPLETE'	=> 'Die Sitzungsdaten wurden erfolgreich gelöscht.',
-	'PURGE_SESSIONS_CONFIRM'	=> 'Bist du dir sicher, dass du alle Sitzungsdaten löschen möchtest? Dies wird alle Benutzer abmelden.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Bist du sicher, dass du alle Sitzungsdaten löschen möchtest? Dadurch werden alle Benutzer ausgeloggt.',
 ));

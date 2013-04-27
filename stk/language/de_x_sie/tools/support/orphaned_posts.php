@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Purge Cache [Deutsch — Du]
+* @package Support Toolkit - Orphaned Posts [Deutsch — Sie]
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -42,24 +42,24 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'AUTHOR'					=> 'Autor',
 	'FORUM_NAME'				=> 'Name des Forums',
-	'NEW_TOPIC_ID'				=> 'Neues Thema-ID',
+	'NEW_TOPIC_ID'				=> 'Neue Themen-ID',
 	'POST_ID'					=> 'Beitrags-ID',
-	'TOPIC_ID'					=> 'Thema-ID',
+	'TOPIC_ID'					=> 'Themen-ID',
 
-	'DELETE_EMPTY_TOPICS'		=> 'Per Klick werden alle ausgewählten Themen gelöscht. (Kann nicht rückgängig gemacht werden!)',
+	'DELETE_EMPTY_TOPICS'		=> 'Per Klick werden alle ausgewählten Themen gelöscht. (Dieser Schritt kann nicht rückgängig gemacht werden!)',
 	'EMPTY_TOPICS'				=> 'Leere Themen',
-	'EMPTY_TOPICS_EXPLAIN'		=> 'Das sind Themen, denen keine Beiträge zugeordnet sind.',
+	'EMPTY_TOPICS_EXPLAIN'		=> 'Dies sind Themen, denen keine Beiträge zugeordnet sind',
 	'NO_EMPTY_TOPICS'			=> 'Keine leeren Themen gefunden',
 	'NO_TOPICS_SELECTED'		=> 'Keine Themen ausgewählt',
 
 	'ORPHANED_POSTS'			=> 'Verwaiste Beiträge',
-	'ORPHANED_POSTS_EXPLAIN'	=> 'Das sind Beiträge, die keinem Themen zugeordnet sind.  Geben Sie eine neue Themen-ID ein um diese Beiträge mit dem Thema zu verbinden.',
+	'ORPHANED_POSTS_EXPLAIN'	=> 'Das sind Beiträge, die keinen Themen zugeordnet sind. Geben Sie eine neue Themen-ID ein, um diese Beiträge mit dem Thema zu verbinden.',
 	'NO_ORPHANED_POSTS'			=> 'Keine verwaisten Beiträge gefunden',
 	'NO_TOPIC_IDS'				=> 'Keine Themen-ID angegeben',
 	'NONEXISTENT_TOPIC_IDS'		=> 'Die folgenden Ziel Themen-IDs existieren nicht: %s.<br />Bitte überprüfen Sie die angegeben Themen-IDs.',
 	'REASSIGN'					=> 'Neu zuordnen',
 
-	'DELETE_SHADOWS'			=> 'Per Klick werden alle ausgewählten Links zu verschobenen Themen gelöscht. (Kann nicht rückgängig gemacht werden!)',
+	'DELETE_SHADOWS'			=> 'Per Klick werden alle ausgewählten Links zu verschobenen Themen gelöscht. (Dieser Schritt kann nicht rückgängig gemacht werden!)',
 	'ORPHANED_SHADOWS'			=> 'Verwaiste Links zu verschobenen Themen',
 	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Das sind Links zu verschobenen Themen, die nicht mehr existieren.',
 	'NO_ORPHANED_SHADOWS'		=> 'Keine verwaisten Links zu verschobenen Themen gefunden',
