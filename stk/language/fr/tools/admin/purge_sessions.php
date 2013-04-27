@@ -3,18 +3,12 @@
 *
 * [french]
 *
-* @package Support Toolkit - Tutorial
-* @version $Id:	papicx	1.0.6	30/12/2012	10h22	$
+* @package Support Toolkit - Purge Sessions
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
 *
-*/
-
-/*
-* This will be a tutorial page for how to build a new tool to be used with the Support Toolkit.
-*
-* Before you ask why this tool does not show in the Tools list in the Support Toolkit, that is because the Support Toolkit is setup to ignore the file named tutorial.php.
 */
 
 /**
@@ -25,9 +19,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -46,10 +37,11 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'TUTORIAL'			=> 'Ceci est un didacticiel',
-	'TUTORIAL_EXPLAIN'	=> 'Ceci est une explication du didacticiel',
+	'PURGE_SESSIONS'			=> 'Purger les Sessions',
+	'PURGE_SESSIONS_COMPLETE'	=> 'Les sessions ont été purgées.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Cet outil supprimera toutes les sessions en cours et déconnectera tous les utilisateurs. Êtes-vous sûr de vouloir continuer ?',
 ));

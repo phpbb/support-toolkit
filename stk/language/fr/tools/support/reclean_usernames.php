@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Reclean Usernames
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -37,12 +40,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'RECLEAN_USERNAMES'					=> 'Renettoyer les noms d’utilisateurs',
-	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms d’utilisateurs ont été renettoyés.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir renettoyer tous les noms d’utilisateurs ?',
-	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de renettoyage des noms d’utilisateurs est en cours d’exécution… Veuillez ne pas interrompre cette opération.',
+	'RECLEAN_USERNAMES'					=> 'Re-nettoyer les noms des utilisateurs',
+	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms des utilisateurs ont été re-nettoyés.',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir re-nettoyer tous les noms des utilisateurs ?',
+	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de re-nettoyage des noms des utilisateurs est en cours d’exécution… Veuillez ne pas interrompre cette opération.',
 ));

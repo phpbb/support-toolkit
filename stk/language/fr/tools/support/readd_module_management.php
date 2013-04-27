@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Readd Module Management
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -34,11 +37,11 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'READD_MODULE_MANAGEMENT'			=> 'Recréer les modules de la gestion du module',
-	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir recréer dans le PCA les modules de la gestion du module ?',
+	'READD_MODULE_MANAGEMENT'			=> 'Recréer les modules de la « Gestion de modules »',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir recréer dans le « Panneau d’administration » les modules de la « Gestion de modules » ?',
 	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'Les modules ont été recréés.',
 ));
