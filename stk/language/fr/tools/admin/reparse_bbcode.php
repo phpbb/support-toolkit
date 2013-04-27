@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Reparse BBCode
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -37,13 +40,13 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// í ª ì î Ö
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Réanalyser tous les BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Si cette option est activée, la réanalyse du BBCode réanalysera tout le contenu sur le forum. Par défaut, l’outil rénalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.',
-	'REPARSE_BBCODE'			=> 'Réanalyser le BBCode',
+	'REPARSE_ALL_EXPLAIN'		=> 'Si cette option est activée, la réanalyse du BBCode vérifiera tout le contenu des forums. Par défaut, l’outil réanalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.', 
+	'REPARSE_BBCODE'			=> 'Réparer le BBCode',
 	'REPARSE_BBCODE_COMPLETE'	=> 'Les BBCodes ont été réanalysés.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
 	'REPARSE_BBCODE_PROGRESS'	=> 'Étape %1$d terminée. Début de l’étape %2$d dans un court instant…',
@@ -51,9 +54,9 @@ $lang = array_merge($lang, array(
 		1	=> 'Réanalyse des messages terminée, début de la réanalyse des messages privés.',
 		2	=> 'Réanalyse des messages privés terminée, début de la réanalyse des signatures.',
 	),
-	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyées ne sont pas valides ; veuillez vous assurer que chaque ID soit séparée par une virgule (par exemple, 1,2,3,5,8,13).',
+	'REPARSE_IDS_INVALID'			=> 'Les IDs que vous avez envoyés ne sont pas valides. Veuillez vous assurer que chaque ID soit séparé par une virgule (exemple : 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Réanalyser les messages spécifiques',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages spécifiques. Chaque ID doit être séparée par une virgule.',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages spécifiques. Chaque ID doit être séparé par une virgule (exemple : 1,2,3,5,8,13).',
 	'REPARSE_PM_IDS'				=> 'Réanalyser les messages privés spécifiques',
-	'REPARSE_PM_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages privés spécifiques. Chaque ID doit être séparée par une virgule (par exemple, 1,2,3,5,8,13).',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'Réanalyse seulement les messages privés spécifiques. Chaque ID doit être séparé par une virgule (exemple : 1,2,3,5,8,13).',
 ));

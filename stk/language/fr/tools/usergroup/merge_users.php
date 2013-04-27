@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Merge Users
-* @version $Id$
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
 * @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -34,25 +37,33 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'MERGE_USERS'						=> 'Fusionner les utilisateurs',
-	'MERGE_USERS_EXPLAIN'				=> 'Cet outil vous permet de déplacer les réglages d’un compte d’utilisateur dans un autre compte. Les réglages incluent les permissions, les pièces jointes, les bannissements, les favoris, les brouillons, les adhésions aux groupes, aux forums, aux sujets et aux messages, les historiques, les votes aux sondages, les messages, les messages privés, les rapports, des sujets, les avertissements, les amis et les ignorés.',
+	'MERGE_USERS_EXPLAIN'				=> 'Cet outil vous permet de déplacer les réglages d’un compte d’utilisateur dans un autre compte. Les réglages incluent les permissions, les fichiers joints, les bannissements, les favoris, les brouillons, les adhésions aux groupes, aux forums, aux sujets et aux messages, les historiques, les votes aux sondages, les messages, les messages privés, les rapports, les sujets, les avertissements, les amis et les ignorés.<br /><strong>Vous pouvez entrer le Nom d’Utilisateur ou l’ID Utilisateur, mais pas les deux.</strong>',
 
-	'MERGE_USERS_BOTH_FOUNDERS'	=> 'Vous ne pouvez pas fusionner un fondateur avec un utilisateur qui n’en est pas un.',
-	'MERGE_USERS_BOTH_IGNORE'	=> 'Vous ne pouvez pas fusionner un robot avec un utilisateur normal.',
+	'MERGE_USERS_BOTH_FOUNDERS'			=> 'Vous ne pouvez pas fusionner un fondateur avec un utilisateur qui n’en est pas un.',
+	'MERGE_USERS_BOTH_IGNORE'			=> 'Vous ne pouvez pas fusionner un robot avec un utilisateur normal.',
 
-	'MERGE_USERS_MERGED'		=> 'Les utilisateurs ont été fusionnés.',
+	'MERGE_USERS_MERGED'				=> 'Les utilisateurs ont été fusionnés.',
 
 	'MERGE_USERS_REMOVE_SOURCE'			=> 'Supprimer l’utilisateur source',
 	'MERGE_USERS_REMOVE_SOURCE_EXPLAIN'	=> 'Si coché, cet outil supprimera l’utilisateur source du forum.',
 
-	'MERGE_USERS_SAME_USERS'	=> 'Les utilisateurs source et cible doivent être différents.',
+	'MERGE_USERS_SAME_USERS'			=> 'Les utilisateurs source et cible doivent être différents.',
 
-	'MERGE_USERS_USER_SOURCE'			=> 'Utilisateur source',
-	'MERGE_USERS_USER_SOURCE_EXPLAIN'	=> 'Les messages, les messages privés, les permissions, les avertissements, etc. sont déplacés de cet utilisateur dans l’utilisateur cible, les adhésions aux groupes et les réglages de l’utilisateur sont copiés.',
+	'MERGE_USERS_USER_SOURCE_ID'			=> 'Utilisateur source. (ID d’Utilisateur)',
+	'MERGE_USERS_USER_SOURCE_NAME'			=> 'Utilisateur source (Nom d’Utilisateur)',
+	'MERGE_USERS_USER_SOURCE_NAME_EXPLAIN'	=> 'Les messages, les messages privés, les permissions, les avertissements... sont déplacés de cet utilisateur dans l’utilisateur cible, les adhésions aux groupes et les réglages de l’utilisateur sont copiés.',
 
-	'MERGE_USERS_USER_TARGET'	=> 'Utilisateur cible',
+	'MERGE_USERS_USER_TARGET_NAME'		=> 'Utilisateur cible. (Nom d’Utilisateur)',
+	'MERGE_USERS_USER_TARGET_ID'		=> 'Utilisateur cible. (ID d’Utilisateur)',
+
+	'NO_SOURCE_USER'					=> 'L’utilisateur source demandé n’existe pas',
+	'NO_TARGET_USER'					=> 'L’utilisateur cible demandé n’existe pas',
+
+	'BOTH_SOURCE_USER'					=> 'Remplir un champ source seulement.',
+	'BOTH_TARGET_USER'					=> 'Remplir un champ cible seulement.',
 ));

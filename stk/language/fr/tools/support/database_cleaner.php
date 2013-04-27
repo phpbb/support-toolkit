@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Database Cleaner
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -34,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
@@ -55,9 +58,9 @@ $lang = array_merge($lang, array(
 	'DATABASE_COLUMNS_SUCCESS'		=> 'Les colonnes de la base de données ont été mises à jour.',
 	'DATABASE_TABLES'				=> 'Tables de la base de données',
 	'DATABASE_TABLES_SUCCESS'		=> 'Les tables de la base de données ont été mises à jour.',
-	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Les rôles système de phpBB a été restauré.',
+	'DATABASE_ROLE_DATA_SUCCESS'	=> 'Les rôles systèmes de phpBB ont été restaurés.',
 	'DATABASE_ROLES_SUCCESS'		=> 'Les rôles ont été mis à jour.',
-	'DATAFILE_NOT_FOUND'			=> 'Support Toolkit n’a pas été capable de trouver le fichier de données que vous recherchez concernant votre version de phpBB !',
+	'DATAFILE_NOT_FOUND'			=> 'Support Toolkit n’a pas été capable de trouver le fichier de données correspondant à votre version de phpBB !',
 
 	'EMPTY_PREFIX'					=> 'Aucun préfixe de base de données',
 	'EMPTY_PREFIX_CONFIRM'			=> 'Le nettoyeur de base de données permet d’apporter des modifications aux tables de votre base de données, mais étant donné que vous n’utilisez pas de préfixe de table, cela peut altérer des tables n’ayant aucun rapport avec phpBB. Êtes-vous sûr(e) de vouloir continuer ?',
@@ -78,12 +81,12 @@ $lang = array_merge($lang, array(
 
 	'PERMISSION_SETTINGS'			=> 'Options des permissions',
 	'PERMISSION_UPDATE_SUCCESS'		=> 'Les réglages des permissions ont été mis à jour.',
-	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Votre version de phpBB3 n’est pas supportée (ou certains fichiers de Support Toolkit sont manquants).<br />phpBB 3.0.0+ devrait être supporté, mais il se peut que la mise à jour de cet outil prenne un certain temps avant d’être disponible, ce qui est souvent le cas lorsqu’une nouvelle version de phpBB 3.0 vient à peine de sortir.',
+	'PHPBB_VERSION_NOT_SUPPORTED'	=> 'Votre version de phpBB3 n’est pas supportée (ou certains fichiers de Support Toolkit sont manquants).<br />phpBB 3.0.0+ devrait être supporté, mais il se peut que la mise à jour de cet outil prenne un certain temps avant d’être disponible, ce qui est souvent le cas lorsqu’une nouvelle version de phpBB 3.0 vient de sortir.',
 
 	'QUIT'							=> 'Quitter',
 
 	'RESET_BOTS'					=> 'Réinitialiser les robots',
-	'RESET_BOTS_EXPLAIN'			=> 'Souhaitez-vous réinitialiser la liste des robots avec la liste des robots présente par défaut dans phpBB3 ? Tous les robots existants seront supprimés afin d’être remplacés par les robots présents par défaut.',
+	'RESET_BOTS_EXPLAIN'			=> 'Souhaitez-vous réinitialiser la liste des robots avec celle définie par défaut dans phpBB3 ? Tous les robots existants seront supprimés afin d’être remplacés par les robots présents par défaut.',
 	'RESET_BOTS_SKIP'				=> 'La réinitialisation du robot a été ignorée',
 	'RESET_BOT_SUCCESS'				=> 'Les robots ont été réinitialisés.',
 	'RESET_MODULES'					=> 'Réinitialiser les modules',
@@ -92,14 +95,14 @@ $lang = array_merge($lang, array(
 	'RESET_MODULE_SUCCESS'			=> 'Les modules ont été réinitialisés.',
 	'RESET_REPORT_REASONS'			=> 'Réinitialiser les raisons des rapports',
 	'RESET_REPORT_REASONS_EXPLAIN'	=> 'Souhaitez-vous réinitialiser les raisons des rapports avec les valeurs par défaut ? Cela supprimera toutes les raisons des rapports que vous avez ajoutées !',
-	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports ont été réinitialisées.',
+	'RESET_REPORT_REASONS_SKIP'		=> 'Les raisons des rapports N’ONT PAS été réinitialisées.',
 	'RESET_REPORT_REASONS_SUCCESS'	=> 'Les raisons des rapports ont été réinitialisées.',
 	'RESET_ROLE_DATA'				=> 'Réinitialiser les données des rôles',
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'Cette étape réinitialisera les rôles système de phpBB avec les valeurs par défaut, il est fortement recommandé d’exécuter cela si vous avez apporté des modifications lors de l’étape précédente.',
 	'ROLE_SETTINGS'					=> 'Réglages des rôles',
 	'ROWS'							=> 'Lignes',
 
-	'SECTION_NOT_CHANGED_TITLE'		=> array(
+	'SECTION_NOT_CHANGED_TITLE'	=> array(
 		'tables'			=> 'Tables non modifiées',
 		'columns'			=> 'Colonnes non modifiées',
 		'config'			=> 'Configuration non modifiée',
@@ -122,9 +125,9 @@ $lang = array_merge($lang, array(
 		'final_step'		=> 'Cette dernière étape videra le cache et réactivera le forum.',
 	),
 	'SUCCESS'						=> 'Succès',
-	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Les groupes système ont été réinitialisés.',
+	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Les groupes systèmes ont été réinitialisés.',
 
 	'TYPE'							=> 'Type',
 
-	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter que sur les versions instables <em>(dev, a, b, RC)</em> de phpBB, lorsque « DEBUG » est activé dans le fichier de configuration de phpBB.',
+	'UNSTABLE_DEBUG_ONLY'			=> 'Le nettoyeur de base de données ne peut s’exécuter sur les versions instables de phpBB <em>(dev, a, b, RC)</em> que lorsque « DEBUG » est activé dans le fichier « config.php ».',
 ));

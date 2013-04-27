@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Anonymous group check
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -34,14 +37,14 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'ANONYMOUS_CLEANED'					=> 'Les données de profil de l’utilisateur anonyme ont été nettoyées.',
-	'ANONYMOUS_CORRECT'					=> 'L’utilisateur anonyme existe et a été configuré correctement.',
+	'ANONYMOUS_CORRECT'					=> 'L’utilisateur anonyme existe et est configuré correctement.',
 	'ANONYMOUS_CREATED'					=> 'L’utilisateur anonyme a été recréé.',
-	'ANONYMOUS_CREATION_FAILED'			=> 'Il n’a pas été possible de recréer l’utilisateur anonyme. Veuillez demander de l’aide sur le forum de support de phpBB.com ou de phpBB.fr.',
+	'ANONYMOUS_CREATION_FAILED'			=> 'Il n’a pas été possible de recréer l’utilisateur anonyme. Veuillez demander de l’aide sur le forum de support de phpBB.com ou de phpBB-fr.com.',
 	'ANONYMOUS_GROUPS_REMOVED'			=> 'L’utilisateur anonyme a été supprimé de tous les groupes d’accès.',
 	'ANONYMOUS_MISSING'					=> 'L’utilisateur anonyme est manquant.',
 	'ANONYMOUS_MISSING_CONFIRM'			=> 'L’utilisateur anonyme est manquant dans votre base de données. Cet utilisateur est utilisé afin d’autoriser les invités à visiter votre forum. Souhaitez-vous en créer un nouveau ?',
@@ -52,5 +55,5 @@ $lang = array_merge($lang, array(
 
 	'REDIRECT_NEXT_STEP'				=> 'Vous allez être redirigé(e) vers la prochaine étape.',
 
-	'SANITISE_ANONYMOUS_USER'			=> 'Nettoyer l’utilisateur anonyme',
+	'SANITISE_ANONYMOUS_USER'			=> 'Reconfigurer l’utilisateur anonyme',
 ));

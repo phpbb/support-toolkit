@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Profile List
-* @version $Id$
-* @copyright (c) 2009 phpBB Group, (c) 2009 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -34,25 +37,25 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'ALL'					=> 'Tous',
+	'ALL'						=> 'Tous',
 
-	'CLICK_TO_DELETE'		=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
+	'CLICK_TO_DELETE'			=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
 
-	'FILTER'				=> 'Filtre',
+	'FILTER'					=> 'Filtre',
 
-	'LIMIT'					=> 'Limite',
+	'LIMIT'						=> 'Limite',
 
-	'ONLY_NON_EMPTY'		=> 'Remplis uniquement',
-	'ORDER_BY'				=> 'Trier par',
+	'ONLY_NON_EMPTY'			=> 'Remplis uniquement',
+	'ORDER_BY'					=> 'Trier par',
 
-	'PROFILE_LIST'			=> 'Liste des profils',
-	'PROFILE_LIST_EXPLAIN'	=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
+	'PROFILE_LIST'				=> 'Liste des profils',
+	'PROFILE_LIST_EXPLAIN'		=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
 
 	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
 	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
-	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés.',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés, ainsi que tous leurs messages !',
 ));

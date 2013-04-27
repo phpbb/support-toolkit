@@ -1,10 +1,13 @@
 <?php
 /**
 *
+* [french]
+*
 * @package Support Toolkit - Recache moderators
-* @version $Id$
-* @copyright (c) 2010 phpBB Group, (c) 2010 phpBB.fr
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License 2.0
+* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @copyright (c) 2010 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Translation phpBB-fr http://www.phpbb-fr.com
 *
 */
 
@@ -37,11 +40,11 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'RECACHE_MODERATORS'				=> 'Mettre de nouveau en cache les modérateurs',
-	'RECACHE_MODERATORS_COMPLETE'		=> 'Le cache des modérateurs a été reconstruit.',
-	'RECACHE_MODERATORS_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
+	'RECACHE_MODERATORS'			=> 'Mettre de nouveau en cache les modérateurs',
+	'RECACHE_MODERATORS_COMPLETE'	=> 'Le cache des modérateurs a été reconstruit.',
+	'RECACHE_MODERATORS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
 ));
