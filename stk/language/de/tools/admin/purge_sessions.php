@@ -42,5 +42,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'PURGE_SESSIONS'			=> 'Sitzungsdaten löschen',
 	'PURGE_SESSIONS_COMPLETE'	=> 'Die Sitzungsdaten wurden erfolgreich gelöscht.',
-	'PURGE_SESSIONS_CONFIRM'	=> 'Bist du sicher, dass du alle Sitzungsdaten löschen möchtest? Dadurch werden alle Benutzer ausgeloggt.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Bist du sicher, dass du alle Sitzungsdaten löschen möchtest? Dadurch werden alle Benutzer abgemeldet.',
 ));
