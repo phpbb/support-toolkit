@@ -48,12 +48,12 @@ $lang = array_merge($lang, array(
 
 	'DELETE_EMPTY_TOPICS'		=> 'Per Klick werden alle ausgewählten Themen gelöscht. (Dieser Schritt kann nicht rückgängig gemacht werden!)',
 	'EMPTY_TOPICS'				=> 'Leere Themen',
-	'EMPTY_TOPICS_EXPLAIN'		=> 'Dies sind Themen, denen keine Beiträge zugeordnet sind',
+	'EMPTY_TOPICS_EXPLAIN'		=> 'Den folgenden Themen sind keine Beiträge zugeordnet',
 	'NO_EMPTY_TOPICS'			=> 'Keine leeren Themen gefunden',
 	'NO_TOPICS_SELECTED'		=> 'Keine Themen ausgewählt',
 
 	'ORPHANED_POSTS'			=> 'Verwaiste Beiträge',
-	'ORPHANED_POSTS_EXPLAIN'	=> 'Die folgenden Beiträge sind keinen Themen zugeordnet. Geben Sie eine neue Themen-ID ein, um diese Beiträge mit dem Thema zu verbinden.',
+	'ORPHANED_POSTS_EXPLAIN'	=> 'Den folgenden Beiträgen sind keine Themen zugeordnet. Geben Sie eine neue Themen-ID ein, um diese Beiträge mit dem Thema zu verbinden.',
 	'NO_ORPHANED_POSTS'			=> 'Keine verwaisten Beiträge gefunden',
 	'NO_TOPIC_IDS'				=> 'Keine Themen-ID angegeben',
 	'NONEXISTENT_TOPIC_IDS'		=> 'Die folgenden Ziel Themen-IDs existieren nicht: %s.<br />Bitte überprüfen Sie die angegeben Themen-IDs.',
