@@ -52,7 +52,7 @@ $lang = array_merge($lang, array(
 
 	'ORPHANED_POSTS'			=> 'Niet toegewezen berichten',
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Dit zijn berichten welke niet toegewezen zijn aan een topic. Selecteer een topic ID om de berichten te verplaatsen naar het geselecteerde topic.',
-	'NO_ORPHANED_POSTS'			=> 'Geen niet toegewezen berichten gevonden',
+	'NO_ORPHANED_POSTS'			=> 'Geen berichten gevonden welke nog niet zijn toegewezen.',
 	'NO_TOPIC_IDS'				=> 'Geen onderwerp IDs opgegeven',
 	'NONEXISTENT_TOPIC_IDS'		=> 'Het volgende doel onderwerp ID bestaat niet: %s.<br />Controleer de opgegeven onderwerp IDs.',
 	'REASSIGN'					=> 'Verplaats',

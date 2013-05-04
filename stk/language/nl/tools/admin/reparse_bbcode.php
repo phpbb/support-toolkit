@@ -42,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Herpars alle BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Indien aangevinkt zullen alle BBCodes van het gehele forum worden geherparst; Standaard zal de tool alleen de berichten/privéberichten/onderschriften herparsen die al eerder door phpBB zijn geparst. Deze optie wordt genegeerd als er specifieke berichten of privéberichten bovenaan zijn gespecificeerd.',
+	'REPARSE_ALL_EXPLAIN'		=> 'Indien aangevinkt worden alle BBCodes van het gehele forum geherparst; Standaard zal de tool alleen de berichten/privéberichten/onderschriften herparsen die al eerder door phpBB zijn geparst. Deze optie wordt genegeerd als er specifieke berichten of privéberichten bovenaan zijn gespecificeerd.',
 	'REPARSE_BBCODE'			=> 'BBCode Herparsen',
 	'REPARSE_BBCODE_COMPLETE'	=> 'De BBCodes zijn opnieuw geparsed.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Weet je zeker dat je alle BBCodes wilt herparsen? Dit kan enige tijd in beslag nemen.',

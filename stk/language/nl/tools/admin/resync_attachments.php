@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_ATTACHMENTS'			=> 'Hersynchroniseer bijlagen',
-	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Deze tool zorgt er voor dat alle in de database opgeslagen bijlagen ook een bestand hebben op de server. Als er een besrand mist, zal deze tool de bijlage uit de database verwijderen. Weet je zeker dat je hiermee verder wil gaan?',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Deze tool zorgt er voor dat alle in de database opgeslagen bijlagen ook een bestand hebben op de server. Als er een bestand mist, zal deze tool de bijlage uit de database verwijderen. Weet je zeker dat je hiermee verder wil gaan?',
 	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Bijlagen succesvol geher-synchroniseerd!',
 	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Bijlagen hersynchroniseren is bezig. Onderbreek dit proces niet.',
 ));
