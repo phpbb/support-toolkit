@@ -38,6 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'De velden Gebruikersnaam en gebruikers-ID mogen niet beiden ingevuld worden.',
 	'DEMOTE_FAILED'				=> 'Niet gelukt om de eigenaarstatus van alle gebruikers te herstellen!',
 	'DEMOTE_FOUNDERS'			=> 'Eigenaar(s) degraderen',
 	'DEMOTE_SUCCESSFULL'		=> 'De eigenaarstatus is van %d gebruikers afgenomen!',
@@ -54,6 +55,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'			=> 'Eigenaar maken',
 
-	'USER_TO_FOUNDER'			=> 'Gebruiker om eigenaar te maken',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikersnaam of het ID van de gebruiker in die je eigenaar wilt maken.',
+	'USER_NAME_TO_FOUNDER'			=> 'Gebruikersnaam om eigenaar te maken',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikersnaam van de gebruiker in die je eigenaar wilt maken.',
+	'USER_ID_TO_FOUNDER'			=> 'Gebruikers-ID om eigenaar te maken',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikers-ID van de gebruiker in die je eigenaar wilt maken.',
 ));

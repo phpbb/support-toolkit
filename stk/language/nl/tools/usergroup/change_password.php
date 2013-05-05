@@ -39,11 +39,15 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Wachtwoord Wijzigen',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Wijzig het wachtwoord van een gebruiker.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Wijzig het wachtwoord van een gebruiker. Je kan hier de gebruikersnaam of gebruikers-id invullen, niet beiden',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'Het wachtwoord van <a href="%s">%s</a> is met succes gewijzigd.',
+	'FIELDS_NOT_FILLED'			=> 'Een veld moet ingevuld worden.',
+	'FIELDS_BOTH_FILLED'		=> 'Je kan maar een veld invullen.',
 
 	'PASSWORD_CONFIRM'			=> 'Wachtwoord nogmaals invoeren',
 
-	'USERNAMEID'				=> 'Gebruikersnaam of ID',
-	'USERNAMEID_EXPLAIN'		=> 'Vul de gebruikersnaam of het ID van de gebruiker in waarvan je het wachtwoord wilt wijzigen.',
-));
+	'USERNAME_NAME'				=> 'Gebruikersnaam',
+	'USERNAME_NAME_EXPLAIN'		=> 'Vul de gebruikersnaam van de gebruiker in waarvan je het wachtwoord wilt wijzigen.',
+	'USERNAMEID'				=> 'Gebruikers-ID',
+	'USERNAMEID_EXPLAIN'		=> 'Vul het gebruikers ID van de gebruiker in waarvan je het wachtwoord wilt wijzigen.',
+	));

@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'UPDATE_EMAIL_HASHES'				=> 'Update e-mail hashes',
-	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'In phpBB installaties vanaf versie 3.0.7 kan een switch van een 32 bit OS naar een 64 bit OS de e-mail hashes beschadigen. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Zie het gerelateerde foutenrapport</a>)</em><br />Deze tool stelt je in staat om de hashes in de database te updaten, waardoor ze weer goed zullen functioneren.',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'In phpBB installaties vanaf versie 3.0.7 kan een switch van een 32 bit OS naar een 64 bit OS de e-mail hashes beschadigen. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Zie het gerelateerde foutenrapport</a>)</em><br />Deze tool stelt je in staat om de hashes in de database te updaten, waardoor ze weer goed functioneren.',
 	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Alle e-mail hashes zijn succesvol geupdated!',
 	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Updaten van email hashes in uitvoering.',
 ));

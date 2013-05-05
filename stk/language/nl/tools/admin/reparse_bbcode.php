@@ -42,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'REPARSE_ALL'				=> 'Herpars alle BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Indien aangevinkt zullen alle BBCodes van het gehele forum worden geherparst; Standaard zal de tool alleen de berichten/privéberichten/onderschriften herparsen die al eerder door phpBB zijn geparst. Deze optie wordt genegeerd als er specifieke berichten of privéberichten bovenaan zijn gespecificeerd.',
+	'REPARSE_ALL_EXPLAIN'		=> 'Indien aangevinkt worden alle BBCodes van het gehele forum geherparst; Standaard zal de tool alleen de berichten/privéberichten/onderschriften herparsen die al eerder door phpBB zijn geparst. Deze optie wordt genegeerd als er specifieke berichten of privéberichten bovenaan zijn gespecificeerd.',
 	'REPARSE_BBCODE'			=> 'BBCode Herparsen',
 	'REPARSE_BBCODE_COMPLETE'	=> 'De BBCodes zijn opnieuw geparsed.',
 	'REPARSE_BBCODE_CONFIRM'	=> 'Weet je zeker dat je alle BBCodes wilt herparsen? Dit kan enige tijd in beslag nemen.',
@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	),
 	'REPARSE_IDS_INVALID'			=> 'De door jou opgegeven IDs zijn niet geldig; zorg er voor dat bericht IDs worden genoteerd als een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 	'REPARSE_POST_IDS'				=> 'Herpars specifieke berichten',
-	'REPARSE_POST_IDS_EXPLAIN'		=> 'Om enkel de specifieke berichten te herparsen, moet je de bericht IDs opgeven in een door komma’s gescheiden lijst.',
+	'REPARSE_POST_IDS_EXPLAIN'		=> 'Om enkel de specifieke berichten te herparsen, moet je de bericht IDs opgeven in een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 	'REPARSE_PM_IDS'				=> 'Herpars specifieke privéberichten',
-	'REPARSE_PM_IDS_EXPLAIN'		=> 'Om enkel de specifieke privéberichten te herparsen, moet je de privébericht IDs opgeven in een door komma’s gescheiden lijst (bijv 1,2,3,5,8,13).',
+	'REPARSE_PM_IDS_EXPLAIN'		=> 'Om enkel de specifieke privéberichten te herparsen, moet je de privébericht IDs opgeven in een door komma’s gescheiden lijst (bijv. 1,2,3,5,8,13).',
 ));

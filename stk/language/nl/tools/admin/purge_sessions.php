@@ -1,15 +1,16 @@
-<?php
+﻿<?php
 /**
- *
- * @package Support Toolkit - Resync Attachments
- * @copyright (c) 2009 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- */
+*
+* @package Support Toolkit - Purge Sessions
+* @version $Id$
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -37,8 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_ATTACHMENTS'			=> 'Hersynchroniseer bijlagen',
-	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Deze tool zorgt er voor dat alle in de database opgeslagen bijlagen ook een bestand hebben op de server. Als er een bestand mist, zal deze tool de bijlage uit de database verwijderen. Weet je zeker dat je hiermee verder wil gaan?',
-	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Bijlagen succesvol geher-synchroniseerd!',
-	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Bijlagen hersynchroniseren is bezig. Onderbreek dit proces niet.',
+	'PURGE_SESSIONS'			=> 'Verwijder alle sessies',
+	'PURGE_SESSIONS_COMPLETE'	=> 'Alle sessies zijn succesvol uitgelogd.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Hiermee wordt de sessie-tabel geleegd en worden alle gebruikers uitgelogd. Weet je zeker dat je alle sessies wilt verwijderen?',
 ));
