@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Resync Avatars
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	20h55	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -42,8 +42,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_AVATARS'			=> 'Resynchroniser les avatars',
-	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent actuellement sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr(e) de vouloir continuer ?',
+	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent actuellement sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr(e) de vouloir continuer ?',
 	'RESYNC_AVATARS_FINISHED'	=> 'Les avatars ont été resynchronisés.',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Commutation aux avatars de groupe. Veuillez ne pas interrompre cette opération.',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Traitement des avatars de groupe. Veuillez ne pas interrompre cette opération.',
 	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours. Veuillez ne pas interrompre cette opération.',
 ));
