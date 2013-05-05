@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Change Password
-* @version $Id:	papicx	1.0.6	30/12/2012	10h22	$
+* @version $Id:	papicx	1.0.7	05/05/2013	16h07	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -50,8 +50,8 @@ $lang = array_merge($lang, array(
 
 	'PASSWORD_CONFIRM'			=> 'Saisissez de nouveau le mot de passe',
 
-	'USERNAMEID'				=> 'Nom de l’utilisateur',
-	'USERNAMEID_EXPLAIN'		=> 'Saisissez le nom de l’utilisateur dont vous souhaitez modifier le mot de passe.',
+	'USERNAME_NAME'				=> 'Nom de l’utilisateur',
+	'USERNAME_NAME_EXPLAIN'		=> 'Saisissez le nom de l’utilisateur dont vous souhaitez modifier le mot de passe.',
 	'USERNAMEID'				=> 'ID de l’Utilisateur',
 	'USERNAMEID_EXPLAIN'		=> 'Saisissez l’ID de l’utilisateur dont vous souhaitez modifier le mot de passe.',
 ));
