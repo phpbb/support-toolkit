@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Reparse BBCode
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	16h07	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -44,12 +44,12 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'REPARSE_ALL'				=> 'Réanalyser tous les BBCodes',
-	'REPARSE_ALL_EXPLAIN'		=> 'Si cette option est activée, la réanalyse du BBCode vérifiera tout le contenu des forums. Par défaut, l’outil réanalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.', 
-	'REPARSE_BBCODE'			=> 'Réparer le BBCode',
-	'REPARSE_BBCODE_COMPLETE'	=> 'Les BBCodes ont été réanalysés.',
-	'REPARSE_BBCODE_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
-	'REPARSE_BBCODE_PROGRESS'	=> 'Étape %1$d terminée. Début de l’étape %2$d dans un court instant…',
+	'REPARSE_ALL'					=> 'Réanalyser tous les BBCodes',
+	'REPARSE_ALL_EXPLAIN'			=> 'Si cette option est activée, la réanalyse du BBCode vérifiera tout le contenu du forum. Par défaut, l’outil réanalysera seulement les messages, les messages privés et les signatures qui ont été précédemment analysés par phpBB. Cette option sera ignorée si vous avez spécifié ci-dessus des messages ou des messages privés spécifiques.',
+	'REPARSE_BBCODE'				=> 'Réanalyser le BBCode',
+	'REPARSE_BBCODE_COMPLETE'		=> 'Les BBCodes ont été réanalysés.',
+	'REPARSE_BBCODE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir réanalyser tous les BBCodes ? Veuillez noter que cet outil peut potentiellement endommager votre base de données au lieu de la réparer. Pour cette raison, <strong>assurez-vous d’avoir bien sauvegardé votre base de données avant de continuer</strong>. De plus, veuillez noter que cet outil peut prendre un certain temps avant de terminer son opération.',
+	'REPARSE_BBCODE_PROGRESS'		=> 'Étape %1$d terminée. Début de l’étape %2$d dans un court instant…',
 	'REPARSE_BBCODE_SWITCH_MODE'	=> array(
 		1	=> 'Réanalyse des messages terminée, début de la réanalyse des messages privés.',
 		2	=> 'Réanalyse des messages privés terminée, début de la réanalyse des signatures.',

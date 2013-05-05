@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Make Founder
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	21h10	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -41,16 +41,16 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'BOTH_FIELDS_FILLED'			=> 'Le champ Nom d’Utilisateur et le champ ID d’Utilisateur ne peuvent pas être remplis tous les deux.',	//
+	'BOTH_FIELDS_FILLED'			=> 'Le champ Nom d’utilisateur et le champ ID d’utilisateur ne peuvent pas être remplis tous les deux.',
 
-	'DEMOTE_FAILED'					=> 'Impossible de supprimer le statut de fondateur de tous les utilisateurs !',
+	'DEMOTE_FAILED'					=> 'Impossible de supprimer le statut de fondateur de tous les utilisateurs !',
 	'DEMOTE_FOUNDERS'				=> 'Rétrograder les fondateurs',
 	'DEMOTE_SUCCESSFULL'			=> 'Le statut de fondateur a été supprimé concernant %d utilisateurs.',
 
 	'FOUNDERS'						=> 'Utilisateurs ayant le statut de fondateur',
 
 	'MAKE_FOUNDER'					=> 'Promouvoir un utilisateur en fondateur du forum',
-	'MAKE_FOUNDER_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir promouvoir <a href="%1$s">%2$s</a> en fondateur du forum ? Cela permettra, entre autres, à <a href="%1$s">%2$s</a> de pouvoir supprimer votre compte.',
+	'MAKE_FOUNDER_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir promouvoir <a href="%1$s">%2$s</a> en fondateur du forum ? Cela permettra, entre autres, à <a href="%1$s">%2$s</a> de pouvoir supprimer votre compte.',
 	'MAKE_FOUNDER_FAILED'			=> 'Impossible de promouvoir cet utilisateur en fondateur',
 	'MAKE_FOUNDER_SUCCESS'			=> '<a href="%1$s">%2$s</a> a été promu en fondateur du forum.',
 	'MANAGE_FOUNDERS'				=> 'Gérer les fondateurs du forum',
@@ -59,8 +59,8 @@ $lang = array_merge($lang, array(
 
 	'PROMOTE_FOUNDER'				=> 'Promouvoir en fondateur',
 
-	'USER_NAME_TO_FOUNDER'			=> 'Nom d’Utilisateur à promouvoir en fondateur',
-	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Saisissez le Nom d’Utilisateur que vous souhaitez promouvoir en fondateur.',
+	'USER_NAME_TO_FOUNDER'			=> 'Nom d’utilisateur à promouvoir en fondateur',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Saisissez le Nom d’utilisateur que vous souhaitez promouvoir en fondateur.',
 	'USER_ID_TO_FOUNDER'			=> 'ID de l’utilisateur à promouvoir en fondateur',
 	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Saisissez l’ID de l’utilisateur que vous souhaitez promouvoir en fondateur.',
 ));

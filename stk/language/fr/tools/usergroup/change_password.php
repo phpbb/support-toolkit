@@ -52,6 +52,6 @@ $lang = array_merge($lang, array(
 
 	'USERNAME_NAME'				=> 'Nom de l’utilisateur',
 	'USERNAME_NAME_EXPLAIN'		=> 'Saisissez le nom de l’utilisateur dont vous souhaitez modifier le mot de passe.',
-	'USERNAMEID'				=> 'ID de l’Utilisateur',
+	'USERNAMEID'				=> 'ID de l’utilisateur',
 	'USERNAMEID_EXPLAIN'		=> 'Saisissez l’ID de l’utilisateur dont vous souhaitez modifier le mot de passe.',
 ));
