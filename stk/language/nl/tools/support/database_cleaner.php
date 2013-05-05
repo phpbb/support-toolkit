@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 
 	'EMPTY_PREFIX'					=> 'Geen database prefix',
 	'EMPTY_PREFIX_CONFIRM'			=> 'De database opschoner staat op het punt om enkele tabellen in je database te bewerken, maar als je gebruik maakt van een lege tabel prefix kan dit invloed hebben op niet-phpBB tabellen. Weet je zeker dat je door wil gaan?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'De database opschoner heeft geconstateerd dat je geen tabel prefix hebt ingesteld voor de phpBB database tabellen. Hierdoor zal de database opschoner <strong>alle</strong> tabellen in de database controleren. Let er extra goed op dat je bij het uitvoeren dat je alle niet-phpBB tabellen uitsluit bij de selectie. Bij het mislukken hiervan zullen database tabellen die geen onderdeel van phpBB zijn beschadigd raken.<br />Als je er niet zeker van bent hoe dit uit te voeren zoek dan hulp in de <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'De database opschoner heeft geconstateerd dat je geen tabel prefix hebt ingesteld voor de phpBB database tabellen. Hierdoor zal de database opschoner <strong>alle</strong> tabellen in de database controleren. Let er extra goed op dat je bij het uitvoeren dat je alle niet-phpBB tabellen uitsluit bij de selectie. Bij het mislukken hiervan kan de database tabellen die geen onderdeel van phpBB zijn beschadigd raken.<br />Als je er niet zeker van bent hoe dit uit te voeren zoek dan hulp in de <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
 	'ERROR'							=> 'Fout',
 	'EXTRA'							=> 'Extra',
 	'EXTENSION_GROUPS_SUCCESS'		=> 'De extensie groepen zijn succesvol gereset',
@@ -83,11 +83,11 @@ $lang = array_merge($lang, array(
 	'QUIT'							=> 'Stoppen',
 
 	'RESET_BOTS'					=> 'Bots resetten',
-	'RESET_BOTS_EXPLAIN'			=> 'Wil je de bot-lijst herstellen naar de standaard phpBB3 bot-lijst? Alle bots zullen worden verwijderd en worden vervangen door de standaard set van bots.',
+	'RESET_BOTS_EXPLAIN'			=> 'Wil je de bot-lijst herstellen naar de standaard phpBB3 bot-lijst? Alle bots worden verwijderd en vervangen door de standaard set van bots.',
 	'RESET_BOTS_SKIP'				=> 'De bot reset is overgeslagen.',
 	'RESET_BOT_SUCCESS'				=> 'De Bot-lijst is hersteld naar de standaard lijst!',
 	'RESET_MODULES'					=> 'Modules resetten',
-	'RESET_MODULES_EXPLAIN'			=> 'Wil je de modules herstellen naar de standaard phpBB3 modules? Alle modules zullen worden verwijderd en worden vervangen door de standaard modules.',
+	'RESET_MODULES_EXPLAIN'			=> 'Wil je de modules herstellen naar de standaard phpBB3 modules? Alle modules worden verwijderd en vervangen door de standaard modules.',
 	'RESET_MODULES_SKIP'			=> 'De module reset is overgeslagen.',
 	'RESET_MODULE_SUCCESS'			=> 'De modules zijn hersteld naar de standaard modules!',
 	'RESET_REPORT_REASONS'			=> 'Herstel rapporteer redenen',

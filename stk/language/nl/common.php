@@ -74,6 +74,8 @@ $lang = array_merge($lang, array(
 
 	'NOTICE'							=> 'Opmerking',
 	'NO_VERSION_FILE'					=> 'De Support Toolkit(STK) kon de laatste versie niet achterhalen. Bezoek de <a href="http://www.phpbb.com/support/stk/">Support Toolkit website van phpBB.com</a> en controleer voordat je verder gaat of je de laatste versie hebt.',
+    'REQUEST_PHPBB_VERSION'				=> 'Selecteer phpBB versie',
+    'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'De Support Toolkit (STK) kon jouw phpBB versie niet achterhalen, selecteer de juiste versie voordat je verder gaat.<br />Dit kan betekenen dat jouw forumbestanden en forumversie inconsistent zijn, waarschijnlijk door een niet succesvol afgemaakte update. Bezoek de <a href="http://www.phpbb.nl/forums/viewforum.php?f=40">supportforums</a> voor hulp bij dit probleem.',
 
 	'PASS_GENERATED'					=> 'Je STK wachtwoordbestand is aangemaakt!<br/>Het gegenereerde wachtwoord is: <em>%1$s</em><br />Dit wachtwoord zal op: <span style="text-decoration: underline;">%2$s</span> verlopen. Daarna <strong>moet</strong> je een nieuw wachtwoordbestand aanmaken om van deze functie gebruik te kunnen blijven maken!<br /><br />Gebruik de button om het bestand te downloaden. Vervolgens dien je het naar de server in de "stk" map te uploaden.',
 	'PASS_GENERATED_REDIRECT'			=> 'Als je het wachtwoordbestand in de juiste map hebt geplaatst, klik dan <a href="%s">hier</a> om naar de inlogpagina te gaan.',
