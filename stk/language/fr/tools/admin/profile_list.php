@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Profile List
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	19h48	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -43,7 +43,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ALL'						=> 'Tous',
 
-	'CLICK_TO_DELETE'			=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
+	'CLICK_TO_DELETE'			=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
 
 	'FILTER'					=> 'Filtre',
 
@@ -56,6 +56,6 @@ $lang = array_merge($lang, array(
 	'PROFILE_LIST_EXPLAIN'		=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
 
 	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
-	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
-	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés, ainsi que tous leurs messages !',
+	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
+	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés, ainsi que tous leurs messages !',
 ));

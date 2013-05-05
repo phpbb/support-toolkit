@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Resync Attachments
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	20h55	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -42,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_ATTACHMENTS'			=> 'Resynchroniser les fichiers joints',
-	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Cet outil vérifiera si tous les liens vers des fichiers joints stockés actuellement dans la base de données ont un fichier sur le serveur. Si un fichier est manquant, cet outil supprimera son lien dans la base de données. Êtes-vous sûr(e) de vouloir continuer ?',
-	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Les fichiers joints ont été resynchronisés avec succès !',
+	'RESYNC_ATTACHMENTS_CONFIRM'	=> 'Cet outil vérifiera si tous les liens vers des fichiers joints stockés actuellement dans la base de données ont un fichier sur le serveur. Si un fichier est manquant, cet outil supprimera son lien dans la base de données. Êtes-vous sûr(e) de vouloir continuer ?',
+	'RESYNC_ATTACHMENTS_FINISHED'	=> 'Les fichiers joints ont été resynchronisés.',
 	'RESYNC_ATTACHMENTS_PROGRESS'	=> 'Resynchronisation des fichiers joints en cours. Veuillez ne pas interrompre cette opération.',
 ));

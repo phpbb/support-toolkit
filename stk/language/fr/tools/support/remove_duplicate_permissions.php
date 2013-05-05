@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Duplicate Permission Remover
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	21h10	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -49,5 +49,5 @@ $lang = array_merge($lang, array(
 	'NO_DUPLICATES_FOUND'					=> 'L’outil a terminé la vérification des permissions dupliquées et n’en a pas trouvé.',
 
 	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Supprimer les permissions dupliquées',
-	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir supprimer les permissions dupliquées ?',
+	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir supprimer les permissions dupliquées ?',
 ));

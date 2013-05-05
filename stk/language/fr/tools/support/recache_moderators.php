@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Recache moderators
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	21h10	$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -46,5 +46,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'RECACHE_MODERATORS'			=> 'Mettre de nouveau en cache les modérateurs',
 	'RECACHE_MODERATORS_COMPLETE'	=> 'Le cache des modérateurs a été reconstruit.',
-	'RECACHE_MODERATORS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
+	'RECACHE_MODERATORS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
 ));

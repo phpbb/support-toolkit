@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit	srt generator
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	16h07	$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -46,13 +46,13 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Ci-dessous se trouve une copie du modèle de demande de support. Cliquez ci-dessous pour le copier dans votre presse-papiers, puis créez un nouveau message dans le <a href="http://www.phpbb.com/community/viewforum.php?f=46">forum de support sur .com (en anglais)</a> ou sur le <a href="http://forums.phpbb-fr.com/support-phpbb3/">support sur forums_phpbb-fr.com (en français)</a> avec ces informations. Si un sujet de support existe déjà concernant votre question, veuillez copier le modèle dans une réponse à votre sujet existant plutôt que d’en créer un nouveau.',
+	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Ci-dessous se trouve une copie du modèle de demande de support. Cliquez ci-dessous pour le copier dans votre presse-papiers, puis créez un nouveau message dans les <a href="https://www.phpbb.com/community/viewforum.php?f=46">forums de support phpBB.com</a> ou les <a href="http://forums.phpbb-fr.com/support-phpbb3/">forums de support phpBB-fr.com</a> avec ces informations. Si un sujet de support existe déjà concernant votre question, veuillez copier le modèle dans une réponse à votre sujet existant plutôt que d’en créer un nouveau.',
 	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Le générateur de modèle de demande de support n’a pas pu charger les réponses. Vérifiez que vous avez correctement démarré STK.',
 	'SRT_GENERATOR'					=> 'Générateur de modèle de demande de support',
 	'SRT_GENERATOR_LANDING'			=> 'Générateur de modèle de demande de support (SRT)',
 	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Bienvenue sur le générateur de modèle pour la demande de support à l’équipe d’assistance. C’est le moyen le plus rapide et efficace pour compléter notre modèle de demande de support. Le générateur vous posera une série de huit à dix questions qui sont utiles pour effectuer un diagnostic. Les réponses seront compilées dans une liste qui peut être copiée et collée dans votre sujet de support.
-	<br />Cet outil STK fait la même chose que le <a href="http://www.phpbb.com/support/STK/">SRT Generator sur www.phpbb.com</a>, mais certaines questions sont pré-remplies.<br /><br /> Souhaitez-vous exécuter le Générateur SRT ?',
-	'SRT_NO_CACHE'	=> 'Le générateur de modèle pour la demande de support utilise le système de cache de phpBB pour stocker des informations à chaque étape. Vous n’utilisez aucun cache pour phpbb ce qui n’est pas compatible avec cet outil. Veuillez utiliser un cache pour utiliser cet outil ou allez sur le <a href="http://www.phpbb.com/support/srt/">générateur en ligne SRT</a>',
+	<br />Cet outil STK fait la même chose que le <a href="https://www.phpbb.com/support/srt/?step=1">SRT Generator sur www.phpbb.com</a>, mais certaines questions sont pré-remplies.<br /><br /> Souhaitez-vous exécuter le Générateur SRT ?',
+	'SRT_NO_CACHE'	=> 'Le générateur de modèle pour la demande de support utilise le système de cache de phpBB pour stocker des informations à chaque étape. Vous n’utilisez aucun cache pour phpbb ce qui n’est pas compatible avec cet outil. Veuillez utiliser un cache pour utiliser cet outil ou allez sur le <a href="https://www.phpbb.com/support/srt/?step=1">générateur en ligne SRT</a>',
 	'START_OVER'	=> 'Tout recommencer',
 ));
 
@@ -62,10 +62,10 @@ $lang = array_merge($lang, array(
 //	'STEP1_CONVERT_EXPLAIN'	=> '',
 	'STEP1_MOD'				=> 'Votre problème est-il lié à un MOD ?',
 	'STEP1_MOD_EXPLAIN'		=> 'Votre problème a commencé après l’installation ou la suppression d’un MOD ?',
-	'STEP1_MOD_ERROR'		=> 'Les demandes de support pour des problèmes liés aux MODs (par exemple, si vous venez d’installer un MOD et constatez des erreurs) doivent être postées dans le sujet où vous avez téléchargé le MOD. Si le MOD est issu d’un autre forum, veuillez vous adresser à celui-ci.<br /><br /><a href="http://www.phpbb.com/community/viewforum.php?f=81">Allez au forum des MODs</a>.',
+	'STEP1_MOD_ERROR'		=> 'Les demandes de support pour des problèmes liés aux MODs (par exemple, si vous venez d’installer un MOD et constatez des erreurs) doivent être postées dans le sujet où vous avez téléchargé le MOD. Si le MOD est issu d’un autre forum, veuillez vous adresser à celui-ci.<br /><br />Allez dans les <a href="http://www.phpbb.com/community/viewforum.php?f=81">forums de support des MODs de phpBB.com</a> ou les <a href="http://forums.phpbb-fr.com/support-mods-phpbb3/">forums de support des MODs de phpBB-fr.com</a>.',
 	'STEP1_HACKED'			=> 'Votre forum a été piraté ?',
 	'STEP1_HACKED_EXPLAIN'	=> 'Sélectionnez « Oui » si vous cherchez du support car votre forum a été effacé ou endommagé d’une façon quelconque.',
-	'STEP1_HACKED_ERROR'	=> 'Si votre forum a été piraté, nous vous demandons de déposer un rapport au Suivi des Enquêtes sur les Incidents au lieu de poster dans le forum de support afin qu’aucune information privée ne soit divulguée.<br /><br />Lisez <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">ce sujet</a> pour les instructions à suivre.',
+	'STEP1_HACKED_ERROR'	=> 'Si votre forum a été piraté, nous vous demandons de déposer un rapport au Suivi des Enquêtes sur les Incidents au lieu de poster dans le forum de support afin qu’aucune information privée ne soit divulguée.<br /><br />Lisez <a href="http://www.phpbb.com/community/viewtopic.php?f=46&t=543171#iit">ce sujet</a> (en anglais) pour les instructions à suivre.',
 ));
 
 // The questions

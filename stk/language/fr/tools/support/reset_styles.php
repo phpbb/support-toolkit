@@ -4,7 +4,7 @@
 * [french]
 *
 * @package Support Toolkit - Reset Styles
-* @version $Id:	papicx	1.0.7	18/04/2013	14h47	$
+* @version $Id:	papicx	1.0.7	05/05/2013	16h07	$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @Translation phpBB-fr http://www.phpbb-fr.com
@@ -43,8 +43,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'RESET_STYLES'			=> 'Réinitialiser les styles',
 	'RESET_STYLES_EXPLAIN'	=> 'Cet outil vous permet de modifier le style par défaut du forum.',
-	'RESET_STYLE_COMPLETE'	=> 'Le style par défaut a été modifié avec succès.',
+	'RESET_STYLE_COMPLETE'	=> 'Le style par défaut a été modifié.',
 
 	'STYLE'					=> 'Style',
-	'STYLE_EXPLAIN'			=> 'Sélectionnez le style que vous souhaitez utiliser comme style par défaut.',
+	'STYLE_EXPLAIN'			=> 'Sélectionnez le style que vous souhaitez définir comme style par défaut.',
 ));
