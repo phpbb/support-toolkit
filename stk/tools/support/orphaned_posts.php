@@ -189,6 +189,7 @@ class orphaned_posts
 					}
 
 					// Make sure the specified topic IDs exist
+					$topic_ids = array_values($post_map);
 					$sql = 'SELECT topic_id FROM ' . TOPICS_TABLE . ' WHERE ' . $db->sql_in_set('topic_id', $topic_ids);
 					$result = $db->sql_query($sql);
 
