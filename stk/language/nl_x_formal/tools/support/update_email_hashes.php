@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Update email hashes
-* @version $Id: update_email_hashes.php 327 2010-10-17 21:01:58Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */

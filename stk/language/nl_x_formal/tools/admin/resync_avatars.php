@@ -1,11 +1,12 @@
 <?php
 /**
- *
- * @package Support Toolkit - Resync Avatars
- * @copyright (c) 2009 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- */
+*
+* @package Support Toolkit - Resync Avatars
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
 /**
  * DO NOT CHANGE

@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Make Founder
-* @version $Id: manage_founders.php 326 2010-10-17 20:59:38Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'BOTH_FIELDS_FILLED'		=> 'De velden gebruikersnaam en gebruikers-ID mogen beide niet ingevuld zijn.',
+
 	'DEMOTE_FAILED'				=> 'Kon niet de oprichterstatus verwijderen van alle gebruikers!',
 	'DEMOTE_FOUNDERS'			=> 'Oprichters degraderen',
 	'DEMOTE_SUCCESSFULL'		=> 'De oprichterstatus is succesvol verwijderd van %d gebruikers!',
@@ -53,9 +55,11 @@ $lang = array_merge($lang, array(
 	'NO_FOUNDERS'				=> 'Er zijn geen oprichters gevonden',	
 
 	'PROMOTE_FOUNDER'			=> 'Naar oprichter promoveren',
-
-	'USER_TO_FOUNDER'			=> 'Gebruiker die oprichter moet worden',
-	'USER_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikersnaam of het gebruikers-ID in van de gebruiker die u wilt die een forumoprichter moet worden.',
+	
+	'USER_NAME_TO_FOUNDER'			=> 'Gebruikersnaam die oprichter moet worden',
+	'USER_NAME_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikersnaam van de gebruiker in die u wenst forumoprichter te maken.',
+	'USER_ID_TO_FOUNDER'			=> 'Gebruikers-ID die oprichter moet worden',
+	'USER_ID_TO_FOUNDER_EXPLAIN'	=> 'Voer de gebruikers-ID van de gebruiker in die u wenst forumoprichter te maken.',
 ));
 
 ?>

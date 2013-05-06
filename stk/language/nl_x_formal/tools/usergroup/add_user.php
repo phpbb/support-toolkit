@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Add User
-* @version $Id: add_user.php 274 2010-02-23 10:21:27Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
