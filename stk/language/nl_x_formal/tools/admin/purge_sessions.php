@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - SQL Query
+* @package Support Toolkit - Purge Sessions
 * @version $Id$
 * @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -38,19 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ERROR_QUERY'					=> 'De query bevat de volgende fout',
-
-	'NO_RESULTS'					=> 'Geen resultaten',
-	'NO_SQL_QUERY'					=> 'U moet een query invoeren',
-
-	'QUERY_RESULT'					=> 'Query resultaten',
-
-	'SHOW_RESULTS'					=> 'Resultaten weergeven',
-	'SQL_QUERY'						=> 'SQL-query uitvoeren',
-	'SQL_QUERY_EXPLAIN'				=> 'Voer de SQL-query in die u wilt uitvoeren. Het hulpmiddel zal de “phpbb_” prefix vervangen met de prefix die u gebruikt.',
-	
-	'SQL_QUERY_LEGEND'				=> 'SQL-query',
-	'SQL_QUERY_SUCCESS'				=> 'De SQL-query is uitgevoerd.',
+	'PURGE_SESSIONS'			=> 'Sessies legen',
+	'PURGE_SESSIONS_COMPLETE'	=> 'De sessies zijn succesvol geleegd.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Dit hulpmiddel zorgt ervoor dat alle huidige sessies worden verwijderd en alle gebruikers worden afgemeld. Weet u zeker dat u door wilt gaan?',
 ));
-
-?>

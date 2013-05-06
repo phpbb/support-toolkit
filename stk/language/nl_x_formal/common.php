@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit
-* @version $Id: common.php 325 2010-10-17 20:54:48Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -74,6 +74,9 @@ $lang = array_merge($lang, array(
 
    'NOTICE'								=> 'Notitie',
    'NO_VERSION_FILE'					=> 'De Support toolkit (STK) kon niet bepalen of u de laatste versie gebruikt van de STK. Ga naar de <a href="http://www.phpbb.com/support/stk">Support toolkit pagina op phpBB.com</a> en kijk of u de laatste versie gebruikt voordat u verder gaat met het gebruiken van de STK.',
+
+   'REQUEST_PHPBB_VERSION'				=> 'Selecteer phpBB-versie',
+   'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'De Support Toolkit (STK) was niet in staat om de juiste phpBB-versie te achterhalen die u momenteel gebruikt, selecteer om deze reden de juiste versie voordat u verder gaat.<br />Dit betekend dat uw forumbestanden niet gelijk zijn met de forumversie die u gebruikt, dit komt meestal doordat een update niet volledig is uitgevoerd. Bezoek de <a href="http://forum.phpbbservice.nl/viewforum.php?f=42">supportforums</a> om hulp te krijgen om dit probleem op te lossen.',
 
    'PASS_GENERATED'						=> 'Uw STK-wachtwoordbestand is succesvol gegenereerd!<br/>Het wachtwoord dat is gegenereerd voor u is: <em>%1$s</em><br />Dit wachtwoord is geldig tot: <span style="text-decoration: underline;">%2$s</span>. Na deze tijd <strong>moet</strong> u een nieuw wachtwoordbestand generen om gebruik te kunnen maken van de nood aanmeldingsfunctie!<br /><br />Gebruik de onderstaande knop om het bestand te downloaden. Wanneer u het bestand hebt gedownload moet u het uploaden naar uw server in de “stk”-directory.',
    'PASS_GENERATED_REDIRECT'			=> 'Wanneer u het wachtwoordbestand in de juiste locatie hebt geüpload, klikt u <a href="%s">hier</a> om terug te gaan naar de aanmeldingspagina.',
