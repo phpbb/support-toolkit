@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Change Password
-* @version $Id: change_password.php 281 2010-02-28 18:31:31Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -39,13 +39,18 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CHANGE_PASSWORD'			=> 'Wachtwoord wijzigen',
-	'CHANGE_PASSWORD_EXPLAIN'	=> 'Wijzig het wachtwoord van een gebruiker.',
+	'CHANGE_PASSWORD_EXPLAIN'	=> 'Wijzig een wachtwoord van een gebruiker(s).<br /><strong>U kunt de gebruikersnaam of het gebruikers-ID hier invoeren, maar niet beide.</strong>',
 	'CHANGE_PASSWORD_SUCCESS'	=> 'Het wachtwoord voor <a href="%s">%s</a> is succesvol gewijzigd.',
+	
+	'FIELDS_NOT_FILLED'			=> 'Tenminste één veld moet ingevuld zijn.',
+	'FIELDS_BOTH_FILLED'		=> 'Alleen één veld mag ingevuld zijn',	
 
 	'PASSWORD_CONFIRM'			=> 'Wachtwoord herinvoeren',
-
-	'USERNAMEID'				=> 'Gebruikersnaam of gebruikers-ID',
-	'USERNAMEID_EXPLAIN'		=> 'Voer hier de gebruikersnaam of het gebruikers-ID in, van de gebruiker waarvan u het wachtwoord wilt wijzigen.',
+	
+	'USERNAME_NAME'				=> 'Gebruikersnaam',
+	'USERNAME_NAME_EXPLAIN'		=> 'Voer de gebruikersnaam van de gebruiker waarvan u het wachtwoord wilt wijzigen hier in.',
+	'USERNAMEID'				=> 'Gebruikers-ID',
+	'USERNAMEID_EXPLAIN'		=> 'Voer de gebruikers-ID van de gebruiker waarvan u het wachtwoord wilt wijzigen hier in.',	
 ));
 
 ?>

@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Reparse BBCode
-* @version $Id: reparse_bbcode.php 331 2010-11-27 18:33:27Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */

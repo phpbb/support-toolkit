@@ -2,8 +2,8 @@
 /**
 *
 * @package Support Toolkit - Restore Delted Users
-* @version $Id: restore_deleted_users.php 327 2010-10-17 21:01:58Z Raimon $
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -38,6 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'DAMAGED_POSTS'			=> 'Beschadigde berichten',
+	'DAMAGED_POSTS_EXPLAIN'	=> 'De volgende bericht-IDs bevatten gebruikersinformatie die te beschadigd zijn om hersteld te kunnen worden. Bezoek de <a href="http://forum.phpbbservice.nl/viewforum.php?f=42">supportforums</a> om hulp te krijgen om dit probleem op te lossen.',
+	
 	'NO_DELETED_USERS'	=> 'Er zijn geen gebruikers die kunnen worden herstelt.',
 	'NO_USER_SELECTED'	=> 'er zijn geen gebruikers geselecteerd!',
 

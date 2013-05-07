@@ -2,7 +2,8 @@
 /**
 *
 * @package Support Toolkit - MySQL Upgrader
-* @copyright (c) 2009 phpBB Group
+* @version $Id$
+* @copyright (c) 2009 phpBB Group , 2013 http://www.phpBBservice.nl
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
