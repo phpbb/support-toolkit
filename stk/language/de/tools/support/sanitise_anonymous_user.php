@@ -1,13 +1,12 @@
 <?php
 /**
 *
-* @package Support Toolkit - Anonymous group check
-* @version $Id: sanitise_anonymous_user.php 544 2011-01-30 16:52:26Z philippk $
+* @package Support Toolkit - Anonymous group check [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/AUTHORS und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
 *
 */
 

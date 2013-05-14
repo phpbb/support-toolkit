@@ -1,10 +1,12 @@
 <?php
 /**
 *
-* @package Support Toolkit - Update email hashes
-* @version $Id: update_email_hashes.php 544 2011-01-30 16:52:26Z philippk $
+* @package Support Toolkit - Update email hashes [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
 *
 */
 

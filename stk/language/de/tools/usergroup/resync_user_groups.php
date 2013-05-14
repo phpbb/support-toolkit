@@ -1,13 +1,14 @@
 <?php
 /**
- *
- * @package Support Toolkit - Resynchronise Registered users groups
- * @copyright (c) 2009 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
- * siehe docs/AUTHORS und http://www.phpbb.de/go/ubersetzerteam
- */
+*
+* @package Support Toolkit - Resynchronise Registered users groups [Deutsch — Du]
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+*
+*/
 
 /**
 * DO NOT CHANGE

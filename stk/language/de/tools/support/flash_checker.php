@@ -1,17 +1,18 @@
 <?php
 /**
- *
- * @package Support Toolkit - Flash checker
- * @copyright (c) 2009 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
- * siehe docs/AUTHORS und http://www.phpbb.de/go/ubersetzerteam
- */
+*
+* @package Support Toolkit - Flash checker [Deutsch — Du]
+* @copyright (c) 2009 phpBB Group
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+*
+*/
 
 /**
- * DO NOT CHANGE
- */
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
