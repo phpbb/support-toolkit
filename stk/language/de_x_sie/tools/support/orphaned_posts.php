@@ -56,10 +56,10 @@ $lang = array_merge($lang, array(
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Den folgenden Beiträgen sind keine Themen zugeordnet. Geben Sie eine neue Themen-ID ein, um diese Beiträge mit dem Thema zu verbinden.',
 	'NO_ORPHANED_POSTS'			=> 'Keine verwaisten Beiträge gefunden',
 	'NO_TOPIC_IDS'				=> 'Keine Themen-ID angegeben',
-	'NONEXISTENT_TOPIC_IDS'		=> 'Die folgenden Ziel Themen-IDs existieren nicht: %s.<br />Bitte überprüfen Sie die angegeben Themen-IDs.',
+	'NONEXISTENT_TOPIC_IDS'		=> 'Die folgenden Ziel-Themen-IDs existieren nicht: %s.<br />Bitte überprüfen Sie die angegeben Themen-IDs.',
 	'REASSIGN'					=> 'Neu zuordnen',
 
-	'DELETE_SHADOWS'			=> 'Per Klick werden alle ausgewählten Links zu verschobenen Themen gelöscht. (Dieser Schritt kann nicht rückgängig gemacht werden!)',
+	'DELETE_SHADOWS'			=> 'Per Klick werden alle ausgewählten verwaisten Links gelöscht. (Dieser Schritt kann nicht rückgängig gemacht werden!)',
 	'ORPHANED_SHADOWS'			=> 'Verwaiste Links zu verschobenen Themen',
 	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Die folgenden Links gehören zu verschobenen Themen, die nicht mehr existieren.',
 	'NO_ORPHANED_SHADOWS'		=> 'Keine verwaisten Links zu verschobenen Themen gefunden',

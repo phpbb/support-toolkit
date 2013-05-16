@@ -41,7 +41,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'DAMAGED_POSTS'			=> 'Beschädigte Beiträge',
-	'DAMAGED_POSTS_EXPLAIN'	=> 'Die folgenden Beitrags-IDs enthalten Benutzerinformationen, die zu beschädigt sind um wiederhergestellt zu werden. Bitte besuche die <a href="https://www.phpbb.de/community/viewforum.php?f=97">Supportforen</a> um Hilfe bei der Problemlösung zu erhalten.',
+	'DAMAGED_POSTS_EXPLAIN'	=> 'Die Benutzer-Informationen folgender Beitrags-IDs sind zu stark beschädigt, um wiederhergestellt werden zu können. Bitte besuche die <a href="https://www.phpbb.de/community/viewforum.php?f=97">Supportforen</a>, um Hilfe bei der Problemlösung zu erhalten.',
 
 	'NO_DELETED_USERS'	=> 'Es sind keine gelöschten Benutzer vorhanden, die wiederhergestellt werden könnten.',
 	'NO_USER_SELECTED'	=> 'Es wurden keine Benutzer ausgewählt!',
