@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 //	'STEP1_CONVERT'			=> '',
 //	'STEP1_CONVERT_EXPLAIN'	=> '',
-	'STEP1_MOD'				=> 'Bezieht sich dein Problem auf einen Modifikation (Mod)?',
+	'STEP1_MOD'				=> 'Bezieht sich dein Problem auf eine Modifikation (Mod)?',
 	'STEP1_MOD_EXPLAIN'		=> 'Hat das Problem nach der Installation oder Deinstallation einer Modifikation (Mod) begonnen?',
 	'STEP1_MOD_ERROR'		=> 'Supportfragen für Modifikations-spezifische Probleme sollten dort gestellt werden, wo du die Modifikation heruntergeladen hast (z. B. wenn du gerade eine Modifikation installiert hast und nun Fehlermeldungen bekommst). Wenn du die Modifikation von einer anderen Seite als phpBB.com hast, musst du dort nach Support suchen.<br /><br /><a href="http://www.phpbb.com/community/viewforum.php?f=81">Zu den Mod-Foren gehen</a>',
 	'STEP1_HACKED'			=> 'Wurde dein Board gehackt?',
@@ -85,8 +85,8 @@ $lang = array_merge($lang, array(
 			'problem_started'		=> 'Wann ist das Problem zum ersten Mal aufgetreten?',
 			'problem_description'	=> 'Bitte beschreibe dein Problem.',
 			'installed_mods'		=> 'Welche Modifikationen (Mods) hast du installiert?',
-			'test_username'			=> 'Welcher Benuter kann verwendet werden, um das Problem zu nachzuvollziehen?',
-			'test_password'			=> 'Welches Passwort kann verwendet werden, um das Problem zu nachzuvollziehen?',
+			'test_username'			=> 'Welcher Benuter kann verwendet werden, um das Problem nachzuvollziehen?',
+			'test_password'			=> 'Welches Passwort kann verwendet werden, um das Problem nachzuvollziehen?',
 		),
 	),
 ));

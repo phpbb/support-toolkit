@@ -85,8 +85,8 @@ $lang = array_merge($lang, array(
 			'problem_started'		=> 'Wann ist das Problem zum ersten Mal aufgetreten?',
 			'problem_description'	=> 'Bitte beschreiben Sie Ihr Problem.',
 			'installed_mods'		=> 'Welche Modifikationen (Mods) haben Sie installiert?',
-			'test_username'			=> 'Welcher Benuter kann verwendet werden, um das Problem zu nachzuvollziehen?',
-			'test_password'			=> 'Welches Passwort kann verwendet werden, um das Problem zu nachzuvollziehen?',
+			'test_username'			=> 'Welcher Benuter kann verwendet werden, um das Problem nachzuvollziehen?',
+			'test_password'			=> 'Welches Passwort kann verwendet werden, um das Problem nachzuvollziehen?',
 		),
 	),
 ));
