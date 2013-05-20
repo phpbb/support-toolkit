@@ -6,7 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und https://www.phpbb.de/go/ubersetzerteam
 *
 */
 
@@ -78,7 +78,7 @@ $lang = array_merge($lang, array(
 	'NO_VERSION_FILE'					=> 'Das Support Toolkit (STK) war nicht in der Lage, die aktuelle Version zu ermitteln. Bitte besuchen Sie die <a href="http://phpbb.com/support/stk">Seiten des Support Toolkits auf phpBB.com</a> und prüfen Sie, ob Sie die aktuelle Version verwenden, bevor Sie fortfahren.',
 
 	'REQUEST_PHPBB_VERSION'				=> 'phpBB-Version festlegen',
-	'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'Die Support-Tools waren nicht in der Lage, die verwendete phpBB-Version zu identifizieren. Bitte wählen Sie die richtige Version aus der Liste aus, bevor Sie fortfahren.<br />Bitte besuchen Sie die <a href="http://www.phpbb.com/community/viewforum.php?f=46">Support-Foren</a> (<a href="http://www.phpbb.de/go/3/supportforum">deutschsprachige Foren</a>), um Unterstützung bei der Behebung des Problems zu erhalten.',
+	'REQUEST_PHPBB_VERSION_EXPLAIN'		=> 'Die Support-Tools waren nicht in der Lage, die verwendete phpBB-Version zu identifizieren. Bitte wählen Sie die richtige Version aus der Liste aus, bevor Sie fortfahren.<br />Bitte besuchen Sie die <a href="http://www.phpbb.com/community/viewforum.php?f=46">Support-Foren</a> (<a href="https://www.phpbb.de/go/3/supportforum">deutschsprachige Foren</a>), um Unterstützung bei der Behebung des Problems zu erhalten.',
 
 	'PASS_GENERATED'					=> 'Ihre STK Passwort-Datei wurde erfolgreich erstellt!<br/>Das Passwort, das für Sie erstellt wurde, lautet: <em>%1$s</em><br />Dieses Passwort ist gültig bis: <span style="text-decoration: underline;">%2$s</span>. Nach Ablauf dieser Zeit <strong>müssen</strong> Sie eine neue Passwort-Datei erstellen, um den Notfall-Zugang weiterhin nutzen zu können!<br /><br />Benutzen Sie die folgende Schaltfläche, um die Datei herunterzuladen. Anschließend müssen Sie die Datei in das „stk“-Verzeichnis des Servers hochladen.',
 	'PASS_GENERATED_REDIRECT'			=> 'Sobald Sie die Datei im richtigen Verzeichnis hochgeladen haben, klicken Sie <a href="%s">hier</a>, um zur Anmelde-Seite zurückzukehren.',

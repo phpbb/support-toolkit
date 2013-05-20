@@ -43,12 +43,12 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Unterhalb ist deine Kopie des Support Request Templates. Kopiere das Template in deine Zwischenablage, danach erstellst du mit diesen Informationen ein neues Thema in den <a href="https://www.phpbb.de/community/viewforum.php?f=97">Supportforen</a>. Wenn du schon ein Thema zu diesem Problem eröffnet hast, kopiere bitte das Template in eine Antwort auf dieses Thema und erstelle kein neues Thema.',
-	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Der Support Request Template Generator konnte die Antworten nicht empfangen. Stelle sicher, dass du das Tool korrekt gestartet hast.',
-	'SRT_GENERATOR'					=> 'Support Request Template Generator',
-	'SRT_GENERATOR_LANDING'			=> 'Support Request Template Generator',
-	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Willkommen beim Support Teams Support Request Template Generator. Das ist die schnellste und effizienteste Methode unsere Support Anfrage Vorlage auszufüllen. Der Generator wird dir eine Reihe von acht bis zehn Fragen stellen, die hilfreich sind die meisten Probleme zu erkennen. Danach werden deine Antworten in einer Liste zusammengestellt die du kopieren und in dein Support Thema einfügen kannst.<br />Dieses STK Tool macht das gleiche wie der <a href="http://www.phpbb.com/support/stk/">SRT Generator auf www.phpbb.com</a> aber versucht verschiedene Fragen automatisch auszufüllen.<br /><br />Willst du den Support Anfrage Vorlagen Generator starten?',
-	'SRT_NO_CACHE'					=> 'Der Support Anfrage Vorlage Generator verwendet das phpBB Cachesystem um die Informationen zwischen zu speichern, während du durch alle Schritte gehst. Du nutzt den phpBB null Cache, der ist mit diesem Tool nicht kompatibel. Bitte wechsel zu einem anderen Caching Backend, um das Tool zu nutzen oder nutze den <a href="http://www.phpbb.com/support/srt/">online Generator</a>',
+	'COMPILED_TEMPLATE_EXPLAIN'		=> 'Unterhalb ist deine Vorlage für die Supportanfrage. Kopiere das Template in deine Zwischenablage, danach erstellst du mit diesen Informationen ein neues Thema in den <a href="http://www.phpbb.de/go/3/supportforum">Supportforen</a>. Wenn du schon ein Thema zu diesem Problem eröffnet hast, kopiere bitte das Template in eine Antwort auf dieses Thema und erstelle kein neues Thema.',
+	'COULDNT_LOAD_SRT_ANSWERS'		=> 'Der Vorlagengenerator für Supportanfragen konnte die Antworten nicht empfangen. Stelle sicher, dass du das Tool korrekt gestartet hast.',
+	'SRT_GENERATOR'					=> 'Vorlagengenerator für Supportanfragen',
+	'SRT_GENERATOR_LANDING'			=> 'Vorlagengenerator für Supportanfragen',
+	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Willkommen beim Vorlagengenerator für Supportanfragen. Dies ist die schnellste und effizienteste Methode, unsere Vorlage für Support-Anfragen auszufüllen. Der Generator wird dir eine Reihe von acht bis zehn Fragen stellen, die dabei helfen, die meisten Probleme zu erkennen. Danach werden deine Antworten in einer Liste zusammengestellt. Diese kannst du kopieren und in dein Support-Thema einfügen.<br />Dieses STK-Tool macht das gleiche wie der <a href="http://www.phpbb.com/support/stk/">Vorlagengenerator für Supportanfragen auf www.phpbb.com</a>, versucht aber, verschiedene Fragen automatisch auszufüllen.<br /><br />Willst du den Vorlagengenerator für Supportanfragen starten?',
+	'SRT_NO_CACHE'					=> 'Der Vorlagengenerator für Supportanfragen verwendet das Cache-System von phpBB, um die Informationen zwischenzuspeichern, während du durch alle Schritte gehst. Du nutzt den phpBB null-Cache, der mit diesem Tool nicht kompatibel ist. Bitte wechsel zu einem anderen Caching-Backend, um das Tool zu nutzen oder nutze die <a href="http://www.phpbb.com/support/srt/">Online-Version</a>'.,
 	'START_OVER'					=> 'Neu beginnen',
 ));
 
@@ -95,7 +95,7 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'SRT_QUESTIONS_EXPLAIN'	=> array(
 		'step2'	=> array(
-			'phpbb_version'		=> 'Der SRT-Generator konnte die phpBB-Version nicht bestimmen, bitte wähle die richtige aus. Um diese Angabe zu finden, musst du dich auf deinem Board anmelden und ganz nach unten scrollen. Klick dort auf „Administrations-Bereich“ und wechsel auf das Register „System“.',
+			'phpbb_version'		=> 'Der Vorlagengenerator für Supportanfragen konnte die phpBB-Version nicht bestimmen, bitte wähle die richtige aus. Um diese Angabe zu finden, musst du dich auf deinem Board anmelden und ganz nach unten scrollen. Klick dort auf „Administrations-Bereich“ und wechsel auf das Register „System“.',
 			'board_url'			=> 'Die URL des Boards ist die Adresse, die du verwendest, um dein Board aufzurufen. Die meisten Probleme lassen sich einfacher lösen, wenn man das Board aufrufen kann. Wenn du uns diese Information nicht geben willst, gib „n/a“ ein.',
 			'dbms'				=> 'Um den Datenbanktyp und die Datenbankversion bestimmen zu können, wechsle in den Administrations-Bereich. Im Register „Allgemein“ findest du den Eintrag „Datenbank-Server“ in der Tabelle „Board-Statistik“.',
 			'php'				=> 'Um die PHP-Version zu bestimmen, wechsle in den Administrations-Bereich. Im Register „Allgemein" rufst du „PHP-Information“ auf, dort siehst du die Information „PHP Version x.y.z“',
