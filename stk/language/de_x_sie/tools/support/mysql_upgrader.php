@@ -6,7 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und https://www.phpbb.de/go/ubersetzerteam
 *
 */
 
@@ -42,7 +42,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER'					=> 'MySQL-Upgrade-Tool',
 	'MYSQL_UPGRADER_BACKUP'				=> 'Dieses Tool ist gefährlich. Stellen Sie sicher, dass Sie ein Backup Ihrer Datenbank erstellt haben, bevor Sie es verwenden!',
-	'MYSQL_UPGRADER_EXPLAIN'			=> 'Dieses Tool löst verschiedene Probleme, die auftreten, wenn die von Ihrer phpBB-Version verwendete MySQL-Datenbank aktualisiert wird. Diese Aktualisierung kann dazu führen, dass das Schema der Datenbank inkompatibel mit der neuen Version ist. <em>Weitere Informationen sind im Artikel „<a href="http://www.phpbb.com/kb/article/doesnt-have-a-default-value-errors">Doesn’t have a default value errors</a>“ der Knowledge Base beschrieben (<a href="http://www.phpbb.de/kb/no_default">Deutsche Version</a>).</em>',
+	'MYSQL_UPGRADER_EXPLAIN'			=> 'Dieses Tool löst verschiedene Probleme, die auftreten, wenn die von Ihrer phpBB-Version verwendete MySQL-Datenbank aktualisiert wird. Diese Aktualisierung kann dazu führen, dass das Schema der Datenbank inkompatibel mit der neuen Version ist. <em>Weitere Informationen sind im Artikel „<a href="http://www.phpbb.com/kb/article/doesnt-have-a-default-value-errors">Doesn’t have a default value errors</a>“ der Knowledge Base beschrieben (<a href="https://www.phpbb.de/kb/no_default">Deutsche Version</a>).</em>',
 	'MYSQL_UPGRADER_DOWNLOAD'			=> 'Download',
 	'MYSQL_UPGRADER_DOWNLOAD_EXPLAIN'	=> 'Wenn diese Option ausgewählt wird, wird das MySQL-Upgrade-Tool die erforderlichen Abragen erstellen und anzeigen. Sie können das Ergebnis als Datei herunterladen.',
 	'MYSQL_UPGRADER_RESULT'				=> 'Diese Abfragen müssen ausgeführt werden, um das Datenbank-Schema für die aktuell verwendete MySQL-Version zu aktualisieren. <a href="%s">Hier</a> können die Abfragen als .sql-Datei heruntergeladen werden.',

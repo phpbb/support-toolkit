@@ -6,7 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 * Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
-* siehe docs/README und http://www.phpbb.de/go/ubersetzerteam
+* siehe docs/README und https://www.phpbb.de/go/ubersetzerteam
 *
 */
 
@@ -63,7 +63,7 @@ $lang = array_merge($lang, array(
 
 	'EMPTY_PREFIX'					=> 'Kein Tabellen-Präfix',
 	'EMPTY_PREFIX_CONFIRM'			=> 'Die Datenbank-Bereinigung soll Änderungen an den Tabellen Ihrer Datenbank durchführen. Da Sie keinen Tabellen-Präfix verwenden, können dadurch Tabellen anderer Anwendungen geändert werden. Sind Sie sicher, dass der Vorgang fortgesetzt werden soll?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'Die Datenbank-Bereinigung hat festgestellt, dass Sie keinen Präfix für die phpBB-Tabellen verwenden. Daher prüft die Datenbank-Bereinigung <strong>alle</strong> Tabellen in der Datenbank. Seien Sie vorsichtig, wenn Sie den Vorgang fortsetzen und entfernen Sie alle Tabellen, die nicht von phpBB stammen, aus der Auswahl. Andernfalls werden die Datenbank-Tabellen beschädigt, die nicht zu phpBB gehören.<br />Wenn Sie sich nicht sicher sind, wie Sie diesen Vorgang durchführen sollen, dann fragen Sie im <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB-Support-Forum</a> nach Unterstützung (<a href="http://www.phpbb.de/go/3/supportforum">Deutschsprachiger Support</a>).',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'Die Datenbank-Bereinigung hat festgestellt, dass Sie keinen Präfix für die phpBB-Tabellen verwenden. Daher prüft die Datenbank-Bereinigung <strong>alle</strong> Tabellen in der Datenbank. Seien Sie vorsichtig, wenn Sie den Vorgang fortsetzen und entfernen Sie alle Tabellen, die nicht von phpBB stammen, aus der Auswahl. Andernfalls werden die Datenbank-Tabellen beschädigt, die nicht zu phpBB gehören.<br />Wenn Sie sich nicht sicher sind, wie Sie diesen Vorgang durchführen sollen, dann fragen Sie im <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB-Support-Forum</a> nach Unterstützung (<a href="https://www.phpbb.de/go/3/supportforum">Deutschsprachiger Support</a>).',
 	'ERROR'							=> 'Fehler',
 	'EXTRA'							=> 'Zusätzlich',
 	'EXTENSION_GROUPS_SUCCESS'		=> 'Die Dateityp-Gruppen wurden erfolgreich zurückgesetzt',
