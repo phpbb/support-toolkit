@@ -1,10 +1,12 @@
 <?php
 /**
 *
-* @package Support Toolkit - Tutorial
-* @version $Id: tutorial.php 544 2011-01-30 16:52:26Z philippk $
+* @package Support Toolkit - Tutorial [Deutsch — Du]
 * @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+* Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de:
+* siehe docs/README und https://www.phpbb.de/go/ubersetzerteam
 *
 */
 
@@ -22,9 +24,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -47,6 +46,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'TUTORIAL'			=> 'This is a tutorial',
-	'TUTORIAL_EXPLAIN'	=> 'This is an explanation for the tutorial',
+	'TUTORIAL'			=> 'Das ist ein Tutorial',
+	'TUTORIAL_EXPLAIN'	=> 'Das ist eine Beschreibung für das Tutorial',
 ));
