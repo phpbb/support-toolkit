@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	'SRT_GENERATOR'					=> 'Vorlagengenerator für Supportanfragen',
 	'SRT_GENERATOR_LANDING'			=> 'Vorlagengenerator für Supportanfragen',
 	'SRT_GENERATOR_LANDING_CONFIRM'	=> 'Willkommen beim Vorlagengenerator für Supportanfragen. Dies ist die schnellste und effizienteste Methode, unsere Vorlage für Support-Anfragen auszufüllen. Der Generator wird dir eine Reihe von acht bis zehn Fragen stellen, die dabei helfen, die meisten Probleme zu erkennen. Danach werden deine Antworten in einer Liste zusammengestellt. Diese kannst du kopieren und in dein Support-Thema einfügen.<br />Dieses STK-Tool macht das gleiche wie der <a href="http://www.phpbb.com/support/stk/">Vorlagengenerator für Supportanfragen auf www.phpbb.com</a>, versucht aber, verschiedene Fragen automatisch auszufüllen.<br /><br />Willst du den Vorlagengenerator für Supportanfragen starten?',
-	'SRT_NO_CACHE'					=> 'Der Vorlagengenerator für Supportanfragen verwendet das Cache-System von phpBB, um die Informationen zwischenzuspeichern, während du durch alle Schritte gehst. Du nutzt den phpBB null-Cache, der mit diesem Tool nicht kompatibel ist. Bitte wechsel zu einem anderen Caching-Backend, um das Tool zu nutzen oder nutze die <a href="http://www.phpbb.com/support/srt/">Online-Version</a>'.,
+	'SRT_NO_CACHE'					=> 'Der Vorlagengenerator für Supportanfragen verwendet das Cache-System von phpBB, um die Informationen zwischenzuspeichern, während du durch alle Schritte gehst. Du nutzt den phpBB null-Cache, der mit diesem Tool nicht kompatibel ist. Bitte wechsel zu einem anderen Caching-Backend, um das Tool zu nutzen oder nutze die <a href="http://www.phpbb.com/support/srt/">Online-Version</a>.',
 	'START_OVER'					=> 'Neu beginnen',
 ));
 
