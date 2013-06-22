@@ -1,13 +1,14 @@
-Deutsch (Du) für Support Toolkit (STK) 1.0.3 (Stand: 2011-06-05)
+Deutsch (Du) für Support Toolkit (STK) 1.0.7
 
-Deutsche Übersetzung durch die Übersetzer-Gruppe von phpBB.de
-Siehe docs/AUTHORS für die aktuellen und die ehemaligen Mitglieder
-Das aktuelle Team: http://www.phpbb.de/go/ubersetzerteam
-
+Übersetzung durch
+-----------------
+BlackHawk87 (Christian Schnegelberger)  [2013 - ]
+nickvergessen (Joas Schilling)          [2013 - ]
+PhilippK (Philipp Kordowich)            [2009 - ]
 
 Lizenz
 ------
-Diese Sprachdateien für phpBB3 unterliegen der GPL (siehe LICENSE).
+Diese Sprachdateien für das Support-Toolkit unterliegen der GPL v2 (siehe LICENSE).
 
 Rechtliche Hinweise
 -------------------
@@ -19,4 +20,4 @@ Verfügung gestellt.
 Fehler
 ------
 Fehler in den deutschen Sprachdateien können unter
-http://www.phpbb.de/go/3/sprachdateienfehler gemeldet werden.
+https://www.phpbb.de/go/3/ubersetzungen gemeldet werden.

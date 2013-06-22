@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Resync Avatars [Deutsch — Sie]
+* @package Support Toolkit - Purge Sessions [Deutsch — Sie]
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -40,9 +40,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RESYNC_AVATARS'			=> 'Avatare synchronisieren',
-	'RESYNC_AVATARS_CONFIRM'	=> 'Dieses Tool stellt sicher, dass für alle Avatare in der Datenbank auch eine Datei auf dem Server existiert. Wenn die Datei fehlt, wird der Avatar aus der Datenbank entfernt. Sind Sie sicher, dass Sie den Vorgang fortsetzen möchten?',
-	'RESYNC_AVATARS_FINISHED'	=> 'Die Avatare wurden erfolgreich synchronisiert!',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Fahre mit den Gruppen-Avataren fort. Bitte unterbrechen Sie diesen Vorgang nicht!',
-	'RESYNC_AVATARS_PROGRESS'	=> 'Die Synchronisierung der Avatare wird durchgeführt. Bitte unterbrechen Sie diesen Vorgang nicht.',
+	'PURGE_SESSIONS'			=> 'Sitzungsdaten löschen',
+	'PURGE_SESSIONS_COMPLETE'	=> 'Die Sitzungsdaten wurden erfolgreich gelöscht.',
+	'PURGE_SESSIONS_CONFIRM'	=> 'Sind Sie sicher, dass Sie alle Sitzungsdaten löschen möchten? Dadurch werden alle Benutzer abgemeldet.',
 ));
