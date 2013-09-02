@@ -48,6 +48,7 @@ update!
 
 = Changelog =
 == Changes since 1.0.7 ==
+* [Change] Adjust the error handler's support for E_STRICT and E_DEPRECATED warnings
 * [Fix] Add support for PHP 5.4 to the MySQL Upgrader. (Bug #63481)
 * [Fix] Undefined variable: topic_ids. (Bug #63475)
 
