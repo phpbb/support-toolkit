@@ -152,7 +152,8 @@ class mysql_upgrader
 					list($orig_column_type, $column_length) = explode(':', $column_data[0]);
 					$column_type = sprintf($umil->db_tools->dbms_type_map['mysql_41'][$orig_column_type . ':'], $column_length);
 
-					if (isset($umil->db_tools->dbms_type_map['mysql_40'][$orig_column_type . ':']['limit'][0]))
+					if (isset($umil->db_tools->dbms_type_map['mysql_40'][$orig_column_type . ':']['limit']) &&
+						isset($umil->db_tools->dbms_type_map['mysql_40'][$orig_column_type . ':']['limit'][0]))
 					{
 						switch ($umil->db_tools->dbms_type_map['mysql_40'][$orig_column_type . ':']['limit'][0])
 						{
