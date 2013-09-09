@@ -62,7 +62,7 @@ class sql_query
 			return;
 		}
 
-		if (!function_exists('recalc_nested_sets'))
+		if (!function_exists('remove_comments'))
 		{
 			include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
 		}
