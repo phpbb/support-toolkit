@@ -47,7 +47,6 @@ class purge_sessions
 		$sql_ary = array(
 			'session_id'			=> (string) $user->session_id,
 			'session_user_id'		=> (int) $user->data['user_id'],
-			'session_forum_id'		=> $user->page['forum'],
 			'session_start'			=> (int) $user->time_now,
 			'session_last_visit'	=> (int) $user->data['session_last_visit'],
 			'session_time'			=> (int) $user->time_now,
@@ -59,6 +58,11 @@ class purge_sessions
 			'session_admin'			=> 1,
 			'session_viewonline'	=> (int) $user->data['session_viewonline'],
 		);
+
+		if (version_compare(PHPBB_VERSION, '3.0.1', '>='))
+		{
+			$sql_ary['session_forum_id'] = $user->page['forum'];
+		}
 
 		$sql = 'INSERT INTO ' . SESSIONS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
 		$db->sql_query($sql);
