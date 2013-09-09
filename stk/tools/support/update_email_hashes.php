@@ -54,7 +54,7 @@ class update_email_hashes
 
 		foreach ($batch as $userrow)
 		{
-			$new_hash = phpbb_email_hash($userrow['user_email']);
+			$new_hash = $this->do_hash($userrow['user_email']);
 			if ($userrow['user_email_hash'] == $new_hash)
 			{
 				// Skip if the hash hasn't changed
@@ -71,5 +71,17 @@ class update_email_hashes
 		$template->assign_var('U_BACK_TOOL', false);
 
 		trigger_error('UPDATE_EMAIL_HASHES_NOT_COMPLETE');
+	}
+
+	/**
+	* Hashes an email address to a big integer (phpbb_email_hash)
+	*
+	* @param string $email		Email address
+	*
+	* @return string			Unsigned Big Integer
+	*/
+	function do_hash($email)
+	{
+		return sprintf('%u', crc32(strtolower($email))) . strlen($email);
 	}
 }
