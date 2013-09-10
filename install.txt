@@ -38,8 +38,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.8-dev ==
-To upgrade a previous version of the STK to 1.0.8-dev, remove your previous
+== Upgrade to 1.0.7-PL1 ==
+To upgrade a previous version of the STK to 1.0.7-PL1, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
