@@ -79,7 +79,7 @@ class change_password
 
 		$user_id = array();
 		$username = array();
-		$user_type = array();
+		$user_type = array(USER_NORMAL, USER_FOUNDER);
 
 		if (!empty($req_user_id))
 		{
@@ -89,7 +89,6 @@ class change_password
 		{
 			$username[] = $req_username;
 		}
-		$user_type[] = USER_NORMAL;
 
 		// Get user_id
 		$result = user_get_id_name($user_id, $username, $user_type);

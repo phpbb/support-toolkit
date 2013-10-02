@@ -5,7 +5,7 @@ Panel" that can be used to recover various part of a corrupted phpBB 3.0.x
 installation or to solve commonly encountered problems with the software.
 
 == Version ==
-Support Toolkit 1.0.8-dev
+Support Toolkit 1.0.7-PL1
 Supported phpBB versions 3.0.0 - 3.0.12
 
 == Authors ==
@@ -38,8 +38,8 @@ language folder to "stk/language/"
 
 
 = Upgrade Instructions=
-== Upgrade to 1.0.8-dev ==
-To upgrade a previous version of the STK to 1.0.8-dev, remove your previous
+== Upgrade to 1.0.7-PL1 ==
+To upgrade a previous version of the STK to 1.0.7-PL1, remove your previous
 installation by deleting the stk/ directory, then follow the Installation
 instructions above.
 If you had any translations installed you'll have to reinstall these after the
@@ -48,7 +48,11 @@ update!
 
 = Changelog =
 == Changes since 1.0.7 ==
+* [Change] Adjust the error handler's support for E_STRICT and E_DEPRECATED warnings
+* [Change] Improve backwards compatibility
+* [Fix] Add support for PHP 5.4 to the MySQL Upgrader. (Bug #63481)
 * [Fix] Undefined variable: topic_ids. (Bug #63475)
+* [Fix] Only synchronise PM reports on phpBB versions that support it.
 
 == Changes since 1.0.6 ==
 * [Add] Added support for phpBB 3.0.12.

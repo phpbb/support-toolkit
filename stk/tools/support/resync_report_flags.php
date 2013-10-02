@@ -75,8 +75,16 @@ class resync_report_flags
 	{
 		global $db;
 
-		// Fetch the report data
-		$reported = $this->_get_reported($type);
+		// PMs can only be reported since version 3.0.5
+		if ($type == 'pms' && version_compare(PHPBB_VERSION, '3.0.5', '<'))
+		{
+			$reported = array();
+		}
+		else
+		{
+			// Fetch the report data
+			$reported = $this->_get_reported($type);
+		}
 
 		// Anything to do at all?
 		if (!empty($reported))
@@ -175,9 +183,12 @@ class resync_report_flags
 	{
 		global $db;
 
+		// PMs can only be reported since version 3.0.5
+		$sql_id = 'post_id' . (version_compare(PHPBB_VERSION, '3.0.5', '>=') ? ', pm_id' : '');
+
 		// Fetch all the closed reports
 		$pms = $posts = array();
-		$sql = 'SELECT post_id, pm_id
+		$sql = 'SELECT ' . $sql_id . '
 			FROM ' . REPORTS_TABLE . '
 			WHERE report_closed = 1';
 		$result	= $db->sql_query($sql);

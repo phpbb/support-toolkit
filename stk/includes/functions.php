@@ -612,17 +612,20 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		return;
 	}
 
+	if (!defined('E_DEPRECATED'))
+	{
+		define('E_DEPRECATED', 8192);
+	}
+
+	// Ignore Strict and Deprecated notices
+	if (in_array($errno, array(E_STRICT, E_DEPRECATED)))
+	{
+		return true;
+	}
+
 	// We encounter an error while in the ERK, this need some special treatment
 	if (defined('IN_ERK'))
 	{
-		// The toolkit kills itself when the ERK encounters an `E_STRICT` error,
-		// if thats the case catch the error and ignore. Otherwise call the
-		// phpBB handler
-		if (in_array($errno, array(E_STRICT, E_DEPRECATED)))
-		{
-			return true;
-		}
-
 		$critical_repair->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
 	}
 	else if (!defined('IN_STK'))
@@ -635,6 +638,11 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 						 The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning.
 						 It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
 						 To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>.';
+		}
+
+		if (!isset($critical_repair))
+		{
+			$critical_repair = new critical_repair();
 		}
 
 		$critical_repair->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
@@ -735,7 +743,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 			}
 
 			// Do not send 200 OK, but service unavailable on errors
-			send_status_line(503, 'Service Unavailable');
+			stk_send_status_line(503, 'Service Unavailable');
 
 			garbage_collection();
 
@@ -806,7 +814,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 
 			if ($msg_text == 'ERROR_NO_ATTACHMENT' || $msg_text == 'NO_FORUM' || $msg_text == 'NO_TOPIC' || $msg_text == 'NO_USER')
 			{
-				send_status_line(404, 'Not Found');
+				stk_send_status_line(404, 'Not Found');
 			}
 
 			$msg_text = (!empty($user->lang[$msg_text])) ? $user->lang[$msg_text] : $msg_text;
@@ -1001,4 +1009,45 @@ function stk_array_walk_keys(&$array, $callback)
 		unset($array[$key]);
 	}
 	$array = $tmp_array;
+}
+
+/**
+* Outputs correct status line header.
+*
+* Depending on php sapi one of the two following forms is used:
+*
+* Status: 404 Not Found
+*
+* HTTP/1.x 404 Not Found
+*
+* HTTP version is taken from HTTP_VERSION environment variable,
+* and defaults to 1.0.
+*
+* Sample usage:
+*
+* send_status_line(404, 'Not Found');
+*
+* @param int $code HTTP status code
+* @param string $message Message for the status code
+* @return void
+*/
+function stk_send_status_line($code, $message)
+{
+	if (substr(strtolower(@php_sapi_name()), 0, 3) === 'cgi')
+	{
+		// in theory, we shouldn't need that due to php doing it. Reality offers a differing opinion, though
+		header("Status: $code $message", true, $code);
+	}
+	else
+	{
+		if (!empty($_SERVER['SERVER_PROTOCOL']))
+		{
+			$version = $_SERVER['SERVER_PROTOCOL'];
+		}
+		else
+		{
+			$version = 'HTTP/1.0';
+		}
+		header("$version $code $message", true, $code);
+	}
 }
