@@ -404,9 +404,19 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					$version_options = '';
 					for ($i = $_phpbb_version; $i > -1; $i--)
 					{
+						if (stripos($i, 'PL') !== false)
+						{
+							list($base_v, $pl_num) = explode('-PL', $_phpbb_version);
+							for ($j = $pl_num; $j > 0; $j--)
+							{
+								$v = "3.0.{$base_v}-PL{$j}";
+								$d = ($v == $config['version']) ? " default='default'" : '';
+								$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
+							}
+							$i = $base_v;
+						}
 						$v = "3.0.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
-
 						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
 					}
 
